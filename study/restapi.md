@@ -1,6 +1,8 @@
 # REST API
 Representational State Transfer (REST)
 
+표현 가능한 상태 전송
+
 **네트워크 아키텍처 원리**의 모음
 
 * 자원을 정의하고 자원에 대한 주소를 지정하는 방법
@@ -15,7 +17,6 @@ Resource, Method, Representation of Resource (Resource의 상태, Message)
 * 중간적 구성요소를 이용해 응답 지연 감소, 보안을 강화, 레거시 시스템을 인캡슐레이션
 
 ## REST의 제한조건
-
 다음 6가지 조건을 준수하는 한 개별 컴포넌트는 자유롭게 구현할 수 있다.
 
 * 클라이언트 / 서버 구조
@@ -36,3 +37,40 @@ Resource, Method, Representation of Resource (Resource의 상태, Message)
 * 메시지를 통한 리소스의 조작
 * 자기서술적 메시지
 * 애플리케이션의 상태에 대한 엔진으로서 하이퍼미디어
+
+## 중심 규칙
+* URI는 **정보의 자원**을 표현
+* 자원에 대한 행위는 HTTP Method(GET / POST / PUT / DELETE)로 표현
+
+## RESTful
+REST의 기본 원칙을 지킨 서비스를 RESTful 하다고 표현
+
+## API가 RESTful한지 체크하는 방법
+1. API Endpoint가 한개인가?
+	* REST의 요소에는 Resource가 있음.
+		* Resource는 말 그대로 서비스를 제공하는 시스템의 자원.
+	* Expensify 시스템의 경우를 예로 들면
+		* /user (사용자)
+		* /team (프로젝트 그룹 / 팀)
+		* /receipt (영수증)
+	* 대부분 명사(noun) 형태의 특성을 가짐
+2. 모든 요청을 POST방식으로만 요청하는가?
+	* Resource를 핸들링 하기 위해 HTTP Method를 사용.
+		* 생성은 **POST**
+		* 수정은 **PUT**
+		* 조회는 **GET**
+		* 삭제는 **DELETE**
+3. 응답에 대한 메타데이터를 Body에 포함 하는가?
+	* Request/Response 메타데이터는 최대한 HTTP 프로토콜 방식을 준수
+		* 예를들면 요청 처리 결과값을 Body에 포함하는것이 아니라 HTTP Status값으로 표현
+	* Body 데이터는 최대한 순수한 Resource 데이터
+4. URL에 동사가 포함되어있는가?
+	* 행위적 표현이기 때문에 RPC(메서드)를 의미하는건지 Resource를 의미하는건지 구분이 모호해짐
+		* Expensify 시스템의 경우를 예로 들면
+			* /receipt/1/approved (X)
+			* /receipt/1/status (O)
+5. URL에 RPC 호출 메서드명이 있는가?
+	* 아래와 같이 URL에 메서드가 포함된 경우나
+		* ?action=createReceipt
+	* URL에 노출되지 않지만, Body안에 선언되는 경우가 있는데,
+	* RESTful 설계 컨셉은 RPC가 아닌 Resource의 bucket화

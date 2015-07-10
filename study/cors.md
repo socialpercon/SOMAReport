@@ -14,3 +14,20 @@ Cross-Origin Resource Sharing
 	* Scheme과 도메인 네임만 같으면 스크립트가 접근 가능
 * Same-origin policy
 	* **서브도메인** 혹은 **포트**까지 같아야됨 	
+
+## JSONP
+* Same-origin policy를 우회하기 위해 보통 JSONP를 사용함
+	* 자바스크립트를 사용해서 직접 요청 (X) ->  script 태그를 DOM에 삽입하여 브라우저가 script를 load하는 방식
+* **자바스크립트로 요청하는 것이 아니므로**, Same-origin policy 를 우회가능
+
+단점
+
+* GET Method만 사용 가능
+* 웹 보안 위협
+	* CSRF (Cross-Site Request Forgery)
+		* 위조된 요청이 믿을 수 있는 사용자로부터 발송된 것으로 판단하게 되어 공격에 노출됨.
+	* XSS (Cross-Site Scripting) 
+		* 사용자로부터 입력 받은 값을 제대로 검사하지 않고 사용할 경우 나타남.
+		* 주로 다른 웹사이트와 정보를 교환하는 식으로 작동함
+	* XSS가 사용자가 특정 웹사이트를 신용하는 점을 노린거라면, CSRF는 웹사이트가 사용자의 웹 브라우저를 신용하는 상태를 노림.
+		
