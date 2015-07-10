@@ -1,8 +1,6 @@
 # SOMAExpensify
 
-## site
-* [trello](https://trello.com/b/0mX9BKo1/somaexpensify)
-* [slack]()
+[trello](https://trello.com/b/0mX9BKo1/somaexpensify) | [slack](https://somaexpensify.slack.com)
 
 
 ## Release
