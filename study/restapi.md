@@ -134,6 +134,35 @@ REST의 기본 원칙을 지킨 서비스를 RESTful 하다고 표현
 	* DELETE /receipt/raw/1 (O)
 	* HTTP Method를 적극 활용
 
+##### RequestHeader
+* Accept
+	* 받고싶은 미디어 타입 명시
+	* 지원할 미디어 타입이 없는 경우 Response Status Code는 406
+* Accept-Charset
+	* 응답으로 받고싶은 캐릭터셋
+* User-Agent
+	* 현재 요청을 보낸 Agent의 정보
+* Referer
+	* 요청을 보내기 직전에 참조하던 **리소스** 혹은 **주소**
+	
+##### ResponseHeader
+* Content-Length
+	* 요청과 Response Message의 엔티티 바디 크기
+* Last-Modified
+	* 해당 리소스가 마지막으로 갱신된 시간
+	* 캐싱 정책과 관련 
+* Response Status Code
+	* 하단의 Response Status Code 참조	
+
+##### 쿼리
+* GET 요청을 보낼 때 쿼리 스트링을 전달
+* 데이터가 너무 거대할 경우 필요한 정도만 요구하기 위해 페이징 값 / 구분 값 포함
+* 예를들면
+	* LinkedIn
+		* /people:(id,first-name,last-name,industry) | 필드 제한
+	* Facebook
+		* /user/friends?fields=id,name,picture | 필드 제한
+
 ##### Collection과 Document
 * Collection : Document들의 집합
 * 예를 들면
