@@ -5,7 +5,7 @@ Representational State Transfer (REST)
 
 **네트워크 아키텍처 원리**의 모음
 
-* 자원을 정의하고 자원에 대한 주소를 지정하는 방법
+* 자원을 정의하고 자원에 대한 주소를 지정하는 방법들의 모음
 
 ##### REST의 요소
 Resource, Method, Representation of Resource (Resource의 상태, Message)
@@ -35,16 +35,21 @@ Resource, Method, Representation of Resource (Resource의 상태, Message)
 
 ##### REST 인터페이스의 원칙에 대한 가이드
 * 자원의 식별
+	* 요청 내에 기술된 개별 자원을 식별할 수 있어야 함.
+		* 예를들면 URI
+	* DB 자료를 직접 전송하는 대신 XML, JSON 형식으로 전송 
 * 메시지를 통한 리소스의 조작
 * 자기서술적 메시지
 * 애플리케이션의 상태에 대한 엔진으로서 하이퍼미디어
 
-##### 중심 규칙
-* URI는 **정보의 자원**을 표현
-* 자원에 대한 행위는 HTTP Method(GET / POST / PUT / DELETE)로 표현
-
-##### 문제점
-* 구형 브라우저가 지원 안할수도 있음. (PUT, DELETE)
+##### URI와 URL의 차이
+* URI가 URL을 포함하고 있다.
+* URL
+	* Uniform Resource Locator 
+	* 인터넷 상의 **자원을 식별하기 위한 문자열의 구성**
+* URI
+	* Uniform Resource Identifier
+	* 인터넷 상의 **자원 위치** 
 
 ##### 보안
 * 인증 (Authentication)
@@ -100,13 +105,81 @@ Resource, Method, Representation of Resource (Resource의 상태, Message)
 		* 대칭키
 		* 비대칭키 
 
+##### 문제점
+* 구형 브라우저가 지원 안할수도 있음. (PUT, DELETE)
+
 ## RESTful
 REST의 기본 원칙을 지킨 서비스를 RESTful 하다고 표현
 
-##### Mobile 환경에서의 REST
-Request Header의 User-Agent를 참조하면 된다.
+##### 중심 규칙
+* URI는 **정보의 자원**을 표현
+* 자원에 대한 행위는 HTTP Method(GET / POST / PUT / DELETE)로 표현
 
-##### API가 RESTful한지 체크하는 방법
+[마크 마세](https://books.google.co.kr/books?id=knLJCQAAQBAJ&pg=PA36&lpg=PA36) :
+> REST API는 부실한 HTTP Client에 부합하려는 어떤 타협도 해서는 안됨
+
+##### URI 설계하기
+1. 소문자를 사용 (대소문자를 구분한다)
+	* 예를들어 SOMA와 SoMa는 다른 리소스다
+2. 하이픈 (–) 을 사용
+	* 경로에 띄어쓰기가 들어가면 띄어쓰기 대신 **%20**이 쓰여지는 경우가 있는데, 이런 경우를 방지하기 위해 하이픈을 사용
+3. 확장자를 사용하지 말자
+	* 자원이 더 유연해짐
+	* /receipt/raw/1.jpg (X)
+	* /receipt/raw/1 (O)
+	* **Accept Header**를 파싱해서 요청한대로 응답해주면 됨.
+		* 예를들면 Accept: image/jpeg
+4. CRUD는 URI에 사용하면 안된다.
+	* /receipt/raw/delete/1 (X)
+	* DELETE /receipt/raw/1 (O)
+	* HTTP Method를 적극 활용
+
+##### Collection과 Document
+* Collection : Document들의 집합
+* 예를 들면
+	* /users/1
+	* /users/1/projects
+* users : Collection
+* 1 : documents
+
+##### Response Status Code
+[rfc2616](http://tools.ietf.org/search/rfc2616#page-39)
+
+* 성공
+	* 200
+		* 클라이언트의 요청을 정상적으로 수행했을 때
+	* 201
+		* 클라이언트가 리소스 생성을 요청해서 성공적으로 리소스가 생성되었을 때
+	* 202
+		* 클라이언트의 요청이 비동기적으로 처리될 때
+		* 처리되기까지의 시간을 넣어주면 좋다.
+	* 204 
+		* 클라이언트의 요청을 정상적으로 수행했을 때
+		* 200과 다른게 없지만, Response Body가 없을 때 204 사용.
+			* 예를들면 DELETE (성공적으로 삭제되었을 때)
+* 실패
+	* 400
+		* 클라이언트의 요청이 부적절할때
+		* 서버에서 validation이 통과하지 못했을 때
+		* Response Body에 실패한 이유 넣어줘야함
+	* 401
+		* 클라이언트가 인증되지 않은 상태에서 보호된 리소스를 요청했을때
+			* 예를들면 로그인 하지 않은 사용자가 로그인 해야만 요청할 수 있는 리소스를 요청했을 때
+	* 403
+		* 리소스는 있으나, 응답하고 싶지 않은 리소스를 클라이언트가 요청했을 때
+		* 리소스 존재 여부조차 감추고 싶다면 400 사용
+	* 404
+		* 요청한 리소스가 존재하지 않을 때
+	* 405
+		* 사용 불가능한 Method로 요청했을 때
+* 기타
+	* 301
+		* URI가 변경되었을 때 
+		* Location Header에 변경된 URI 적어줘야함
+	* 500
+		* 서버에 문제가 있을 때
+	
+##### 설계한 API가 RESTful한지 체크하는 방법
 1. API Endpoint가 한개인가?
 	* REST의 요소에는 Resource가 있음.
 		* Resource는 말 그대로 서비스를 제공하는 시스템의 자원.
@@ -118,7 +191,7 @@ Request Header의 User-Agent를 참조하면 된다.
 2. 모든 요청을 POST방식으로만 요청하는가?
 	* Resource를 핸들링 하기 위해 HTTP Method를 사용.
 		* 생성은 **POST**
-		* 수정은 **PUT**
+		* 수정은 **PUT** (PATCH)
 		* 조회는 **GET**
 		* 삭제는 **DELETE**
 3. 응답에 대한 메타데이터를 Body에 포함 하는가?
@@ -135,10 +208,29 @@ Request Header의 User-Agent를 참조하면 된다.
 		* ?action=createReceipt
 	* URL에 노출되지 않지만, Body안에 선언되는 경우가 있는데,
 	* RESTful 설계 컨셉은 RPC가 아닌 Resource의 bucket화
+
+##### Mobile 환경에서의 REST
+Request Header의 User-Agent를 참조하면 된다.
+
+## SOMAExpensify
+
+어떻게 해야할까?
+
+#####인증
+* Facebook API
+	* 연수생 / 연수센터 직원분들이 가입되어있는 그룹이 있음
+	* Facebook API에서 가입되어있는 그룹 확인 가능 
+	* 소마 그룹이 있는지 확인해서 인증 처리 및 기수 확인 가능
+	* 장점
+		* 페이스북을 쓰는 사람은 편하게 접근이 가능하다.
+	* 단점
+		* 페이스북을 쓰지 않는 사람은 사용할 수 없다.
 	
 ## 참고한 링크
 * [RestFul이란 무엇인가?](http://blog.remotty.com/blog/2014/01/28/lets-study-rest/#crud)
 * [REST 아키텍처를 훌륭하게 적용하기 위한 몇 가지 디자인 팁](http://spoqa.github.io/2012/02/27/rest-introduction.html)
+* [RESTful API를 설계하기 위한 디자인 팁](http://spoqa.github.io/2013/06/11/more-restful-interface.html)
 * [당신의 API가 Restful 하지 않은 5가지 증거](https://beyondj2ee.wordpress.com/2013/03/21/%EB%8B%B9%EC%8B%A0%EC%9D%98-api%EA%B0%80-restful-%ED%95%98%EC%A7%80-%EC%95%8A%EC%9D%80-5%EA%B0%80%EC%A7%80-%EC%A6%9D%EA%B1%B0/)
 * [REST API 설계와 구현](http://seminar.eventservice.co.kr/JCO_1/images/track4-1.pdf)
-* [REST API의 이해와 설계-#3 API 보안](http://bcho.tistory.com/955)
+* [REST API의 이해와 설계-#3 API 보안](http://bcho.tistory.com/955)ß
+* [RESTful 웹서비스에 대해 알아보자!](http://iamcorean.tistory.com/22)
