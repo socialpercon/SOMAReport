@@ -36,3 +36,7 @@ Cross-Origin Resource Sharing
 ##### Preflight Request (사전 요청)
 * 외부 도메인인 경우 웹브라우저는 먼저 Preflight Request를 하게된다.
 * Preflight Request는 실제로 요청하려는 경로와 같은 URL에 OPTIONS 메서드로 요청을 날려서 요청을 할 수 있는 권한이 있는지 확인
+
+##### 서버에서 CORS 요청 핸들링
+* 모든 외부 도메인에서 허용할 경우
+	* OPTIONS 요청을 받아서 컨트롤 해야됨

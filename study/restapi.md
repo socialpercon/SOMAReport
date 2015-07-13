@@ -46,10 +46,10 @@ Resource, Method, Representation of Resource (Resource의 상태, Message)
 * URI가 URL을 포함하고 있다.
 * URL
 	* Uniform Resource Locator 
-	* 인터넷 상의 **자원을 식별하기 위한 문자열의 구성**
+	* 인터넷 상의 **자원 위치** 
 * URI
 	* Uniform Resource Identifier
-	* 인터넷 상의 **자원 위치** 
+	* 인터넷 상의 **자원을 식별하기 위한 문자열의 구성**
 
 ##### 보안
 * 인증 (Authentication)
