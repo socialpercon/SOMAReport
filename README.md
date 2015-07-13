@@ -2,7 +2,6 @@
 
 [trello](https://trello.com/b/0mX9BKo1/somaexpensify) | [slack](https://somaexpensify.slack.com)
 
-
 ## Release
 * 7/31(금) 1차버전
 * 8/17(월) 2차버전 (기능완성되어야함)
@@ -10,10 +9,48 @@
 ## 발표
 * usecase부터 시작해서
 * 1인당 발표 한시간 (Q&A 포함)
-* 월요일 
+* (7/13) 월요일 
 	* Couch DB / 이재연
 	* RestAPI / 강성훈 
 		* 인증을 어떻게 할건지 / 키를 어떻게 관리할건지
 	* CORS / 강성훈
 	* Google Drive / 민종현
 	* Lucene / 민종현
+* (7/16) 목요일
+	* CouchDB / 이재연
+		* 예제 with gradle
+		* CRUD Map / Reduce
+	* Lucene / Google Drive / 민종현
+		* 쓸 용도로 key 번갈아가면서 데이터 저장
+	* JAVA로 RESTful API를 설계한다고 했을때 어떻게 해야할지 / 강성훈
+		* Spring MVC / Jersey
+		* 어떤거를 할지
+		* 프로젝트 할때 어떤걸로 갈지 고민을 하면 됨
+	* 공통과제
+		* 오정은 선임님께 **(7/15) 수요일 10:00** 뭘 할건지
+			* 가능한 PPT / A4 용지
+			* UI 를 보여주기
+			* Expensify 같이
+			* 프로젝트 팀 / 멤버
+			* 생각하는 기능들 
+			* 이게 필요한 지 여쭤보괴
+			* 필요한 기능 / 필요하지 않은 기능 
+			* 기능 제안을 유도
+			* **친해져라** (도와주려고 하는거다)
+			* 목 / 금에 프로젝트 계획을 짜기
+			* 영수증 원본
+		* 3단계 멘티분들께 영수증 관리 여쭤보기
+		* **디자인 패턴** / 알고리즘 공부하기
+		* 한달에 랭귀지 하나 익히기 (랭귀지 컨셉이라던지)
+			* 추천 언어
+				* **Python** 
+				* **JavaScript**
+				* JAVA
+					* Scala
+				* Perl
+					* 다른건 안써도 Perl은 쓰임
+				* Go
+					* 현대적인 C라고 보면 됨
+					* Application / System
+					* IoT
+				* C
