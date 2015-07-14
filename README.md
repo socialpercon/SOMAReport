@@ -20,13 +20,18 @@
 	* CouchDB / 이재연
 		* 예제 with gradle
 		* CRUD Map / Reduce
-	* Lucene / Google Drive / 민종현
+	* Lucene / Google Drive + SVG / 민종현
 		* 쓸 용도로 key 번갈아가면서 데이터 저장
-	* JAVA로 RESTful API를 설계한다고 했을때 어떻게 해야할지 / 강성훈
+		* SVG로 그려도 웬만한건 다 그릴 수 있음
+			* 예를들면 Diagram
+	* JAVA로 RESTful API를 설계한다고 했을때 어떻게 해야할지 + jQuery & D3.js  + node.js / 강성훈
 		* Spring MVC / Jersey
 		* 어떤거를 할지
 		* 프로젝트 할때 어떤걸로 갈지 고민을 하면 됨
+		* node.js 기본적인 것
 	* 공통과제
+		* 단위테스트 (Android / Server 상관 없이 다)
+		* [JavaScript 클로져(Closures)](https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Closures)가 어떤 의미인지 생각해보기
 		* 오정은 선임님께 **(7/15) 수요일 10:00** 뭘 할건지
 			* 가능한 PPT / A4 용지
 			* UI 를 보여주기
@@ -40,7 +45,7 @@
 			* 목 / 금에 프로젝트 계획을 짜기
 			* 영수증 원본
 		* 3단계 멘티분들께 영수증 관리 여쭤보기
-		* **디자인 패턴** / 알고리즘 공부하기
+		* **디자인 패턴** / 알고리즘 / 보안 / 네트워크 공부하기
 		* 한달에 랭귀지 하나 익히기 (랭귀지 컨셉이라던지)
 			* 추천 언어
 				* **Python** 
