@@ -55,7 +55,7 @@
 				* Perl
 					* 다른건 안써도 Perl은 쓰임
 				* Go
-					* 현대적인 C라고 보면 됨
+					* 현대적인 C 라고 보면 됨
 					* Application / System
 					* IoT
 				* C
