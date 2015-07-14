@@ -33,7 +33,7 @@
 		* 단위테스트 (Android / Server 상관 없이 다)
 		* [JavaScript 클로져(Closures)](https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Closures)가 어떤 의미인지 생각해보기
 		* 오정은 선임님께 **(7/15) 수요일 10:00** 뭘 할건지
-			* 가능한 PPT / A4 용지
+			* 가능한 PPT / A4용지
 			* UI 를 보여주기
 			* Expensify 같이
 			* 프로젝트 팀 / 멤버
