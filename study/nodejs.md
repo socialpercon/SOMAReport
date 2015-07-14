@@ -4,7 +4,7 @@
 	* 해당되는 OS를 선택 후 다운로드를 하면 된다.
 
 ##### HelloWorld 출력하기
-
+---
 [helloworld.js](https://github.com/devholic/SOMAExpensify/blob/master/study/resources/nodejs/helloworld.js)
 
     console.log('Hello World');
@@ -18,7 +18,7 @@
 ![helloworld](https://github.com/devholic/SOMAExpensify/blob/master/study/resources/nodejs/helloworld.png)
 
 ##### 간단한 웹서버 생성하기
-
+---
 [helloworld_server.js](https://github.com/devholic/SOMAExpensify/blob/master/study/resources/nodejs/helloworld_server.js)
 
     var http = require('http');

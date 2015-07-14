@@ -16,7 +16,7 @@
 	* CORS / 강성훈
 	* Google Drive / 민종현
 	* Lucene / 민종현
-* (7/16) 목요일
+* (7/15) 수요일
 	* CouchDB / 이재연
 		* 예제 with gradle
 		* CRUD Map / Reduce
