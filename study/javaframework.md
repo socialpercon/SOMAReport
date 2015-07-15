@@ -1,8 +1,14 @@
 # JAVA Framework
 
-## Play!
+## Play
 ---
-* 2.0에서 점점 Scala쪽으로 넘어가고 있어 JAVA Framework라고 보기 조금 애매함.
+* 점점 Scala쪽으로 넘어가고 있어 JAVA Framework라고 보기 조금 애매함.
+	* 1.X대 버전에서는
+		* ![Play1](https://github.com/devholic/SOMAExpensify/blob/master/study/resources/javaframework/play1.png)
+	* 2.X대 버전에서는
+		* ![Play2](https://github.com/devholic/SOMAExpensify/blob/master/study/resources/javaframework/play2.png)
+* Build System : **SBT**
+* 그래서 Java기반으로 만들어질 SOMA Expensify에는 적합하지 않다고 생각됨.
 
 ## Spring
 ---
@@ -31,5 +37,5 @@
 	2. **Spring** : 21,807
 	3. **Play 1 (Siena)** : N/A
 * 결론
-	* 성능은 Jersey > Spring > Play!
+	* 성능은 Jersey > Spring > Play
 	* Jersey와 Spring 둘중 하나를 골랴아 되는데, 개인적으로는
