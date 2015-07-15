@@ -8,7 +8,7 @@
 * [Google Drive API File Upload](https://www.evernote.com/shard/s37/sh/6d9edc9c-dde2-4a84-8a4e-3252120e163e/afffe46d2895b229)
 
 ## Java Framework
-* [Java Framework](https://github.com/devholic/SOMAExpensify/blob/master/study/javaframework.md)
+* [Java Framework (Jersey vs Spring vs Play)](https://github.com/devholic/SOMAExpensify/blob/master/study/javaframework.md)
 
 ## Lucene
 
