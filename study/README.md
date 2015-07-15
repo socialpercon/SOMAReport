@@ -2,6 +2,10 @@
 
 * [CORS](https://github.com/devholic/SOMAExpensify/blob/master/study/cors.md)
 
+## D3.js
+
+* [D3.js](https://github.com/devholic/SOMAExpensify/blob/master/study/d3js.md)
+
 ## Google Drive
 
 * [Google Drive API Quick Start](https://www.evernote.com/shard/s37/sh/6ef7e497-af91-4ae8-a46c-dc91dc3587c1/854e41cbbaa6dbb4)
