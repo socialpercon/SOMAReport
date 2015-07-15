@@ -11,13 +11,10 @@
 * 그래서 Java기반으로 만들어질 SOMA Expensify에는 적합하지 않다고 생각됨.
 
 ## Spring
----
 
 ## Jersey
----
 
 ## Benchmark
----
 출처 : [TechEmpower - Web Framework Benchmarks](https://www.techempower.com/benchmarks/)
 
 * JSON serialization (높을수록 좋음)
