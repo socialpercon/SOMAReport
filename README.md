@@ -1,6 +1,6 @@
-# SOMAExpensify
+# SOMAReport
 
-[trello](https://trello.com/b/0mX9BKo1/somaexpensify) | [slack](https://somaexpensify.slack.com)
+[trello](https://trello.com/b/0mX9BKo1) | [slack](https://somareport.slack.com)
 
 ## Release
 * 7/31(금) 1차버전
