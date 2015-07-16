@@ -1,10 +1,10 @@
 ## CORS
 
-* [CORS](https://github.com/devholic/SOMAExpensify/blob/master/study/cors.md)
+* [CORS](https://github.com/devholic/SOMAReport/blob/master/study/cors.md)
 
 ## D3.js
 
-* [D3.js](https://github.com/devholic/SOMAExpensify/blob/master/study/d3js.md)
+* [D3.js](https://github.com/devholic/SOMAReport/blob/master/study/d3js.md)
 
 ## Google Drive
 
@@ -12,7 +12,7 @@
 * [Google Drive API File Upload](https://www.evernote.com/shard/s37/sh/6d9edc9c-dde2-4a84-8a4e-3252120e163e/afffe46d2895b229)
 
 ## Java Framework
-* [Java Framework (Jersey vs Spring vs Play)](https://github.com/devholic/SOMAExpensify/blob/master/study/javaframework.md)
+* [Java Framework (Jersey vs Spring vs Play)](https://github.com/devholic/SOMAReport/blob/master/study/javaframework.md)
 
 ## Lucene
 
@@ -20,8 +20,8 @@
 
 ## node.js
 
-* [node.js](https://github.com/devholic/SOMAExpensify/blob/master/study/nodejs.md)
+* [node.js](https://github.com/devholic/SOMAReport/blob/master/study/nodejs.md)
 
 ## REST API
 
-* [REST API](https://github.com/devholic/SOMAExpensify/blob/master/study/restapi.md)
+* [REST API](https://github.com/devholic/SOMAReport/blob/master/study/restapi.md)

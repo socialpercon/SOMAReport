@@ -4,10 +4,10 @@
 * 점점 Scala쪽으로 넘어가고 있어 JAVA Framework라고 보기 조금 애매함.
 	* 1.X대 버전에서는
 	
-		![Play1](https://github.com/devholic/SOMAExpensify/blob/master/study/resources/javaframework/play1.png)
+		![Play1](https://github.com/devholic/SOMAReport/blob/master/study/resources/javaframework/play1.png)
 	* 2.X대 버전에서는
 		
-		![Play2](https://github.com/devholic/SOMAExpensify/blob/master/study/resources/javaframework/play2.png)
+		![Play2](https://github.com/devholic/SOMAReport/blob/master/study/resources/javaframework/play2.png)
 * Build System : **SBT**
 * 그래서 Java기반으로 만들어질 SOMA Expensify에는 적합하지 않다고 생각됨.
 

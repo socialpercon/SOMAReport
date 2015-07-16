@@ -9,53 +9,35 @@
 ## 발표
 * usecase부터 시작해서
 * 1인당 발표 한시간 (Q&A 포함)
-* (7/13) 월요일 
-	* Couch DB / 이재연
-	* RestAPI / 강성훈 
-		* 인증을 어떻게 할건지 / 키를 어떻게 관리할건지
-	* CORS / 강성훈
-	* Google Drive / 민종현
-	* Lucene / 민종현
-* (7/15) 수요일
-	* CouchDB / 이재연
-		* 예제 with gradle
-		* CRUD Map / Reduce
-	* Lucene / Google Drive + SVG / 민종현
-		* 쓸 용도로 key 번갈아가면서 데이터 저장
-		* SVG로 그려도 웬만한건 다 그릴 수 있음
-			* 예를들면 Diagram
-	* JAVA로 RESTful API를 설계한다고 했을때 어떻게 해야할지 + jQuery & D3.js  + node.js / 강성훈
-		* Spring MVC / Jersey
-		* 어떤거를 할지
-		* 프로젝트 할때 어떤걸로 갈지 고민을 하면 됨
-		* node.js 기본적인 것
+* (7/20) 월요일
+	* CouchDB로 어떻게 할 수 있는지 / 이재연
+		* 데이터 모델링
+		* 코드화 시켜야 함
+		* _changes
+	* 특정 데이터베이스에 변경되는거 세개의 변경된 데이터를 받아올 수 있음 / 강성훈
+		* 뭘로 만드는지가 핵심 
+		* node.js로 짤 것 : 쉽게 만들 수 있는 : 데몬
+			* Socket이 끊어져있음 가장 최근 데이터를 저장해서 체크하면 되는부분
+		* 1번을 썼다고 하면 2번,3번 파일에 쓰는거
+		* Couch DB : Insert Update Delete / Select(Log에 안남음)
+			* changes 호출하면 log를 file로
+			* OS에서 주기적으로 FILE로 
+			* git
+			* 반대는 git clone 하면 읽어서 적용시키는거
+		* 백업이라는 개념을 더 쉽게
+		* 코드까지 나와야함
+		* + Zookeeper (시간 나면)
+			* Node가 떠있는지 죽었는지를 체크하게
+			* HA 환경 (자동화)
+		* 선정된 기술로 REST 데모를 만들기
+	* curl로 시도 / 민종현
+		* Google API Test 완료 
+		* OAuth 2.0
+			* Spec 읽어보기
+		* Elastic Search
 	* 공통과제
-		* 단위테스트 (Android / Server 상관 없이 다)
-		* [JavaScript 클로져(Closures)](https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Closures)가 어떤 의미인지 생각해보기
-		* ~~오정은 선임님께 **(7/15) 수요일 10:00** 뭘 할건지~~ : 완료
-			* 가능한 PPT / A4용지
-			* UI 를 보여주기
-			* Expensify 같이
-			* 프로젝트 팀 / 멤버
-			* 생각하는 기능들 
-			* 이게 필요한 지 여쭤보괴
-			* 필요한 기능 / 필요하지 않은 기능 
-			* 기능 제안을 유도
-			* **친해져라** (도와주려고 하는거다)
-			* 목 / 금에 프로젝트 계획을 짜기
-			* 영수증 원본
-		* 3단계 멘티분들께 영수증 관리 여쭤보기
-		* **디자인 패턴** / 알고리즘 / 보안 / 네트워크 공부하기
-		* 한달에 랭귀지 하나 익히기 (랭귀지 컨셉이라던지)
-			* 추천 언어
-				* **Python** 
-				* **JavaScript**
-				* JAVA
-					* Scala
-				* Perl
-					* 다른건 안써도 Perl은 쓰임
-				* Go
-					* 현대적인 C 라고 보면 됨
-					* Application / System
-					* IoT
-				* C
+		* **Maven**
+			* [자바 세상의 빌드를 이끄는 메이븐 / 박재성](http://book.naver.com/bookdb/book_detail.nhn?bid=6600936)
+		* 코드리뷰
+		* UI 구성 및 프로젝트 기능 요건 추출
+			* 기본 개발 Spec을 적기
