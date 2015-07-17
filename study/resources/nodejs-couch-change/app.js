@@ -13,10 +13,17 @@ fs.readFile('./app.pref', 'utf8', function(err, data) {
 	}
 });
 
+// backup 파일을 저장할 폴더 생성
+fs.mkdir('./backup', function(err){
+	if(err){
+
+	}
+});
+
 // _changes를 서버에서 가져오는 함수
 function load(){
 	// GET Request를 서버로 보냄
-	http.get("http://plusquare.com:3001/test_report/_changes?feed=continuous", function(response) {
+	http.get("http://nodeapp:nodeappdb@plusquare.com:3001/test_report/_changes?feed=continuous", function(response) {
  		response.on('data', function (data) { // 데이터가 있는 경우
  			try{
 				var json = JSON.parse(data); // JSON으로 Parse 시도
@@ -35,7 +42,7 @@ function load(){
  								console.log('Error : ' + err); // 에러 출력
   							}
 						});
-						fs.writeFile('./seq-'+json.seq+'.json', JSON.stringify(json),function(err){ // 백업 파일 생성 (json)
+						fs.writeFile('./backup/seq-'+json.seq+'.json', JSON.stringify(json),function(err){ // 백업 파일 생성 (json)
 							
 							/*
 								파일 이름은 다음 규칙에 의해 생성됩니다.
