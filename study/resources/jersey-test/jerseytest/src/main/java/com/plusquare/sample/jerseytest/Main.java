@@ -16,6 +16,7 @@ public class Main {
 	public static final String BASE_URI = "http://localhost:8080/api/";
 
 	public static HttpServer startServer() {
+		// https://jersey.java.net/documentation/latest/mvc.html#mvc.registration
 		final ResourceConfig rc = new ResourceConfig()
 				.property(MustacheMvcFeature.TEMPLATE_BASE_PATH, "")
 				.register(MustacheMvcFeature.class)
@@ -26,8 +27,7 @@ public class Main {
 
 	public static void main(final String[] args) throws Exception {
 		final HttpServer server = startServer();
-		System.out.println(String.format("Hit enter to stop server",
-				BASE_URI));
+		System.out.println(String.format("Hit enter to stop server", BASE_URI));
 		System.in.read();
 		server.shutdownNow();
 	}
