@@ -17,7 +17,7 @@ public class Application {
 		final ResourceConfig rc = new ResourceConfig()
 				.property(MustacheMvcFeature.TEMPLATE_BASE_PATH, "templates")
 				.register(MustacheMvcFeature.class)
-				.packages("com.plusquare.sample.jerseytest");
+				.packages("com.github.devholic.SOMAReport");
 		return GrizzlyHttpServerFactory.createHttpServer(
 				URI.create(StringFactory.createBaseUrl(BASE_URI, PORT)), rc);
 	}
