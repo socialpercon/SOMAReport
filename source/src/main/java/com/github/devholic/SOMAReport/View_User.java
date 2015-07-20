@@ -6,6 +6,7 @@ import javax.ws.rs.Produces;
 
 import org.glassfish.jersey.server.mvc.Viewable;
 
+@Path("/")
 public class View_User {
 
 	@GET
