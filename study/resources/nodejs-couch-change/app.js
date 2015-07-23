@@ -23,7 +23,7 @@ fs.mkdir('./backup', function(err){
 // _changes를 서버에서 가져오는 함수
 function load(){
 	// GET Request를 서버로 보냄
-	http.get("http://nodeapp:nodeappdb@plusquare.com:3001/test_report/_changes?feed=continuous", function(response) {
+	http.get("http://nodeapp:nodeappdb@plusquare.com:3001/test_report/_changes?include_docs=true&feed=continuous", function(response) {
  		response.on('data', function (data) { // 데이터가 있는 경우
  			try{
 				var json = JSON.parse(data); // JSON으로 Parse 시도

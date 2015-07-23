@@ -4,6 +4,7 @@ import java.net.URI;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.mvc.mustache.MustacheMvcFeature;
 
@@ -17,6 +18,7 @@ public class Application {
 		final ResourceConfig rc = new ResourceConfig()
 				.property(MustacheMvcFeature.TEMPLATE_BASE_PATH, "templates")
 				.register(MustacheMvcFeature.class)
+				.register(MultiPartFeature.class)
 				.packages("com.github.devholic.SOMAReport");
 		return GrizzlyHttpServerFactory.createHttpServer(
 				URI.create(StringFactory.createBaseUrl(BASE_URI, PORT)), rc);

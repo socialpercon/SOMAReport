@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="4dp"
+    android:padding="16dp"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="진행사항 요약"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/textTitle"></TextView>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:text="#20150723"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/textSubhead"></TextView>
+
+        <RelativeLayout
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/date"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorDivider"></RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_below="@+id/divider"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/user_a" />
+
+            <RelativeLayout
+                android:id="@+id/mentor_divider"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="8dp"
+                android:background="@color/colorDivider" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/user_k" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/user_m" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/user_l" />
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

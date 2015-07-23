@@ -1,0 +1,76 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/background"
+        android:elevation="24dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="SoMa Report"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/textDisplay1" />
+
+        <TextView
+            android:id="@+id/welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="멘토링보고서. 작성. 성공적."
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/textSubhead" />
+
+        <RelativeLayout
+            android:id="@+id/loginBtn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="56dp"
+            android:background="@color/googleRed">
+
+            <RelativeLayout
+                android:id="@+id/googleLogo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/googleRed">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/google_plus" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/logoDivider"
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@+id/googleLogo"
+                android:background="@color/colorDivider"></RelativeLayout>
+
+            <TextView
+                android:id="@+id/loginText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Google 계정으로 로그인"
+                android:textColor="@color/textColorPrimaryLight"
+                android:textSize="@dimen/textButton" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>
