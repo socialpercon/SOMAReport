@@ -1,7 +1,7 @@
 package com.github.devholic.SOMAReport;
 
-import java.io.InputStream;
 
+import java.io.InputStream;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,8 +10,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+
 import org.glassfish.grizzly.http.server.Request;
-import org.glassfish.grizzly.http.server.Session;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.JSONObject;
@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+
 
 @Path("/api/demo")
 public class API_Demo {
@@ -64,6 +65,7 @@ public class API_Demo {
 		return Response.status(200).type(MediaType.APPLICATION_JSON)
 				.entity(jo.toString()).build();
 	}
+	
 	/*
 	 * private void writeToFile(InputStream uploadedInputStream, String
 	 * uploadedFileLocation) {
