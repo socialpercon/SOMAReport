@@ -8,6 +8,8 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.mvc.mustache.MustacheMvcFeature;
 
+import com.github.devholic.SOMAReport.Utilities.StringFactory;
+
 public class Application {
 
 	public static final String BASE_URI = "http://localhost";

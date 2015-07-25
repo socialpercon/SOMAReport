@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Reports {
 	
+	String reportId;
 	String [] attended_mentee ;
 	Integer count;
 	Date date;
@@ -21,6 +22,7 @@ public class Reports {
 	String etc;
 	
 	public Reports(){
+		reportId = "";
 		attended_mentee = null;
 		count = 0;
 		date = null;
@@ -39,6 +41,13 @@ public class Reports {
 			
 	}
 	
+	
+	public String getReportId() {
+		return reportId;
+	}
+	public void setReportId(String reportId) {
+		this.reportId = reportId;
+	}
 	public String[] getAttended_mentee() {
 		return attended_mentee;
 	}
