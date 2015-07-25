@@ -1,4 +1,4 @@
-package utilities;
+package com.github.devholic.SOMAReport.Utilities;
 
 /*
  * Courtesy of
