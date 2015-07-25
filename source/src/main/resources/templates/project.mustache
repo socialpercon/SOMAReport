@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>somareport</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+</head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+	<nav id="somareport-nav" class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">SOMA Report</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="./main.mustache">홈</a></li>
+            <li class="active"><a href="#">프로젝트</a></li>
+            <li><a href="./statistics.mustache">통계</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+         	<li><a href="#">계정설정</a></li>
+            <li><a href="#">로그아웃</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <div class="container">
+    <a href="./reportlist.mustache" id="blocklink">
+    <div style="width:3em;height:0.2em;background:#000"></div>
+      <h2 style="margin-top:0.2em;margin-bottom:0.2em">SOMA Report</h2>
+      <h5 style="margin-top:0.2em;margin-bottom:0.3em;color:rgba(0,0,0,0.54)">6기 1단계 1차</h5>
+      <div style="margin-top:0.5em">
+        <div class="circular user-a"></div>
+        <div class="mentor-divider"></div>
+        <div class="circular mentee-pic user-k"></div>
+        <div class="circular mentee-pic user-m"></div>
+        <div class="circular mentee-pic user-l"></div>
+      </div>
+    </a>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  </body>
+</html>

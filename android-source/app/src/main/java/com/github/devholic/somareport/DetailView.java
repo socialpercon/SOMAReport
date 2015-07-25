@@ -102,15 +102,10 @@ public class DetailView extends AppCompatActivity {
                         from(viewGroup.getContext()).
                         inflate(R.layout.detail_text, viewGroup, false);
                 return new DetailItemViewHolder(itemView);
-            } else if (viewType == 1) {
-                View itemView = LayoutInflater.
-                        from(viewGroup.getContext()).
-                        inflate(R.layout.detail_user, viewGroup, false);
-                return new DetailUserViewHolder(itemView);
             } else {
                 View itemView = LayoutInflater.
                         from(viewGroup.getContext()).
-                        inflate(R.layout.detail_text2, viewGroup, false);
+                        inflate(R.layout.detail_user, viewGroup, false);
                 return new DetailUserViewHolder(itemView);
             }
         }
@@ -122,11 +117,6 @@ public class DetailView extends AppCompatActivity {
                 position *= 2;
                 DetailUserViewHolder uh = (DetailUserViewHolder) holder;
                 uh.title.setText((String) items.get(position));
-            } else if (position > 2) {
-                position *= 2;
-                DetailItemViewHolder2 ih2 = (DetailItemViewHolder2) holder;
-                ih2.title.setText((String) items.get(position));
-                ih2.content.setText((String) items.get(position + 1));
             } else {
                 position *= 2;
                 DetailItemViewHolder ih = (DetailItemViewHolder) holder;
@@ -139,8 +129,6 @@ public class DetailView extends AppCompatActivity {
         public int getItemViewType(int position) {
             if (position == 2) {
                 return 1;
-            } else if (position > 2) {
-                return 2;
             } else {
                 return 0;
             }
