@@ -17,6 +17,7 @@ import com.github.devholic.SOMAReport.Model.Projects;
 public class ProjectsController {
 
 	
+	//일단 데이터를 박아놓음
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
 	public List<Projects> getUserList(){
