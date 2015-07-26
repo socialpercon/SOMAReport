@@ -32,7 +32,7 @@ APPLICATION_NAME = 'SOMAReport Test'
 def home():
     return "Hello World!"
 
-@app.route('/oauth2callback/<int:did>')
+@app.route('/authcallback/<int:did>')
 def oauth2callback(did):
 	flow = client.flow_from_clientsecrets(
     'client_secret.json',
@@ -72,11 +72,9 @@ def checkCredential(did):
 	store = oauth2client.file.Storage(str(did)+'.json')
 	credentials = store.get()
 	if not credentials or credentials.invalid:
-		#return flask.redirect(flask.url_for('oauth2callback',did=did))
 		return False
 	else:
 		return True
-    	# return credentials
 
 def getCredential(did):
 	store = oauth2client.file.Storage(str(did)+'.json')
