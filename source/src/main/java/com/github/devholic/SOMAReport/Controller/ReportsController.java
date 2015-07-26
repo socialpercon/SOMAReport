@@ -19,6 +19,10 @@ import com.github.devholic.SOMAReport.Model.Reports;
 public class ReportsController {
 
 	
+	/**************************************************************************
+	 * 레포트 리스트를 가져온다.
+	 * @return List<Reports>
+	 *************************************************************************/
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
 	public List<Reports> getUserList(){
@@ -46,6 +50,11 @@ public class ReportsController {
 		return report_list;
 	}
 	
+	/**************************************************************************
+	 * 레포트 상세정보를 가져온다.
+	 * @param reportId
+	 * @return Reports
+	 *************************************************************************/
 	@GET
 	@Path("/{reportId}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 

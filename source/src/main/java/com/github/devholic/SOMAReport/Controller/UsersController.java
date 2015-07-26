@@ -10,9 +10,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import com.github.devholic.SOMAReport.Model.Users;
 
@@ -35,9 +33,9 @@ public class UsersController {
 		Users user3 = new Users();
 		
 		try{		
-			user1.setUserId("123");
-			user2.setUserId("456");
-			user3.setUserId("789");
+			user1.setUserId("user1");
+			user2.setUserId("user2");
+			user3.setUserId("user3");
 			
 			user_list.add(user1);
 			user_list.add(user2);
@@ -74,7 +72,12 @@ public class UsersController {
 		return user;
 	}
 
+	/**************************************************************************
+	 * 사용자를 입력한다
+	 * @param userId,userName,userAge,userSex,userYear
+	 *************************************************************************/
 	@POST
+	@Path("/{userId}/{userName}/{userAge}/{userSex}/{userYear}")
 	public void insertUser( @PathParam("userId") String userId,
 							@PathParam("userName") String userName,
 							@FormParam("userAge") Integer userAge,
