@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+import io
+import json
+import oauth2client
+import os
 import httplib2
 import urllib2
-import os
-import sys
-
 from apiclient import discovery
-import oauth2client
 from oauth2client import client
 from oauth2client import tools
 from urllib import urlencode
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
+import flask
+app = flask.Flask(__name__)
 
 try:
     import argparse
@@ -22,43 +26,65 @@ except ImportError:
 
 SCOPES = 'https://www.googleapis.com/auth/drive'
 CLIENT_SECRET_FILE = 'client_secret.json'
-APPLICATION_NAME = 'Drive API Quickstart'
+APPLICATION_NAME = 'SOMAReport Test'
 
+@app.route("/")
+def home():
+    return "Hello World!"
 
-def get_credentials():
-    """Gets valid user credentials from storage.
+@app.route('/oauth2callback/<int:did>')
+def oauth2callback(did):
+	flow = client.flow_from_clientsecrets(
+    'client_secret.json',
+    scope=SCOPES,
+    redirect_uri=flask.url_for('oauth2callback', did=did, _external=True))
+	flow.user_agent = APPLICATION_NAME
+	if 'code' not in flask.request.args:
+		auth_uri = flow.step1_get_authorize_url()
+		return flask.redirect(auth_uri)
+	else:
+		auth_code = flask.request.args.get('code')
+		print auth_code
+		credentials = flow.step2_exchange(auth_code)
+		with io.open(str(did)+'.json', 'w', encoding='utf-8') as f:
+			f.write(unicode(credentials.to_json()))
+    	return flask.redirect(flask.url_for('getFilelist', did=did))
 
-    If nothing has been stored, or if the stored credentials are invalid,
-    the OAuth2 flow is completed to obtain the new credentials.
+@app.route("/drive/files/<int:did>")
+def getFilelist(did):
+	if checkCredential(did):
+		credentials = getCredential(did)
+		http = credentials.authorize(httplib2.Http())
+		service = discovery.build('drive', 'v2', http=http)
+		results = service.files().list(maxResults=3).execute()
+		items = results.get('items', [])
+		if not items:
+			return 'No files found.'
+		else:
+			print_v = ""
+			for item in items:
+				print_v += ('{0} ({1}) \n '.format(unicode(item['title']), unicode(item['id'])))
+			return print_v
+	else:
+		return flask.redirect(flask.url_for('oauth2callback', did=did))
 
-    Returns:
-        Credentials, the obtained credential.
-    """
-    home_dir = os.path.expanduser('~')
-    credential_dir = os.path.join(home_dir, '.credentials')
-    if not os.path.exists(credential_dir):
-        os.makedirs(credential_dir)
-    credential_path = os.path.join(credential_dir,
-                                   'drive-quickstart.json')
+def checkCredential(did):
+	store = oauth2client.file.Storage(str(did)+'.json')
+	credentials = store.get()
+	if not credentials or credentials.invalid:
+		#return flask.redirect(flask.url_for('oauth2callback',did=did))
+		return False
+	else:
+		return True
+    	# return credentials
 
-    store = oauth2client.file.Storage(credential_path)
-    credentials = store.get()
-    if not credentials or credentials.invalid:
-        flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
-        flow.user_agent = APPLICATION_NAME
-        if flags:
-            credentials = tools.run_flow(flow, store, flags)
-        else: # Needed only for compatability with Python 2.6
-            credentials = tools.run(flow, store)
-        print 'Storing credentials to ' + credential_path
-    return credentials
+def getCredential(did):
+	store = oauth2client.file.Storage(str(did)+'.json')
+	credentials = store.get()
+	return credentials
 
+'''
 def main():
-    """Shows basic usage of the Google Drive API.
-
-    Creates a Google Drive API service object and outputs the names and IDs
-    for up to 10 files.
-    """
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('drive', 'v2', http=http)
@@ -74,7 +100,7 @@ def main():
     # 파일 업로드
     data = open("test.txt", 'r') 
     resp, content = http.request("https://www.googleapis.com/upload/drive/v2/files?uploadType=media","POST",data)
-    print resp
-
+	print resp
+'''
 if __name__ == '__main__':
-    main()
+	app.run(debug=True)
