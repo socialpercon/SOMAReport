@@ -22,7 +22,7 @@ public class View_ProjectList {
 	@Produces("text/html")
 	public Viewable test() {
 		ProjectsController p = new ProjectsController();
-		List<Projects> l = p.getUserList();
+		List<Projects> l = p.getProjectList();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("projectlist", l);
 		return new Viewable("/project.mustache", map);

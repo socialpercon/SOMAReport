@@ -39,18 +39,23 @@
     </nav>
     <div class="container">
     {{#projectlist}}
-    <a href="./reportlist.mustache" id="blocklink">
-    <div style="width:3em;height:0.2em;background:#000"></div>
-      <h2 style="margin-top:0.2em;margin-bottom:0.2em">{{projectName}}</h2>
-      <h5 style="margin-top:0.2em;margin-bottom:0.3em;color:rgba(0,0,0,0.54)">6기 1단계 1차</h5>
-      <div style="margin-top:0.5em">
-        <div class="circular user-a"></div>
-        <div class="mentor-divider"></div>
-        <div class="circular mentee-pic user-k"></div>
-        <div class="circular mentee-pic user-m"></div>
-        <div class="circular mentee-pic user-l"></div>
-      </div>
-    </a>
+    <div>
+    <div class="line"></div>
+    <a href="./reportlist.mustache"><h2 style="margin-top:0.2em;margin-bottom:0.2em">{{projectName}}</h2></a>
+    <h5 style="margin-top:0.2em;margin-bottom:0.3em">6기 1단계 1차</h5>
+    <table><tr><td>
+      <div class="circular user-a"></div>
+      </td><td>
+      <div class="mentor-divider"></div>
+      </td><td>
+      <div class="circular mentee-pic user-k"></div>
+      </td><td>
+      <div class="circular mentee-pic user-m"></div>
+      </td><td>
+      <div class="circular mentee-pic user-l"></div>
+      </td></tr>
+    </table>   
+    </div>
     {{/projectlist}}
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
