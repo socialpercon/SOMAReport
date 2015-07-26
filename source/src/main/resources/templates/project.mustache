@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>somareport</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 </head>
 
@@ -39,8 +39,9 @@
     </nav>
     <div class="container">
     <a href="./reportlist.mustache" id="blocklink">
+    {{#projectlist}}
     <div style="width:3em;height:0.2em;background:#000"></div>
-      <h2 style="margin-top:0.2em;margin-bottom:0.2em">SOMA Report</h2>
+      <h2 style="margin-top:0.2em;margin-bottom:0.2em">{{projectName}}</h2>
       <h5 style="margin-top:0.2em;margin-bottom:0.3em;color:rgba(0,0,0,0.54)">6기 1단계 1차</h5>
       <div style="margin-top:0.5em">
         <div class="circular user-a"></div>
@@ -51,6 +52,7 @@
       </div>
     </a>
     </div>
+    {{/projectlist}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
