@@ -10,7 +10,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.glassfish.hk2.utilities.reflection.Logger;
 
 import com.github.devholic.SOMAReport.Model.Reports;
 
@@ -18,7 +17,6 @@ import com.github.devholic.SOMAReport.Model.Reports;
 @Path("/reports")
 public class ReportsController {
 
-	Logger logger = Logger.getLogger();
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
@@ -28,7 +26,6 @@ public class ReportsController {
 		Reports report = new Reports();
 		
 		try{
-			logger.debug("GET reports");
 		
 			
 			//참석한 멘티들

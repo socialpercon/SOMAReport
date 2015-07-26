@@ -1,12 +1,15 @@
 package com.github.devholic.SOMAReport.Controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.Encoded;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.glassfish.hk2.utilities.reflection.Logger;
 
 import com.github.devholic.SOMAReport.Model.Projects;
 
@@ -14,20 +17,57 @@ import com.github.devholic.SOMAReport.Model.Projects;
 @Path("/projects")
 public class ProjectsController {
 
-	Logger logger = Logger.getLogger();
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-	@Encoded
-	public Projects getUserList(){
+	public List<Projects> getUserList(){
+		
+		List<Projects> project_list = new ArrayList<Projects>();
+		
+		Projects pj1 = new Projects();
+		Projects pj2 = new Projects();
+		Projects pj3 = new Projects();
+		
+		try{
+			
+			String [] pj1_userIds = {"123","456"};
+			pj1.setProjectId("pj1");
+			pj1.setProjectName("somaexpensify");
+			pj1.setUserIds(pj1_userIds);
+			
+			String [] pj2_userIds = {"456","789"};
+			pj2.setProjectId("pj2");
+			pj2.setProjectName("somareport");
+			pj2.setUserIds(pj2_userIds);
+			
+			String [] pj3_userIds = {"123","789"};
+			pj3.setProjectId("pj3");
+			pj3.setProjectName("somareservation");
+			pj3.setUserIds(pj3_userIds);
+
+			project_list.add(pj1);
+			project_list.add(pj2);
+			project_list.add(pj3);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+			
+		return project_list;
+	}
+	
+	@GET
+	@Path("/{projectId}")
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
+	public Projects getProjectDetails(@PathParam("projectId") String projectId){
 		
 		Projects project = new Projects();
 		
 		try{
-			logger.debug("GET projects");
 			
-			String [] userIds = {"dd","cc"};
-			project.setProjectId("projectId");
+			String [] userIds = {"123","456","789"};
+			
+			project.setProjectId(projectId);
 			project.setArea("area");
 			project.setCategory("category");
 			project.setLevel("level");

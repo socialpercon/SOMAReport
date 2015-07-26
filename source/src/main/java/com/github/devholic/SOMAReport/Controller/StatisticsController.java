@@ -6,13 +6,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.glassfish.hk2.utilities.reflection.Logger;
 import org.json.JSONObject;
 
 @Path("/statistics")
 public class StatisticsController {
 
-	Logger logger = Logger.getLogger();
 	
 	
 	@GET
@@ -22,8 +20,6 @@ public class StatisticsController {
 		JSONObject jo1 = new JSONObject();
 		
 		try{
-			
-			logger.debug("GET statistics");
 			
 			jo1.put("name", "name");
 			jo1.put("age", "age");
