@@ -3,9 +3,11 @@ package com.github.devholic.SOMAReport.Controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -127,4 +129,24 @@ public class ProjectsController {
 			e.printStackTrace();
 		}
 	}
+	
+	@PUT
+	public void updateProject(){
+		try{
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@DELETE
+	public void deleteProject(){
+		try{
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	
 }
