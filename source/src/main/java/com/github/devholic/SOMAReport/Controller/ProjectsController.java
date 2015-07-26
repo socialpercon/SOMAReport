@@ -33,15 +33,21 @@ public class ProjectsController {
 			String [] pj1_userIds = {"123","456"};
 			pj1.setProjectId("pj1");
 			pj1.setProjectName("somaexpensify");
+			pj1.setSequence("6");
+			pj1.setLevel("1-1");
 			pj1.setUserIds(pj1_userIds);
 			
 			String [] pj2_userIds = {"456","789"};
 			pj2.setProjectId("pj2");
+			pj2.setSequence("6");
+			pj2.setLevel("1-1");
 			pj2.setProjectName("somareport");
 			pj2.setUserIds(pj2_userIds);
 			
 			String [] pj3_userIds = {"123","789"};
 			pj3.setProjectId("pj3");
+			pj3.setSequence("6");
+			pj3.setLevel("1-1");
 			pj3.setProjectName("somareservation");
 			pj3.setUserIds(pj3_userIds);
 
