@@ -24,8 +24,8 @@ public class View_ProjectList {
 		ProjectsController p = new ProjectsController();
 		List<Projects> l = p.getProjectList();
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("projectlist", l);
-		return new Viewable("/project.mustache", map);
+		map.put("projectList", l);
+		return new Viewable("/m_main.mustache", map);
 	}
 
 }

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.css">
-    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
 </head>
 
   <body>
@@ -24,9 +24,10 @@
       </div>
     </nav>
     <div class="container">
+    {{#projectList}}
     <div>
     <div class="line"></div>
-    <a href="./reportlist.mustache"><h2 style="margin-top:0.2em;margin-bottom:0.2em">SOMA Expensify</h2></a>
+    <a href="./{{projectId}}"><h2 style="margin-top:0.2em;margin-bottom:0.2em">{{projectName}}</h2></a>
     <h5 style="margin-top:0.2em;margin-bottom:0.3em">6기 1단계 1차</h5>
     <table><tr><td>
       <div class="circular user-a"></div>
@@ -41,6 +42,7 @@
       </td></tr>
     </table>   
     </div>
+    {{/projectList}}
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>

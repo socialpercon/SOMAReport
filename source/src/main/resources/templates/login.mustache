@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>somareport</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.css">
-    <link rel="stylesheet" href="theme.css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Expires" content="-1"> 
+  <meta http-equiv="Pragma" content="no-cache"> 
+  <meta http-equiv="Cache-Control" content="No-Cache"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-signin-client_id" content="3024099101-h9n9s6qbhj6mkh97qhdtrf7dui1b9c2j.apps.googleusercontent.com">
+  <title>somareport</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.css">
+  <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
 </head>
-
   <body>
-
-	<nav id="somareport-nav" class="navbar navbar-default navbar-fixed-top">
+	  <nav id="somareport-nav" class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="#">SOMA Report</a>
@@ -21,11 +22,21 @@
       </div>
     </nav>
     <div class="container">
-        <a href="./m_main.mustache" class="btn btn-material-red-A400">멘토 / 멘티 로그인<div class="ripple-wrapper"></div></a>
-        <a href="./mentee_main.mustache" class="btn btn-material-red-A400">사무국 로그인<div class="ripple-wrapper"></div></a>
-    </div>
+      <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    </div><script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script>
+      function onSignIn(googleUser) {
+        var token = googleUser.getAuthResponse().id_token;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:8080/login?token='+token);
+        xhr.onload = function() {
+          location.href="http://localhost:8080/project/list"
+        };
+        xhr.send();
+      };
+    </script>
   </body>
 </html>
