@@ -23,6 +23,7 @@
     </nav>
     <div class="container">
       <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+      <div class="g-signin2" data-onsuccess="onSignIn2" data-theme="dark"></div>
     </div><script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
@@ -34,6 +35,15 @@
         xhr.open('GET', 'http://localhost:8080/login?token='+token);
         xhr.onload = function() {
           location.href="http://localhost:8080/report/list/pj1"
+        };
+        xhr.send();
+      };
+      function onSignIn2(googleUser) {
+        var token = googleUser.getAuthResponse().id_token;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:8080/login?token='+token);
+        xhr.onload = function() {
+          location.href="http://localhost:8080/project/list/6/1/1"
         };
         xhr.send();
       };

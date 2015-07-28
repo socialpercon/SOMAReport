@@ -17,12 +17,28 @@ public class View_Report {
 		return new Viewable("/reportlist.mustache");
 	}
 
+	// Office
+	@GET
+	@Path("/list/office/{id}")
+	@Produces("text/html")
+	public Viewable officeReportList() {
+		return new Viewable("/office_reportlist.mustache");
+	}
+
 	// Mento / Mentee
 	@GET
 	@Path("/{id}")
 	@Produces("text/html")
 	public Viewable report() {
 		return new Viewable("/reportdetail.mustache");
+	}
+
+	// Mento / Mentee
+	@GET
+	@Path("/office/{id}")
+	@Produces("text/html")
+	public Viewable officeReport() {
+		return new Viewable("/office_reportdetail.mustache");
 	}
 
 	// Mento / Mentee

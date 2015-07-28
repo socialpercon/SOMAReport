@@ -20,12 +20,22 @@ public class View_ProjectList {
 	@GET
 	@Path("/list")
 	@Produces("text/html")
-	public Viewable test() {
+	public Viewable projectList() {
 		ProjectsController p = new ProjectsController();
 		List<Projects> l = p.getProjectList();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("projectList", l);
 		return new Viewable("/projectlist.mustache", map);
 	}
-
+	// Office
+	@GET
+	@Path("/list/{stage}/{level}/{d}")
+	@Produces("text/html")
+	public Viewable officeProjectList() {
+		ProjectsController p = new ProjectsController();
+		List<Projects> l = p.getProjectList();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectList", l);
+		return new Viewable("/office_projectlist.mustache", map);
+	}
 }
