@@ -108,7 +108,7 @@ public class ProjectsController {
 	 * @param projectName,level,sequence,main_mento,area,period,sub_mento,category
 	 *************************************************************************/
 	@POST
-	@Path("/{projectName}/{level}/{sequence}/{main_mento}/{area}/{period}/{sub_mento}/{category}")
+	@Path("/{projectName}/{level}")
 	public void insertProject(  @PathParam("projectName") String projectName,
 								@PathParam("level") String level,
 								@FormParam("sequence") String sequence,
