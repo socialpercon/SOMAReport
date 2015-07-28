@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Expires" content="-1"> 
+  	<meta http-equiv="Pragma" content="no-cache"> 
+  	<meta http-equiv="Cache-Control" content="No-Cache"> 
     <title>somareport</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.css">
@@ -27,7 +30,7 @@
     {{#projectList}}
     <div>
     <div class="line"></div>
-    <a href="./{{projectId}}"><h2 style="margin-top:0.2em;margin-bottom:0.2em">{{projectName}}</h2></a>
+    <a href="http://localhost:8080/report/list/{{projectId}}"><h2 style="margin-top:0.2em;margin-bottom:0.2em">{{projectName}}</h2></a>
     <h5 style="margin-top:0.2em;margin-bottom:0.3em">6기 1단계 1차</h5>
     <table><tr><td>
       <div class="circular user-a"></div>
@@ -44,6 +47,7 @@
     </div>
     {{/projectList}}
     </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>

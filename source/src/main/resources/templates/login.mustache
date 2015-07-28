@@ -33,7 +33,7 @@
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'http://localhost:8080/login?token='+token);
         xhr.onload = function() {
-          location.href="http://localhost:8080/project/list"
+          location.href="http://localhost:8080/report/list/pj1"
         };
         xhr.send();
       };

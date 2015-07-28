@@ -3,12 +3,16 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Expires" content="-1"> 
+    <meta http-equiv="Pragma" content="no-cache"> 
+    <meta http-equiv="Cache-Control" content="No-Cache"> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="3024099101-h9n9s6qbhj6mkh97qhdtrf7dui1b9c2j.apps.googleusercontent.com">
     <title>somareport</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.css">
-    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
 </head>
 
   <body>
@@ -19,12 +23,12 @@
           <a class="navbar-brand" href="#">SOMA Report</a>
         </div>
         <ul class="nav navbar-nav">
-          <li><a href="./m_main.mustache" class="disable">프로젝트 리스트</a></li>
+          <li><a href="http://localhost:8080/project/list" class="disable">프로젝트 리스트</a></li>
           <li><a class="disable">></a></li>
           <li><a class="disable">SOMA Expensify</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a class="disable">기본 프로젝트로 설정</a></li>
+        <ul class="nav navbar-nav">
+          <li><a class="disable" onclick="signOut();">로그아웃</a></li>
         </ul>
       </div>
     </nav>
@@ -35,7 +39,7 @@
     </div>
     <div>
     <div class="line"></div>
-    <a href="./reportdetail.mustache"><h3 style="margin-top:0.2em;margin-bottom:0.2em">#20150724</h3></a>
+    <a href="http://localhost:8080/report/1"><h3 style="margin-top:0.2em;margin-bottom:0.2em">#20150724</h3></a>
     <h5 style="margin-top:0.2em;margin-bottom:0.3em">프로젝트 개발 진행</h5>
     <table><tr><td>
       <div class="circular user-a"></div>
@@ -50,7 +54,7 @@
     </div>
     <div>
     <div class="line"></div>
-    <a href="./reportdetail.mustache"><h3 style="margin-top:0.2em;margin-bottom:0.2em">#20150722</h3></a>
+    <a href="http://localhost:8080/report/1"><h3 style="margin-top:0.2em;margin-bottom:0.2em">#20150722</h3></a>
     <h5 style="margin-top:0.2em;margin-bottom:0.3em">프로젝트 스케쥴링</h5>
     <table><tr><td>
       <div class="circular user-a"></div>
@@ -67,7 +71,7 @@
     </div>
     <div>
     <div class="line"></div>
-    <a href="./reportdetail.mustache"><h3 style="margin-top:0.2em;margin-bottom:0.2em">#20150720</h3></a>
+    <a href="http://localhost:8080/report/1"><h3 style="margin-top:0.2em;margin-bottom:0.2em">#20150720</h3></a>
     <h5 style="margin-top:0.2em;margin-bottom:0.3em">프로젝트 적용기술 관련 발표</h5>
     <table><tr><td>
       <div class="circular user-a"></div>
@@ -82,10 +86,24 @@
       </td></tr>
     </table>   
     </div>
-    <a href="./writereport.mustache" class="btn btn-fab btn-raised btn-primary" style="position:fixed;right:56px;bottom:56px;"><i class="mdi-image-edit"></i><div class="ripple-wrapper"></div></a>
+    <a href="http://localhost:8080/report/write/1" class="btn btn-fab btn-raised btn-primary" style="position:fixed;right:56px;bottom:56px;"><i class="mdi-image-edit"></i><div class="ripple-wrapper"></div></a>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script>
+      function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+          location.href="http://localhost:8080/login";
+        });
+      }
+      function onLoad() {
+        gapi.load('auth2', function() {
+        gapi.auth2.init();
+        });
+      }
+    </script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
   </body>
 </html>
