@@ -7,12 +7,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.github.devholic.SOMAReport.Model.Reports;
 
@@ -92,21 +95,57 @@ public class ReportsController {
 		return report;
 	}
 	
-	@PUT
-	public void updateReport(){
+	/**************************************************************************
+	 * 레포를 입력한다
+	 *  String reportId;
+		String [] attended_mentee ;
+		Integer count;
+		Date date;
+		String location;
+		Date start_date;
+		Date end_date;
+		Date except_start_date;
+		Date except_end_date;
+		String title;
+		String purpose;
+		String forwarding;
+		String solution;
+		String plan;
+		String mento_opinion;
+		String etc;
+	 * @param 
+	 *************************************************************************/
+	@POST
+	@Path("/{title}/{purpose}")
+	public Response insertReport( @FormParam("title") String title,
+								  @FormParam("purpose") String purpose){
 		try{
-			
+			System.out.println("post date - title = ["+ title + "]");
+			System.out.println("post date - purpose = ["+ purpose + "]");
+			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("post : 200").build();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("post : 500").build();
+	}
+	
+	@PUT
+	public Response updateReport(){
+		try{
+			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("put : 200").build();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("put : 500").build();
 	}
 	
 	@DELETE
-	public void deleteReport(){
+	public Response deleteReport(){
 		try{
-			
+			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("delete : 200").build();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("delete : 500").build();
 	}
 }

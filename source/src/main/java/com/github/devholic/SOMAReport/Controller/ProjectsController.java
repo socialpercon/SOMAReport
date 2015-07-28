@@ -109,7 +109,7 @@ public class ProjectsController {
 	 *************************************************************************/
 	@POST
 	@Path("/{projectName}/{level}")
-	public void insertProject(  @PathParam("projectName") String projectName,
+	public Response insertProject(  @PathParam("projectName") String projectName,
 								@PathParam("level") String level,
 								@FormParam("sequence") String sequence,
 								@FormParam("main_mento") String main_mento,
@@ -126,9 +126,11 @@ public class ProjectsController {
 			System.out.println("post date - period = ["+ period + "]");
 			System.out.println("post date - sub_mento = ["+ sub_mento + "]");
 			System.out.println("post date - category = ["+ category + "]");
+			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("post : 200").build();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("post : 500").build();
 	}
 	
 	@PUT
