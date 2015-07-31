@@ -1,0 +1,40 @@
+{
+	"type": "report",
+	"project": "91d6d79e630bcd52ba25829a3357c520",
+	"report_info":{
+		"mentoring_num": 1,
+		"date": "2015-07-20",
+		"place": "aram7-8",
+		"start_time": [2015, 7, 20, 18, 0],
+		"end_time": [2015, 7, 20, 23, 0],
+		"whole_time": 4,
+		"excep_time": 0,
+		"total_time": 0
+	},
+	"attendance": [
+	{
+		"id": "91d6d79e630bcd52ba25829a334ed457",
+		"attend": false,
+		"absense_reason": "family"
+	},
+	{
+		"id": "0eb343a9a9f608c3f227cac5224ce611",
+		"attend": true
+	},
+	{
+		"id": "00ba0ab1632c9538faecce5087e41201",
+		"attend": true
+	}
+	],
+	"report_details": {
+		"topic": "주제",
+		"goal": "목표",
+		"issue": "추진내용",
+		"goal": "향후계획",
+		"opinion": "의견"
+	},
+	"report_attachments": {
+		"photo": "linklinklink",
+		"reference": "refrefref"
+	}
+}

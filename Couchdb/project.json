@@ -1,0 +1,9 @@
+{
+	"type": "project",
+	"project_type": "regular",
+	"stage": [6, 1, 1],
+	"field": "web, mobile",
+	"title": "SOMAProject1",
+	"mentor": "3f4ce9856efb3e2f5d86eeb4d5abb8c6",
+	"mentee": [ "4c44d639b77c290955371694d3310194", "3f4ce9856efb3e2f5d86eeb4d5bad432", "3f4ce9856efb3e2f5d86eeb4d5b99c53" ]
+}
