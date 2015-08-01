@@ -1,7 +1,6 @@
 package org.gradle;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -12,10 +11,10 @@ import com.google.gson.JsonObject;
 
 public class ReferenceUtilTest {
 
-	public ReferenceUtil refutil;
+	public static ReferenceUtil refutil;
 	
 	@BeforeClass
-	public void testReferenceUtil() {
+	public static void testReferenceUtil() {
 		refutil = new ReferenceUtil("somarecord");
 		System.out.println("Connected to Cloudant :: SOMAReport");
 		System.out.println("Server Version: " + refutil.client.serverVersion());
@@ -26,34 +25,60 @@ public class ReferenceUtilTest {
 	@Test
 	public void testGetMyProjects() {
 		List<JsonObject> lists = refutil.getMyProjects("4c44d639b77c290955371694d3310194");
+		System.out.println("\nMy Projects: 4c44d639b77c290955371694d3310194");
 		for (JsonObject project : lists) {
-			System.out.println(project.toString());
+			System.out.println(project.get("title").getAsString()
+					+"\n"+ project.get("mentor").getAsString()
+					+"\n"+ project.get("mentee").toString());
 		}
+		assertTrue(true);
 	}
 
 	@Test
 	public void testGetReports() {
-		fail("Not yet implemented");
+		List<JsonObject> lists = refutil.getReports("4c44d639b77c290955371694d33e4fe9");
+		System.out.println("\nReports");
+		for (JsonObject report : lists) {
+			System.out.println(report.get("report_info").toString());
+		}
+		assertTrue(true);
 	}
 
 	@Test
 	public void testCalTotalMentoring() {
-		fail("Not yet implemented");
+		int total = refutil.calTotalMentoring("4c44d639b77c290955371694d33e4fe9");
+		assertEquals(21, total);
 	}
 
 	@Test
 	public void testGetAllMentor() {
-		fail("Not yet implemented");
+		List<JsonObject> lists = refutil.getAllMentor();
+		System.out.println("\nAll mentors");
+		for (JsonObject mentor : lists) {
+			System.out.println(mentor.get("name").getAsString()
+					+"\n"+mentor.toString());
+		}
 	}
 
 	@Test
 	public void testGetAllMentee() {
-		fail("Not yet implemented");
+		List<JsonObject> lists = refutil.getAllMentee();
+		System.out.println("\nAll mentees");
+		for (JsonObject mentee : lists) {
+			System.out.println(mentee.get("name").getAsString()
+					+"\n"+mentee.toString());
+		}		
 	}
 
 	@Test
 	public void testGetCurrentProjects() {
-		fail("Not yet implemented");
+		int[] current = {6, 1, 1};
+		List<JsonObject> lists = refutil.getCurrentProjects(current);
+		System.out.println("\n6, 1, 1 Projects");
+		for (JsonObject project: lists) {
+			System.out.println(project.get("title")
+					+"\n"+project.get("mentor"));
+		}
 	}
 
 }

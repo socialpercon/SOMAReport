@@ -1,0 +1,70 @@
+package org.gradle;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+
+public class DocumentUtilTest {
+
+	DocumentUtil docutil;
+	
+	@BeforeClass
+	public void testDocumentUtil() {
+		docutil = new DocumentUtil("somarecord");
+		System.out.println("Connected to Cloudant :: SOMAReport");
+		System.out.println("Server Version: " + docutil.client.serverVersion());
+		System.out.println("DB Info. \n" + docutil.db.info().toString());
+		assertTrue(true);
+	}
+	
+	@Test
+	public void testGetUserDoc() {
+		JsonObject user = docutil.getUserDoc("ppyong0@gmail.com");
+		System.out.println(user.toString());
+		assertTrue(true);
+	}
+	
+	@Test
+	public void testGetUserId() {
+		String id = docutil.getUserId("이뿅뿅");
+		System.out.println(id);
+		assertEquals("이뿅뿅",docutil.getDoc(id).get("name").getAsString());
+	}
+
+	@Test
+	public void testGetDoc() {
+		
+	}
+
+	@Test
+	public void testPutDoc() throws JsonIOException, JsonSyntaxException, FileNotFoundException {
+		JsonParser parser = new JsonParser();
+		JsonElement json = parser.parse(new FileReader("report.json"));
+		JsonObject inputDoc = json.getAsJsonObject();
+		JsonObject resultDoc = docutil.db.find(JsonObject.class, docutil.putDoc(inputDoc));
+		assertEquals(inputDoc.get("name").getAsString(), resultDoc.get("name").getAsString());
+	}
+
+	@Test
+	public void testDeleteDoc() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testUpdateDoc() {
+		fail("Not yet implemented");
+	}
+
+}

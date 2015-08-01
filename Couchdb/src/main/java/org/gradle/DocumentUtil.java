@@ -29,7 +29,7 @@ public class DocumentUtil {
     }
 	
 	String getUserId (String name) {
-		JsonObject user = db.view("get_doc/user_by_name)")
+		JsonObject user = db.view("get_doc/user_by_name")
 				.key(name).includeDocs(false).reduce(false)
 				.query(JsonObject.class)
 				.get(0).getAsJsonObject();

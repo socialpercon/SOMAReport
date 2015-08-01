@@ -1,0 +1,351 @@
+!SESSION 2015-07-31 17:34:49.564 -----------------------------------------------
+eclipse.buildId=4.5.0.I20150603-2000
+java.version=1.8.0_51
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=ko_KR
+Framework arguments:  -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -keyring /Users/JaeyeonLee/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -data /Users/JaeyeonLee/SOMAReport -product org.eclipse.epp.package.java.product -keyring /Users/JaeyeonLee/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.jface 2 0 2015-07-31 17:34:55.777
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-07-31 17:34:55.777
+!MESSAGE A conflict occurred for ALT+COMMAND+C:
+Binding(ALT+COMMAND+C,
+	ParameterizedCommand(Command(de.bastiankrol.startexplorer.copyResourcePathToClipboardFromResourceView,Copy Resource Path to Clipboard,
+		Copies the path of the resource to the clipboard,
+		Category(de.bastiankrol.startexplorer.commands.category,StartExplorer,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@20864cd1,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+COMMAND+C,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.modify.method.parameters,Change Method Signature,
+		Change method signature includes parameter names and parameter order,
+		Category(org.eclipse.jdt.ui.category.refactoring,Refactor - Java,Java Refactoring Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5c839677,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)
+
+!ENTRY org.eclipse.core.net 1 0 2015-07-31 17:34:56.474
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.epp.logging.aeri.ui 1 4 2015-07-31 17:35:13.675
+!MESSAGE The error reporting server is not available. Error reporting will be disabled until next restart. Version: 1.0.0.v20150617-0732
+!STACK 0
+org.eclipse.epp.internal.logging.aeri.ui.l10n.Logs$LogTraceException
+	at org.eclipse.epp.internal.logging.aeri.ui.l10n.Logs$LogTraceException.newTrace(Logs.java:382)
+	at org.eclipse.epp.internal.logging.aeri.ui.l10n.Logs.log(Logs.java:134)
+	at org.eclipse.epp.internal.logging.aeri.ui.l10n.Logs.log(Logs.java:126)
+	at org.eclipse.epp.internal.logging.aeri.ui.log.CheckServerAvailabilityJob.run(CheckServerAvailabilityJob.java:53)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.epp.logging.aeri.ui 4 32 2015-07-31 17:35:14.659
+!MESSAGE Failed to do network communication. Please file a bug with the EPP Logging project (https://bugs.eclipse.org/bugs/enter_bug.cgi?product=EPP&component=logging) along with any information you can provide us with regarding your network settings. Please include the following information which will help us fix this issue: 
+Communication URL: http://download.eclipse.org/stats/technology/epp/logging/network-communication-test/apache/java-1.8.0_51/Mac+OS+X-10.10.4/Direct-none/noProxyHost/noProxyUsername-noProxyPassword/
+Response Code: 404 - Not Found
+Response Headers:
+Date: Fri, 31 Jul 2015 08:35:14 GMT
+Server: Apache
+Vary: Accept-Encoding
+Content-Encoding: gzip
+Content-Length: 33
+Keep-Alive: timeout=5, max=999
+Connection: Keep-Alive
+Content-Type: text/html
+ Version: 1.0.0.v20150617-0732
+!STACK 0
+org.eclipse.epp.internal.logging.aeri.ui.l10n.Logs$LogTraceException
+	at org.eclipse.epp.internal.logging.aeri.ui.l10n.Logs$LogTraceException.newTrace(Logs.java:382)
+	at org.eclipse.epp.internal.logging.aeri.ui.l10n.Logs.log(Logs.java:134)
+	at org.eclipse.epp.internal.logging.aeri.ui.log.NetworkCommunicationTestJob.doApacheHeadRequest(NetworkCommunicationTestJob.java:155)
+	at org.eclipse.epp.internal.logging.aeri.ui.log.NetworkCommunicationTestJob.run(NetworkCommunicationTestJob.java:88)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 17:36:53.473
+!MESSAGE Failed to dispatch repository event to org.eclipse.m2e.core.internal.embedder.EclipseRepositoryListener: null
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 17:39:27.154
+!MESSAGE Failed to dispatch repository event to org.eclipse.m2e.core.internal.embedder.EclipseRepositoryListener: null
+
+!ENTRY org.eclipse.core.jobs 4 1 2015-07-31 18:08:01.393
+!MESSAGE Worker thread ended job: Update Gradle Classpath for Couchdb(242), but still holds rule: ThreadJob(Update Gradle Classpath for Couchdb(242),[MultiRule[R/,LIGHT_RULE]])
+
+!ENTRY org.springsource.ide.eclipse.gradle.core 1 0 2015-07-31 18:26:56.587
+!MESSAGE org.eclipse.wst.common.componentcore.ComponentCore cannot be found by org.springsource.ide.eclipse.gradle.core_3.7.0.201506251228-RELEASE
+!STACK 0
+java.lang.ClassNotFoundException: org.eclipse.wst.common.componentcore.ComponentCore cannot be found by org.springsource.ide.eclipse.gradle.core_3.7.0.201506251228-RELEASE
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:439)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:352)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:344)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:160)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:264)
+	at org.springsource.ide.eclipse.gradle.core.wtp.WTPUtil.createImplementation(WTPUtil.java:252)
+	at org.springsource.ide.eclipse.gradle.core.wtp.WTPUtil.<clinit>(WTPUtil.java:248)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleDependencyComputer.addJarEntry(GradleDependencyComputer.java:87)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleDependencyComputer.computeEntries(GradleDependencyComputer.java:149)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleDependencyComputer.getClassPath(GradleDependencyComputer.java:107)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleClassPathContainer.getClasspathEntries(GradleClassPathContainer.java:166)
+	at org.eclipse.jdt.internal.core.JavaModelManager$VariablesAndContainersSaveHelper.saveContainers(JavaModelManager.java:4252)
+	at org.eclipse.jdt.internal.core.JavaModelManager$VariablesAndContainersSaveHelper.saveProjects(JavaModelManager.java:4319)
+	at org.eclipse.jdt.internal.core.JavaModelManager$VariablesAndContainersSaveHelper.save(JavaModelManager.java:4160)
+	at org.eclipse.jdt.internal.core.JavaModelManager.saveVariablesAndContainers(JavaModelManager.java:4131)
+	at org.eclipse.jdt.internal.core.JavaModelManager.saving(JavaModelManager.java:4362)
+	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:387)
+	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:196)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:199)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1184)
+	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1163)
+	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:52)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SESSION 2015-07-31 18:34:10.510 -----------------------------------------------
+eclipse.buildId=4.5.0.I20150603-2000
+java.version=1.8.0_51
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=ko_KR
+Framework arguments:  -product org.eclipse.epp.package.java.product -keyring /Users/JaeyeonLee/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -keyring /Users/JaeyeonLee/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.jface 2 0 2015-07-31 18:34:34.479
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-07-31 18:34:34.479
+!MESSAGE A conflict occurred for ALT+COMMAND+C:
+Binding(ALT+COMMAND+C,
+	ParameterizedCommand(Command(de.bastiankrol.startexplorer.copyResourcePathToClipboardFromResourceView,Copy Resource Path to Clipboard,
+		Copies the path of the resource to the clipboard,
+		Category(de.bastiankrol.startexplorer.commands.category,StartExplorer,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@56b05bd7,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+COMMAND+C,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.modify.method.parameters,Change Method Signature,
+		Change method signature includes parameter names and parameter order,
+		Category(org.eclipse.jdt.ui.category.refactoring,Refactor - Java,Java Refactoring Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@3e4afd10,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)
+
+!ENTRY org.eclipse.core.net 1 0 2015-07-31 18:34:35.139
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 18:35:00.325
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 18:35:00.619
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.springsource.ide.eclipse.gradle.core 1 0 2015-07-31 18:35:00.661
+!MESSAGE org.eclipse.wst.common.componentcore.ComponentCore cannot be found by org.springsource.ide.eclipse.gradle.core_3.7.0.201506251228-RELEASE
+!STACK 0
+java.lang.ClassNotFoundException: org.eclipse.wst.common.componentcore.ComponentCore cannot be found by org.springsource.ide.eclipse.gradle.core_3.7.0.201506251228-RELEASE
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:439)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:352)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:344)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:160)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:264)
+	at org.springsource.ide.eclipse.gradle.core.wtp.WTPUtil.createImplementation(WTPUtil.java:252)
+	at org.springsource.ide.eclipse.gradle.core.wtp.WTPUtil.<clinit>(WTPUtil.java:248)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleDependencyComputer.addJarEntry(GradleDependencyComputer.java:87)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleDependencyComputer.computeEntries(GradleDependencyComputer.java:149)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleDependencyComputer.getClassPath(GradleDependencyComputer.java:107)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleClassPathContainer.getClasspathEntries(GradleClassPathContainer.java:166)
+	at org.eclipse.jdt.internal.core.JavaProject.resolveClasspath(JavaProject.java:2699)
+	at org.eclipse.jdt.internal.core.JavaProject.resolveClasspath(JavaProject.java:2857)
+	at org.eclipse.jdt.internal.core.ClasspathChange.generateDelta(ClasspathChange.java:235)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.resourceChanged(DeltaProcessor.java:2032)
+	at org.eclipse.jdt.internal.core.DeltaProcessingState.resourceChanged(DeltaProcessingState.java:477)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:289)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:152)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:373)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1470)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2250)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:794)
+	at org.eclipse.jdt.core.JavaCore.setClasspathContainer(JavaCore.java:5479)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleClassPathContainer.setJDTClassPathContainer(GradleClassPathContainer.java:291)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleClassPathContainer.notifyJDT(GradleClassPathContainer.java:276)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.JarRemapRefresher$1$1.doit(JarRemapRefresher.java:117)
+	at org.springsource.ide.eclipse.gradle.core.util.GradleRunnable.run(GradleRunnable.java:104)
+	at org.springsource.ide.eclipse.gradle.core.util.JobUtil.withRule(JobUtil.java:192)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.JarRemapRefresher$1.doit(JarRemapRefresher.java:110)
+	at org.springsource.ide.eclipse.gradle.core.util.GradleRunnable$1.run(GradleRunnable.java:53)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 18:35:02.291
+!MESSAGE Failed to dispatch repository event to org.eclipse.m2e.core.internal.embedder.EclipseRepositoryListener: null
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 18:35:42.629
+!MESSAGE Failed to dispatch repository event to org.eclipse.m2e.core.internal.embedder.EclipseRepositoryListener: null
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 18:35:44.225
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 18:35:44.228
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 18:36:31.182
+!MESSAGE Failed to dispatch repository event to org.eclipse.m2e.core.internal.embedder.EclipseRepositoryListener: null
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 18:36:31.829
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 18:36:31.840
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 18:36:36.743
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 18:36:36.747
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 18:36:37.175
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-07-31 18:36:37.178
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+!SESSION 2015-08-01 10:56:43.817 -----------------------------------------------
+eclipse.buildId=4.5.0.I20150603-2000
+java.version=1.8.0_51
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=ko_KR
+Framework arguments:  -product org.eclipse.epp.package.java.product -keyring /Users/JaeyeonLee/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -keyring /Users/JaeyeonLee/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.jface 2 0 2015-08-01 10:56:53.470
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-08-01 10:56:53.470
+!MESSAGE A conflict occurred for ALT+COMMAND+C:
+Binding(ALT+COMMAND+C,
+	ParameterizedCommand(Command(de.bastiankrol.startexplorer.copyResourcePathToClipboardFromResourceView,Copy Resource Path to Clipboard,
+		Copies the path of the resource to the clipboard,
+		Category(de.bastiankrol.startexplorer.commands.category,StartExplorer,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@3de56885,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+COMMAND+C,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.modify.method.parameters,Change Method Signature,
+		Change method signature includes parameter names and parameter order,
+		Category(org.eclipse.jdt.ui.category.refactoring,Refactor - Java,Java Refactoring Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@2673487b,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)
+
+!ENTRY org.eclipse.core.net 1 0 2015-08-01 10:56:54.115
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-08-01 10:58:43.295
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-08-01 10:58:43.301
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-08-01 10:58:44.303
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-08-01 10:58:44.365
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+!SESSION 2015-08-01 14:59:52.210 -----------------------------------------------
+eclipse.buildId=4.5.0.I20150603-2000
+java.version=1.8.0_51
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=ko_KR
+Framework arguments:  -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product -keyring /Users/JaeyeonLee/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -data file:/Users/JaeyeonLee/SOMAReport/ -product org.eclipse.epp.package.java.product -keyring /Users/JaeyeonLee/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.jface 2 0 2015-08-01 15:00:02.956
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-08-01 15:00:02.956
+!MESSAGE A conflict occurred for ALT+COMMAND+C:
+Binding(ALT+COMMAND+C,
+	ParameterizedCommand(Command(de.bastiankrol.startexplorer.copyResourcePathToClipboardFromResourceView,Copy Resource Path to Clipboard,
+		Copies the path of the resource to the clipboard,
+		Category(de.bastiankrol.startexplorer.commands.category,StartExplorer,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@36d7a68a,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+COMMAND+C,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.modify.method.parameters,Change Method Signature,
+		Change method signature includes parameter names and parameter order,
+		Category(org.eclipse.jdt.ui.category.refactoring,Refactor - Java,Java Refactoring Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@42dd7d82,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)
+
+!ENTRY org.eclipse.core.net 1 0 2015-08-01 15:00:03.546
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-08-01 15:00:16.188
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-08-01 15:00:16.196
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-08-01 15:00:17.576
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-08-01 15:00:17.584
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.springsource.ide.eclipse.gradle.core 1 0 2015-08-01 15:00:24.967
+!MESSAGE org.eclipse.wst.common.componentcore.ComponentCore cannot be found by org.springsource.ide.eclipse.gradle.core_3.7.0.201506251228-RELEASE
+!STACK 0
+java.lang.ClassNotFoundException: org.eclipse.wst.common.componentcore.ComponentCore cannot be found by org.springsource.ide.eclipse.gradle.core_3.7.0.201506251228-RELEASE
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:439)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:352)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:344)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:160)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:264)
+	at org.springsource.ide.eclipse.gradle.core.wtp.WTPUtil.createImplementation(WTPUtil.java:252)
+	at org.springsource.ide.eclipse.gradle.core.wtp.WTPUtil.<clinit>(WTPUtil.java:248)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleDependencyComputer.addJarEntry(GradleDependencyComputer.java:87)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleDependencyComputer.computeEntries(GradleDependencyComputer.java:149)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleDependencyComputer.getClassPath(GradleDependencyComputer.java:107)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleClassPathContainer.getClasspathEntries(GradleClassPathContainer.java:166)
+	at org.eclipse.jdt.internal.core.JavaProject.resolveClasspath(JavaProject.java:2699)
+	at org.eclipse.jdt.internal.core.JavaProject.resolveClasspath(JavaProject.java:2857)
+	at org.eclipse.jdt.internal.core.ClasspathChange.generateDelta(ClasspathChange.java:235)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.resourceChanged(DeltaProcessor.java:2032)
+	at org.eclipse.jdt.internal.core.DeltaProcessingState.resourceChanged(DeltaProcessingState.java:477)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:289)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:152)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:373)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1470)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2250)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:794)
+	at org.eclipse.jdt.core.JavaCore.setClasspathContainer(JavaCore.java:5479)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleClassPathContainer.setJDTClassPathContainer(GradleClassPathContainer.java:291)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleClassPathContainer.notifyJDT(GradleClassPathContainer.java:276)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleClassPathContainer$1$1.doit(GradleClassPathContainer.java:137)
+	at org.springsource.ide.eclipse.gradle.core.util.GradleRunnable.run(GradleRunnable.java:104)
+	at org.springsource.ide.eclipse.gradle.core.util.JobUtil.withRule(JobUtil.java:192)
+	at org.springsource.ide.eclipse.gradle.core.classpathcontainer.GradleClassPathContainer$1.doit(GradleClassPathContainer.java:135)
+	at org.springsource.ide.eclipse.gradle.core.util.GradleRunnable$1.run(GradleRunnable.java:53)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-08-01 15:00:53.836
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-08-01 15:00:53.848
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-08-01 15:02:20.095
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-08-01 15:02:20.098
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!

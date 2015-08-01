@@ -1,28 +1,27 @@
 {
 	"type": "report",
-	"project": "91d6d79e630bcd52ba25829a3357c520",
+	"project": "4c44d639b77c290955371694d33e4fe9",
 	"report_info":{
 		"mentoring_num": 1,
-		"date": "2015-07-20",
-		"place": "aram7-8",
-		"start_time": [2015, 7, 20, 18, 0],
-		"end_time": [2015, 7, 20, 23, 0],
+		"date": "2015-07-18",
+		"place": "aram7-6",
+		"start_time": [2015, 7, 18, 18, 0],
+		"end_time": [2015, 7, 18, 22, 0],
 		"whole_time": 4,
 		"excep_time": 0,
-		"total_time": 0
+		"total_time": 4
 	},
 	"attendance": [
 	{
-		"id": "91d6d79e630bcd52ba25829a334ed457",
-		"attend": false,
-		"absense_reason": "family"
-	},
-	{
-		"id": "0eb343a9a9f608c3f227cac5224ce611",
+		"id": "4c44d639b77c290955371694d3310194",
 		"attend": true
 	},
 	{
-		"id": "00ba0ab1632c9538faecce5087e41201",
+		"id": "3f4ce9856efb3e2f5d86eeb4d5b99c53",
+		"attend": true
+	},
+	{
+		"id": "3f4ce9856efb3e2f5d86eeb4d5bad432",
 		"attend": true
 	}
 	],
