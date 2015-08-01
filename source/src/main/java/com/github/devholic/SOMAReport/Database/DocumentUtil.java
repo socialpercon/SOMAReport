@@ -5,7 +5,6 @@ import java.util.List;
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
 import com.cloudant.client.api.model.Response;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class DocumentUtil {
