@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>somareport</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
+    <link rel="stylesheet" href="test.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
@@ -25,7 +25,7 @@
           <li><a class="disabled">></a></li>
           <li><a href="http://localhost:8080/report/list/{{pid}}">{{pname}}</a></li>
           <li><a class="disabled">></a></li>
-          <li><a href="http://localhost:8080/report/{{rid}}">#{{title}}</a></li>
+          <li><a class="disabled">#{{title}}</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a onclick="/mypage">마이페이지</a></li>
@@ -35,51 +35,79 @@
     </nav>
     <div id="soma-container" class="container">
     <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
-    <a href="http://localhost:8080/report/1"><h2 style="margin-top:0.2em;margin-bottom:0.2em">#{{title}}</h2></a>
-    <h3 style="margin-top:1em">참석자</h3>
-    <table><tr>
-      <td>
-      <div class="circular-img"></div>
-      </td>
-      <td>
-      </td>
-      <td>
-      <div class="circular-img mentee"></div>
-      </td>
-      </tr>
-    </table>
-    <h3 style="margin-top:1em">불참석자</h3>
-     <table><tr>
-      <td>
-      <div class="circular-img"></div>
-      </td>
-      <td>
-      <div class="mentor-divider"></div>
-      </td>
-      <td>
-      <span style="height:36px;line-height:36px;text-align:center;" class="mentee">유희열 : 콘서트 보러감</span>
-      </td>
-      </tr>
-    </table>
-    <h3 style="margin-top:1em">회차</h3>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em">1회차</h5>
-    <h3 style="margin-top:1em">장소</h3>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em">아람 7-6</h5>
-    <h3 style="margin-top:1em">멘토링 시간</h3>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em">19:00 ~ 23:00 (제외시간 21:00~22:00)</h5>
-    <h3 style="margin-top:1em">주제</h3>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em">개발 스코프 설정</h5>
-    <h3 style="margin-top:1em">목표</h3>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em">1차 완성 기한인 8/2일까지의 목표를 설정한다.</h5>
-    <h3 style="margin-top:1em">추진내용</h3>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em">choojin nae yong</h5>
-    <h3 style="margin-top:1em">해결방안</h3>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em">Trello로 Gyehuek을 짤 수 있도록 한다.</h5>
-    <h3 style="margin-top:1em">향후계획</h3>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em">멘티간의 상호 교류를 통해 가능한 범위 내의 스코프를 설정한다.</h5>
-    <h3 style="margin-top:1em">멘토의견</h3>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em">아몰랑!</h5>
+    <div class="group">      
+      <input type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>장소</label>
     </div>
+    <div class="group">      
+      <input type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>멘토링 시작 시간</label>
+    </div>
+    <div class="group">      
+      <input type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>멘토링 종료 시간</label>
+    </div>
+    <div class="group">      
+      <input type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>제외 시간</label>
+    </div>
+    <div class="group">      
+      <input type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>주제</label>
+    </div>
+    <div class="group">      
+      <input type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>목표</label>
+    </div>
+    <div class="group">      
+      <input type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>추진내용</label>
+    </div>
+    <div class="group">      
+      <input type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>해결방안</label>
+    </div>
+    <div class="group">      
+      <input type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>향후계획</label>
+    </div>
+    <div class="group">      
+      <input type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>멘토의견</label>
+    </div>
+    <div class="group">      
+      <input type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>기타</label>
+    </div>
+    <div class="group">      
+      <input type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>내용</label>
+    </div>
+     <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">제출</button>
     <div style="height:15px">
     </div>
     </div>
