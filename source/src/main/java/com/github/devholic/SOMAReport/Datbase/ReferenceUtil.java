@@ -20,6 +20,7 @@ public class ReferenceUtil {
 	
 	public JsonArray getMyProjects (String user_id)
     {
+		
         //멘토, 멘티
         //자신이 속한 프로젝트 조회
 		List<JsonObject> lists = db.view("user_view/all_my_project")

@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.github.devholic.SOMAReport.Datbase.DocumentUtil;
 import com.github.devholic.SOMAReport.Datbase.ReferenceUtil;
 import com.github.devholic.SOMAReport.Model.Reports;
 import com.google.gson.JsonObject;
@@ -25,7 +26,37 @@ import com.google.gson.JsonObject;
 @Path("/reports")
 public class ReportsController {
 
+	ReferenceUtil ref_util = new ReferenceUtil("somarecord");
+	DocumentUtil doc_util = new DocumentUtil("somarecord");
+	/**************************************************************************
+	 * 프로젝트 아이디로 레포트 가져오기 
+	 * @param projectId
+	 * @return
+	 *************************************************************************/
+	public List<JsonObject> getReportByProjectId(String projectId){
+		List<JsonObject> reports_list = new ArrayList<JsonObject>();
+		try{
+			reports_list = ref_util.getReports(projectId);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return reports_list;
+	}
 	
+
+	/**
+	 * 레포트 아이디로 레포트 상세정보 가져오기 
+	 */
+	public JsonObject getDetailByReportId(String reportId){
+		JsonObject detail = new JsonObject();
+		
+		try{
+			detail = doc_util.getDoc(reportId);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return detail;
+	}
 	/**************************************************************************
 	 * 레포트 리스트를 가져온다.
 	 * @return List<Reports>
@@ -38,8 +69,7 @@ public class ReportsController {
 		
 		try{
 
-			ReferenceUtil util = new ReferenceUtil("somarecord");
-			report_list = util.getAllReports();
+			report_list = ref_util.getAllReports();
 			
 		}catch(Exception e){
 			e.printStackTrace();

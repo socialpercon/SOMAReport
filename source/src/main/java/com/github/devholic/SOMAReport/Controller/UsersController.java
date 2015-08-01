@@ -27,7 +27,6 @@ public class UsersController {
 	
 	/**
 	 * 로그인
-	 * 
 	 * @param email
 	 * @param password
 	 * @return

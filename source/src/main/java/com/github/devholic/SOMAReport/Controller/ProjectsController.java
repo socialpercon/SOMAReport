@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.github.devholic.SOMAReport.Datbase.DocumentUtil;
 import com.github.devholic.SOMAReport.Datbase.ReferenceUtil;
 import com.github.devholic.SOMAReport.Model.Projects;
 import com.google.gson.JsonArray;
@@ -24,18 +25,40 @@ import com.google.gson.JsonObject;
 public class ProjectsController {
 
 	ReferenceUtil reference_util = new ReferenceUtil("somarecord");
+	DocumentUtil doc_util = new DocumentUtil("somarecord");
 	
-	//public JsonArray getMyProjects (String user_id)
+	
+	/**************************************************************************
+	 * 나의 프로젝트 가져오기 
+	 * @param email
+	 * @return
+	 *************************************************************************/
 	@GET
 	public JsonArray getMyProjects(String email){
 		JsonArray result = new JsonArray();
 		
 		try{
 			result = reference_util.getMyProjects(email);
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return result;
+		
+	}
+	
+	/**************************************************************************
+	 * 프로젝트 아이디로 프로젝트 상세정보 가져오기 
+	 *************************************************************************/
+	public JsonObject getDetailByProjectId(String projectId){
+		JsonObject detail = new JsonObject();
+		
+		try{
+			detail = doc_util.getDoc(projectId);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return detail;
 		
 	}
 	/**************************************************************************
