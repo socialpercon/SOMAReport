@@ -101,6 +101,23 @@ public class ProjectsController {
 			
 		return project;
 	}
+	
+	/*********************************************************************
+	 * 프로젝트 아이디로 프로젝트의 기본 정보를 가져온다
+	 * @param projectId
+	 * @return
+	 ********************************************************************/
+	public JsonObject getProjectInfo (String projectId){
+		
+		JsonObject projectInfo = new JsonObject();
+		
+		try{
+			projectInfo = reference_util.getProjectInfo(projectId);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return projectInfo;
+	}
 
 	
 	/*************************************************************************
