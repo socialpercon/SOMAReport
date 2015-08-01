@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.github.devholic.SOMAReport.Database.DocumentUtil;
 import com.github.devholic.SOMAReport.Database.ReferenceUtil;
 import com.github.devholic.SOMAReport.Model.Users;
 import com.google.gson.JsonObject;
@@ -23,6 +24,7 @@ public class UsersController {
 
 	
 	ReferenceUtil reference_util = new ReferenceUtil("somarecord");
+	DocumentUtil doc_util = new DocumentUtil("somarecord");
 	
 	/**
 	 * 로그인
@@ -113,32 +115,22 @@ public class UsersController {
 		return user;
 	}
 
-	/**************************************************************************
-	 * 사용자를 입력한다
-	 * 
-	 * @param userId
-	 *            ,userName,userAge,userSex,userYear
-	 *************************************************************************/
-	@POST
-	@Path("/{userId}/{userName}/{userAge}/{userSex}/{userYear}")
-	public Response insertUser(@PathParam("userId") String userId,
-			@PathParam("userName") String userName,
-			@FormParam("userAge") Integer userAge,
-			@FormParam("userSex") String userSex,
-			@FormParam("userYear") String userYear) {
-		try {
-			System.out.println("post date - userId = [" + userId + "]");
-			System.out.println("post date - userName = [" + userName + "]");
-			System.out.println("post date - userAge = [" + userAge + "]");
-			System.out.println("post date - userSex = [" + userSex + "]");
-			System.out.println("post date - userYear = [" + userYear + "]");
-			return Response.status(200).type(MediaType.APPLICATION_JSON)
-					.entity("post : 200").build();
-		} catch (Exception e) {
+	
+	/*************************************************************************
+	 * 사용자를 입력한다 
+	 * @param document
+	 * @return
+	 ************************************************************************/
+	public boolean insertUser(JsonObject document){
+		boolean result = false;
+		try{
+			String id = doc_util.putDoc(document);
+			System.out.println("inserted report id = "+id);
+			result = true;
+		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return Response.status(500).type(MediaType.APPLICATION_JSON)
-				.entity("post : 500").build();
+		return result;
 	}
 
 	@PUT
@@ -153,16 +145,24 @@ public class UsersController {
 				.entity("put : 500").build();
 	}
 
+	
+	/************************************************************************
+	 * 사용자 아이디로 사용자를 삭제한다.
+	 * @param reportId
+	 * @return
+	 ***********************************************************************/
 	@DELETE
-	public Response deleteUser() {
-		try {
-			return Response.status(200).type(MediaType.APPLICATION_JSON)
-					.entity("delete : 200").build();
-		} catch (Exception e) {
+	public boolean deleteUser(String reportId){
+		boolean result = false;
+		
+		try{
+			System.out.println("delete | user id = "+ reportId+ "\n");
+			doc_util.deleteDoc(reportId);
+			result = true;
+		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return Response.status(500).type(MediaType.APPLICATION_JSON)
-				.entity("delete : 500").build();
+		return result;
 	}
 
 }

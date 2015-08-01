@@ -101,42 +101,13 @@ public class ProjectsController {
 			
 		return project;
 	}
+
 	
-//	/**************************************************************************
-//	 * 프로젝트를 입력한다
-//	 * @param projectName,level,sequence,main_mento,area,period,sub_mento,category
-//	 *************************************************************************/
-//	@POST
-//	@Path("/{projectName}/{level}")
-//	public Response insertProject(  @PathParam("projectName") String projectName,
-//								@PathParam("level") String level,
-//								@FormParam("sequence") String sequence,
-//								@FormParam("main_mento") String main_mento,
-//								@FormParam("area") String area,
-//								@FormParam("period") String period,
-//								@FormParam("sub_mento") String sub_mento,
-//								@FormParam("category") String category){
-//		try{
-//			System.out.println("post date - projectName = ["+ projectName + "]");
-//			System.out.println("post date - level = ["+ level + "]");
-//			System.out.println("post date - sequence = ["+ sequence + "]");
-//			System.out.println("post date - main_mento = ["+ main_mento + "]");
-//			System.out.println("post date - area = ["+ area + "]");
-//			System.out.println("post date - period = ["+ period + "]");
-//			System.out.println("post date - sub_mento = ["+ sub_mento + "]");
-//			System.out.println("post date - category = ["+ category + "]");
-//			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("post : 200").build();
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("post : 500").build();
-//	}
-	
-	/**
+	/*************************************************************************
 	 * 프로젝트를 입력한다 
 	 * @param document
 	 * @return
-	 */
+	 ************************************************************************/
 	public boolean insertProject(JsonObject document){
 		boolean result = false;
 		try{
@@ -148,6 +119,8 @@ public class ProjectsController {
 		}
 		return result;
 	}
+	
+	
 	@PUT
 	public Response updateProject(){
 		try{
@@ -158,14 +131,24 @@ public class ProjectsController {
 		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("put : 500").build();
 	}
 	
+	
+	/************************************************************************
+	 * 프로젝트 아이디로 프로젝트를 삭제한다.
+	 * @param reportId
+	 * @return
+	 ***********************************************************************/
 	@DELETE
-	public Response deleteProject(){
+	public boolean deleteProject(String reportId){
+		boolean result = false;
+		
 		try{
-			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("delete : 200").build();
+			System.out.println("delete | project id = "+ reportId+ "\n");
+			doc_util.deleteDoc(reportId);
+			result = true;
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("delete : 500").build();
+		return result;
 	}
 	
 	

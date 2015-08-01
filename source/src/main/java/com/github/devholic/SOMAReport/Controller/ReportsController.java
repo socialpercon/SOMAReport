@@ -118,45 +118,12 @@ public class ReportsController {
 		return report;
 	}
 	
-	/**************************************************************************
-	 * 레포를 입력한다
-	 *  String reportId;
-		String [] attended_mentee ;
-		Integer count;
-		Date date;
-		String location;
-		Date start_date;
-		Date end_date;
-		Date except_start_date;
-		Date except_end_date;
-		String title;
-		String purpose;
-		String forwarding;
-		String solution;
-		String plan;
-		String mento_opinion;
-		String etc;
-	 * @param 
-	 *************************************************************************/
-//	@POST
-//	@Path("/{title}/{purpose}")
-//	public Response insertReport( @FormParam("title") String title,
-//								  @FormParam("purpose") String purpose){
-//		try{
-//			System.out.println("post date - title = ["+ title + "]");
-//			System.out.println("post date - purpose = ["+ purpose + "]");
-//			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("post : 200").build();
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("post : 500").build();
-//	}
 	
-	/**
+	/*************************************************************************
 	 * 레포트를 입력한다 
 	 * @param document
 	 * @return
-	 */
+	 ************************************************************************/
 	public boolean insertReport(JsonObject document){
 		boolean result = false;
 		try{
@@ -179,13 +146,23 @@ public class ReportsController {
 		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("put : 500").build();
 	}
 	
+	
+	/************************************************************************
+	 * 레포트 아이디로 레포트를 삭제한다 
+	 * @param reportId
+	 * @return
+	 ***********************************************************************/
 	@DELETE
-	public Response deleteReport(){
+	public boolean deleteReport(String reportId){
+		boolean result = false;
+		
 		try{
-			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("delete : 200").build();
+			System.out.println("delete | report id = "+ reportId+ "\n");
+			doc_util.deleteDoc(reportId);
+			result = true;
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("delete : 500").build();
+		return result;
 	}
 }

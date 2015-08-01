@@ -1,10 +1,12 @@
-package com.github.devholic.SOMAReport.Utilities;
+package com.github.devholic.SOMAReport.Model;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+
+import org.junit.Test;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
@@ -21,7 +23,7 @@ import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 
-public class GdriveAPI {
+public class GdriveAPITEST {
 
 //	private static final String SCOPES = "https://www.googleapis.com/auth/drive";
 //	private static final String CLIENT_SECRET_FILE = "client_secret.json";
@@ -52,7 +54,7 @@ public class GdriveAPI {
 	 */
 	public static Credential authorize() throws IOException {
         // Load client secrets.
-        InputStream in = GdriveAPI.class.getResourceAsStream("/client_secret.json");
+        InputStream in = GdriveAPITEST.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
             GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
