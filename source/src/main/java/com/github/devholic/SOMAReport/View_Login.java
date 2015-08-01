@@ -43,6 +43,9 @@ public class View_Login {
 						new URI("http://localhost:8080/project/list")).build();
 			} else {
 				// 로그인 되어있으므로
+				
+				//login logic
+				
 				return Response.seeOther(new URI("http://localhost:8080/"))
 						.build();
 			}

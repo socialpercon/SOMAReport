@@ -37,30 +37,6 @@ public class ProjectsController {
 		
 		try{
 			
-			String [] pj1_userIds = {"user1","user2"};
-			pj1.setProjectId("pj1");
-			pj1.setProjectName("somaexpensify");
-			pj1.setSequence("6");
-			pj1.setLevel("1-1");
-			pj1.setUserIds(pj1_userIds);
-			
-			String [] pj2_userIds = {"user2","user3"};
-			pj2.setProjectId("pj2");
-			pj2.setSequence("6");
-			pj2.setLevel("1-1");
-			pj2.setProjectName("somareport");
-			pj2.setUserIds(pj2_userIds);
-			
-			String [] pj3_userIds = {"user1","user3"};
-			pj3.setProjectId("pj3");
-			pj3.setSequence("6");
-			pj3.setLevel("1-1");
-			pj3.setProjectName("somareservation");
-			pj3.setUserIds(pj3_userIds);
-
-			project_list.add(pj1);
-			project_list.add(pj2);
-			project_list.add(pj3);
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -82,19 +58,7 @@ public class ProjectsController {
 		Projects project = new Projects();
 		
 		try{
-			
-			String [] userIds = {"user1","user2","user3"};
-			
-			project.setProjectId(projectId);
-			project.setArea("area");
-			project.setCategory("category");
-			project.setLevel("level");
-			project.setMain_mento("main_mento");
-			project.setPeriod("period");
-			project.setProjectName("projectName");
-			project.setSequence("sequence");
-			project.setSub_mento("sub_mento");
-			project.setUserIds(userIds);			
+					
 
 		}catch(Exception e){
 			e.printStackTrace();

@@ -21,6 +21,24 @@ import com.github.devholic.SOMAReport.Model.Users;
 @Path("/users")
 public class UsersController {
 
+	
+	
+	public boolean login(String email, String password){
+		System.out.println("email :"+ email +"/ password:"+password);
+		
+		boolean result = false;
+		
+		Users us = new Users(email);
+		
+		if(us.getUserName() != null){
+			result= true;
+		}else{
+			result = false;
+		}
+		
+		return result;
+		
+	}
 	/**************************************************************************
 	 * 사용자 리스트를 가져온다
 	 * @return List<Users>

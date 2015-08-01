@@ -110,4 +110,51 @@ public class Users {
 		return refutil.getMyProjects(userId);
 		
 	}
+
+	public Integer getRole() {
+		return role;
+	}
+
+	public void setRole(Integer role) {
+		this.role = role;
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
+	public Integer[] getUserYear() {
+		return userYear;
+	}
+
+	public void setUserYear(Integer[] userYear) {
+		this.userYear = userYear;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public void setUserSection(String userSection) {
+		this.userSection = userSection;
+	}
+
+	public void setUserBelong(String userBelong) {
+		this.userBelong = userBelong;
+	}
+
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
+	
+	
+	
 }
