@@ -9,16 +9,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>somareport</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
   </head>
   <body>
     <div class="container vertical-center">
     	<div class="card card-container">
     		<center><h1><span class="logo-front">SOMA</span><span class="logo-back">REPORT</span></h1></center>
             <p id="profile-name" class="profile-name-card logo-subtext">bogoseo. write. success.</p>
-            <form class="form-signin" action="/login" method="post">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <form class="form-signin" action="http://localhost:8080/login" method="post">
+                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">로그인</button>
             </form><!-- /form -->
             <a href="#" class="forgot-password">

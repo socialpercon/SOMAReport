@@ -35,13 +35,11 @@ import com.google.gson.Gson;
 @Singleton
 public class GsonReader<T> implements MessageBodyReader<T> {
  
-    @Override
     public boolean isReadable(Class<?> type, Type genericType,
             Annotation[] antns, MediaType mt) {
         return true;
     }
  
-    @Override
     public T readFrom(Class<T> type, Type genericType,
             Annotation[] antns, MediaType mt,
             MultivaluedMap<String, String> mm, InputStream in)

@@ -5,7 +5,6 @@ package com.github.devholic.SOMAReport.Utilities;
  * http://www.larsmichael.net/?p=140
  */
 
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
@@ -30,7 +29,6 @@ import com.google.gson.Gson;
 @Singleton
 public class GsonWriter<T> implements MessageBodyWriter<T> {
  
-    @Override
     public void writeTo(T t, Class<?> type, Type genericType,
             Annotation[] annotations, MediaType mediaType,
             MultivaluedMap<String, Object> httpHeaders,
@@ -41,13 +39,11 @@ public class GsonWriter<T> implements MessageBodyWriter<T> {
         entityStream.write(g.toJson(t).getBytes("UTF-8"));
     }
  
-    @Override
     public long getSize(T t, Class<?> type, Type genericType,
             Annotation[] annotations, MediaType mediaType) {
         return -1;
     }
  
-    @Override
     public boolean isWriteable(Class<?> type, Type genericType,
             Annotation[] annotations, MediaType mediaType) {
         return true;

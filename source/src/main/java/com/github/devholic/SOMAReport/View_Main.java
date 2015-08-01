@@ -15,7 +15,7 @@ import org.glassfish.grizzly.http.server.Session;
 import org.glassfish.jersey.server.mvc.Viewable;
 
 @Path("/")
-public class View_Login {
+public class View_Main {
 
 	@GET
 	@Path("/login")
