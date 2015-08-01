@@ -10,7 +10,6 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.grizzly.http.server.Request;
 import org.glassfish.grizzly.http.server.Session;
-import org.glassfish.jersey.server.mvc.Viewable;
 
 @Path("/")
 public class View_Main {
@@ -23,7 +22,8 @@ public class View_Main {
 			return Response.seeOther(
 					new URI("http://localhost:8080/project/list")).build();
 		} else {
-			return Response.ok(new Viewable("/login.mustache")).build();
+			return Response.seeOther(
+					new URI("http://localhost:8080/login")).build();
 		}
 	}
 
