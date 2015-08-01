@@ -230,16 +230,19 @@ user.name | user._id
 
 key | value
 --- | ---
-project.mentor<br>project.mentee[i]<br>(user._id) | project._id
+[ user._id, project.stage ] <br> id: project.mentor, project.mentee[i] | project._id
 
-이때 key는 프로젝트 문서에서 mentor와 mentee[]에 소속된 user의 모든 아이디
+이때 key는 프로젝트 문서에서 mentor와 mentee[]에 소속된 user의 모든 아이디와 stage([기수, 단계, 차수]).  
+user._id는 검색 키 / stage는 정렬 키
 
 
 #####_design/project_view/all_report
 
 key | value
 --- | ---
-report.project <br>(project._id) | report._id
+[ project._id, report.report_info.date ] <br> id: report.project | report._id
+
+project._id는 검색 키 / date는 정렬 키
 
 
 #####_design/project_view/calculate_total_time

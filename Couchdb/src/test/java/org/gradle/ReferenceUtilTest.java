@@ -26,10 +26,10 @@ public class ReferenceUtilTest {
 	public void testGetMyProjects() {
 		List<JsonObject> lists = refutil.getMyProjects("4c44d639b77c290955371694d3310194");
 		System.out.println("\nMy Projects: 4c44d639b77c290955371694d3310194");
+		System.out.println("has "+lists.size() +" projects");
 		for (JsonObject project : lists) {
-			System.out.println(project.get("title").getAsString()
-					+"\n"+ project.get("mentor").getAsString()
-					+"\n"+ project.get("mentee").toString());
+			System.out.println(project.get("key").toString()
+					/*+"\n"+ project.get("title").toString()*/);
 		}
 		assertTrue(true);
 	}

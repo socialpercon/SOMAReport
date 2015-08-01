@@ -1225,3 +1225,436 @@
 2015-08-01 15:02:20,096 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
 2015-08-01 15:02:20,098 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
 2015-08-01 15:02:20,099 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 15:07:37,608 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:07:37,616 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/study/resources/java-pdfboxtest/src/main/resources
+2015-08-01 15:07:37,619 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:07:37,620 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/study/resources/java-pdfboxtest/src/test/resources
+2015-08-01 15:07:38,179 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:07:38,186 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 15:07:38,208 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:07:38,209 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 15:10:07,769 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:10:07,796 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 15:10:07,810 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:10:07,810 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 15:12:33,781 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:12:33,782 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 15:12:33,784 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:12:33,785 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 15:12:44,316 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:12:44,317 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 15:12:44,319 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:12:44,320 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 15:55:31,817 [Worker-27] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:55:31,820 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 15:55:31,823 [Worker-27] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:55:31,824 [Worker-27] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 15:56:01,178 [Worker-30] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:56:01,179 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 15:56:01,181 [Worker-30] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:56:01,182 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 15:58:21,376 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:58:21,382 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 15:58:21,384 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:58:21,385 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 15:58:48,906 [Worker-32] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:58:48,908 [Worker-32] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 15:58:48,910 [Worker-32] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:58:48,911 [Worker-32] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 15:59:49,809 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:59:49,813 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 15:59:49,814 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 15:59:49,815 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:02:06,662 [Worker-32] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: SOMAReport:SOMAReport:0.0.1-SNAPSHOT @ /Users/JaeyeonLee/SOMAReport/source/pom.xml.
+2015-08-01 16:02:09,749 [Worker-32] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/cloudant/cloudant-client/1.1.0/cloudant-client-1.1.0.pom
+2015-08-01 16:02:09,980 [Worker-32] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/cloudant/cloudant-client/1.1.0/cloudant-client-1.1.0.pom
+2015-08-01 16:02:10,136 [Worker-32] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpclient/4.3.3/httpclient-4.3.3.pom
+2015-08-01 16:02:10,287 [Worker-32] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpclient/4.3.3/httpclient-4.3.3.pom
+2015-08-01 16:02:10,598 [Worker-32] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpcomponents-client/4.3.3/httpcomponents-client-4.3.3.pom
+2015-08-01 16:02:10,748 [Worker-32] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpcomponents-client/4.3.3/httpcomponents-client-4.3.3.pom
+2015-08-01 16:02:10,904 [Worker-32] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.2.4/gson-2.2.4.pom
+2015-08-01 16:02:11,056 [Worker-32] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.2.4/gson-2.2.4.pom
+2015-08-01 16:02:11,317 [Worker-32] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/cloudant/cloudant-client/1.1.0/cloudant-client-1.1.0.jar
+2015-08-01 16:02:12,003 [Worker-32] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/cloudant/cloudant-client/1.1.0/cloudant-client-1.1.0.jar
+2015-08-01 16:02:12,184 [Worker-32] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:02:12,184 [Worker-32] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-08-01 16:02:12,186 [Worker-32] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:02:12,187 [Worker-32] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:02:13,756 [Worker-32] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:02:13,757 [Worker-32] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:02:13,769 [Worker-32] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:02:13,770 [Worker-32] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:02:39,766 [Worker-33] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:02:39,774 [Worker-33] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:02:39,784 [Worker-33] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:02:39,785 [Worker-33] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:08:19,423 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:08:19,427 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:08:19,429 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:08:19,430 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:08:34,927 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:08:34,929 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:08:34,930 [Worker-31] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:08:34,931 [Worker-31] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:09:33,368 [Worker-34] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:09:33,369 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:09:33,371 [Worker-34] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:09:33,373 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:10:21,498 [Worker-35] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:10:21,499 [Worker-35] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:10:21,500 [Worker-35] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:10:21,501 [Worker-35] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:15:17,214 [Worker-38] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:15:17,215 [Worker-38] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:15:17,217 [Worker-38] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:15:17,218 [Worker-38] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:15:19,117 [Worker-37] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:15:19,118 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:15:19,119 [Worker-37] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:15:19,120 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:16:24,068 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:16:24,069 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:16:24,071 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:16:24,072 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:16:50,296 [Worker-38] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:16:50,297 [Worker-38] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:16:50,300 [Worker-38] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:16:50,301 [Worker-38] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:17:42,909 [Worker-38] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:17:42,910 [Worker-38] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:17:42,912 [Worker-38] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:17:42,913 [Worker-38] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:19:04,738 [Worker-35] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:19:04,740 [Worker-35] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:19:04,742 [Worker-35] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:19:04,743 [Worker-35] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:19:48,114 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:19:48,115 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:19:48,117 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:19:48,117 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:22:48,763 [Worker-37] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:22:48,765 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:22:48,766 [Worker-37] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:22:48,767 [Worker-37] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:23:18,859 [Worker-39] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:23:18,861 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:23:18,862 [Worker-39] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:23:18,862 [Worker-39] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:24:05,053 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:24:05,054 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:24:05,055 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:24:05,056 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:25:42,426 [Worker-38] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:25:42,427 [Worker-38] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:25:42,429 [Worker-38] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:25:42,429 [Worker-38] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:38:40,148 [Worker-42] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:38:40,149 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:38:40,151 [Worker-42] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:38:40,152 [Worker-42] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:50:07,224 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:50:07,225 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:50:07,227 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:50:07,227 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:51:39,600 [Worker-43] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:51:39,601 [Worker-43] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:51:39,602 [Worker-43] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:51:39,603 [Worker-43] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:52:10,025 [Worker-44] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:52:10,026 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:52:10,027 [Worker-44] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:52:10,028 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:54:36,596 [Worker-44] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:54:36,597 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:54:36,599 [Worker-44] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:54:36,600 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:54:56,436 [Worker-43] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:54:56,437 [Worker-43] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:54:56,439 [Worker-43] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:54:56,441 [Worker-43] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:55:52,673 [Worker-43] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:55:52,674 [Worker-43] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:55:52,676 [Worker-43] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:55:52,676 [Worker-43] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:57:19,541 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:57:19,542 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:57:19,543 [Worker-45] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:57:19,543 [Worker-45] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 16:57:26,368 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:57:26,369 [Worker-48] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 16:57:26,371 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 16:57:26,372 [Worker-48] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:02:20,474 [Worker-49] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:02:20,475 [Worker-49] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:02:20,477 [Worker-49] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:02:20,477 [Worker-49] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:06:23,232 [Worker-46] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: SOMAReport:SOMAReport:0.0.1-SNAPSHOT @ /Users/JaeyeonLee/SOMAReport/source/pom.xml.
+2015-08-01 17:06:24,557 [Worker-46] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-api/2.3/log4j-api-2.3.pom
+2015-08-01 17:06:24,717 [Worker-46] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-api/2.3/log4j-api-2.3.pom
+2015-08-01 17:06:25,021 [Worker-46] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j/2.3/log4j-2.3.pom
+2015-08-01 17:06:25,318 [Worker-46] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j/2.3/log4j-2.3.pom
+2015-08-01 17:06:25,487 [Worker-46] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-core/2.3/log4j-core-2.3.pom
+2015-08-01 17:06:25,639 [Worker-46] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-core/2.3/log4j-core-2.3.pom
+2015-08-01 17:06:25,844 [Worker-46] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-api/2.3/log4j-api-2.3.jar
+2015-08-01 17:06:26,477 [Worker-46] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-api/2.3/log4j-api-2.3.jar
+2015-08-01 17:06:26,645 [Worker-46] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-core/2.3/log4j-core-2.3.jar
+2015-08-01 17:06:30,369 [Worker-46] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/logging/log4j/log4j-core/2.3/log4j-core-2.3.jar
+2015-08-01 17:06:30,493 [Worker-46] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:06:30,494 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-08-01 17:06:30,496 [Worker-46] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:06:30,496 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:06:32,088 [Worker-46] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:06:32,089 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:06:32,101 [Worker-46] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:06:32,102 [Worker-46] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:06:41,950 [main] INFO  o.e.m2e.actions.ExecutePomAction - Using existing launch configuration
+2015-08-01 17:06:45,257 [Worker-49] INFO  o.e.m.i.launch.MavenLaunchDelegate - /Users/JaeyeonLee/SOMAReport/source
+2015-08-01 17:06:45,257 [Worker-49] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn  -B 
+2015-08-01 17:16:41,424 [Worker-53] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:16:41,427 [Worker-53] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:16:41,429 [Worker-53] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:16:41,430 [Worker-53] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:20:47,076 [Worker-54] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:20:47,077 [Worker-54] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:20:47,079 [Worker-54] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:20:47,080 [Worker-54] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:20:48,746 [Worker-54] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:20:48,748 [Worker-54] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:20:48,750 [Worker-54] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:20:48,750 [Worker-54] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:21:52,058 [Worker-53] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:21:52,059 [Worker-53] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:21:52,060 [Worker-53] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:21:52,061 [Worker-53] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:22:01,391 [Worker-55] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:22:01,394 [Worker-55] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:22:01,395 [Worker-55] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:22:01,396 [Worker-55] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:22:10,436 [Worker-54] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:22:10,437 [Worker-54] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:22:10,438 [Worker-54] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:22:10,439 [Worker-54] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:22:13,180 [Worker-54] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:22:13,181 [Worker-54] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:22:13,182 [Worker-54] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:22:13,182 [Worker-54] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:22:18,476 [Worker-55] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:22:18,477 [Worker-55] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:22:18,479 [Worker-55] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:22:18,479 [Worker-55] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:24:17,541 [Worker-56] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:24:17,542 [Worker-56] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:24:17,544 [Worker-56] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:24:17,544 [Worker-56] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:24:34,057 [Worker-55] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:24:34,058 [Worker-55] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:24:34,060 [Worker-55] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:24:34,060 [Worker-55] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:25:37,392 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:25:37,393 [Worker-48] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:25:37,394 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:25:37,395 [Worker-48] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:28:15,227 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:28:15,228 [Worker-48] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:28:15,229 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:28:15,229 [Worker-48] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:29:14,416 [Worker-55] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:29:14,417 [Worker-55] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:29:14,418 [Worker-55] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:29:14,419 [Worker-55] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:30:56,360 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:30:56,361 [Worker-48] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:30:56,362 [Worker-48] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:30:56,362 [Worker-48] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 17:54:35,177 [Worker-63] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:54:35,178 [Worker-63] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 17:54:35,180 [Worker-63] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 17:54:35,181 [Worker-63] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 18:07:21,881 [Worker-71] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 18:07:21,882 [Worker-71] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 18:07:21,884 [Worker-71] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 18:07:21,885 [Worker-71] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 18:08:05,625 [Worker-71] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 18:08:05,626 [Worker-71] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 18:08:05,627 [Worker-71] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 18:08:05,627 [Worker-71] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 20:33:38,798 [Worker-82] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 20:33:38,801 [Worker-82] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 20:33:38,805 [Worker-82] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 20:33:38,806 [Worker-82] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 20:41:34,432 [Worker-88] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 20:41:34,433 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 20:41:34,434 [Worker-88] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 20:41:34,435 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 21:12:27,917 [Worker-96] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 21:12:27,920 [Worker-96] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 21:12:27,923 [Worker-96] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 21:12:27,923 [Worker-96] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 21:13:39,683 [Worker-98] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 21:13:39,684 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 21:13:39,687 [Worker-98] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 21:13:39,687 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 21:20:31,591 [Worker-102] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 21:20:31,592 [Worker-102] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 21:20:31,594 [Worker-102] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 21:20:31,594 [Worker-102] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:09:10,536 [Worker-121] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:09:10,537 [Worker-121] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:09:10,540 [Worker-121] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:09:10,540 [Worker-121] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:15:08,933 [Worker-120] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:15:08,936 [Worker-120] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:15:08,937 [Worker-120] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:15:08,938 [Worker-120] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:15:13,515 [Worker-121] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:15:13,516 [Worker-121] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:15:13,518 [Worker-121] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:15:13,519 [Worker-121] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:16:18,765 [Worker-123] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:16:18,766 [Worker-123] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:16:18,768 [Worker-123] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:16:18,768 [Worker-123] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:16:25,039 [Worker-124] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:16:25,040 [Worker-124] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:16:25,041 [Worker-124] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:16:25,041 [Worker-124] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:16:52,353 [Worker-121] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:16:52,353 [Worker-121] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:16:52,354 [Worker-121] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:16:52,355 [Worker-121] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:17:35,078 [Worker-124] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:17:35,079 [Worker-124] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:17:35,080 [Worker-124] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:17:35,080 [Worker-124] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:23:37,202 [Worker-123] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:23:37,204 [Worker-123] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:23:37,206 [Worker-123] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:23:37,207 [Worker-123] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:24:26,737 [Worker-126] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:24:26,738 [Worker-126] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-08-01 22:24:26,738 [Worker-126] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:24:26,739 [Worker-126] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:25:22,700 [Worker-125] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:25:22,701 [Worker-125] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2015-08-01 22:25:22,702 [Worker-125] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:25:22,702 [Worker-125] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:26:17,509 [Worker-125] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:26:17,510 [Worker-125] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:26:17,512 [Worker-125] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:26:17,512 [Worker-125] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:27:45,351 [Worker-123] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:27:45,353 [Worker-123] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:27:45,355 [Worker-123] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:27:45,356 [Worker-123] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:27:57,338 [Worker-128] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:27:57,340 [Worker-128] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:27:57,341 [Worker-128] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:27:57,342 [Worker-128] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:28:16,325 [Worker-121] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:28:16,326 [Worker-121] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:28:16,327 [Worker-121] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:28:16,328 [Worker-121] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:34:19,784 [Worker-127] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:34:19,785 [Worker-127] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:34:19,786 [Worker-127] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:34:19,786 [Worker-127] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:39:28,317 [Worker-125] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:39:28,319 [Worker-125] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:39:28,323 [Worker-125] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:39:28,324 [Worker-125] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:41:17,695 [Worker-121] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:41:17,697 [Worker-121] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:41:17,698 [Worker-121] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:41:17,699 [Worker-121] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:41:51,651 [Worker-121] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:41:51,652 [Worker-121] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:41:51,653 [Worker-121] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:41:51,654 [Worker-121] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:42:08,428 [Worker-123] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:42:08,429 [Worker-123] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:42:08,430 [Worker-123] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:42:08,430 [Worker-123] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:43:58,787 [Worker-131] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:43:58,791 [Worker-131] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:43:58,796 [Worker-131] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:43:58,796 [Worker-131] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:44:01,440 [Worker-128] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:44:01,441 [Worker-128] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:44:01,442 [Worker-128] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:44:01,443 [Worker-128] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:45:13,881 [Worker-131] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:45:13,882 [Worker-131] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:45:13,883 [Worker-131] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:45:13,883 [Worker-131] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:45:44,132 [Worker-123] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:45:44,133 [Worker-123] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:45:44,134 [Worker-123] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:45:44,134 [Worker-123] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:48:17,705 [Worker-125] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:48:17,706 [Worker-125] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:48:17,707 [Worker-125] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:48:17,707 [Worker-125] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:48:31,596 [Worker-132] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:48:31,598 [Worker-132] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:48:31,599 [Worker-132] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:48:31,600 [Worker-132] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:52:45,105 [Worker-132] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:52:45,106 [Worker-132] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:52:45,108 [Worker-132] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:52:45,109 [Worker-132] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:53:59,761 [Worker-133] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:53:59,765 [Worker-133] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:53:59,766 [Worker-133] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:53:59,767 [Worker-133] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:54:05,875 [Worker-125] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:54:05,876 [Worker-125] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:54:05,877 [Worker-125] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:54:05,878 [Worker-125] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:55:50,662 [Worker-134] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:55:50,663 [Worker-134] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:55:50,663 [Worker-134] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:55:50,664 [Worker-134] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:56:30,003 [Worker-134] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:56:30,004 [Worker-134] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:56:30,005 [Worker-134] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:56:30,006 [Worker-134] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:57:03,753 [Worker-130] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:57:03,756 [Worker-130] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:57:03,757 [Worker-130] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:57:03,758 [Worker-130] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 22:57:30,187 [Worker-132] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:57:30,188 [Worker-132] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 22:57:30,189 [Worker-132] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 22:57:30,190 [Worker-132] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 23:04:05,841 [Worker-135] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:04:05,846 [Worker-135] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 23:04:05,849 [Worker-135] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:04:05,850 [Worker-135] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 23:05:48,208 [Worker-136] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:05:48,210 [Worker-136] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 23:05:48,211 [Worker-136] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:05:48,212 [Worker-136] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 23:09:45,375 [Worker-138] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:09:45,378 [Worker-138] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 23:09:45,381 [Worker-138] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:09:45,381 [Worker-138] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 23:10:32,729 [Worker-138] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:10:32,730 [Worker-138] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 23:10:32,731 [Worker-138] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:10:32,731 [Worker-138] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 23:10:55,924 [Worker-137] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:10:55,925 [Worker-137] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 23:10:55,926 [Worker-137] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:10:55,927 [Worker-137] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 23:11:12,023 [Worker-138] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:11:12,024 [Worker-138] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 23:11:12,025 [Worker-138] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:11:12,026 [Worker-138] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 23:43:23,721 [Worker-144] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:43:23,725 [Worker-144] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 23:43:23,732 [Worker-144] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:43:23,732 [Worker-144] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-01 23:43:34,082 [Worker-145] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:43:34,083 [Worker-145] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
+2015-08-01 23:43:34,084 [Worker-145] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-01 23:43:34,085 [Worker-145] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources

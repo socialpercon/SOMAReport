@@ -13,7 +13,7 @@ public class ReferenceUtil {
 	
 	public ReferenceUtil (String dbName) 
 	{
-		client = new CloudantClient("http://somareport.cloudant.com", "somareport", "somasoma");
+		client = new CloudantClient("http://plusquare.com:3001", "javaapp", "somareport");
 		db = client.database(dbName, true);
 	}
 	
@@ -22,7 +22,10 @@ public class ReferenceUtil {
         //멘토, 멘티
         //자신이 속한 프로젝트 조회
 		return db.view("user_view/all_my_project")
-				.key(user_id).includeDocs(true).reduce(false)
+				.startKey(new Object[]{user_id+" ", " "})
+				.endKey(new Object[]{user_id, " "})
+				.descending(true)
+				.includeDocs(false).reduce(false)
 				.query(JsonObject.class);
     }
 
@@ -30,7 +33,10 @@ public class ReferenceUtil {
     {
         //프로젝트에 속한 모든 레포트 조회    
     	return db.view("project_view/all_report")
-    			.key(project_id).includeDocs(true).reduce(false)
+    			.startKey(new Object[]{project_id+" ", " "})
+    			.endKey(new Object[]{project_id, " "})
+    			.descending(true)
+    			.includeDocs(true).reduce(false)
     			.query(JsonObject.class);
     }
     

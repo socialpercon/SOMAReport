@@ -1,0 +1,61 @@
+package com.github.devholic.SOMAReport.Model;
+
+import com.github.devholic.SOMAReport.Datbase.DocumentUtil;
+import com.google.gson.JsonObject;
+
+public class Users {
+
+	public static Integer USER_ROLE_MENTOR = 0;
+	public static Integer USER_ROLE_MENTEE = 1;
+	
+	private Integer role;
+	private String userId;
+	private String userName;
+	private String[] userYear;
+	private String section;
+	private String phone;
+	
+	String account;	
+	
+	public Users () {
+		role = -1;
+		userId = "";
+		userName = "";
+		userYear = null;
+		section = "";
+		phone = "";
+		account = "";
+	}
+	
+	public Users (String account) {
+		DocumentUtil docUtil = new DocumentUtil("somarecord");
+		JsonObject userDoc = docUtil.getUserDoc(account);
+		
+		if (userDoc.get("type").getAsString().equalsIgnoreCase("mentor")) 
+			role = Users.USER_ROLE_MENTOR;
+		else if (userDoc.get("type").getAsString().equalsIgnoreCase("mentee")) 
+			role = Users.USER_ROLE_MENTOR;
+		else {
+			// user에 해당하지 않는 문서이므로 에
+		}
+		
+		userName = 
+			
+	}
+	
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	
+}

@@ -29,7 +29,11 @@ import com.google.gson.Gson;
 @Singleton
 public class GsonWriter<T> implements MessageBodyWriter<T> {
  
+<<<<<<< Updated upstream
     public void writeTo(T t, Class<?> type, Type genericType,
+=======
+   public void writeTo(T t, Class<?> type, Type genericType,
+>>>>>>> Stashed changes
             Annotation[] annotations, MediaType mediaType,
             MultivaluedMap<String, Object> httpHeaders,
             OutputStream entityStream)

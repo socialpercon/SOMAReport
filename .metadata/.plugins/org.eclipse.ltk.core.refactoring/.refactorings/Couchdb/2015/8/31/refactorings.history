@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 2 elements to &apos;source/src/main/java/com.github.devholic.SOMAReport.Datbase&apos;&#x0A;- Original project: &apos;Couchdb&apos;&#x0A;- Destination element: &apos;source/src/main/java/com.github.devholic.SOMAReport.Datbase&apos;&#x0A;- Original elements:&#x0A;     org.gradle.DocumentUtil.java&#x0A;     org.gradle.ReferenceUtil.java" description="Copy compilation units" destination="=source/src\/main\/java&lt;com.github.devholic.SOMAReport.Datbase" element1="/src\/main\/java&lt;org.gradle{DocumentUtil.java" element2="/src\/main\/java&lt;org.gradle{ReferenceUtil.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1438412559541" units="2" version="1.0"/>
+</session>

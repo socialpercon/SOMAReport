@@ -1,0 +1,24 @@
+package com.github.devholic.SOMAReport.Model;
+
+import static org.junit.Assert.fail;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+public class UsersTest {
+
+	@BeforeClass
+	public void testUsersString() {
+		
+	}
+
+	@Test
+	public void testIsBelongToYear() {
+	}
+
+	@Test
+	public void testGetMyProjects() {
+		fail("Not yet implemented");
+	}
+
+}

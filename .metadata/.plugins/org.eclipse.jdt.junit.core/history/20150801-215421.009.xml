@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ReferenceUtilTest" project="Couchdb" tests="6" started="6" failures="0" errors="0" ignored="0">
+  <testsuite name="org.gradle.ReferenceUtilTest" time="0.323">
+    <testcase name="testCalTotalMentoring" classname="org.gradle.ReferenceUtilTest" time="0.01"/>
+    <testcase name="testGetCurrentProjects" classname="org.gradle.ReferenceUtilTest" time="0.069"/>
+    <testcase name="testGetAllMentee" classname="org.gradle.ReferenceUtilTest" time="0.064"/>
+    <testcase name="testGetAllMentor" classname="org.gradle.ReferenceUtilTest" time="0.061"/>
+    <testcase name="testGetMyProjects" classname="org.gradle.ReferenceUtilTest" time="0.058"/>
+    <testcase name="testGetReports" classname="org.gradle.ReferenceUtilTest" time="0.061"/>
+  </testsuite>
+</testrun>

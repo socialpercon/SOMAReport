@@ -23,7 +23,8 @@ public class DocumentUtilTest {
 	public static DocumentUtil docutil;
 	
 	@BeforeClass
-	public static void testDocumentUtil() {
+	public static void testDocumentUtil() 
+	{
 		docutil = new DocumentUtil("somarecord");
 		System.out.println("Connected to Cloudant :: SOMAReport");
 		System.out.println("Server Version: " + docutil.client.serverVersion());
@@ -32,7 +33,8 @@ public class DocumentUtilTest {
 	}
 	
 	@Test
-	public void testGetUserDoc() {
+	public void testGetUserDoc() 
+	{
 		String account = "ppyong0@gmail.com";
 		JsonObject user = docutil.getUserDoc(account);
 		System.out.println(user.toString());
@@ -40,13 +42,16 @@ public class DocumentUtilTest {
 	}
 	
 	@Test
-	public void testGetUserId() {
+	public void testGetUserId() 
+	{
 		String id = docutil.getUserId("이뿅뿅");
 		assertEquals("이뿅뿅",docutil.getDoc(id).get("name").getAsString());
 	}
 
 	@Test
-	public void testPutDoc() throws JsonIOException, JsonSyntaxException, FileNotFoundException {
+	public void testPutDoc() 
+			throws JsonIOException, JsonSyntaxException, FileNotFoundException 
+	{
 		JsonParser parser = new JsonParser();
 		JsonElement json = parser.parse(new FileReader("report.json"));
 		JsonObject inputDoc = json.getAsJsonObject();
@@ -58,13 +63,15 @@ public class DocumentUtilTest {
 	}
 
 	@Test
-	public void testDeleteDoc() {
+	public void testDeleteDoc() 
+	{
 		Response res = docutil.deleteDoc("fa7a8da525ad46148610ffeb0bfe2f8b");
 		System.out.println("\n"+res.toString());
 	}
 
 	@Test
-	public void testUpdateDoc() {
+	public void testUpdateDoc() 
+	{
 		JsonObject doc = docutil.getUserDoc("gyakk3@gmail.com").getAsJsonObject();
 		if (!doc.has("years")) {
 			JsonPrimitive year = new JsonPrimitive(2015);
