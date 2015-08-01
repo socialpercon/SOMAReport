@@ -138,18 +138,35 @@ public class ReportsController {
 		String etc;
 	 * @param 
 	 *************************************************************************/
-	@POST
-	@Path("/{title}/{purpose}")
-	public Response insertReport( @FormParam("title") String title,
-								  @FormParam("purpose") String purpose){
+//	@POST
+//	@Path("/{title}/{purpose}")
+//	public Response insertReport( @FormParam("title") String title,
+//								  @FormParam("purpose") String purpose){
+//		try{
+//			System.out.println("post date - title = ["+ title + "]");
+//			System.out.println("post date - purpose = ["+ purpose + "]");
+//			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("post : 200").build();
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("post : 500").build();
+//	}
+	
+	/**
+	 * 레포트를 입력한다 
+	 * @param document
+	 * @return
+	 */
+	public boolean insertReport(JsonObject document){
+		boolean result = false;
 		try{
-			System.out.println("post date - title = ["+ title + "]");
-			System.out.println("post date - purpose = ["+ purpose + "]");
-			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("post : 200").build();
+			String id = doc_util.putDoc(document);
+			System.out.println("inserted report id = "+id);
+			result = true;
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("post : 500").build();
+		return result;
 	}
 	
 	@PUT

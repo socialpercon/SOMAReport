@@ -101,36 +101,52 @@ public class ProjectsController {
 		return project;
 	}
 	
-	/**************************************************************************
-	 * 프로젝트를 입력한다
-	 * @param projectName,level,sequence,main_mento,area,period,sub_mento,category
-	 *************************************************************************/
-	@POST
-	@Path("/{projectName}/{level}")
-	public Response insertProject(  @PathParam("projectName") String projectName,
-								@PathParam("level") String level,
-								@FormParam("sequence") String sequence,
-								@FormParam("main_mento") String main_mento,
-								@FormParam("area") String area,
-								@FormParam("period") String period,
-								@FormParam("sub_mento") String sub_mento,
-								@FormParam("category") String category){
+//	/**************************************************************************
+//	 * 프로젝트를 입력한다
+//	 * @param projectName,level,sequence,main_mento,area,period,sub_mento,category
+//	 *************************************************************************/
+//	@POST
+//	@Path("/{projectName}/{level}")
+//	public Response insertProject(  @PathParam("projectName") String projectName,
+//								@PathParam("level") String level,
+//								@FormParam("sequence") String sequence,
+//								@FormParam("main_mento") String main_mento,
+//								@FormParam("area") String area,
+//								@FormParam("period") String period,
+//								@FormParam("sub_mento") String sub_mento,
+//								@FormParam("category") String category){
+//		try{
+//			System.out.println("post date - projectName = ["+ projectName + "]");
+//			System.out.println("post date - level = ["+ level + "]");
+//			System.out.println("post date - sequence = ["+ sequence + "]");
+//			System.out.println("post date - main_mento = ["+ main_mento + "]");
+//			System.out.println("post date - area = ["+ area + "]");
+//			System.out.println("post date - period = ["+ period + "]");
+//			System.out.println("post date - sub_mento = ["+ sub_mento + "]");
+//			System.out.println("post date - category = ["+ category + "]");
+//			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("post : 200").build();
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("post : 500").build();
+//	}
+	
+	/**
+	 * 프로젝트를 입력한다 
+	 * @param document
+	 * @return
+	 */
+	public boolean insertProject(JsonObject document){
+		boolean result = false;
 		try{
-			System.out.println("post date - projectName = ["+ projectName + "]");
-			System.out.println("post date - level = ["+ level + "]");
-			System.out.println("post date - sequence = ["+ sequence + "]");
-			System.out.println("post date - main_mento = ["+ main_mento + "]");
-			System.out.println("post date - area = ["+ area + "]");
-			System.out.println("post date - period = ["+ period + "]");
-			System.out.println("post date - sub_mento = ["+ sub_mento + "]");
-			System.out.println("post date - category = ["+ category + "]");
-			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("post : 200").build();
+			String id = doc_util.putDoc(document);
+			System.out.println("inserted project id = "+id);
+			result = true;
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("post : 500").build();
+		return result;
 	}
-	
 	@PUT
 	public Response updateProject(){
 		try{
