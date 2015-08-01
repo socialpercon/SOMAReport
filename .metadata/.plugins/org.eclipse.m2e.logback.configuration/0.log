@@ -1658,3 +1658,260 @@
 2015-08-01 23:43:34,083 [Worker-145] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 15 resources
 2015-08-01 23:43:34,084 [Worker-145] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
 2015-08-01 23:43:34,085 [Worker-145] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/source/src/test/resources
+2015-08-02 01:27:39,478 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:27:39,496 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/study/resources/java-pdfboxtest/src/main/resources
+2015-08-02 01:27:39,502 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:27:39,502 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/study/resources/java-pdfboxtest/src/test/resources
+2015-08-02 01:27:40,773 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-08-02 01:27:40,788 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2015-08-02 01:27:40,800 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-08-02 01:27:40,801 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/study/resources/jersey-test/jerseytest/src/test/resources
+2015-08-02 01:27:42,712 [Worker-14] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: SOMAReport:SOMAReport:0.0.1-SNAPSHOT @ /Users/JaeyeonLee/MyGit/SOMAReport/source/pom.xml.
+2015-08-02 01:27:43,918 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:27:43,922 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 01:27:43,937 [Worker-14] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:27:43,938 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 01:30:01,835 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:30:01,841 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 01:30:01,845 [Worker-19] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:30:01,846 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 01:30:27,822 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:30:27,823 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 01:30:27,826 [Worker-17] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:30:27,826 [Worker-17] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 01:32:24,909 [Worker-12] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:32:24,910 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 01:32:24,912 [Worker-12] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:32:24,912 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 01:39:59,131 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:39:59,133 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 01:39:59,135 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:39:59,136 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 01:42:18,994 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:42:18,997 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 01:42:19,001 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:42:19,001 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 01:44:13,472 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:44:13,474 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 01:44:13,476 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:44:13,477 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 01:44:17,065 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:44:17,066 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 01:44:17,068 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:44:17,069 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 01:49:17,832 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:49:17,833 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 01:49:17,835 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:49:17,836 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 01:56:57,543 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:56:57,544 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 01:56:57,546 [Worker-22] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:56:57,546 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 01:57:38,034 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:57:38,036 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 01:57:38,038 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:57:38,039 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 01:58:22,526 [Worker-12] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:58:22,527 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 01:58:22,530 [Worker-12] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 01:58:22,532 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:00:38,044 [Worker-24] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:00:38,045 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:00:38,047 [Worker-24] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:00:38,047 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:00:47,542 [Worker-24] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: SOMAReport:SOMAReport:0.0.1-SNAPSHOT @ /Users/JaeyeonLee/MyGit/SOMAReport/source/pom.xml.
+2015-08-02 02:00:49,566 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/api-client/google-api-client-extensions/1.6.0-beta/google-api-client-extensions-1.6.0-beta.pom
+2015-08-02 02:00:49,705 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/api-client/google-api-client-extensions/1.6.0-beta/google-api-client-extensions-1.6.0-beta.pom
+2015-08-02 02:00:49,847 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/api-client/google-api-client-parent/1.6.0-beta/google-api-client-parent-1.6.0-beta.pom
+2015-08-02 02:00:49,984 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/api-client/google-api-client-parent/1.6.0-beta/google-api-client-parent-1.6.0-beta.pom
+2015-08-02 02:00:50,120 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/google/5/google-5.pom
+2015-08-02 02:00:50,255 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/google/5/google-5.pom
+2015-08-02 02:00:50,393 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-extensions/1.6.0-beta/google-oauth-client-extensions-1.6.0-beta.pom
+2015-08-02 02:00:50,529 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-extensions/1.6.0-beta/google-oauth-client-extensions-1.6.0-beta.pom
+2015-08-02 02:00:50,670 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-parent/1.6.0-beta/google-oauth-client-parent-1.6.0-beta.pom
+2015-08-02 02:00:50,806 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-parent/1.6.0-beta/google-oauth-client-parent-1.6.0-beta.pom
+2015-08-02 02:00:50,943 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client-extensions/1.6.0-beta/google-http-client-extensions-1.6.0-beta.pom
+2015-08-02 02:00:51,080 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client-extensions/1.6.0-beta/google-http-client-extensions-1.6.0-beta.pom
+2015-08-02 02:00:51,220 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client-parent/1.6.0-beta/google-http-client-parent-1.6.0-beta.pom
+2015-08-02 02:00:51,355 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client-parent/1.6.0-beta/google-http-client-parent-1.6.0-beta.pom
+2015-08-02 02:00:51,495 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client/1.6.0-beta/google-http-client-1.6.0-beta.pom
+2015-08-02 02:00:51,632 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client/1.6.0-beta/google-http-client-1.6.0-beta.pom
+2015-08-02 02:00:51,774 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/code/gson/gson/1.7.1/gson-1.7.1.pom
+2015-08-02 02:00:51,919 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/code/gson/gson/1.7.1/gson-1.7.1.pom
+2015-08-02 02:00:52,055 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/sonatype/oss/oss-parent/5/oss-parent-5.pom
+2015-08-02 02:00:52,191 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/sonatype/oss/oss-parent/5/oss-parent-5.pom
+2015-08-02 02:00:52,328 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/guava/guava/r09/guava-r09.pom
+2015-08-02 02:00:52,464 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/guava/guava/r09/guava-r09.pom
+2015-08-02 02:00:52,602 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/junit/junit/4.8.2/junit-4.8.2.pom
+2015-08-02 02:00:52,741 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/junit/junit/4.8.2/junit-4.8.2.pom
+2015-08-02 02:00:52,879 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpclient/4.0.3/httpclient-4.0.3.pom
+2015-08-02 02:00:53,016 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpclient/4.0.3/httpclient-4.0.3.pom
+2015-08-02 02:00:53,155 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpcomponents-client/4.0.3/httpcomponents-client-4.0.3.pom
+2015-08-02 02:00:53,292 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/httpcomponents/httpcomponents-client/4.0.3/httpcomponents-client-4.0.3.pom
+2015-08-02 02:00:53,433 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/httpcomponents/project/4.1/project-4.1.pom
+2015-08-02 02:00:53,569 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/httpcomponents/project/4.1/project-4.1.pom
+2015-08-02 02:00:53,708 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-core-asl/1.9.1/jackson-core-asl-1.9.1.pom
+2015-08-02 02:00:53,843 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/codehaus/jackson/jackson-core-asl/1.9.1/jackson-core-asl-1.9.1.pom
+2015-08-02 02:00:53,981 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/xpp3/xpp3/1.1.4c/xpp3-1.1.4c.pom
+2015-08-02 02:00:54,117 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/xpp3/xpp3/1.1.4c/xpp3-1.1.4c.pom
+2015-08-02 02:00:54,258 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/protobuf/protobuf-java/2.2.0/protobuf-java-2.2.0.pom
+2015-08-02 02:00:54,393 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/protobuf/protobuf-java/2.2.0/protobuf-java-2.2.0.pom
+2015-08-02 02:00:54,531 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client/1.6.0-beta/google-oauth-client-1.6.0-beta.pom
+2015-08-02 02:00:54,667 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client/1.6.0-beta/google-oauth-client-1.6.0-beta.pom
+2015-08-02 02:00:54,807 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/javax/servlet/servlet-api/2.5/servlet-api-2.5.pom
+2015-08-02 02:00:54,945 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/javax/servlet/servlet-api/2.5/servlet-api-2.5.pom
+2015-08-02 02:00:55,087 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/javax/jdo/jdo2-api/2.3-eb/jdo2-api-2.3-eb.pom
+2015-08-02 02:00:55,223 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/javax/jdo/jdo2-api/2.3-eb/jdo2-api-2.3-eb.pom
+2015-08-02 02:00:55,360 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/javax/transaction/transaction-api/1.1/transaction-api-1.1.pom
+2015-08-02 02:00:55,496 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/javax/transaction/transaction-api/1.1/transaction-api-1.1.pom
+2015-08-02 02:00:55,772 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/googlecode/jsontoken/jsontoken/1.0/jsontoken-1.0.pom
+2015-08-02 02:00:55,909 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/googlecode/jsontoken/jsontoken/1.0/jsontoken-1.0.pom
+2015-08-02 02:00:56,051 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/code/gson/gson/1.4/gson-1.4.pom
+2015-08-02 02:00:56,186 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/code/gson/gson/1.4/gson-1.4.pom
+2015-08-02 02:00:56,329 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.4/commons-codec-1.4.pom
+2015-08-02 02:00:56,467 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/commons-codec/commons-codec/1.4/commons-codec-1.4.pom
+2015-08-02 02:00:56,739 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/11/commons-parent-11.pom
+2015-08-02 02:00:56,876 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/commons/commons-parent/11/commons-parent-11.pom
+2015-08-02 02:00:57,017 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/joda-time/joda-time/1.6/joda-time-1.6.pom
+2015-08-02 02:00:57,152 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/joda-time/joda-time/1.6/joda-time-1.6.pom
+2015-08-02 02:00:57,294 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/api-client/google-api-client/1.6.0-beta/google-api-client-1.6.0-beta.pom
+2015-08-02 02:00:57,429 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/api-client/google-api-client/1.6.0-beta/google-api-client-1.6.0-beta.pom
+2015-08-02 02:00:57,567 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/api-client/google-api-client-java6/1.20.0/google-api-client-java6-1.20.0.pom
+2015-08-02 02:00:57,703 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/api-client/google-api-client-java6/1.20.0/google-api-client-java6-1.20.0.pom
+2015-08-02 02:00:57,842 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-java6/1.20.0/google-oauth-client-java6-1.20.0.pom
+2015-08-02 02:00:57,980 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-java6/1.20.0/google-oauth-client-java6-1.20.0.pom
+2015-08-02 02:00:58,122 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-jetty/1.11.0-beta/google-oauth-client-jetty-1.11.0-beta.pom
+2015-08-02 02:00:58,257 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-jetty/1.11.0-beta/google-oauth-client-jetty-1.11.0-beta.pom
+2015-08-02 02:00:58,399 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-parent/1.11.0-beta/google-oauth-client-parent-1.11.0-beta.pom
+2015-08-02 02:00:58,535 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-parent/1.11.0-beta/google-oauth-client-parent-1.11.0-beta.pom
+2015-08-02 02:00:58,675 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-java6/1.11.0-beta/google-oauth-client-java6-1.11.0-beta.pom
+2015-08-02 02:00:58,827 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-java6/1.11.0-beta/google-oauth-client-java6-1.11.0-beta.pom
+2015-08-02 02:00:58,966 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client/1.11.0-beta/google-oauth-client-1.11.0-beta.pom
+2015-08-02 02:00:59,101 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client/1.11.0-beta/google-oauth-client-1.11.0-beta.pom
+2015-08-02 02:00:59,242 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client/1.11.0-beta/google-http-client-1.11.0-beta.pom
+2015-08-02 02:00:59,381 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client/1.11.0-beta/google-http-client-1.11.0-beta.pom
+2015-08-02 02:00:59,525 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client-parent/1.11.0-beta/google-http-client-parent-1.11.0-beta.pom
+2015-08-02 02:00:59,786 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client-parent/1.11.0-beta/google-http-client-parent-1.11.0-beta.pom
+2015-08-02 02:00:59,926 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/guava/guava/11.0.1/guava-11.0.1.pom
+2015-08-02 02:01:00,063 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/guava/guava/11.0.1/guava-11.0.1.pom
+2015-08-02 02:01:00,215 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/guava/guava-parent/11.0.1/guava-parent-11.0.1.pom
+2015-08-02 02:01:00,351 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/guava/guava-parent/11.0.1/guava-parent-11.0.1.pom
+2015-08-02 02:01:00,502 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty/6.1.26/jetty-6.1.26.pom
+2015-08-02 02:01:00,636 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty/6.1.26/jetty-6.1.26.pom
+2015-08-02 02:01:00,776 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/mortbay/jetty/project/6.1.26/project-6.1.26.pom
+2015-08-02 02:01:00,916 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/mortbay/jetty/project/6.1.26/project-6.1.26.pom
+2015-08-02 02:01:01,056 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty-parent/10/jetty-parent-10.pom
+2015-08-02 02:01:01,192 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty-parent/10/jetty-parent-10.pom
+2015-08-02 02:01:01,336 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-parent/14/jetty-parent-14.pom
+2015-08-02 02:01:01,472 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/eclipse/jetty/jetty-parent/14/jetty-parent-14.pom
+2015-08-02 02:01:01,634 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty-util/6.1.26/jetty-util-6.1.26.pom
+2015-08-02 02:01:01,769 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty-util/6.1.26/jetty-util-6.1.26.pom
+2015-08-02 02:01:01,913 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/mortbay/jetty/servlet-api/2.5-20081211/servlet-api-2.5-20081211.pom
+2015-08-02 02:01:02,052 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/mortbay/jetty/servlet-api/2.5-20081211/servlet-api-2.5-20081211.pom
+2015-08-02 02:01:02,194 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty-parent/7/jetty-parent-7.pom
+2015-08-02 02:01:02,329 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty-parent/7/jetty-parent-7.pom
+2015-08-02 02:01:02,863 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/apis/google-api-services-drive/v2-rev178-1.20.0/google-api-services-drive-v2-rev178-1.20.0.pom
+2015-08-02 02:01:03,000 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/apis/google-api-services-drive/v2-rev178-1.20.0/google-api-services-drive-v2-rev178-1.20.0.pom
+2015-08-02 02:01:03,191 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/api-client/google-api-client-extensions/1.6.0-beta/google-api-client-extensions-1.6.0-beta.jar
+2015-08-02 02:01:03,327 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/api-client/google-api-client-extensions/1.6.0-beta/google-api-client-extensions-1.6.0-beta.jar
+2015-08-02 02:01:03,471 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-extensions/1.6.0-beta/google-oauth-client-extensions-1.6.0-beta.jar
+2015-08-02 02:01:03,871 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-extensions/1.6.0-beta/google-oauth-client-extensions-1.6.0-beta.jar
+2015-08-02 02:01:04,008 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/googlecode/jsontoken/jsontoken/1.0/jsontoken-1.0.jar
+2015-08-02 02:01:04,278 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/googlecode/jsontoken/jsontoken/1.0/jsontoken-1.0.jar
+2015-08-02 02:01:04,417 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/joda-time/joda-time/1.6/joda-time-1.6.jar
+2015-08-02 02:01:05,617 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/joda-time/joda-time/1.6/joda-time-1.6.jar
+2015-08-02 02:01:05,755 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar
+2015-08-02 02:01:05,915 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar
+2015-08-02 02:01:06,055 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/javax/jdo/jdo2-api/2.3-eb/jdo2-api-2.3-eb.jar
+2015-08-02 02:01:06,340 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/javax/jdo/jdo2-api/2.3-eb/jdo2-api-2.3-eb.jar
+2015-08-02 02:01:06,479 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/javax/transaction/transaction-api/1.1/transaction-api-1.1.jar
+2015-08-02 02:01:06,615 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/javax/transaction/transaction-api/1.1/transaction-api-1.1.jar
+2015-08-02 02:01:06,755 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client-extensions/1.6.0-beta/google-http-client-extensions-1.6.0-beta.jar
+2015-08-02 02:01:06,892 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client-extensions/1.6.0-beta/google-http-client-extensions-1.6.0-beta.jar
+2015-08-02 02:01:07,027 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/api-client/google-api-client-java6/1.20.0/google-api-client-java6-1.20.0.jar
+2015-08-02 02:01:07,162 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/api-client/google-api-client-java6/1.20.0/google-api-client-java6-1.20.0.jar
+2015-08-02 02:01:07,297 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-java6/1.20.0/google-oauth-client-java6-1.20.0.jar
+2015-08-02 02:01:07,433 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-java6/1.20.0/google-oauth-client-java6-1.20.0.jar
+2015-08-02 02:01:07,569 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-jetty/1.11.0-beta/google-oauth-client-jetty-1.11.0-beta.jar
+2015-08-02 02:01:07,705 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/oauth-client/google-oauth-client-jetty/1.11.0-beta/google-oauth-client-jetty-1.11.0-beta.jar
+2015-08-02 02:01:07,846 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty/6.1.26/jetty-6.1.26.jar
+2015-08-02 02:01:08,390 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty/6.1.26/jetty-6.1.26.jar
+2015-08-02 02:01:08,533 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty-util/6.1.26/jetty-util-6.1.26.jar
+2015-08-02 02:01:08,712 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/mortbay/jetty/jetty-util/6.1.26/jetty-util-6.1.26.jar
+2015-08-02 02:01:08,850 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/mortbay/jetty/servlet-api/2.5-20081211/servlet-api-2.5-20081211.jar
+2015-08-02 02:01:09,017 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/mortbay/jetty/servlet-api/2.5-20081211/servlet-api-2.5-20081211.jar
+2015-08-02 02:01:09,160 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/apis/google-api-services-drive/v2-rev178-1.20.0/google-api-services-drive-v2-rev178-1.20.0.jar
+2015-08-02 02:01:09,336 [Worker-24] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/apis/google-api-services-drive/v2-rev178-1.20.0/google-api-services-drive-v2-rev178-1.20.0.jar
+2015-08-02 02:01:09,696 [Worker-24] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: PDFBoxTest:PDFBoxTest:0.0.1-SNAPSHOT @ /Users/JaeyeonLee/SOMAReport/study/resources/java-pdfboxtest/pom.xml.
+2015-08-02 02:01:10,752 [Worker-24] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:01:10,753 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:01:10,763 [Worker-24] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:01:10,764 [Worker-24] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:01:12,042 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:01:12,043 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/study/resources/java-pdfboxtest/src/main/resources
+2015-08-02 02:01:12,046 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:01:12,048 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/SOMAReport/study/resources/java-pdfboxtest/src/test/resources
+2015-08-02 02:01:12,694 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:01:12,698 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:01:12,712 [Worker-29] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:01:12,713 [Worker-29] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:08:07,529 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:08:07,531 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:08:07,532 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:08:07,533 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:08:15,105 [Worker-34] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:08:15,106 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:08:15,107 [Worker-34] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:08:15,108 [Worker-34] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:09:50,496 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:09:50,497 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:09:50,498 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:09:50,498 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:11:31,731 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:11:31,739 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:11:31,742 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:11:31,742 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:15:44,847 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:15:44,848 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:15:44,852 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:15:44,852 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:19:36,278 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:19:36,279 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:19:36,281 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:19:36,281 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:21:54,914 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:21:54,916 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:21:54,917 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:21:54,918 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:23:48,688 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:23:48,689 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:23:48,690 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:23:48,690 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:24:57,280 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:24:57,281 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:24:57,283 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:24:57,284 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:25:31,316 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:25:31,317 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:25:31,319 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:25:31,320 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:26:18,973 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:26:18,977 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:26:18,982 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:26:18,983 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:28:32,811 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:28:32,812 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:28:32,813 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:28:32,814 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:28:56,863 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:28:56,864 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:28:56,865 [Worker-36] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:28:56,866 [Worker-36] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:28:59,524 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:28:59,525 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:28:59,527 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:28:59,527 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources
+2015-08-02 02:29:28,533 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:29:28,534 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 16 resources
+2015-08-02 02:29:28,536 [Worker-26] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2015-08-02 02:29:28,537 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/JaeyeonLee/MyGit/SOMAReport/source/src/test/resources

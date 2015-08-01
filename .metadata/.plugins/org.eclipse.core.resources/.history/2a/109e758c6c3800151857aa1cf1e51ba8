@@ -1,0 +1,169 @@
+package com.github.devholic.SOMAReport.Model;
+
+import java.util.Date;
+
+import com.google.gson.JsonObject;
+
+public class Reports {
+	
+	private String reportId;
+	String [] attended_mentee;
+	Integer count;
+	String projectId;
+	
+	String location;
+	
+	Date date;
+	Date start_date;
+	Date end_date;
+	Date except_start_date;
+	Date except_end_date;
+	
+	Integer whole_time;
+	Integer except_time;
+	Integer total_time;
+	
+	String topic;
+	String purpose;
+	String forwarding;
+	String solution;
+	String plan;
+	String mento_opinion;
+	String etc;
+	
+	public Reports(){
+		reportId = "";
+		attended_mentee = null;
+		count = 0;
+		date = null;
+		location = "";
+		start_date = null;
+		end_date = null;
+		except_start_date = null;
+		except_end_date = null;
+		topic = "";
+		purpose = "";
+		forwarding = "";
+		solution = "";
+		plan = "";
+		mento_opinion = "";
+		etc = "";
+			
+	}
+	
+	
+	public String getReportId() {
+		return reportId;
+	}
+	public void setReportId(String reportId) {
+		this.reportId = reportId;
+	}
+	public String[] getAttended_mentee() {
+		return attended_mentee;
+	}
+	public void setAttended_mentee(String[] attended_mentee) {
+		this.attended_mentee = attended_mentee;
+	}
+	public Integer getCount() {
+		return count;
+	}
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public Date getStart_date() {
+		return start_date;
+	}
+	public void setStart_date(Date start_date) {
+		this.start_date = start_date;
+	}
+	public Date getEnd_date() {
+		return end_date;
+	}
+	public void setEnd_date(Date end_date) {
+		this.end_date = end_date;
+	}
+	public Date getExcept_start_date() {
+		return except_start_date;
+	}
+	public void setExcept_start_date(Date except_start_date) {
+		this.except_start_date = except_start_date;
+	}
+	public Date getExcept_end_date() {
+		return except_end_date;
+	}
+	public void setExcept_end_date(Date except_end_date) {
+		this.except_end_date = except_end_date;
+	}
+	public String getTitle() {
+		return topic;
+	}
+	public void setTitle(String title) {
+		this.topic = title;
+	}
+	public String getPurpose() {
+		return purpose;
+	}
+	public void setPurpose(String purpose) {
+		this.purpose = purpose;
+	}
+	public String getForwarding() {
+		return forwarding;
+	}
+	public void setForwarding(String forwarding) {
+		this.forwarding = forwarding;
+	}
+	public String getSolution() {
+		return solution;
+	}
+	public void setSolution(String solution) {
+		this.solution = solution;
+	}
+	public String getPlan() {
+		return plan;
+	}
+	public void setPlan(String plan) {
+		this.plan = plan;
+	}
+	public String getMento_opinion() {
+		return mento_opinion;
+	}
+	public void setMento_opinion(String mento_opinion) {
+		this.mento_opinion = mento_opinion;
+	}
+	public String getEtc() {
+		return etc;
+	}
+	public void setEtc(String etc) {
+		this.etc = etc;
+	}
+	
+	public JsonObject insertReport() {
+		JsonObject report = new JsonObject();
+		
+		report.addProperty("type", "report");
+		report.addProperty("project", projectId);
+		
+		JsonObject report_info = new JsonObject();
+		report_info.addProperty("mentoring_num", count);
+		report_info.addProperty("date", );
+		report_info.addProperty("place", location);
+		report_info.addProperty("whole_time", whole_time);
+		report_info.addProperty("excep_time", except_time);
+		report_info.addProperty("total_time", total_time);
+	
+		
+		return report;
+	}
+}

@@ -62,30 +62,30 @@ public class DocumentUtilTest {
 		assertEquals(inputDoc.get("project").getAsString(), resultDoc.get("project").getAsString());
 	}
 
-	@Test
-	public void testDeleteDoc() 
-	{
-		Response res = docutil.deleteDoc("fa7a8da525ad46148610ffeb0bfe2f8b");
-		System.out.println("\n"+res.toString());
-	}
-
-	@Test
-	public void testUpdateDoc() 
-	{
-		JsonObject doc = docutil.getUserDoc("gyakk3@gmail.com").getAsJsonObject();
-		if (!doc.has("years")) {
-			JsonPrimitive year = new JsonPrimitive(2015);
-			JsonArray years = new JsonArray();
-			years.add(year);
-			doc.add("years", years);
-		}
-		System.out.println("\nchanged doc: "+doc.toString());
-		Response res = docutil.updateDoc(doc);
-		System.out.println(res.toString());
-		JsonObject updoc = docutil.db.find(JsonObject.class, res.getId());
-		System.out.println("updated doc: "+updoc.toString());
-		
-		assertTrue(updoc.has("years"));
-	}
+//	@Test
+//	public void testDeleteDoc() 
+//	{
+//		Response res = docutil.deleteDoc("fa7a8da525ad46148610ffeb0bfe2f8b");
+//		System.out.println("\n"+res.toString());
+//	}
+//
+//	@Test
+//	public void testUpdateDoc() 
+//	{
+//		JsonObject doc = docutil.getUserDoc("gyakk3@gmail.com").getAsJsonObject();
+//		if (!doc.has("years")) {
+//			JsonPrimitive year = new JsonPrimitive(2015);
+//			JsonArray years = new JsonArray();
+//			years.add(year);
+//			doc.add("years", years);
+//		}
+//		System.out.println("\nchanged doc: "+doc.toString());
+//		Response res = docutil.updateDoc(doc);
+//		System.out.println(res.toString());
+//		JsonObject updoc = docutil.db.find(JsonObject.class, res.getId());
+//		System.out.println("updated doc: "+updoc.toString());
+//		
+//		assertTrue(updoc.has("years"));
+//	}
 
 }
