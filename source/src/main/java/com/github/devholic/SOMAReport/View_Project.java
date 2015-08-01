@@ -22,9 +22,9 @@ public class View_Project {
 	@Produces("text/html")
 	public Viewable projectList() {
 		ProjectsController p = new ProjectsController();
-		System.out.println(p.getMyProjects("ppyong0@gmail.com").toString());
+		System.out.println(p.getMyProjects("4c44d639b77c290955371694d3310194").toString());
 		Map<String, Object> projectMap = new Gson().fromJson(
-				p.getMyProjects("ppyong0@gmail.com"),
+				p.getMyProjects("4c44d639b77c290955371694d3310194"),
 				new TypeToken<HashMap<String, Object>>() {
 				}.getType());
 		Map<String, Object> map = new HashMap<String, Object>();

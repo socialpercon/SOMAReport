@@ -1,4 +1,4 @@
-package com.github.devholic.SOMAReport.Datbase;
+package com.github.devholic.SOMAReport.Database;
 
 import java.util.List;
 

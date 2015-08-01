@@ -17,8 +17,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.github.devholic.SOMAReport.Datbase.DocumentUtil;
-import com.github.devholic.SOMAReport.Datbase.ReferenceUtil;
+import com.github.devholic.SOMAReport.Database.DocumentUtil;
+import com.github.devholic.SOMAReport.Database.ReferenceUtil;
 import com.github.devholic.SOMAReport.Model.Reports;
 import com.google.gson.JsonObject;
 

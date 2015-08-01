@@ -1,7 +1,7 @@
 package com.github.devholic.SOMAReport.Model;
 
-import com.github.devholic.SOMAReport.Datbase.DocumentUtil;
-import com.github.devholic.SOMAReport.Datbase.ReferenceUtil;
+import com.github.devholic.SOMAReport.Database.DocumentUtil;
+import com.github.devholic.SOMAReport.Database.ReferenceUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 

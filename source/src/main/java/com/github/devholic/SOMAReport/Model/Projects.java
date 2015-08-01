@@ -1,6 +1,6 @@
 package com.github.devholic.SOMAReport.Model;
 
-import com.github.devholic.SOMAReport.Datbase.DocumentUtil;
+import com.github.devholic.SOMAReport.Database.DocumentUtil;
 
 public class Projects {
 
