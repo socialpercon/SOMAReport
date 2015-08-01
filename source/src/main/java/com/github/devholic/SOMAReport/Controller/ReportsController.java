@@ -17,7 +17,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.github.devholic.SOMAReport.Datbase.ReferenceUtil;
 import com.github.devholic.SOMAReport.Model.Reports;
+import com.google.gson.JsonObject;
 
 
 @Path("/reports")
@@ -30,23 +32,14 @@ public class ReportsController {
 	 *************************************************************************/
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-	public List<Reports> getUserList(){
+	public List<JsonObject> getReportList(){
 		
-		List<Reports> report_list = new ArrayList<Reports>();
-		
-		Reports report1 = new Reports();
-		Reports report2 = new Reports();
-		Reports report3 = new Reports();
+		List<JsonObject> report_list = new ArrayList<JsonObject>();
 		
 		try{
 
-			report1.setReportId("repo1");
-			report2.setReportId("repo2");
-			report3.setReportId("repo3");
-
-			report_list.add(report1);
-			report_list.add(report2);
-			report_list.add(report3);
+			ReferenceUtil util = new ReferenceUtil("somarecord");
+			report_list = util.getAllMentee();
 			
 		}catch(Exception e){
 			e.printStackTrace();

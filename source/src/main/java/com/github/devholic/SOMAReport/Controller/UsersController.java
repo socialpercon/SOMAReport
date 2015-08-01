@@ -15,7 +15,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jettison.json.JSONObject;
+
+import com.github.devholic.SOMAReport.Datbase.ReferenceUtil;
 import com.github.devholic.SOMAReport.Model.Users;
+import com.google.gson.JsonObject;
 
 
 @Path("/users")
@@ -40,33 +44,45 @@ public class UsersController {
 		
 	}
 	/**************************************************************************
-	 * 사용자 리스트를 가져온다
+	 * 멘티 전체 리스트를 가져온다
 	 * @return List<Users>
 	 *************************************************************************/
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-	public List<Users> getUserList(){
+	public List<JsonObject> getMenteeList(){
 
-		List<Users> user_list = new ArrayList<Users>();
-		
-		Users user1 = new Users();
-		Users user2 = new Users();
-		Users user3 = new Users();
+		List<JsonObject> result = new ArrayList<JsonObject>();
 		
 		try{		
-			user1.setUserId("user1");
-			user2.setUserId("user2");
-			user3.setUserId("user3");
-			
-			user_list.add(user1);
-			user_list.add(user2);
-			user_list.add(user3);
+			ReferenceUtil util = new ReferenceUtil("somarecord");
+			result = util.getAllMentee();
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 			
-		return user_list;
+		return result;
+	}
+	
+	/**************************************************************************
+	 * 멘토 전체 리스트를 가져온다
+	 * @return List<Users>
+	 *************************************************************************/
+	@GET
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
+	public List<JsonObject> getMentoList(){
+
+		List<JsonObject> result = new ArrayList<JsonObject>();
+		
+		try{		
+			ReferenceUtil util = new ReferenceUtil("somarecord");
+			result = util.getAllMentor();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+			
+		return result;
 	}
 	
 	/**************************************************************************

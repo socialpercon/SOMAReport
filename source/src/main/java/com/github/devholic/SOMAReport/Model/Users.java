@@ -37,28 +37,30 @@ public class Users {
 		DocumentUtil docUtil = new DocumentUtil("somarecord");
 		JsonObject userDoc = docUtil.getUserDoc(account);
 		
-		userId = userDoc.get("_id").getAsString();
-		
-		if (userDoc.get("type").getAsString().equalsIgnoreCase("mentor")) {
-			role = Users.USER_ROLE_MENTOR;
-			userSection = userDoc.get("section").getAsString(); 
-			JsonArray years = userDoc.get("years").getAsJsonArray();
-			userYear = new Integer[years.size()];
-			for (int i=0; i<userYear.length; i++) 
-				userYear[i] = years.get(i).getAsInt();
+		if(userDoc != null){
+			userId = userDoc.get("_id").getAsString();
+			
+			if (userDoc.get("type").getAsString().equalsIgnoreCase("mentor")) {
+				role = Users.USER_ROLE_MENTOR;
+				userSection = userDoc.get("section").getAsString(); 
+				JsonArray years = userDoc.get("years").getAsJsonArray();
+				userYear = new Integer[years.size()];
+				for (int i=0; i<userYear.length; i++) 
+					userYear[i] = years.get(i).getAsInt();
+			}
+			else if (userDoc.get("type").getAsString().equalsIgnoreCase("mentee")) {
+				role = Users.USER_ROLE_MENTOR;
+				userYear = new Integer[1];
+				userYear[0] = userDoc.get("year").getAsInt();
+			}
+				else {
+				// user에 해당하지 않는 문서이므로 exception 처리
+			}
+			
+			userName = userDoc.get("name").getAsString();
+			userBelong = userDoc.get("belong").getAsString();
+			userPhone = userDoc.get("phone_num").getAsString();	
 		}
-		else if (userDoc.get("type").getAsString().equalsIgnoreCase("mentee")) {
-			role = Users.USER_ROLE_MENTOR;
-			userYear = new Integer[1];
-			userYear[0] = userDoc.get("year").getAsInt();
-		}
-			else {
-			// user에 해당하지 않는 문서이므로 exception 처리
-		}
-		
-		userName = userDoc.get("name").getAsString();
-		userBelong = userDoc.get("belong").getAsString();
-		userPhone = userDoc.get("phone_num").getAsString();	
 	}
 	
 	
