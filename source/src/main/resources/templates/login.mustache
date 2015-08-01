@@ -1,52 +1,33 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="Expires" content="-1"> 
-  <meta http-equiv="Pragma" content="no-cache"> 
-  <meta http-equiv="Cache-Control" content="No-Cache"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="google-signin-client_id" content="3024099101-h9n9s6qbhj6mkh97qhdtrf7dui1b9c2j.apps.googleusercontent.com">
-  <title>somareport</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.css">
-  <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
-</head>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Expires" content="-1"> 
+    <meta http-equiv="Pragma" content="no-cache"> 
+    <meta http-equiv="Cache-Control" content="No-Cache"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>somareport</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="test.css">
+  </head>
   <body>
-	  <nav id="somareport-nav" class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">SOMA Report</a>
+    <div class="container vertical-center">
+    	<div class="card card-container">
+    		<center><h1><span class="logo-front">SOMA</span><span class="logo-back">REPORT</span></h1></center>
+            <p id="profile-name" class="profile-name-card logo-subtext">bogoseo. write. success.</p>
+            <form class="form-signin" action="/login" method="post">
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">로그인</button>
+            </form><!-- /form -->
+            <a href="#" class="forgot-password">
+                비밀번호를 잊어버리셨나요?
+            </a>
         </div>
-      </div>
-    </nav>
-    <div class="container">
-      <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-      <div class="g-signin2" data-onsuccess="onSignIn2" data-theme="dark"></div>
-    </div><script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script>
-      function onSignIn(googleUser) {
-        var token = googleUser.getAuthResponse().id_token;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8080/login?token='+token);
-        xhr.onload = function() {
-          location.href="http://localhost:8080/report/list/pj1"
-        };
-        xhr.send();
-      };
-      function onSignIn2(googleUser) {
-        var token = googleUser.getAuthResponse().id_token;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:8080/login?token='+token);
-        xhr.onload = function() {
-          location.href="http://localhost:8080/project/list/6/1/1"
-        };
-        xhr.send();
-      };
-    </script>
   </body>
 </html>
