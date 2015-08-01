@@ -29,14 +29,12 @@ public class ProjectsController {
 	@GET
 	public JsonArray getMyProjects(String email){
 		JsonArray result = new JsonArray();
-		
 		try{
 			result = reference_util.getMyProjects(email);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return result;
-		
 	}
 	/**************************************************************************
 	 * 프로젝트 리스트를 가져온다.
