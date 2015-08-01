@@ -33,12 +33,11 @@ public class ProjectsController {
 	 * @param email
 	 * @return
 	 *************************************************************************/
-	@GET
+	
 	public JsonArray getMyProjects(String email){
 		JsonArray result = new JsonArray();
 		try{
 			result = reference_util.getMyProjects(email);
-			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
