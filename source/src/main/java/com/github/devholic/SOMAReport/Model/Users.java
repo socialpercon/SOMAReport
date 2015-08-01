@@ -39,6 +39,7 @@ public class Users {
 		JsonObject userDoc = docUtil.getUserDoc(account);
 		System.out.println(userDoc);
 		if (userDoc != null) {
+			userId = userDoc.get("_id").getAsString();
 			if (userDoc.get("type").getAsString().equalsIgnoreCase("mentor")) {
 				role = Users.USER_ROLE_MENTOR;
 				userSection = userDoc.get("section").getAsString();
