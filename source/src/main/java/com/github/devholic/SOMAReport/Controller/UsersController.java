@@ -14,7 +14,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.codehaus.jettison.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Datbase.ReferenceUtil;
 import com.github.devholic.SOMAReport.Model.Users;
@@ -23,6 +22,16 @@ import com.google.gson.JsonObject;
 @Path("/users")
 public class UsersController {
 
+	
+	ReferenceUtil reference_util = new ReferenceUtil("somarecord");
+	
+	/**
+	 * 로그인
+	 * 
+	 * @param email
+	 * @param password
+	 * @return
+	 */
 	public static boolean login(String email, String password) {
 		System.out.println("email :" + email + "/ password:" + password);
 		boolean result = false;

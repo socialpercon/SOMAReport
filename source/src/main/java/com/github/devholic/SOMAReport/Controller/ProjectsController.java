@@ -14,29 +14,43 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.github.devholic.SOMAReport.Datbase.ReferenceUtil;
 import com.github.devholic.SOMAReport.Model.Projects;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 
 @Path("/projects")
 public class ProjectsController {
 
+	ReferenceUtil reference_util = new ReferenceUtil("somarecord");
 	
+	//public JsonArray getMyProjects (String user_id)
+	@GET
+	public JsonArray getMyProjects(String email){
+		JsonArray result = new JsonArray();
+		
+		try{
+			result = reference_util.getMyProjects(email);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+		
+	}
 	/**************************************************************************
 	 * 프로젝트 리스트를 가져온다.
 	 * @return List<Projects>
 	 *************************************************************************/
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-	public List<Projects> getProjectList(){
+	public List<JsonObject> getProjectList(){
 		
-		List<Projects> project_list = new ArrayList<Projects>();
+		List<JsonObject> project_list = new ArrayList<JsonObject>();
 		
-		Projects pj1 = new Projects();
-		Projects pj2 = new Projects();
-		Projects pj3 = new Projects();
 		
 		try{
-			
+			project_list = reference_util.getAllProjects();
 			
 		}catch(Exception e){
 			e.printStackTrace();

@@ -77,7 +77,7 @@ public class ReferenceUtil {
 	public List<JsonObject> getAllMentee ()
     {
         //사무국
-        //모든 멘티 리스트 불러오기  
+        //모든 멘티 리스트 불러오기
     	return db.view("admin_view/all_docs")
     			.key("mentee").includeDocs(true).reduce(false)
     			.query(JsonObject.class);

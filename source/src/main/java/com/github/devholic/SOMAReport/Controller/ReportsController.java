@@ -39,7 +39,7 @@ public class ReportsController {
 		try{
 
 			ReferenceUtil util = new ReferenceUtil("somarecord");
-			report_list = util.getAllMentee();
+			report_list = util.getAllReports();
 			
 		}catch(Exception e){
 			e.printStackTrace();
