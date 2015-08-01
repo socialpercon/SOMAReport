@@ -82,7 +82,15 @@ public class ReferenceUtil {
     			.key("mentee").includeDocs(true).reduce(false)
     			.query(JsonObject.class);
     }
+	
+	public List<JsonObject> getAllProjects(){
+		return db.view("admin_viewcurrent_project").includeDocs(true).reduce(false).query(JsonObject.class);
+	}
 
+	public List<JsonObject> getAllReports(){
+		return db.view("project_view/all_report").includeDocs(true).reduce(false).query(JsonObject.class);
+	}
+	
 	public List<JsonObject> getCurrentProjects (int[] current)
     {
         //사무국
