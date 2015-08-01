@@ -14,6 +14,8 @@ import org.glassfish.grizzly.http.server.Request;
 import org.glassfish.grizzly.http.server.Session;
 import org.glassfish.jersey.server.mvc.Viewable;
 
+import com.github.devholic.SOMAReport.Controller.UsersController;
+
 @Path("/")
 public class View_Login {
 
@@ -42,12 +44,13 @@ public class View_Login {
 				return Response.seeOther(
 						new URI("http://localhost:8080/project/list")).build();
 			} else {
-				// 로그인 되어있으므로
-				
-				//login logic
-				
-				return Response.seeOther(new URI("http://localhost:8080/"))
-						.build();
+				if (UsersController.login(email, password)) {
+					return Response.seeOther(new URI("http://localhost:8080/report/list"))
+							.build();
+				} else {
+					return Response.seeOther(new URI("http://localhost:8080/login"))
+							.build();
+				}
 			}
 		} else {
 			return Response.seeOther(new URI("http://localhost:8080/login"))
