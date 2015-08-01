@@ -34,7 +34,7 @@
     <div id="soma-container" class="container">
     {{#reportList}}
     <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
-    <a href="http://localhost:8080/report/1"><h3 style="margin-top:0.2em;margin-bottom:0.2em">{{reportTitle}}</h3></a>
+    <a href="http://localhost:8080/report/{{id}}"><h3 style="margin-top:0.2em;margin-bottom:0.2em">#{{reportTitle}}</h3></a>
     <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{reportTopic}}</h5>
     <div class="divider"></div>
     <table><tr>
@@ -53,6 +53,8 @@
       {{/attendedMentee}}
       </tr>
     </table>   
+    </div>
+    <div style="height:15px">
     </div>
     {{/reportList}}
     {{#isMentor}}
