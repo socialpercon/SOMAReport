@@ -32,9 +32,9 @@
     <div id="soma-container" class="container">
     {{#projectList}}
     <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
-    <a href="http://localhost:8080/report/1"><h3 style="margin-top:0.2em;margin-bottom:0.2em">{{projectName}}</h3></a>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em"></h5>
-    <div class="divider">{{projectPeriod}}</div>
+    <a href="http://localhost:8080/project/{{id}}"><h3 style="margin-top:0.2em;margin-bottom:0.2em">{{title}}</h3></a>
+    <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{stage}}</h5>
+    <div class="divider"></div>
     <table><tr><td>
       <div class="circular-img"></div>
       </td><td>
@@ -45,6 +45,8 @@
       <div class="circular-img mentee"></div>
       </td></tr>
     </table>   
+    </div>
+    <div style="height:15px">
     </div>
     {{/projectList}}
     </div>

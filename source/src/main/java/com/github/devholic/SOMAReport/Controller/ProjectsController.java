@@ -14,10 +14,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONArray;
+
 import com.github.devholic.SOMAReport.Database.DocumentUtil;
 import com.github.devholic.SOMAReport.Database.ReferenceUtil;
 import com.github.devholic.SOMAReport.Model.Projects;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 
@@ -34,8 +35,8 @@ public class ProjectsController {
 	 * @return
 	 *************************************************************************/
 	
-	public JsonArray getMyProjects(String email){
-		JsonArray result = new JsonArray();
+	public JSONArray getMyProjects(String email){
+		JSONArray result = new JSONArray();
 		try{
 			result = reference_util.getMyProjects(email);
 		}catch(Exception e){

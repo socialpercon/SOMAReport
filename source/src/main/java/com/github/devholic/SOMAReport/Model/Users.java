@@ -1,5 +1,7 @@
 package com.github.devholic.SOMAReport.Model;
 
+import org.json.JSONArray;
+
 import com.github.devholic.SOMAReport.Database.DocumentUtil;
 import com.github.devholic.SOMAReport.Database.ReferenceUtil;
 import com.google.gson.JsonArray;
@@ -96,7 +98,7 @@ public class Users {
 		return false;
 	}
 
-	public JsonArray getMyProjects() {
+	public JSONArray getMyProjects() {
 		// 사용자가 소속된 프로젝트의 리스트를 리턴
 		// 포함된 정보: {id, stage, title, mentor, mentee}
 		ReferenceUtil refutil = new ReferenceUtil("somarecord");
