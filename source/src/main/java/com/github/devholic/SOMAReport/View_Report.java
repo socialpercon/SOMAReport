@@ -9,7 +9,6 @@ import org.glassfish.jersey.server.mvc.Viewable;
 @Path("/report")
 public class View_Report {
 
-	// Mento / Mentee
 	@GET
 	@Path("/list/{id}")
 	@Produces("text/html")

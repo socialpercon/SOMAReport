@@ -3,9 +3,7 @@ package com.github.devholic.SOMAReport;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -18,8 +16,7 @@ import org.glassfish.jersey.server.mvc.Viewable;
 public class View_Main {
 
 	@GET
-	@Path("/login")
-	public Response loginView(@Context Request request)
+	public Response mainView(@Context Request request)
 			throws URISyntaxException {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
@@ -30,25 +27,4 @@ public class View_Main {
 		}
 	}
 
-	@POST
-	@Path("/login")
-	public Response doLogin(@FormParam("email") String email,
-			@FormParam("password") String password, @Context Request request)
-			throws URISyntaxException {
-		if (email != null && password != null) {
-			Session session = request.getSession();
-			if (session.getAttribute("user_id") != null) {
-				// 로그인 처리
-				return Response.seeOther(
-						new URI("http://localhost:8080/project/list")).build();
-			} else {
-				// 로그인 되어있으므로
-				return Response.seeOther(new URI("http://localhost:8080/"))
-						.build();
-			}
-		} else {
-			return Response.seeOther(new URI("http://localhost:8080/login"))
-					.build();
-		}
-	}
 }

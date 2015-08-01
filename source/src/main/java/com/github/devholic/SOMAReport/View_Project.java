@@ -14,7 +14,7 @@ import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Model.Projects;
 
 @Path("/project")
-public class View_ProjectList {
+public class View_Project {
 
 	// Mento / Mentee
 	@GET

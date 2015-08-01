@@ -1,55 +1,57 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Expires" content="-1"> 
-  	<meta http-equiv="Pragma" content="no-cache"> 
-  	<meta http-equiv="Cache-Control" content="No-Cache"> 
+    <meta http-equiv="Pragma" content="no-cache"> 
+    <meta http-equiv="Cache-Control" content="No-Cache"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>somareport</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.css">
     <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
-</head>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
+  </head>
   <body>
-
-	<nav id="somareport-nav" class="navbar navbar-default navbar-fixed-top">
+    <nav id="soma-nav" class="navbar navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">SOMA Report</a>
+          <a class="navbar-brand" href="#"><span class="logo-front">SOMA</span><span class="logo-back">REPORT</span></a>
         </div>
         <ul class="nav navbar-nav">
-          <li><a>프로젝트 리스트</a></li>
+          <li><a href="http://localhost:8080/project/list" class="disable">프로젝트 리스트</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a onclick="/mypage">마이페이지</a></li>
+          <li><a onclick="signOut();">로그아웃</a></li>
         </ul>
       </div>
     </nav>
-    <div class="container">
+    <div id="soma-container" class="container">
     {{#projectList}}
-    <div>
-    <div class="line"></div>
-    <a href="http://localhost:8080/report/list/{{projectId}}"><h2 style="margin-top:0.2em;margin-bottom:0.2em">{{projectName}}</h2></a>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em">6기 1단계 1차</h5>
+    <div class="shadow-z-1 soma-list-card">
+    <a href="http://localhost:8080/report/1"><h3 style="margin-top:0.2em;margin-bottom:0.2em">{{projectName}}</h3></a>
+    <h5 style="margin-top:0.2em;margin-bottom:0.3em"></h5>
+    <div class="divider">{{projectPeriod}}</div>
     <table><tr><td>
-      <div class="circular user-a"></div>
+      <div class="circular-img"></div>
       </td><td>
       <div class="mentor-divider"></div>
       </td><td>
-      <div class="circular mentee-pic user-k"></div>
+      <div class="circular-img mentee"></div>
       </td><td>
-      <div class="circular mentee-pic user-m"></div>
-      </td><td>
-      <div class="circular mentee-pic user-l"></div>
+      <div class="circular-img mentee"></div>
       </td></tr>
     </table>   
     </div>
     {{/projectList}}
     </div>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
   </body>
 </html>
