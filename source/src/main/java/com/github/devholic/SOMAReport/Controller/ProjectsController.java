@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -18,7 +16,6 @@ import org.json.JSONArray;
 
 import com.github.devholic.SOMAReport.Database.DocumentUtil;
 import com.github.devholic.SOMAReport.Database.ReferenceUtil;
-import com.github.devholic.SOMAReport.Model.Projects;
 import com.google.gson.JsonObject;
 
 
@@ -59,6 +56,28 @@ public class ProjectsController {
 		return detail;
 		
 	}
+	
+	/**************************************************************************
+	 * 프로젝트 아이디로 프로젝트 상세정보 가져오기  _ URL Path GET
+	 * @param projectId
+	 * @return Projects
+	 *************************************************************************/
+	@GET
+	@Path("/{projectId}")
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
+	public JsonObject getProjectDetails(@PathParam("projectId") String projectId){
+		
+		JsonObject detail = new JsonObject();
+		
+		try{
+			detail = doc_util.getDoc(projectId);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+			
+		return detail;
+	}
+	
 	/**************************************************************************
 	 * 프로젝트 리스트를 가져온다.
 	 * @return List<Projects>
@@ -79,28 +98,7 @@ public class ProjectsController {
 			
 		return project_list;
 	}
-	
-	/**************************************************************************
-	 * 프로젝트 상세정보를 가져온다
-	 * @param projectId
-	 * @return Projects
-	 *************************************************************************/
-	@GET
-	@Path("/{projectId}")
-	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-	public Projects getProjectDetails(@PathParam("projectId") String projectId){
-		
-		Projects project = new Projects();
-		
-		try{
-					
 
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-			
-		return project;
-	}
 	
 	/*********************************************************************
 	 * 프로젝트 아이디로 프로젝트의 기본 정보를 가져온다
@@ -136,6 +134,7 @@ public class ProjectsController {
 		}
 		return result;
 	}
+	
 	
 	
 	@PUT
