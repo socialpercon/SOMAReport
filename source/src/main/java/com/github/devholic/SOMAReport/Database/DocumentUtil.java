@@ -22,7 +22,7 @@ public class DocumentUtil {
 		// 멘토, 멘티
 		// 계정 정보를 통해 해당 유저의 정보를 가져온다
 		List<JsonObject> result = db.view("get_doc/user_by_account")
-				.key(account).includeDocs(false).reduce(false)
+				.key(account).includeDocs(true).reduce(false)
 				.query(JsonObject.class);
 		if (result.size() == 0) {
 			return null;

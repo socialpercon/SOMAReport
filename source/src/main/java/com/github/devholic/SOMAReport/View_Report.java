@@ -1,6 +1,8 @@
 package com.github.devholic.SOMAReport;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -50,5 +52,23 @@ public class View_Report {
 		jo.put("pid", project.get("_id").toString());
 		jo.put("pname", project.get("title").toString());
 		return new Viewable("/reportdetail.mustache", MustacheHelper.toMap(jo));
+	}
+
+	@GET
+	@Path("/write/{id}")
+	@Produces("text/html")
+	public Viewable writeReport(@PathParam("id") String id) {
+		JSONObject jo = new JSONObject();
+		jo.put("pid", id);
+		return new Viewable("/reportwrite.mustache", MustacheHelper.toMap(jo));
+	}
+
+	@POST
+	@Path("/write")
+	@Produces("text/html")
+	public Viewable doWriteReport(@FormParam("projectid") String pid,
+			@FormParam("date") String date) {
+		System.out.println(pid);
+		return new Viewable("/reportdetail.mustache");
 	}
 }

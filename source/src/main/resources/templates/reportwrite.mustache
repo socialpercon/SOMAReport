@@ -1,102 +1,127 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Expires" content="-1"> 
     <meta http-equiv="Pragma" content="no-cache"> 
     <meta http-equiv="Cache-Control" content="No-Cache"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>somareport</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.css">
     <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
-</head>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
+  </head>
   <body>
-
-	<nav id="somareport-nav" class="navbar navbar-default navbar-fixed-top">
+    <nav id="soma-nav" class="navbar navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">SOMA Report</a>
+          <a class="navbar-brand" href="/"><span class="logo-front">SOMA</span><span class="logo-back">REPORT</span></a>
         </div>
         <ul class="nav navbar-nav">
           <li><a href="http://localhost:8080/project/list" class="disable">프로젝트 리스트</a></li>
-          <li><a class="disable">></a></li>
-          <li><a href="http://localhost:8080/report/list/1" class="disable">SOMA Expensify</a></li>
-          <li><a class="disable">></a></li>
-          <li><a class="disable">보고서 작성</a></li>
+          <li><a class="disabled">></a></li>
+          <li><a href="http://localhost:8080/report/list/{{pid}}">{{pname}}</a></li>
+          <li><a class="disabled">></a></li>
+          <li><a class="disabled">#{{title}}</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a onclick="/mypage">마이페이지</a></li>
+          <li><a onclick="signOut();">로그아웃</a></li>
         </ul>
       </div>
     </nav>
-    <div class="container">
-    <div>
-    <form id="testform" action="http://localhost:8080/projects/name/level" method="post">
-    <div class="line"></div>
-    <div class="form-control-wrapper" style="margin-top:2em;"><input name="sequence" type="text" class="form-control" value="#150724"><div class="floating-label">진행일자</div><span class="material-input"></span></div>
+    <div id="soma-container" class="container">
+    <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
+    <form method="post" action="http://localhost:8080/report/write">
+    <input type="hidden" name="projectid" value="{{pid}}">
+    <div class="group">      
+      <input name="location" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>장소</label>
     </div>
-    <h3 style="margin-top:0.5em;margin-bottom:0.2em">참석자 리스트</h3>
-    <div class="checkbox">
-    	<label>
-        	<input type="checkbox"><span class="checkbox-material"><span class="check"></span></span> 강성훈
-        </label>
+    <div class="group">      
+      <input name="start" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>멘토링 시작 시간</label>
     </div>
-    <div class="checkbox">
-    	<label>
-        	<input type="checkbox"><span class="checkbox-material"><span class="check"></span></span> 민종현
-        </label>
+    <div class="group">      
+      <input name="end" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>멘토링 종료 시간</label>
     </div>
-    <div class="checkbox">
-    	<label>
-        	<input type="checkbox"><span class="checkbox-material"><span class="check"></span></span> 이재연
-        </label>
+    <div class="group">      
+      <input name="except" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>제외 시간</label>
     </div>
-    <div>
-    <h3 style="margin-top:0.8em">회차</h3>
-    <h5>2회차 [자동입력]</h5>
+    <div class="group">      
+      <input name="topic" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>주제</label>
     </div>
-    <div>
-    <div class="form-control-wrapper" style="margin-top:2em;"><input name="main_mento" type="text" class="form-control"><div class="floating-label">멘토링 진행일시</div><span class="material-input"></span></div>
+    <div class="group">      
+      <input name="goal" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>목표</label>
     </div>
-    <div>
-    <div class="form-control-wrapper" style="margin-top:2em;"><input name="area" type="text" class="form-control"><div class="floating-label">제외시간</div><span class="material-input"></span></div>
+    <div class="group">      
+      <input name="issue" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>추진내용</label>
     </div>
-    <div>
-    <div class="form-control-wrapper" style="margin-top:2em;"><input name="period" type="text" class="form-control"><div class="floating-label">주제</div><span class="material-input"></span></div>
+    <div class="group">      
+      <input name="solution" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>해결방안</label>
     </div>
-    <div>
-    <div class="form-control-wrapper" style="margin-top:2em;"><input name="sub_mento" type="text" class="form-control"><div class="floating-label">목표</div><span class="material-input"></span></div>
+    <div class="group">      
+      <input name="plan" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>향후계획</label>
     </div>
-    <div>
-    <div class="form-control-wrapper" style="margin-top:2em;"><input name="category" type="text" class="form-control"><div class="floating-label">추진내용</div><span class="material-input"></span></div>
+    <div class="group">      
+      <input name="opinion" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>멘토의견</label>
     </div>
-    <div>
-    <div class="form-control-wrapper" style="margin-top:2em;"><input type="text" class="form-control"><div class="floating-label">해결방안</div><span class="material-input"></span></div>
+    <div class="group">      
+      <input name="etc" type="text" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>기타</label>
     </div>
-    <div>
-    <div class="form-control-wrapper" style="margin-top:2em;"><input type="text" class="form-control"><div class="floating-label">향후계획</div><span class="material-input"></span></div>
+    <h4>내용</h4>
+    <div class="group">      
+      <textarea style="width:100%;max-width:100%;overflow:visible" type="text" onkeyup="resize(this)" required></textarea>  
     </div>
-    <div>
-    <div class="form-control-wrapper" style="margin-top:2em;"><input type="text" class="form-control"><div class="floating-label">멘토의견</div><span class="material-input"></span></div>
+    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">제출</button>
+    <div style="height:15px">
     </div>
-    <div>
-    <div class="form-control-wrapper" style="margin-top:2em;"><input type="text" class="form-control"><div class="floating-label">기타</div><span class="material-input"></span></div>
-    </div>
-    <div>
-    <div class="form-control-wrapper" style="margin-top:2em;"><input type="text" class="form-control"><div class="floating-label">내용</div><span class="material-input"></span></div>
-    </div>
-    <div>
-    <h3 style="margin-top:0.8em">사진</h3>
-    <a href="#" class="btn btn-material-red-A400">첨부하기<div class="ripple-wrapper"></div></a>
-    </div>
-    <a href='#' class="btn btn-material-red-A400" onclick='document.forms["testform"].submit(); return false;'>업로드<div class="ripple-wrapper"></div></a>
     </form>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
+    <script>
+      function resize(obj) {
+        obj.style.height = "1px";
+        obj.style.height = (20+obj.scrollHeight)+"px";
+      }
+    </script>
   </body>
 </html>
