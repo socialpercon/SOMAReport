@@ -122,11 +122,9 @@ public class DocumentUtil {
 		System.out.println(report_input.toString());
 		JsonObject report = new JsonObject();
 		report.addProperty("type", "project");
-
+		report.add("project", report_input.get("project"));
 		JsonObject report_info = report_input.get("report_info")
 				.getAsJsonObject();
-
-		System.out.println(report_info.toString());
 		report_info.addProperty("date", getDate(report_info));
 		int whole_time = calWholeTime(report_info);
 		int total_time = whole_time - report_info.get("except_time").getAsInt();
