@@ -16,6 +16,7 @@ import com.github.devholic.SOMAReport.Database.DocumentUtil;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 @Path("/report")
 public class View_Report {
@@ -79,7 +80,16 @@ public class View_Report {
 		jo.addProperty("project", pid);
 		JsonObject info = new JsonObject();
 		info.addProperty("place", place);
-		jo.add("report_info", info);
+		JsonArray sja = new JsonArray();
+		sja.add(new JsonPrimitive(2015));
+		sja.add(new JsonPrimitive(7));
+		sja.add(new JsonPrimitive(28));
+		sja.add(new JsonPrimitive(17));
+		sja.add(new JsonPrimitive(0));
+		info.add("start_time", sja);
+		info.add("end_time", sja);
+		info.addProperty("start_time", 1);
+		info.addProperty("except_time", 1);
 		JsonObject details = new JsonObject();
 		details.addProperty("topic", topic);
 		details.addProperty("goal", goal);
