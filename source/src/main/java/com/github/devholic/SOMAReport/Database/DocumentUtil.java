@@ -121,7 +121,7 @@ public class DocumentUtil {
 		
 		JsonObject report = new JsonObject();
 		report.addProperty("type", "project");
-		
+		report.add("project", report_input.get("project"));
 		JsonObject report_info = report_input.get("report_info").getAsJsonObject();
 		report_info.addProperty("date", getDate(report_info));
 		int whole_time = calWholeTime(report_info);
