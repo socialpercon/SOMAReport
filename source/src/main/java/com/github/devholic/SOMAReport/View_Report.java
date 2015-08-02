@@ -14,6 +14,8 @@ import org.json.JSONObject;
 import com.github.devholic.SOMAReport.Controller.ReportsController;
 import com.github.devholic.SOMAReport.Database.DocumentUtil;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 @Path("/report")
 public class View_Report {
@@ -67,8 +69,27 @@ public class View_Report {
 	@Path("/write")
 	@Produces("text/html")
 	public Viewable doWriteReport(@FormParam("projectid") String pid,
-			@FormParam("date") String date) {
-		System.out.println(pid);
+			@FormParam("place") String place, @FormParam("topic") String topic,
+			@FormParam("goal") String goal, @FormParam("issue") String issue,
+			@FormParam("solution") String solution,
+			@FormParam("plan") String plan,
+			@FormParam("opinion") String opinion, @FormParam("etc") String etc) {
+		JsonObject jo = new JsonObject();
+		ReportsController r = new ReportsController();
+		jo.addProperty("project", pid);
+		JsonObject info = new JsonObject();
+		info.addProperty("place", place);
+		jo.add("report_info", info);
+		JsonObject details = new JsonObject();
+		details.addProperty("topic", topic);
+		details.addProperty("goal", goal);
+		details.addProperty("issue", issue);
+		details.addProperty("solution", solution);
+		details.addProperty("plan", plan);
+		details.addProperty("opinion", opinion);
+		details.addProperty("etc", etc);
+		jo.add("report_details", details);
+		r.insertReport(jo);
 		return new Viewable("/reportdetail.mustache");
 	}
 }
