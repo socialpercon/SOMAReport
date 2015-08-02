@@ -27,7 +27,7 @@ public class View_Report {
 	public Viewable report(@PathParam("id") String id) {
 		ReportsController r = new ReportsController();
 		JSONArray ja = r.getReportByProjectId(id);
-		JSONObject jo = new JSONObject();///.
+		JSONObject jo = new JSONObject();// /.
 		jo.put("reportList", ja);
 		DocumentUtil dutil = new DocumentUtil("somarecord");
 		jo.put("pid", id);
@@ -88,8 +88,8 @@ public class View_Report {
 		sja.add(new JsonPrimitive(0));
 		info.add("start_time", sja);
 		info.add("end_time", sja);
-		info.addProperty("start_time", 1);
 		info.addProperty("except_time", 1);
+		jo.add("report_info", info);
 		JsonObject details = new JsonObject();
 		details.addProperty("topic", topic);
 		details.addProperty("goal", goal);
