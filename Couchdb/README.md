@@ -87,7 +87,7 @@
 	      0
 	    ],
 	    "whole_time": 4,
-	    "excep_time": 0,
+	    "except_time": 0,
 	    "total_time": 4
 	  },
 	  "attendance": [

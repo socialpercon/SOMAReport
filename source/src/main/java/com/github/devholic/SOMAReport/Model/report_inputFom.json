@@ -1,0 +1,36 @@
+{
+	"project": "58387a05c00dcded6f7936c1173e3f5a",
+	"report_info":{
+		"place": "aram7-7",
+		"start_time": [2015, 7, 28, 17, 0],
+		"end_time": [2015, 7, 28, 22, 0],
+		"except_time": 1
+	},
+	"attendance": [
+	{
+		"id": "4c44d639b77c290955371694d3310194",
+		"attend": true
+	},
+	{
+		"id": "36be054d83f701154adfdd0cf1019d20",
+		"attend": true
+	},
+	{
+		"id": "36be054d83f701154adfdd0cf1100e37",
+		"attend": true
+	}
+	],
+	"report_details": {
+		"topic": "주제입니다만",
+		"goal": "목푭니다만",
+		"issue": "추진내용입니다만",
+		"solution": "해결방안이요",
+		"plan": "계획입니다만",
+		"opinion": "의견입니다만",
+		"etc": "하고싶은말이남았어"
+	},
+	"report_attachments": {
+		"photo": "linklinklink",
+		"reference": "refrefref"
+	}
+}

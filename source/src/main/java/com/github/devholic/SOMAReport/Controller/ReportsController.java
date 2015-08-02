@@ -56,9 +56,9 @@ public class ReportsController {
 		return ja;
 	}
 
-	/**
+	/**************************************************************************
 	 * 레포트 아이디로 레포트 상세정보 가져오기
-	 */
+	 *************************************************************************/
 	public JsonObject getDetailByReportId(String reportId) {
 		JsonObject detail = new JsonObject();
 
@@ -68,6 +68,24 @@ public class ReportsController {
 			e.printStackTrace();
 		}
 		return detail;
+	}
+	/***************************************************************************
+	 * 레포트 아이디로 레포트 상세정보 가져오기 _ URL Path GET
+	 * @param reportId
+	 * @return
+	 **************************************************************************/
+	@GET
+	@Path("/{reportId}")
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	public JsonObject getReportDetailByReportId(@PathParam("reportId") String reportId){
+		JsonObject detail = new JsonObject();
+		try{
+			detail = doc_util.getDoc(reportId);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return detail;
+		
 	}
 
 	/**************************************************************************
@@ -142,8 +160,8 @@ public class ReportsController {
 	public boolean insertReport(JsonObject document) {
 		boolean result = false;
 		try {
-			String id = doc_util.putDoc(document);
-			System.out.println("insert | report id = " + id);
+			String id = doc_util.putReportDoc(document);
+			System.out.println("inserted | report id = " + id);
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

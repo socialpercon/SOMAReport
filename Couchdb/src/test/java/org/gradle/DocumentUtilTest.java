@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.text.ParseException;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -48,19 +49,19 @@ public class DocumentUtilTest {
 		assertEquals("이뿅뿅",docutil.getDoc(id).get("name").getAsString());
 	}
 
-	@Test
-	public void testPutDoc() 
-			throws JsonIOException, JsonSyntaxException, FileNotFoundException 
-	{
-		JsonParser parser = new JsonParser();
-		JsonElement json = parser.parse(new FileReader("report.json"));
-		JsonObject inputDoc = json.getAsJsonObject();
-		System.out.println("input: "+inputDoc);
-		JsonObject resultDoc = docutil.db.find(JsonObject.class, docutil.putDoc(inputDoc));
-		System.out.println("result: "+resultDoc);
-		
-		assertEquals(inputDoc.get("project").getAsString(), resultDoc.get("project").getAsString());
-	}
+//	@Test
+//	public void testPutDoc() 
+//			throws JsonIOException, JsonSyntaxException, FileNotFoundException 
+//	{
+//		JsonParser parser = new JsonParser();
+//		JsonElement json = parser.parse(new FileReader("report.json"));
+//		JsonObject inputDoc = json.getAsJsonObject();
+//		System.out.println("input: "+inputDoc);
+//		JsonObject resultDoc = docutil.db.find(JsonObject.class, docutil.putDoc(inputDoc));
+//		System.out.println("result: "+resultDoc);
+//		
+//		assertEquals(inputDoc.get("project").getAsString(), resultDoc.get("project").getAsString());
+//	}
 
 //	@Test
 //	public void testDeleteDoc() 
@@ -88,4 +89,11 @@ public class DocumentUtilTest {
 //		assertTrue(updoc.has("years"));
 //	}
 
+	@Test
+	public void testCalTotalTime() throws JsonIOException, JsonSyntaxException, FileNotFoundException, ParseException {
+		JsonParser parser = new JsonParser();
+		JsonElement json = parser.parse(new FileReader("report.json"));
+		JsonObject report_info = json.getAsJsonObject().get("report_info").getAsJsonObject();
+		assertEquals(4,docutil.calTotalTime(report_info));
+	}
 }
