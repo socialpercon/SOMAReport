@@ -10,7 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
-
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
@@ -27,6 +29,7 @@ import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 
+@Path("/gdrive")
 public class GdriveAPI {
 
 //	private static final String SCOPES = "https://www.googleapis.com/auth/drive";
@@ -50,6 +53,29 @@ public class GdriveAPI {
             System.exit(1);
         }
     }
+	
+	
+	@GET
+	@Path("/test")
+	public void test_main() throws IOException{
+        // Build a new authorized API client service.
+        Drive service = getDriveService();
+
+        // Print the names and IDs for up to 10 files.
+        FileList result = service.files().list()
+             .setMaxResults(10)
+             .execute();
+        List<File> files = result.getItems();
+        if (files == null || files.size() == 0) {
+            System.out.println("No files found.");
+        } else {
+            System.out.println("Files:");
+            for (File file : files) {
+                System.out.printf("%s (%s)\n", file.getTitle(), file.getId());
+            }
+        }
+	}
+	
 	
 	/**
 	 * 
@@ -90,29 +116,30 @@ public class GdriveAPI {
                 .build();
     }
 	
-	/**
-	 * 
-	 * @param args
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws IOException {
-        // Build a new authorized API client service.
-        Drive service = getDriveService();
-
-        // Print the names and IDs for up to 10 files.
-        FileList result = service.files().list()
-             .setMaxResults(10)
-             .execute();
-        List<File> files = result.getItems();
-        if (files == null || files.size() == 0) {
-            System.out.println("No files found.");
-        } else {
-            System.out.println("Files:");
-            for (File file : files) {
-                System.out.printf("%s (%s)\n", file.getTitle(), file.getId());
-            }
-        }
-    }
+//	/**
+//	 * 
+//	 * @param args
+//	 * @throws IOException
+//	 */
+//	public static void main(String[] args) throws IOException {
+//        // Build a new authorized API client service.
+//        Drive service = getDriveService();
+//
+//        // Print the names and IDs for up to 10 files.
+//        FileList result = service.files().list()
+//             .setMaxResults(10)
+//             .execute();
+//        List<File> files = result.getItems();
+//        if (files == null || files.size() == 0) {
+//            System.out.println("No files found.");
+//        } else {
+//            System.out.println("Files:");
+//            for (File file : files) {
+//                System.out.printf("%s (%s)\n", file.getTitle(), file.getId());
+//            }
+//        }
+//    }
+	
 	
 	/**
 	 * File Upload through GDrive API
@@ -160,8 +187,7 @@ public class GdriveAPI {
  
 		//print result
 		System.out.println(response.toString());
- 
-		
+	
 	}
 	
 }
