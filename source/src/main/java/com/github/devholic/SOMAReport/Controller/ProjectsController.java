@@ -121,7 +121,7 @@ public class ProjectsController {
 	/*************************************************************************
 	 * 프로젝트를 입력한다 
 	 * @param document
-	 * @return
+	 * @return boolean
 	 ************************************************************************/
 	public boolean insertProject(JsonObject document){
 		boolean result = false;
