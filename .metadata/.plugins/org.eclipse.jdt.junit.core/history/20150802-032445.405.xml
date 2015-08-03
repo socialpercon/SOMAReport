@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="DocumentUtilTest" project="Couchdb" tests="3" started="3" failures="0" errors="0" ignored="0">
-  <testsuite name="org.gradle.DocumentUtilTest" time="0.3">
-    <testcase name="testGetUserDoc" classname="org.gradle.DocumentUtilTest" time="0.025"/>
-    <testcase name="testGetUserId" classname="org.gradle.DocumentUtilTest" time="0.126"/>
-    <testcase name="testPutDoc" classname="org.gradle.DocumentUtilTest" time="0.149"/>
-  </testsuite>
-</testrun>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="UsersTest" project="source" tests="2" started="2" failures="0" errors="0" ignored="0">
-  <testsuite name="com.github.devholic.SOMAReport.Model.UsersTest" time="0.157">
-    <testcase name="testIsBelongToYear" classname="com.github.devholic.SOMAReport.Model.UsersTest" time="0.0"/>
-    <testcase name="testGetMyProjects" classname="com.github.devholic.SOMAReport.Model.UsersTest" time="0.157"/>
-  </testsuite>
-</testrun>

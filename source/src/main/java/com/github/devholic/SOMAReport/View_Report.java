@@ -71,7 +71,9 @@ public class View_Report {
 	@Path("/write")
 	@Produces("text/html")
 	public Viewable doWriteReport(@FormParam("projectid") String pid,
-			@FormParam("place") String place, @FormParam("topic") String topic,
+			@FormParam("place") String place, @FormParam("start") String start, 
+			@FormParam("end") String end, @FormParam("except") String except,
+			@FormParam("topic") String topic,
 			@FormParam("goal") String goal, @FormParam("issue") String issue,
 			@FormParam("solution") String solution,
 			@FormParam("plan") String plan,
@@ -81,15 +83,23 @@ public class View_Report {
 		jo.addProperty("project", pid);
 		JsonObject info = new JsonObject();
 		info.addProperty("place", place);
+		//날짜 입력
+		//현재는 "yyyyMMddhhmm" 기준 
 		JsonArray sja = new JsonArray();
-		sja.add(new JsonPrimitive(2015));
-		sja.add(new JsonPrimitive(7));
-		sja.add(new JsonPrimitive(28));
-		sja.add(new JsonPrimitive(17));
-		sja.add(new JsonPrimitive(0));
+		sja.add(new JsonPrimitive(Integer.parseInt(start.substring(0, 4))));
+		sja.add(new JsonPrimitive(Integer.parseInt(start.substring(4, 6))));
+		sja.add(new JsonPrimitive(Integer.parseInt(start.substring(6, 8))));
+		sja.add(new JsonPrimitive(Integer.parseInt(start.substring(8, 10))));
+		sja.add(new JsonPrimitive(Integer.parseInt(start.substring(10, 12))));
 		info.add("start_time", sja);
+		sja = new JsonArray();
+		sja.add(new JsonPrimitive(Integer.parseInt(end.substring(0, 4))));
+		sja.add(new JsonPrimitive(Integer.parseInt(end.substring(4, 6))));
+		sja.add(new JsonPrimitive(Integer.parseInt(end.substring(6, 8))));
+		sja.add(new JsonPrimitive(Integer.parseInt(end.substring(8, 10))));
+		sja.add(new JsonPrimitive(Integer.parseInt(end.substring(10, 12))));
 		info.add("end_time", sja);
-		info.addProperty("except_time", 1);
+		info.addProperty("except_time", Integer.parseInt(except));
 		jo.add("report_info", info);
 		JsonObject details = new JsonObject();
 		details.addProperty("topic", topic);

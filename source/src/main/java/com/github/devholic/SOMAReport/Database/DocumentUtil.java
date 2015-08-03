@@ -112,9 +112,8 @@ public class DocumentUtil {
 	public String getDate(JsonObject report_info) {
 		String date = "";
 		JsonArray start_time = report_info.get("start_time").getAsJsonArray();
-		for (int i = 0; i < start_time.size(); i++)
-			date = date + start_time.get(i) + "-";
-		date = date.substring(0, date.length() - 2);
+		date = start_time.get(0).getAsString() + "_" + 
+				start_time.get(1).getAsString() + "_" + start_time.get(2).getAsString();
 		return date;
 	}
 
