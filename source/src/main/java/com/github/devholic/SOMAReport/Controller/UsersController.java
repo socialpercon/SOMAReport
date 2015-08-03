@@ -20,12 +20,12 @@ import com.google.gson.JsonObject;
 @Path("/users")
 public class UsersController {
 
-	
 	ReferenceUtil reference_util = new ReferenceUtil("somarecord");
 	DocumentUtil doc_util = new DocumentUtil("somarecord");
-	
+
 	/**
 	 * 로그인
+	 * 
 	 * @param email
 	 * @param password
 	 * @return
@@ -34,7 +34,7 @@ public class UsersController {
 		System.out.println("email :" + email + "/ password:" + password);
 		boolean result = false;
 		Users us = new Users(email);
-		if (us.getUserName() != null) {
+		if (us.getUserId() != null) {
 			result = true;
 		} else {
 			result = false;
@@ -113,19 +113,19 @@ public class UsersController {
 		return user;
 	}
 
-	
 	/*************************************************************************
-	 * 사용자를 입력한다 
+	 * 사용자를 입력한다
+	 * 
 	 * @param document
 	 * @return
 	 ************************************************************************/
-	public boolean insertUser(JsonObject document){
+	public boolean insertUser(JsonObject document) {
 		boolean result = false;
-		try{
+		try {
 			String id = doc_util.putDoc(document);
-			System.out.println("inserted report id = "+id);
+			System.out.println("inserted report id = " + id);
 			result = true;
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
@@ -143,21 +143,21 @@ public class UsersController {
 				.entity("put : 500").build();
 	}
 
-	
 	/************************************************************************
 	 * 사용자 아이디로 사용자를 삭제한다.
+	 * 
 	 * @param reportId
 	 * @return
 	 ***********************************************************************/
 	@DELETE
-	public boolean deleteUser(String reportId){
+	public boolean deleteUser(String reportId) {
 		boolean result = false;
-		
-		try{
-			System.out.println("delete | user id = "+ reportId+ "\n");
+
+		try {
+			System.out.println("delete | user id = " + reportId + "\n");
 			doc_util.deleteDoc(reportId);
 			result = true;
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;

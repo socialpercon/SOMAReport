@@ -45,7 +45,7 @@ public class View_Login {
 						new URI("http://localhost:8080/project/list")).build();
 			} else {
 				if (UsersController.login(email, password)) {
-					return Response.seeOther(new URI("http://localhost:8080/report/list"))
+					return Response.seeOther(new URI("http://localhost:8080/report/list/4c44d639b77c290955371694d33e4fe9"))
 							.build();
 				} else {
 					return Response.seeOther(new URI("http://localhost:8080/login"))

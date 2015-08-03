@@ -26,7 +26,7 @@ public class DocumentUtil {
 		// 멘토, 멘티
 		// 계정 정보를 통해 해당 유저의 정보를 가져온다
 		List<JsonObject> result = db.view("get_doc/user_by_account")
-				.key(account).includeDocs(false).reduce(false)
+				.key(account).includeDocs(true).reduce(false)
 				.query(JsonObject.class);
 		if (result.size() == 0) {
 			return null;
@@ -69,7 +69,7 @@ public class DocumentUtil {
 		Response response = db.update(document);
 		return response;
 	}
-	
+
 	public int calWholeTime(JsonObject report_info) {
 
 		int whole_time = 0;
@@ -95,45 +95,47 @@ public class DocumentUtil {
 		String end = timeString;
 
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyyMMddhhmm");
-		
+
 		try {
 			Date startTime = dateformat.parse(start);
 			Date endTime = dateformat.parse(end);
-			long whole = (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60);
-			whole_time = (int)whole;
+			long whole = (endTime.getTime() - startTime.getTime())
+					/ (1000 * 60 * 60);
+			whole_time = (int) whole;
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 
 		return whole_time;
 	}
-	
-	public String getDate (JsonObject report_info) {
+
+	public String getDate(JsonObject report_info) {
 		String date = "";
 		JsonArray start_time = report_info.get("start_time").getAsJsonArray();
-		for (int i=0; i<start_time.size(); i++) 
+		for (int i = 0; i < start_time.size(); i++)
 			date = date + start_time.get(i) + "-";
-		date = date.substring(0, date.length()-2);
+		date = date.substring(0, date.length() - 2);
 		return date;
 	}
 
-	public String putReportDoc (JsonObject report_input) {
-		
+	public String putReportDoc(JsonObject report_input) {
+		System.out.println(report_input.toString());
 		JsonObject report = new JsonObject();
 		report.addProperty("type", "project");
-		
-		JsonObject report_info = report_input;
-		report_info.addProperty("date", getDate(report_input));
-		int whole_time = calWholeTime(report_input);
-		int total_time = whole_time - report_input.get("except_time").getAsInt(); 
+		report.add("project", report_input.get("project"));
+		JsonObject report_info = report_input.get("report_info")
+				.getAsJsonObject();
+		report_info.addProperty("date", getDate(report_info));
+		int whole_time = calWholeTime(report_info);
+		int total_time = whole_time - report_info.get("except_time").getAsInt();
 		report_info.addProperty("whole_time", whole_time);
 		report_info.addProperty("total_time", total_time);
 		report.add("report_info", report_info);
-		
+
 		report.add("attendance", report_input.get("attendance"));
 		report.add("report_details", report_input.get("report_details"));
 		report.add("report_attachments", report_input.get("report_attachments"));
-		
+
 		return putDoc(report);
 
 	}

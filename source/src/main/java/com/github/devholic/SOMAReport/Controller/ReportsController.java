@@ -44,7 +44,8 @@ public class ReportsController {
 				JSONObject jo = new JSONObject();
 				jo.put("id", reports_list.get(i).get("_id").getAsString());
 				jo.put("reportTitle", reports_list.get(i).get("report_info")
-						.getAsJsonObject().get("date").getAsString().replaceAll("-", ""));
+						.getAsJsonObject().get("date").getAsString()
+						.replaceAll("-", ""));
 				jo.put("reportTopic", reports_list.get(i).get("report_details")
 						.getAsJsonObject().get("topic").getAsString());
 				ja.put(jo);
@@ -69,23 +70,26 @@ public class ReportsController {
 		}
 		return detail;
 	}
+
 	/***************************************************************************
 	 * 레포트 아이디로 레포트 상세정보 가져오기 _ URL Path GET
+	 * 
 	 * @param reportId
 	 * @return
 	 **************************************************************************/
 	@GET
 	@Path("/{reportId}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public JsonObject getReportDetailByReportId(@PathParam("reportId") String reportId){
+	public JsonObject getReportDetailByReportId(
+			@PathParam("reportId") String reportId) {
 		JsonObject detail = new JsonObject();
-		try{
+		try {
 			detail = doc_util.getDoc(reportId);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return detail;
-		
+
 	}
 
 	/**************************************************************************
@@ -108,47 +112,6 @@ public class ReportsController {
 		}
 
 		return report_list;
-	}
-
-	/**************************************************************************
-	 * 레포트 상세정보를 가져온다.
-	 * 
-	 * @param reportId
-	 * @return Reports
-	 *************************************************************************/
-	@GET
-	@Path("/{reportId}")
-	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public Reports getReportDetail(@PathParam("reportId") String reportId) {
-
-		Reports report = new Reports();
-
-		try {
-
-			// 참석한 멘티들
-			String[] attended_mentee = { "min", "kang", "lee" };
-			String inputStr = "11-07-2015";
-			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-			Date inputDate = dateFormat.parse(inputStr);
-
-			report.setReportId(reportId);
-			report.setAttended_mentee(attended_mentee);
-			report.setCount(1);
-			report.setDate(inputDate);
-			report.setEnd_date(inputDate);
-			report.setEtc("ETCCC");
-			report.setExcept_end_date(inputDate);
-			report.setExcept_start_date(inputDate);
-			report.setForwarding("추진사항");
-			report.setLocation("위치");
-			report.setMento_opinion("우수하군요");
-			report.setPlan("아무 계획이 없다");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return report;
 	}
 
 	/****************************************************************
@@ -181,22 +144,22 @@ public class ReportsController {
 		return Response.status(500).type(MediaType.APPLICATION_JSON)
 				.entity("put : 500").build();
 	}
-	
-	
+
 	/************************************************************************
-	 * 레포트 아이디로 레포트를 삭제한다 
+	 * 레포트 아이디로 레포트를 삭제한다
+	 * 
 	 * @param reportId
 	 * @return
 	 ***********************************************************************/
 	@DELETE
-	public boolean deleteReport(String reportId){
+	public boolean deleteReport(String reportId) {
 		boolean result = false;
-		
-		try{
-			System.out.println("delete | report id = "+ reportId+ "\n");
+
+		try {
+			System.out.println("delete | report id = " + reportId + "\n");
 			doc_util.deleteDoc(reportId);
 			result = true;
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
