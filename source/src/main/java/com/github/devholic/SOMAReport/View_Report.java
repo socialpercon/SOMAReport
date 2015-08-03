@@ -48,13 +48,12 @@ public class View_Report {
 		JSONObject project = new JSONObject(dutil
 				.getDoc(report.get("project").toString()).getAsJsonObject()
 				.toString());
-		System.out.println(report.toString());
-		System.out.println(project.toString());
 		jo.put("rid", id);
 		jo.put("title", report.getJSONObject("report_info").get("date")
 				.toString().replaceAll("-", ""));
 		jo.put("pid", project.get("_id").toString());
 		jo.put("pname", project.get("title").toString());
+		jo.put("report", report);
 		return new Viewable("/reportdetail.mustache", MustacheHelper.toMap(jo));
 	}
 
@@ -71,10 +70,10 @@ public class View_Report {
 	@Path("/write")
 	@Produces("text/html")
 	public Viewable doWriteReport(@FormParam("projectid") String pid,
-			@FormParam("place") String place, @FormParam("start") String start, 
+			@FormParam("place") String place, @FormParam("start") String start,
 			@FormParam("end") String end, @FormParam("except") String except,
-			@FormParam("topic") String topic,
-			@FormParam("goal") String goal, @FormParam("issue") String issue,
+			@FormParam("topic") String topic, @FormParam("goal") String goal,
+			@FormParam("issue") String issue,
 			@FormParam("solution") String solution,
 			@FormParam("plan") String plan,
 			@FormParam("opinion") String opinion, @FormParam("etc") String etc) {
@@ -83,8 +82,8 @@ public class View_Report {
 		jo.addProperty("project", pid);
 		JsonObject info = new JsonObject();
 		info.addProperty("place", place);
-		//날짜 입력
-		//현재는 "yyyyMMddhhmm" 기준 
+		// 날짜 입력
+		// 현재는 "yyyyMMddhhmm" 기준
 		JsonArray sja = new JsonArray();
 		sja.add(new JsonPrimitive(Integer.parseInt(start.substring(0, 4))));
 		sja.add(new JsonPrimitive(Integer.parseInt(start.substring(4, 6))));

@@ -222,23 +222,37 @@ body, html {
     margin-left:0.5em;
 }
 
-.group            { 
-  margin-top:20px; 
-  position:relative; 
-  margin-bottom:45px; 
+.group { 
+    margin-top:20px; 
+    position:relative; 
+    margin-bottom:45px; 
 }
-input               {
-  font-size:18px;
-  padding:10px 10px 10px 5px;
-  display:block;
-  width:100%;
-  border:none;
-  border-bottom:1px solid #757575;
+
+.group-c { 
+    margin-top:20px; 
+    position:relative;
 }
-input:focus         { outline:none; }
+
+.checkbox-helper { 
+    padding-bottom:20px;
+    padding-left:5px;
+}
+
+.materialst-input input {
+    font-size:18px;
+    padding:10px 10px 10px 5px;
+    display:block;
+    width:100%;
+    border:none;
+    border-bottom:1px solid #757575;
+}
+
+.materialst-input input:focus {
+    outline:none;
+}
 
 /* LABEL ======================================= */
-label                {
+.materialst-input label {
   color:#999; 
   font-size:18px;
   font-weight:normal;
@@ -252,7 +266,7 @@ label                {
 }
 
 /* active state */
-input:focus ~ label, input:valid ~ label        {
+.materialst-input input:focus ~ label, .materialst-input input:valid ~ label {
   top:-20px;
   font-size:14px;
   color:#5264AE;
@@ -284,7 +298,7 @@ input:focus ~ label, input:valid ~ label        {
 }
 
 /* active state */
-input:focus ~ .bar:before, input:focus ~ .bar:after {
+.materialst-input input:focus ~ .bar:before, .materialst-input input:focus ~ .bar:after {
   width:100%;
 }
 
@@ -300,10 +314,14 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
 }
 
 /* active state */
-input:focus ~ .highlight {
+.materialst-input input:focus ~ .highlight {
   -webkit-animation:inputHighlighter 0.3s ease;
   -moz-animation:inputHighlighter 0.3s ease;
   animation:inputHighlighter 0.3s ease;
+}
+
+.popover {
+    background: #fff !important; 
 }
 
 /* ANIMATIONS ================ */

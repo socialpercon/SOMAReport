@@ -1,5 +1,6 @@
 .log
 .metadata/.plugins/org.eclipse.core.resources/.history/
 .metadata/.plugins/
-
+.snap
 *.snap
+

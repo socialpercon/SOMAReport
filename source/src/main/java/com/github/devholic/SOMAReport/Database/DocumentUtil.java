@@ -131,7 +131,8 @@ public class DocumentUtil {
 		report_info.addProperty("total_time", total_time);
 		report.add("report_info", report_info);
 
-		report.add("attendance", report_input.get("attendance"));
+		report.add("attendee", report_input.get("attendee"));
+		report.add("absentee", report_input.get("absentee"));
 		report.add("report_details", report_input.get("report_details"));
 		report.add("report_attachments", report_input.get("report_attachments"));
 
