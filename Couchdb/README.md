@@ -61,55 +61,81 @@
 
 - 멘토, 멘티의 경우 이름으로 입력받지만 실제로는 id로 저장된다
 
-###Report
+
+###Report _입력 포맷
+
+웹에서 입력된 정보는 다음과 같은 형태로 입력된다
+
+	{
+		"project": "58387a05c00dcded6f7936c1173e3f5a",
+		"report_info":{
+			"place": "aram7-7",
+			"start_time": [2015, 7, 28, 17, 0],
+			"end_time": [2015, 7, 28, 22, 0],
+			"except_time": 1
+		},
+	  "attendee": [
+		"3f4ce9856efb3e2f5d86eeb4d5b99c53",
+		"3f4ce9856efb3e2f5d86eeb4d5bad432"
+	  ],
+	  "absentee": [
+			{
+				"id": "4c44d639b77c290955371694d3310194",
+				"reason": "amolang"
+			}
+	  ],
+		"report_details": {
+			"topic": "주제입니다만",
+			"goal": "목푭니다만",
+			"issue": "추진내용입니다만",
+			"solution": "해결방안이요",
+			"plan": "계획입니다만",
+			"opinion": "의견입니다만",
+			"etc": "하고싶은말이남았어"
+		},
+		"report_attachments": {
+			"photo": "linklinklink",
+			"reference": "refrefref"
+		}
+	}
+
+
+
+###Report _저장 결과
 
 	 {
 	  "_id": "5e9f05f667364abba459f06cdabc3b05",
 	  "_rev": "1-2bf7013eff5de91d47cf3951624e3533",
 	  "type": "report",
-	  "project": "4c44d639b77c290955371694d33e4fe9",
+	  "project": "58387a05c00dcded6f7936c1173e3f5a",
 	  "report_info": {
 	    "mentoring_num": 1,
-	    "date": "2015-07-20",
-	    "place": "aram7-8",
-	    "start_time": [
-	      2015,
-	      7,
-	      20,
-	      18,
-	      0
-	    ],
-	    "end_time": [
-	      2015,
-	      7,
-	      20,
-	      23,
-	      0
-	    ],
-	    "whole_time": 4,
-	    "except_time": 0,
+	    "date": "2015-07-28",
+	    "place": "aram7-7",
+		"start_time": [2015, 7, 28, 17, 0],
+		"end_time": [2015, 7, 28, 22, 0],
+	    "whole_time": 5,
+	    "except_time": 1,
 	    "total_time": 4
 	  },
-	  "attendance": [
-	    {
-	      "id": "4c44d639b77c290955371694d3310194",
-	      "attend": false,
-	      "absense_reason": "family"
-	    },
-	    {
-	      "id": "3f4ce9856efb3e2f5d86eeb4d5b99c53",
-	      "attend": true
-	    },
-	    {
-	      "id": "3f4ce9856efb3e2f5d86eeb4d5bad432",
-	      "attend": true
-	    }
+	  "attendee": [
+		"3f4ce9856efb3e2f5d86eeb4d5b99c53",
+		"3f4ce9856efb3e2f5d86eeb4d5bad432"
+	  ],
+	  "absentee": [
+			{
+				"id": "4c44d639b77c290955371694d3310194",
+				"reason": "amolang"
+			}
 	  ],
 	  "report_details": {
-	    "topic": "주제주제주제주제주제",
-	    "goal": "향후계획향후계획향후계획향후계획향후계획향후계획향후계획향후계획",
-	    "issue": "추진내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용",
-	    "opinion": "의견의견의견의견의견의견의견의견의견의견의견의견의견"
+		"topic": "주제입니다만",
+		"goal": "목푭니다만",
+		"issue": "추진내용입니다만",
+		"solution": "해결방안이요",
+		"plan": "계획입니다만",
+		"opinion": "의견입니다만",
+		"etc": "하고싶은말이남았어"
 	  },
 	  "report_attachments": {
 	    "photo": "linklinklink",
@@ -117,6 +143,7 @@
 	  }
 	}
 
+ - report_info.date, whole_time, total_time등은 자동으로 계산되어 입력
 
 ##Methods  
   
@@ -127,37 +154,84 @@
 
 	DocumentUtil docutil = new DocumentUtil("dbName");
 
-근데 그냥 user, project, report 클래스에 아예 종속시켜서 만드는 게 더 나을 것 같기도..
-
 
 #####DocumentUtil.getUserDoc (String account) : JsonObject
 
 로그인한 사용자의 account정보를 통해 사용자 문서를 JsonObject로 받아온다.
 
+input | output 
+----- | ------
+account | user document (mentor, mentee)
 
 #####DocumentUtil.getUserId (String name) : String
 
 사용자의 이름을 통해 _id값을 받아온다.
 
+input | output
+----- | ------
+name | ._id (mentee, mentor)
+
 #####DocumentUtil.getDoc (String id) : JsonObject
 
 id에 해당하는 문서를 조회한다.
 
+input | output
+----- | ------
+_id | document
+
 #####DocumentUtil.putDoc (JsonObject document) : String
 
-json문서를 데이터베이스에 넣는다.  
-생성된 _id를 리턴한다. -> 이것도 그냥 Response를 통째로 리턴할까?
+json문서를 데이터베이스에 넣는다. (PUT)  
+생성된 _id를 리턴한다.
+
+input | output
+----- | ------
+json document | doc._id
 
 #####DocumentUtil.deleteDoc (String id) : Response
 
 id에 해당하는 문서를 삭제한다.  
 response를 리턴. 
 
+input | output
+----- | ------
+_id | response
+
 #####DocumentUtil.updateDoc (JsonObject document) : JsonObject
 
-수정된 내용의 문서를 입력받아 해당 문서를 update한다. 이때 document는 데이터베이스에 존재하던 문서를 불러온 것으로, 반드시 id, rev를 포함하고 있어야 한다.  
+수정된 내용의 문서를 입력받아 해당 문서를 update한다.  
+이때 document는 데이터베이스에 존재하던 문서를 불러온 것으로, 반드시 id, rev를 포함하고 있어야 한다.  
 
- - 앞으로 생성해야 할 update 기능의 세부사항에 따라 수정 및 확장 필요할듯
+input | output
+----- | ------
+document<br>(include id & rev) | response
+
+#####DocumentUtil.calWholeTime (JsonObject report_info) : int
+
+입력된 레포트 정보에서 멘토링이 진행된 전체 시간을 계산하여 리턴한다.  
+입력받는 report_info는 start_time, end_time을 포함하고 있어야 한다
+
+input | output
+----- | ------
+report_info<br>(include start_time, end_time) | report_info.whole_time
+
+#####DocumentUtil.getDate (JsonObject report_info) : String
+
+입력된 레포트 정보의 start_time 배열로부터 날짜 정보를 받아와 문자열로 리턴한다.  
+출력 포맷을 여기서 지정. (현재는 yyyy_MM_dd)
+
+input | output
+----- | ------
+report_info<br>(include start_time) | report_info.date
+
+#####DocumentUtil.putReportDoc (JsonObject report_input) : String
+
+입력된 레포트 정보 json에 자동으로 입력될 요소들(type, date, whole_time, total_time)을 세팅하여 데이터베이스에 PUT.  
+입력된 최종 문서의 _id를 리턴한다.
+
+input | output
+----- | ------
+report_input<br>(report _입력 포맷 참조) | ._id
 
 ###ReferenceUtil
 
@@ -197,6 +271,18 @@ response를 리턴.
 
  - 관리자용
 
+#####ReferenceUtil.getAllProjects () : List< JsonObject >
+
+모든 프로젝트 문서를 List<JsonObject > 형태로 받아온다
+
+ - 관리자용
+ 
+#####ReferenceUtil.getAllReports () : List< JsonObject >
+
+모든 레포트 문서를 List<JsonObject > 형태로 받아온다
+
+ - 관리자용
+
 #####ReferenceUtil.getCurrentProjects (int[] stage) : List< JsonObject >
 
 입력된 기수, 단계, 차수에 진행되고 있는 모든 프로젝트를 조회
@@ -206,7 +292,12 @@ response를 리턴.
 
  - 관리자용 
   
-  
+#####ReferenceUtil.getProjectInfo (String project_id) : JSonObject
+
+레포트에 입력되거나 프로젝트 리스트 화면에서 보여져야 하는 등에 필요한 프로젝트의 기본 정보를 JsonObject형태로 가져온다
+
+
+
 
 ##Design Documents
 
@@ -269,3 +360,14 @@ project.stage | project._id
 
 기수/단계/차수에 따라 프로젝트 조회
 
+#####_design/admin_view/all_docs_by_id
+
+key | value
+--- | -----
+_.id | doc
+
+#####_design/admin_view/mentor_section
+
+key | value
+--- | -----
+mentor.section | mentor._id
