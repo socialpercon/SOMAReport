@@ -8,11 +8,11 @@
     <meta http-equiv="Cache-Control" content="No-Cache"> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>somareport</title>
+    <link rel="stylesheet" href="test.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
+    <link href="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
   </head>
   <body>
     <nav id="soma-nav" class="navbar navbar-fixed-top">
@@ -37,77 +37,88 @@
     <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
     <form method="post" action="http://localhost:8080/report/write">
     <input type="hidden" name="projectid" value="{{pid}}">
-    <div class="group">      
+    <div class="group materialst-input">      
       <input name="place" type="text" required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>장소</label>
     </div>
-    <div class="group">      
-      <input name="start" type="text" required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>멘토링 시작 시간</label>
+    <h5 style="padding-left:5px; color:#5264AE">시작시간</h5>
+  	<div class="form-group">
+  		<center>
+        <div class='input-group date' id='datetimepicker1'>
+            <input type='text' onkeypress="return false;" style="padding-left:5px;" class="form-control"/>
+            <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        	</span>
+    	</div>
+    	</center>
     </div>
-    <div class="group">      
-      <input name="end" type="text" required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>멘토링 종료 시간</label>
+    <h5 style="padding-left:5px; color:#5264AE">종료시간</h5>
+    <div class="form-group" style="margin-bottom:45px;">
+  		<center>
+        <div class='input-group date' id='datetimepicker2'>
+            <input type='text' onkeypress="return false;" style="padding-left:5px;" class="form-control"/>
+            <span class="input-group-addon">
+            <span class="glyphicon glyphicon-time"></span>
+        	</span>
+    	</div>
+    	</center>
     </div>
-    <div class="group">      
-      <input name="except" type="text" required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>제외 시간</label>
-    </div>
-    <div class="group">      
+    <div class="group materialst-input">      
       <input name="topic" type="text" required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>주제</label>
     </div>
-    <div class="group">      
+    <div class="group materialst-input">      
       <input name="goal" type="text" required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>목표</label>
     </div>
-    <div class="group">      
+    <div class="group materialst-input">      
       <input name="issue" type="text" required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>추진내용</label>
     </div>
-    <div class="group">      
+    <div class="group materialst-input">      
       <input name="solution" type="text" required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>해결방안</label>
     </div>
-    <div class="group">      
+    <div class="group materialst-input">      
       <input name="plan" type="text" required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>향후계획</label>
     </div>
-    <div class="group">      
+    <div class="group-c materialst-input">
       <input name="opinion" type="text" required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>멘토의견</label>
     </div>
-    <div class="group">      
+    <div class="checkbox checkbox-helper">
+		<label>
+			<input type="checkbox"><span class="checkbox-material"><span class="check"></span></span>	멘토의견 공개
+		</label>
+	</div>
+    <div class="group materialst-input">      
       <input name="etc" type="text" required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>기타</label>
     </div>
     <h4>내용</h4>
-    <div class="group">      
+    <div class="group materialst-input">      
       <textarea style="width:100%;max-width:100%;overflow:visible" type="text" onkeyup="resize(this)" required></textarea>  
     </div>
-    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">제출</button>
+    <div>
+    <button class="btn btn-default btn-raised">작성완료<div class="ripple-wrapper"></div></button>
+    </div>
     <div style="height:15px">
     </div>
     </form>
@@ -115,13 +126,30 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
     <script>
-      function resize(obj) {
-        obj.style.height = "1px";
-        obj.style.height = (20+obj.scrollHeight)+"px";
-      }
+    	$(function () {
+                $('#datetimepicker1').datetimepicker({
+                	locale: 'ko',
+                });
+                $('#datetimepicker2').datetimepicker({
+                	locale: 'ko',
+                	format: 'HH:mm'
+                });
+                $("#datetimepicker1").on("dp.change", function (e) {
+            		 $('#datetimepicker2').datetimepicker({
+                		locale: 'ko',
+                		sideBySide: true
+                	});
+        		});
+            });
+      	function resize(obj) {
+        	obj.style.height = "1px";
+        	obj.style.height = (20+obj.scrollHeight)+"px";
+      	}
     </script>
   </body>
 </html>
