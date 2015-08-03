@@ -40,6 +40,7 @@ public class ReportsController {
 		JSONArray ja = new JSONArray();
 		try {
 			reports_list = ref_util.getReports(projectId);
+			System.out.println(reports_list.size());
 			for (int i = 0; i < reports_list.size(); i++) {
 				JSONObject jo = new JSONObject();
 				jo.put("id", reports_list.get(i).get("_id").getAsString());

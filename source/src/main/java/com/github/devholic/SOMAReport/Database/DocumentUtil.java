@@ -121,7 +121,7 @@ public class DocumentUtil {
 	public String putReportDoc(JsonObject report_input) {
 		System.out.println(report_input.toString());
 		JsonObject report = new JsonObject();
-		report.addProperty("type", "project");
+		report.addProperty("type", "report");
 		report.add("project", report_input.get("project"));
 		JsonObject report_info = report_input.get("report_info")
 				.getAsJsonObject();
