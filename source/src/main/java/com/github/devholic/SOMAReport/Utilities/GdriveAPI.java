@@ -11,7 +11,6 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -56,7 +55,7 @@ public class GdriveAPI {
 	
 	
 	@GET
-	@Path("/test")
+	@Path("/fileprint")
 	public void test_main() throws IOException{
         // Build a new authorized API client service.
         Drive service = getDriveService();
@@ -95,8 +94,14 @@ public class GdriveAPI {
                 .setDataStoreFactory(DATA_STORE_FACTORY)
                 .setAccessType("offline")
                 .build();
+        ////-------------------modified by MIN for test----------------------
+        LocalServerReceiver localserver = new LocalServerReceiver();
+        System.out.println("HOST:"+localserver.getHost()+"\n");
+        System.out.println("PORT:"+localserver.getPort()+"\n");
+        ////-----------------------------------------------------------------
         Credential credential = new AuthorizationCodeInstalledApp(
-        		flow, new LocalServerReceiver()).authorize("user");
+        		flow, localserver).authorize("user");
+        
         System.out.println(
                 "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;

@@ -1,9 +1,6 @@
 package com.github.devholic.SOMAReport.Controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.DELETE;
@@ -20,7 +17,6 @@ import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Database.DocumentUtil;
 import com.github.devholic.SOMAReport.Database.ReferenceUtil;
-import com.github.devholic.SOMAReport.Model.Reports;
 import com.google.gson.JsonObject;
 
 @Path("/reports")
