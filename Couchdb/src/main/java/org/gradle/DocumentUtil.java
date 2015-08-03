@@ -23,17 +23,24 @@ public class DocumentUtil {
 	JsonObject getUserDoc(String account) {
 		// 멘토, 멘티
 		// 계정 정보를 통해 해당 유저의 정보를 가져온다
-		JsonObject document = db.view("get_doc/user_by_account").key(account).includeDocs(true).reduce(false)
-				.query(JsonObject.class).get(0).getAsJsonObject();
-
-		return document;
+		try {
+			JsonObject document = db.view("get_doc/user_by_account").key(account).includeDocs(true).reduce(false)
+							.query(JsonObject.class).get(0).getAsJsonObject();
+			return document;
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	String getUserId(String name) {
+		
+		try {
 		JsonObject user = db.view("get_doc/user_by_name").key(name).includeDocs(false).reduce(false)
 				.query(JsonObject.class).get(0).getAsJsonObject();
-
 		return user.get("value").getAsString();
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	JsonObject getDoc(String id) {
