@@ -13,6 +13,9 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
+import org.apache.log4j.Logger;
+
+import com.github.devholic.SOMAReport.Model.Users;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -31,6 +34,8 @@ import com.google.api.services.drive.model.FileList;
 @Path("/gdrive")
 public class GdriveAPI {
 
+	private final Logger logger = Logger.getLogger(GdriveAPI .class);
+	
 //	private static final String SCOPES = "https://www.googleapis.com/auth/drive";
 //	private static final String CLIENT_SECRET_FILE = "client_secret.json";
 	private static final String APPLICATION_NAME = "SOMAReport Test";
@@ -66,11 +71,11 @@ public class GdriveAPI {
              .execute();
         List<File> files = result.getItems();
         if (files == null || files.size() == 0) {
-            System.out.println("No files found.");
+            logger.debug("No files found.");
         } else {
-            System.out.println("Files:");
+            logger.debug("Files:");
             for (File file : files) {
-                System.out.printf("%s (%s)\n", file.getTitle(), file.getId());
+                logger.debug(file.getTitle()+"("+file.getId()+")\n");
             }
         }
 	}
@@ -82,6 +87,7 @@ public class GdriveAPI {
 	 * @throws IOException
 	 */
 	public static Credential authorize() throws IOException {
+		Logger static_logger = Logger.getLogger(GdriveAPI .class);
         // Load client secrets.
         InputStream in = GdriveAPI.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
@@ -96,14 +102,13 @@ public class GdriveAPI {
                 .build();
         ////-------------------modified by MIN for test----------------------
         LocalServerReceiver localserver = new LocalServerReceiver();
-        System.out.println("HOST:"+localserver.getHost()+"\n");
-        System.out.println("PORT:"+localserver.getPort()+"\n");
+        static_logger.debug("HOST:"+localserver.getHost()+"\n");
+        static_logger.debug("PORT:"+localserver.getPort()+"\n");
         ////-----------------------------------------------------------------
         Credential credential = new AuthorizationCodeInstalledApp(
         		flow, localserver).authorize("user");
         
-        System.out.println(
-                "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+        static_logger.debug("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
 	
@@ -121,37 +126,13 @@ public class GdriveAPI {
                 .build();
     }
 	
-//	/**
-//	 * 
-//	 * @param args
-//	 * @throws IOException
-//	 */
-//	public static void main(String[] args) throws IOException {
-//        // Build a new authorized API client service.
-//        Drive service = getDriveService();
-//
-//        // Print the names and IDs for up to 10 files.
-//        FileList result = service.files().list()
-//             .setMaxResults(10)
-//             .execute();
-//        List<File> files = result.getItems();
-//        if (files == null || files.size() == 0) {
-//            System.out.println("No files found.");
-//        } else {
-//            System.out.println("Files:");
-//            for (File file : files) {
-//                System.out.printf("%s (%s)\n", file.getTitle(), file.getId());
-//            }
-//        }
-//    }
-	
-	
 	/**
 	 * File Upload through GDrive API
 	 * @throws IOException
 	 */
 	public static void insertFile() throws IOException{
 		
+		Logger static_logger = Logger.getLogger(GdriveAPI .class);
 //		Drive service = getDriveService();s
 		
 		//URL 을 이용하여 File을 upload
@@ -176,9 +157,9 @@ public class GdriveAPI {
 		wr.close();
  
 		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + uploadURL);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
+		static_logger.debug("\nSending 'POST' request to URL : " + uploadURL);
+		static_logger.debug("Post parameters : " + urlParameters);
+		static_logger.debug("Response Code : " + responseCode);
 		
 		BufferedReader in = new BufferedReader(
 		        new InputStreamReader(con.getInputStream()));
@@ -191,7 +172,7 @@ public class GdriveAPI {
 		in.close();
  
 		//print result
-		System.out.println(response.toString());
+		static_logger.debug(response.toString());
 	
 	}
 	

@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -16,6 +17,8 @@ import com.google.gson.JsonPrimitive;
 
 public class RegistrationUtil {
 
+	private final Logger logger = Logger.getLogger(RegistrationUtil .class);
+	
 	DocumentUtil doc_util = new DocumentUtil("registtest");
 	Workbook workbook;
 	Sheet mentor;
@@ -65,8 +68,8 @@ public class RegistrationUtil {
 					}
 					years.add(new JsonPrimitive(year));
 					registerDoc.add("years", years);
-					
-					System.out.println(doc_util.updateDoc(registerDoc).toString());
+
+					logger.debug(doc_util.updateDoc(registerDoc).toString());
 				} 
 				
 				else {
@@ -119,8 +122,6 @@ public class RegistrationUtil {
 				registerDoc.addProperty("phone_num", cell.getStringCellValue());
 				cell = row.getCell(3);
 				registerDoc.addProperty("belong", cell.getStringCellValue());
-
-				//System.out.println(doc_util.putDoc(registerDoc));
 			}
 		}
 	}

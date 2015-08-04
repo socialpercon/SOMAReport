@@ -5,14 +5,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
 import com.cloudant.client.api.model.Response;
+import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class DocumentUtil {
 
+	private final Logger logger = Logger.getLogger(DocumentUtil .class);
+	
 	CloudantClient client;
 	Database db;
 
@@ -81,7 +86,7 @@ public class DocumentUtil {
 			}
 			timeString += time.get(i).getAsString();
 		}
-		System.out.println("start time: " + timeString);
+		logger.debug("start time: " + timeString);
 		String start = timeString;
 
 		time = report_info.get("end_time").getAsJsonArray();
@@ -118,7 +123,7 @@ public class DocumentUtil {
 	}
 
 	public String putReportDoc(JsonObject report_input) {
-		System.out.println(report_input.toString());
+		logger.debug(report_input.toString());
 		JsonObject report = new JsonObject();
 		report.addProperty("type", "report");
 		report.add("project", report_input.get("project"));

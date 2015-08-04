@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,6 +22,8 @@ import com.google.gson.JsonObject;
 
 @Path("/reports")
 public class ReportsController {
+	
+	private final Logger logger = Logger.getLogger(ReportsController .class);
 
 	ReferenceUtil ref_util = new ReferenceUtil("somarecord");
 	DocumentUtil doc_util = new DocumentUtil("somarecord");
@@ -37,7 +40,7 @@ public class ReportsController {
 		try {
 			reports_list = ref_util.getReports(projectId);
 			for (int i = 0; i < reports_list.size(); i++) {
-				System.out.println(reports_list.get(i).toString());
+				logger.debug(reports_list.get(i).toString());
 				JSONObject jo = new JSONObject();
 				jo.put("id", reports_list.get(i).get("_id").getAsString());
 				jo.put("reportTitle", reports_list.get(i).get("report_info")
@@ -52,7 +55,7 @@ public class ReportsController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(ja.toString());
+		logger.debug(ja.toString());
 		return ja;
 	}
 
@@ -122,9 +125,9 @@ public class ReportsController {
 	public boolean insertReport(JsonObject document) {
 		boolean result = false;
 		try {
-			System.out.println(document.toString());
+			logger.debug(document.toString());
 			String id = doc_util.putReportDoc(document);
-			System.out.println("inserted | report id = " + id);
+			logger.debug("inserted | report id = " + id);
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -155,7 +158,7 @@ public class ReportsController {
 		boolean result = false;
 
 		try {
-			System.out.println("delete | report id = " + reportId + "\n");
+			logger.debug("delete | report id = " + reportId + "\n");
 			doc_util.deleteDoc(reportId);
 			result = true;
 		} catch (Exception e) {

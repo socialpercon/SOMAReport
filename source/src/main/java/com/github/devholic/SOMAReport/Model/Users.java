@@ -1,7 +1,9 @@
 package com.github.devholic.SOMAReport.Model;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 
+import com.github.devholic.SOMAReport.Controller.ReportsController;
 import com.github.devholic.SOMAReport.Database.DocumentUtil;
 import com.github.devholic.SOMAReport.Database.ReferenceUtil;
 import com.google.gson.JsonArray;
@@ -9,6 +11,8 @@ import com.google.gson.JsonObject;
 
 public class Users {
 
+	private final Logger logger = Logger.getLogger(Users .class);
+	
 	public static Integer USER_ROLE_MENTOR = 0;
 	public static Integer USER_ROLE_MENTEE = 1;
 
@@ -35,11 +39,13 @@ public class Users {
 	}
 
 	public Users(String account) {
-		System.out.println(account);
+		logger.debug(account);
 		DocumentUtil docUtil = new DocumentUtil("somarecord");
-		System.out.println(docUtil);
+		
+		logger.debug(docUtil);
 		JsonObject userDoc = docUtil.getUserDoc(account);
-		System.out.println(userDoc);
+
+		logger.debug(userDoc);
 		if (userDoc != null) {
 			userId = userDoc.get("_id").getAsString();
 			if (userDoc.get("type").getAsString().equalsIgnoreCase("mentor")) {

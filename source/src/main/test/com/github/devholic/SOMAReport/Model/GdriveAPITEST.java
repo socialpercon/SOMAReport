@@ -11,6 +11,9 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import org.apache.log4j.Logger;
+
+import com.github.devholic.SOMAReport.Database.RegistrationUtil;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -57,6 +60,7 @@ public class GdriveAPITEST {
 	 * @throws IOException
 	 */
 	public static Credential authorize() throws IOException {
+		Logger logger = Logger.getLogger(GdriveAPITEST.class);
         // Load client secrets.
         InputStream in = GdriveAPITEST.class.getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
@@ -71,8 +75,7 @@ public class GdriveAPITEST {
                 .build();
         Credential credential = new AuthorizationCodeInstalledApp(
         		flow, new LocalServerReceiver()).authorize("user");
-        System.out.println(
-                "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+        logger.debug("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
 	
@@ -96,6 +99,7 @@ public class GdriveAPITEST {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
+		Logger logger = Logger.getLogger(GdriveAPITEST.class);
         // Build a new authorized API client service.
         Drive service = getDriveService();
 
@@ -105,11 +109,11 @@ public class GdriveAPITEST {
              .execute();
         List<File> files = result.getItems();
         if (files == null || files.size() == 0) {
-            System.out.println("No files found.");
+            logger.debug("No files found.");
         } else {
-            System.out.println("Files:");
+        	logger.debug("Files:");
             for (File file : files) {
-                System.out.printf("%s (%s)\n", file.getTitle(), file.getId());
+            	logger.debug(file.getTitle()+"("+file.getId()+")\n");
             }
         }
     }
@@ -119,7 +123,7 @@ public class GdriveAPITEST {
 	 * @throws IOException
 	 */
 	public static void insertFile() throws IOException{
-		
+		Logger logger = Logger.getLogger(GdriveAPITEST.class);
 //		Drive service = getDriveService();s
 		
 		//URL 을 이용하여 File을 upload
@@ -144,9 +148,9 @@ public class GdriveAPITEST {
 		wr.close();
  
 		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + uploadURL);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
+		logger.debug("\nSending 'POST' request to URL : " + uploadURL);
+		logger.debug("Post parameters : " + urlParameters);
+		logger.debug("Response Code : " + responseCode);
 		
 		BufferedReader in = new BufferedReader(
 		        new InputStreamReader(con.getInputStream()));
@@ -159,7 +163,7 @@ public class GdriveAPITEST {
 		in.close();
  
 		//print result
-		System.out.println(response.toString());
+		logger.debug(response.toString());
 	
 	}
 	

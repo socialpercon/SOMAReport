@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 
 import com.github.devholic.SOMAReport.Database.DocumentUtil;
@@ -22,6 +23,9 @@ import com.google.gson.JsonObject;
 @Path("/projects")
 public class ProjectsController {
 
+	//Log4j setting
+	private final Logger logger = Logger.getLogger(ProjectsController .class);
+		
 	ReferenceUtil reference_util = new ReferenceUtil("somarecord");
 	DocumentUtil doc_util = new DocumentUtil("somarecord");
 	
@@ -127,7 +131,7 @@ public class ProjectsController {
 		boolean result = false;
 		try{
 			String id = doc_util.putDoc(document);
-			System.out.println("inserted project id = "+id);
+			logger.debug("inserted project id = "+id);
 			result = true;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -158,7 +162,7 @@ public class ProjectsController {
 		boolean result = false;
 		
 		try{
-			System.out.println("delete | project id = "+ reportId+ "\n");
+			logger.debug("delete | project id = "+ reportId+ "\n");
 			doc_util.deleteDoc(reportId);
 			result = true;
 		}catch(Exception e){

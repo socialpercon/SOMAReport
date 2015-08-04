@@ -14,6 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.mvc.Viewable;
@@ -30,13 +31,15 @@ import com.google.gson.JsonPrimitive;
 @Path("/report")
 public class View_Report {
 
+	private final Logger logger = Logger.getLogger(View_Report .class);
+	
 	@GET
 	@Path("/list/{id}")
 	@Produces("text/html")
 	public Viewable report(@PathParam("id") String id) {
 		ReportsController r = new ReportsController();
 		JSONArray ja = r.getReportByProjectId(id);
-		System.out.println(ja.toString());
+		logger.debug(ja.toString());
 		JSONObject jo = new JSONObject();// /.
 		jo.put("reportList", ja);
 		DocumentUtil dutil = new DocumentUtil("somarecord");
@@ -63,7 +66,7 @@ public class View_Report {
 		jo.put("pid", project.get("_id").toString());
 		jo.put("pname", project.get("title").toString());
 		jo.put("report", report);
-		System.out.println(report.toString());
+		logger.debug(report.toString());
 		return new Viewable("/reportdetail.mustache", MustacheHelper.toMap(jo));
 	}
 
@@ -98,13 +101,13 @@ public class View_Report {
 			@FormDataParam("etc") String etc,
 			@FormDataParam("file") InputStream is,
 			@FormDataParam("file") FormDataContentDisposition formData) {
-		System.out.println("heek");
+		logger.debug("heek");
 		String fileLocation = formData.getFileName();
 		try {
 			saveFile(is, fileLocation);
 			String result = "Successfully File Uploaded on the path "
 					+ fileLocation;
-			System.out.println(result);
+			logger.debug(result);
 		} catch (IOException e) {
 			e.printStackTrace();
 

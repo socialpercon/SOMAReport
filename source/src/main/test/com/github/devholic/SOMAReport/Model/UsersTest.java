@@ -3,11 +3,14 @@ package com.github.devholic.SOMAReport.Model;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class UsersTest {
 
+	private final Logger logger = Logger.getLogger(UsersTest .class);
+	
 	public static Users user;
 	
 	@BeforeClass
@@ -27,7 +30,7 @@ public class UsersTest {
 	public void testGetMyProjects() {
 		JSONArray resultList = user.getMyProjects();
 		for (JsonElement project : resultList) {
-			System.out.println(project.toString());
+			logger.debug(project.toString());
 		}
 		assertFalse(resultList.isJsonNull());
 	}

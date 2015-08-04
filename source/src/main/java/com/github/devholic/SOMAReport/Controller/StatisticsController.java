@@ -8,12 +8,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
 @Path("/statistics")
 public class StatisticsController {
 
-	
+	//Log4j setting
+	private final Logger logger = Logger.getLogger(StatisticsController .class);
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
@@ -22,6 +24,10 @@ public class StatisticsController {
 		JSONObject jo1 = new JSONObject();
 		
 		try{
+			logger.info("info level");
+			logger.warn("warn level");
+			logger.debug("debug level");
+			logger.fatal("fatal level");
 			
 			jo1.put("name", "name");
 			jo1.put("age", "age");

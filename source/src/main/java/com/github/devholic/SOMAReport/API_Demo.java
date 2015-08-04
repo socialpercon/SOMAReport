@@ -2,6 +2,7 @@ package com.github.devholic.SOMAReport;
 
 
 import java.io.InputStream;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,7 +11,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
+import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.Request;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -23,6 +24,8 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 @Path("/api/demo")
 public class API_Demo {
+	
+	private final Logger logger = Logger.getLogger(API_Demo .class);
 
 	@GET
 	@Path("/couch")
@@ -61,7 +64,7 @@ public class API_Demo {
 			@FormDataParam("file") FormDataContentDisposition fileDetail) {
 		JSONObject jo = new JSONObject();
 		jo.put("fileName", fileDetail.getFileName().toString());
-		System.out.println(jo.toString());
+		logger.debug(jo.toString());
 		return Response.status(200).type(MediaType.APPLICATION_JSON)
 				.entity(jo.toString()).build();
 	}

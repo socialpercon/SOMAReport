@@ -2,6 +2,7 @@ package com.github.devholic.SOMAReport;
 
 import java.net.URI;
 
+import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -12,6 +13,7 @@ import com.github.devholic.SOMAReport.Utilities.StringFactory;
 
 public class Application {
 
+	
 	public static final String BASE_URI = "http://localhost";
 	public static final String PORT = "8080";
 
@@ -27,8 +29,9 @@ public class Application {
 	}
 
 	public static void main(final String[] args) throws Exception {
+		Logger logger = Logger.getLogger(Application .class);
 		final HttpServer server = startServer();
-		System.out.println("Hit enter to stop server");
+		logger.debug("Hit enter to stop server");
 		System.in.read();
 		server.shutdownNow();
 	}

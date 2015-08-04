@@ -12,6 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.Logger;
+
 import com.github.devholic.SOMAReport.Database.DocumentUtil;
 import com.github.devholic.SOMAReport.Database.ReferenceUtil;
 import com.github.devholic.SOMAReport.Model.Users;
@@ -19,7 +21,9 @@ import com.google.gson.JsonObject;
 
 @Path("/users")
 public class UsersController {
-
+	
+	private final Logger logger = Logger.getLogger(UsersController .class);
+	
 	ReferenceUtil reference_util = new ReferenceUtil("somarecord");
 	DocumentUtil doc_util = new DocumentUtil("somarecord");
 
@@ -31,7 +35,10 @@ public class UsersController {
 	 * @return
 	 */
 	public static boolean login(String email, String password) {
-		System.out.println("email :" + email + "/ password:" + password);
+		Logger static_logger = Logger.getLogger(UsersController .class);
+		
+		static_logger.debug("email :" + email + "/ password:" + password);
+		
 		boolean result = false;
 		Users us = new Users(email);
 		if (us.getUserId() != null) {
@@ -102,7 +109,7 @@ public class UsersController {
 		Users user = new Users();
 
 		try {
-			System.out.println("param userId =[" + userId + "]");
+			logger.debug("param userId =[" + userId + "]");
 
 			user.setUserId(userId);
 			user.setUserName("min");
@@ -123,7 +130,7 @@ public class UsersController {
 		boolean result = false;
 		try {
 			String id = doc_util.putDoc(document);
-			System.out.println("inserted report id = " + id);
+			logger.debug("inserted report id = " + id);
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -154,7 +161,7 @@ public class UsersController {
 		boolean result = false;
 
 		try {
-			System.out.println("delete | user id = " + reportId + "\n");
+			logger.debug("delete | user id = " + reportId + "\n");
 			doc_util.deleteDoc(reportId);
 			result = true;
 		} catch (Exception e) {
