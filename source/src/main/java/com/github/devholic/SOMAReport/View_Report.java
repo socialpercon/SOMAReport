@@ -54,6 +54,7 @@ public class View_Report {
 		jo.put("pid", project.get("_id").toString());
 		jo.put("pname", project.get("title").toString());
 		jo.put("report", report);
+		System.out.println(report.toString());
 		return new Viewable("/reportdetail.mustache", MustacheHelper.toMap(jo));
 	}
 
