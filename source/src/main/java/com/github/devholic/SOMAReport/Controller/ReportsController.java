@@ -36,8 +36,8 @@ public class ReportsController {
 		JSONArray ja = new JSONArray();
 		try {
 			reports_list = ref_util.getReports(projectId);
-			System.out.println(reports_list.size());
 			for (int i = 0; i < reports_list.size(); i++) {
+				System.out.println(reports_list.get(i).toString());
 				JSONObject jo = new JSONObject();
 				jo.put("id", reports_list.get(i).get("_id").getAsString());
 				jo.put("reportTitle", reports_list.get(i).get("report_info")
@@ -45,6 +45,8 @@ public class ReportsController {
 						.replaceAll("-", ""));
 				jo.put("reportTopic", reports_list.get(i).get("report_details")
 						.getAsJsonObject().get("topic").getAsString());
+				jo.put("attendee", reports_list.get(i).get("attendee")
+						.getAsJsonArray());
 				ja.put(jo);
 			}
 		} catch (Exception e) {
@@ -120,6 +122,7 @@ public class ReportsController {
 	public boolean insertReport(JsonObject document) {
 		boolean result = false;
 		try {
+			System.out.println(document.toString());
 			String id = doc_util.putReportDoc(document);
 			System.out.println("inserted | report id = " + id);
 			result = true;
@@ -128,7 +131,6 @@ public class ReportsController {
 		}
 		return result;
 	}
-
 
 	@PUT
 	public Response updateReport() {

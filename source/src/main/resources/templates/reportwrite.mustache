@@ -25,7 +25,7 @@
           <li><a class="disabled">></a></li>
           <li><a href="http://localhost:8080/report/list/{{pid}}">{{pname}}</a></li>
           <li><a class="disabled">></a></li>
-          <li><a class="disabled">#{{title}}</a></li>
+          <li><a class="disabled">보고서 작성</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a onclick="/mypage">마이페이지</a></li>
@@ -35,19 +35,13 @@
     </nav>
     <div id="soma-container" class="container">
     <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
-    <form method="post" action="http://localhost:8080/report/write">
+    <form method="post" action="http://localhost:8080/report/write" enctype="multipart/form-data">
     <input type="hidden" name="projectid" value="{{pid}}">
-    <div class="group materialst-input">      
-      <input name="place" type="text" required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>장소</label>
-    </div>
     <h5 style="padding-left:5px; color:#5264AE">시작시간</h5>
   	<div class="form-group">
   		<center>
         <div class='input-group date' id='datetimepicker1'>
-            <input type='text' onkeypress="return false;" style="padding-left:5px;" class="form-control"/>
+            <input type='text' onkeypress="return false;" style="padding-left:5px;" name="start" class="form-control"/>
             <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
         	</span>
@@ -58,7 +52,7 @@
     <div class="form-group" style="margin-bottom:45px;">
   		<center>
         <div class='input-group date' id='datetimepicker2'>
-            <input type='text' onkeypress="return false;" style="padding-left:5px;" class="form-control"/>
+            <input type='text' onkeypress="return false;" style="padding-left:5px;" name="end" class="form-control"/>
             <span class="input-group-addon">
             <span class="glyphicon glyphicon-time"></span>
         	</span>
@@ -66,37 +60,43 @@
     	</center>
     </div>
     <div class="group materialst-input">      
-      <input name="topic" type="text" required>
+      <input name="place" type="text" value="아람7-6" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>장소</label>
+    </div>
+    <div class="group materialst-input">      
+      <input name="topic" type="text" value="북경오리" required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>주제</label>
     </div>
     <div class="group materialst-input">      
-      <input name="goal" type="text" required>
+      <input name="goal" type="text" value="먹고싶다" required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>목표</label>
     </div>
     <div class="group materialst-input">      
-      <input name="issue" type="text" required>
+      <input name="issue" type="text" value="간절하게 원하면 이루어질것이다." required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>추진내용</label>
     </div>
     <div class="group materialst-input">      
-      <input name="solution" type="text" required>
+      <input name="solution" type="text" value="돈을벌어서 사먹으면 된다." required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>해결방안</label>
     </div>
     <div class="group materialst-input">      
-      <input name="plan" type="text" required>
+      <input name="plan" type="text" value="두마리를 시킨다." required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>향후계획</label>
     </div>
     <div class="group-c materialst-input">
-      <input name="opinion" type="text" required>
+      <input name="opinion" type="text" value="내가 사준다." required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>멘토의견</label>
@@ -107,7 +107,7 @@
 		</label>
 	</div>
     <div class="group materialst-input">      
-      <input name="etc" type="text" required>
+      <input name="etc" type="text" value="아몰랑!" required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>기타</label>
@@ -116,6 +116,7 @@
     <div class="group materialst-input">      
       <textarea style="width:100%;max-width:100%;overflow:visible" type="text" onkeyup="resize(this)" required></textarea>  
     </div>
+    <input type="file" name="file">
     <div>
     <button class="btn btn-default btn-raised">작성완료<div class="ripple-wrapper"></div></button>
     </div>
@@ -134,6 +135,7 @@
     	$(function () {
                 $('#datetimepicker1').datetimepicker({
                 	locale: 'ko',
+                  format: 'YYYYMMDD HH:mm'
                 });
                 $('#datetimepicker2').datetimepicker({
                 	locale: 'ko',

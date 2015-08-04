@@ -1,12 +1,21 @@
 package com.github.devholic.SOMAReport;
 
-import javax.ws.rs.FormParam;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,13 +36,13 @@ public class View_Report {
 	public Viewable report(@PathParam("id") String id) {
 		ReportsController r = new ReportsController();
 		JSONArray ja = r.getReportByProjectId(id);
+		System.out.println(ja.toString());
 		JSONObject jo = new JSONObject();// /.
 		jo.put("reportList", ja);
 		DocumentUtil dutil = new DocumentUtil("somarecord");
 		jo.put("pid", id);
 		jo.put("pname", dutil.getDoc(id).getAsJsonObject().get("title")
 				.getAsString());
-		System.out.println(jo.toString());
 		return new Viewable("/reportlist.mustache", MustacheHelper.toMap(jo));
 	}
 
@@ -62,44 +71,67 @@ public class View_Report {
 	@Path("/write/{id}")
 	@Produces("text/html")
 	public Viewable writeReport(@PathParam("id") String id) {
+		DocumentUtil dutil = new DocumentUtil("somarecord");
+		JSONObject project = new JSONObject(dutil.getDoc(id).getAsJsonObject()
+				.toString());
 		JSONObject jo = new JSONObject();
 		jo.put("pid", id);
+		jo.put("pname", project.get("title").toString());
 		return new Viewable("/reportwrite.mustache", MustacheHelper.toMap(jo));
 	}
 
 	@POST
 	@Path("/write")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces("text/html")
-	public Viewable doWriteReport(@FormParam("projectid") String pid,
-			@FormParam("place") String place, @FormParam("start") String start,
-			@FormParam("end") String end, @FormParam("except") String except,
-			@FormParam("topic") String topic, @FormParam("goal") String goal,
-			@FormParam("issue") String issue,
-			@FormParam("solution") String solution,
-			@FormParam("plan") String plan,
-			@FormParam("opinion") String opinion, @FormParam("etc") String etc) {
+	public Viewable doWriteReport(@FormDataParam("projectid") String pid,
+			@FormDataParam("place") String place,
+			@FormDataParam("start") String start,
+			@FormDataParam("end") String end,
+			@FormDataParam("except") String except,
+			@FormDataParam("topic") String topic,
+			@FormDataParam("goal") String goal,
+			@FormDataParam("issue") String issue,
+			@FormDataParam("solution") String solution,
+			@FormDataParam("plan") String plan,
+			@FormDataParam("opinion") String opinion,
+			@FormDataParam("etc") String etc,
+			@FormDataParam("file") InputStream is,
+			@FormDataParam("file") FormDataContentDisposition formData) {
+		System.out.println("heek");
+		String fileLocation = formData.getFileName();
+		try {
+			saveFile(is, fileLocation);
+			String result = "Successfully File Uploaded on the path "
+					+ fileLocation;
+			System.out.println(result);
+		} catch (IOException e) {
+			e.printStackTrace();
+
+		}
 		JsonObject jo = new JsonObject();
 		ReportsController r = new ReportsController();
 		jo.addProperty("project", pid);
 		JsonObject info = new JsonObject();
 		info.addProperty("place", place);
-		// 날짜 입력
-		// 현재는 "yyyyMMddhhmm" 기준
+		String[] startArr = start.split(" ");
+		String[] endArr = end.split(":");
+		String startDay = startArr[0].toString();
 		JsonArray sja = new JsonArray();
-		sja.add(new JsonPrimitive(Integer.parseInt(start.substring(0, 4))));
-		sja.add(new JsonPrimitive(Integer.parseInt(start.substring(4, 6))));
-		sja.add(new JsonPrimitive(Integer.parseInt(start.substring(6, 8))));
-		sja.add(new JsonPrimitive(Integer.parseInt(start.substring(8, 10))));
-		sja.add(new JsonPrimitive(Integer.parseInt(start.substring(10, 12))));
+		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(0, 4))));
+		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(4, 6))));
+		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(6, 8))));
+		sja.add(new JsonPrimitive(Integer.parseInt(startArr[1].split(":")[0])));
+		sja.add(new JsonPrimitive(Integer.parseInt(startArr[1].split(":")[1])));
 		info.add("start_time", sja);
 		sja = new JsonArray();
-		sja.add(new JsonPrimitive(Integer.parseInt(end.substring(0, 4))));
-		sja.add(new JsonPrimitive(Integer.parseInt(end.substring(4, 6))));
-		sja.add(new JsonPrimitive(Integer.parseInt(end.substring(6, 8))));
-		sja.add(new JsonPrimitive(Integer.parseInt(end.substring(8, 10))));
-		sja.add(new JsonPrimitive(Integer.parseInt(end.substring(10, 12))));
+		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(0, 4))));
+		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(4, 6))));
+		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(6, 8))));
+		sja.add(new JsonPrimitive(Integer.parseInt(endArr[0])));
+		sja.add(new JsonPrimitive(Integer.parseInt(endArr[1])));
 		info.add("end_time", sja);
-		info.addProperty("except_time", Integer.parseInt(except));
+		info.addProperty("except_time", 0);
 		jo.add("report_info", info);
 		JsonObject details = new JsonObject();
 		details.addProperty("topic", topic);
@@ -112,5 +144,16 @@ public class View_Report {
 		jo.add("report_details", details);
 		r.insertReport(jo);
 		return new Viewable("/reportdetail.mustache");
+	}
+
+	private void saveFile(InputStream is, String fileLocation)
+			throws IOException {
+		OutputStream os = new FileOutputStream(new File(fileLocation));
+		byte[] buffer = new byte[256];
+		int bytes = 0;
+		while ((bytes = is.read(buffer)) != -1) {
+			os.write(buffer, 0, bytes);
+		}
+		os.close();
 	}
 }
