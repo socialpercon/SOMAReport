@@ -36,17 +36,19 @@ public class UsersController {
 	 */
 	public static boolean login(String email, String password) {
 		Logger static_logger = Logger.getLogger(UsersController .class);
+		DocumentUtil doc_util = new DocumentUtil("");
 		
 		static_logger.debug("email :" + email + "/ password:" + password);
 		
-		boolean result = false;
-		Users us = new Users(email);
-		if (us.getUserId() != null) {
-			result = true;
-		} else {
-			result = false;
-		}
-		return result;
+//		boolean result = false;
+//		Users us = new Users(email);
+//		if (us.getUserId() != null) {
+//			result = true;
+//		} else {
+//			result = false;
+//		}
+//		return result;
+		return doc_util.userAuthentication(email, password);
 	}
 
 	/**************************************************************************

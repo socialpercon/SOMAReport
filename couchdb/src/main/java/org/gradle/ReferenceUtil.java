@@ -13,7 +13,7 @@ public class ReferenceUtil {
 	
 	public ReferenceUtil (String dbName) 
 	{
-		client = new CloudantClient("http://plusquare.com:3001", "javaapp", "somareport");
+		client = new CloudantClient("http://somareport.cloudant.com", "somareport", "somasoma");
 		db = client.database(dbName, true);
 	}
 	
@@ -75,4 +75,25 @@ public class ReferenceUtil {
     			.key(current).includeDocs(true).reduce(false)
     			.query(JsonObject.class);
     }
+    
+    public JsonObject getProjectInfo (String project_id) 
+    {
+    	
+		JsonObject projectInfo = new JsonObject();
+		DocumentUtil docutil = new DocumentUtil("somarecord");
+		JsonObject project = docutil.getDoc(project_id);
+
+		projectInfo.add("project_type", project.get("project_type"));
+		projectInfo.add("title", project.get("title"));
+		projectInfo.add("mentor", project.get("mentor"));
+		
+		JsonObject mentor = docutil.getDoc(project.get("mentor").getAsString());
+		projectInfo.add("section", mentor.get("section"));
+		projectInfo.add("stage", project.get("stage"));
+		projectInfo.add("field", project.get("field"));
+		projectInfo.addProperty("mentoring_num", getReports(project_id).size());
+		projectInfo.add("mentee", project.get("mentee"));
+		
+		return projectInfo;
+	}
 }
