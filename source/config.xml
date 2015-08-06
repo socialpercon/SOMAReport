@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>This is config file!</comment>
+<entry key="database_name">somarecord</entry>
+<entry key="cloudant_url">http://somareport.cloudant.com</entry>
+<entry key="cloudant_id">somareport</entry>
+<entry key="cloudant_pwd">somasoma</entry>
+<entry key="test">test</entry>
+</properties>

@@ -70,8 +70,9 @@ public class DocumentUtil {
 		return response;
 	}
 
-	public int calTotalTime(JsonObject report_info) throws ParseException {
+	public int calWholeTime(JsonObject report_info) {
 
+		int whole_time = 0;
 		JsonArray time = report_info.get("start_time").getAsJsonArray();
 		String timeString = "";
 		for (int i = 0; i < time.size(); i++) {
@@ -80,7 +81,6 @@ public class DocumentUtil {
 			}
 			timeString += time.get(i).getAsString();
 		}
-		System.out.println("start time: " + timeString);
 		String start = timeString;
 
 		time = report_info.get("end_time").getAsJsonArray();
@@ -91,21 +91,50 @@ public class DocumentUtil {
 			}
 			timeString += time.get(i).getAsString();
 		}
-		System.out.println("end time: " + timeString);
 		String end = timeString;
 
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyyMMddhhmm");
-		Date startTime = dateformat.parse(start);
-		Date endTime = dateformat.parse(end);
 
-		System.out.println(startTime + " - " + endTime);
-		long whole = (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60);
-		System.out.println(whole);
-		int wholeTime = (int) whole;
-		int exceptTime = report_info.get("except_time").getAsInt();
-		System.out.println(exceptTime);
+		try {
+			Date startTime = dateformat.parse(start);
+			Date endTime = dateformat.parse(end);
+			long whole = (endTime.getTime() - startTime.getTime())
+					/ (1000 * 60 * 60);
+			whole_time = (int) whole;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
-		return (wholeTime - exceptTime);
+		return whole_time;
 	}
 
+	public String getDate(JsonObject report_info) {
+		String date = "";
+		JsonArray start_time = report_info.get("start_time").getAsJsonArray();
+		date = start_time.get(0).getAsString() + "_" + 
+				start_time.get(1).getAsString() + "_" + start_time.get(2).getAsString();
+		return date;
+	}
+
+	public String putReportDoc(JsonObject report_input) {
+		JsonObject report = new JsonObject();
+		report.addProperty("type", "report");
+		report.add("project", report_input.get("project"));
+		JsonObject report_info = report_input.get("report_info")
+				.getAsJsonObject();
+		report_info.addProperty("date", getDate(report_info));
+		int whole_time = calWholeTime(report_info);
+		int total_time = whole_time - report_info.get("except_time").getAsInt();
+		report_info.addProperty("whole_time", whole_time);
+		report_info.addProperty("total_time", total_time);
+		report.add("report_info", report_info);
+
+		report.add("attendee", report_input.get("attendee"));
+		report.add("absentee", report_input.get("absentee"));
+		report.add("report_details", report_input.get("report_details"));
+		report.add("report_attachments", report_input.get("report_attachments"));
+
+		return putDoc(report);
+
+	}
 }

@@ -47,7 +47,7 @@ public class ReferenceUtilTest {
 	@Test
 	public void testCalTotalMentoring() {
 		int total = refutil.calTotalMentoring("4c44d639b77c290955371694d33e4fe9");
-		assertEquals(21, total);
+		assertEquals(25, total);
 	}
 
 	@Test
@@ -79,6 +79,13 @@ public class ReferenceUtilTest {
 			System.out.println(project.get("title")
 					+"\n"+project.get("mentor"));
 		}
+	}
+	
+	@Test
+	public void testGetProjectInfo() {
+		String project_id = "4c44d639b77c290955371694d33e4fe9";
+		JsonObject project_info = refutil.getProjectInfo(project_id);
+		System.out.println(project_info.toString());
 	}
 
 }

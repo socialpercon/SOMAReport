@@ -25,8 +25,8 @@ public class ReportsController {
 	
 	private final Logger logger = Logger.getLogger(ReportsController .class);
 
-	ReferenceUtil ref_util = new ReferenceUtil("somarecord");
-	DocumentUtil doc_util = new DocumentUtil("somarecord");
+	ReferenceUtil ref_util = new ReferenceUtil("");
+	DocumentUtil doc_util = new DocumentUtil("");
 
 	/**************************************************************************
 	 * 프로젝트 아이디로 레포트 가져오기

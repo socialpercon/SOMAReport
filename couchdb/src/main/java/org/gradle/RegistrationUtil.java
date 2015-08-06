@@ -86,7 +86,7 @@ public class RegistrationUtil {
 					cell = row.getCell(4);
 					registerDoc.addProperty("section", cell.getStringCellValue());
 					
-					System.out.print(doc_util.putDoc(registerDoc));
+					System.out.println(doc_util.putDoc(registerDoc));
 				}
 			}
 		}

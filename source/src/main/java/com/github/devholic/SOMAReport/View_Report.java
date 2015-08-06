@@ -42,7 +42,7 @@ public class View_Report {
 		logger.debug(ja.toString());
 		JSONObject jo = new JSONObject();// /.
 		jo.put("reportList", ja);
-		DocumentUtil dutil = new DocumentUtil("somarecord");
+		DocumentUtil dutil = new DocumentUtil("");
 		jo.put("pid", id);
 		jo.put("pname", dutil.getDoc(id).getAsJsonObject().get("title")
 				.getAsString());
@@ -53,7 +53,7 @@ public class View_Report {
 	@Path("/{id}")
 	@Produces("text/html")
 	public Viewable reportDetail(@PathParam("id") String id) {
-		DocumentUtil dutil = new DocumentUtil("somarecord");
+		DocumentUtil dutil = new DocumentUtil("");
 		JSONObject jo = new JSONObject();
 		JSONObject report = new JSONObject(dutil.getDoc(id).getAsJsonObject()
 				.toString());
@@ -74,7 +74,7 @@ public class View_Report {
 	@Path("/write/{id}")
 	@Produces("text/html")
 	public Viewable writeReport(@PathParam("id") String id) {
-		DocumentUtil dutil = new DocumentUtil("somarecord");
+		DocumentUtil dutil = new DocumentUtil("");
 		JSONObject project = new JSONObject(dutil.getDoc(id).getAsJsonObject()
 				.toString());
 		System.out.println(project.toString());

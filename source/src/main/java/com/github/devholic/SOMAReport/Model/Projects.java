@@ -28,7 +28,7 @@ public class Projects {
 	
 	public Projects(String id) {
 		projectId = id;
-		DocumentUtil docutil = new DocumentUtil("somarecord");
+		DocumentUtil docutil = new DocumentUtil("");
 		
 	}
 

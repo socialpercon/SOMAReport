@@ -1,16 +1,19 @@
 package com.github.devholic.SOMAReport.Database;
 
+import java.io.FileInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
 import com.cloudant.client.api.model.Response;
-import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -21,10 +24,24 @@ public class DocumentUtil {
 	CloudantClient client;
 	Database db;
 
-	public DocumentUtil(String dbName) {
-		client = new CloudantClient("http://somareport.cloudant.com",
-				"somareport", "somasoma");
-		db = client.database(dbName, true);
+	public DocumentUtil(String dbname){
+		try{
+			//get config value 
+			Properties prop = new Properties();
+			FileInputStream fileInput = new FileInputStream("config.xml");
+			prop.loadFromXML(fileInput);
+			
+			client = new CloudantClient(prop.getProperty("cloudant_url"),
+					prop.getProperty("cloudant_id"), prop.getProperty("cloudant_pwd"));
+			if(dbname == null || dbname.equals("")){
+				db = client.database(prop.getProperty("database_name"), true);
+			}else{
+				db = client.database(dbname, true);
+			}
+				
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public JsonObject getUserDoc(String account) {
@@ -144,4 +161,53 @@ public class DocumentUtil {
 		return putDoc(report);
 
 	}
+	
+	public List<String> getUUID(int count) {
+		return client.uuids(count);
+	}
+	
+	public JsonArray getUserAuthInfo (String account) {
+		List<JsonObject> userInfo = db.view("get_doc/password_by_account").key(account)
+				.includeDocs(false).reduce(false).query(JsonObject.class);
+		if (userInfo.size() == 0) return null;
+		else return userInfo.get(0).get("value").getAsJsonArray();
+	}
+	
+	public boolean userAuthentication (String account, String password) {
+		JsonArray user = getUserAuthInfo(account);
+		if (user == null) {
+			logger.debug("wrong account");
+			return false;
+		}
+		else {
+			logger.info(user.toString());
+			String inputPwd = encryptPassword(password, user.get(1).getAsString());
+			if (inputPwd.equals(user.get(0).getAsString())) 
+				return true;
+			else {
+				logger.debug("wrong password");
+				return false;
+			}
+		}
+	}
+	
+	private static String encryptPassword (String password, String salt)
+    {
+        String encryptedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(salt.getBytes());
+            byte[] bytes = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            encryptedPassword = sb.toString();
+        }
+        catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return encryptedPassword;
+    }
 }
