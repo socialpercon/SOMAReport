@@ -37,6 +37,16 @@
     <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
     <form method="post" action="http://localhost:8080/report/write" enctype="multipart/form-data">
     <input type="hidden" name="projectid" value="{{pid}}">
+    <h5 style="padding-left:5px; color:#5264AE">참석자</h5>
+    {{#mentee}}
+    <div class="form-group">
+  		<div>
+            <div class="circular-img">
+    		</div>
+            <input id="a1reason" name="reason_u1" type='text' placeholder="불참사유" class="form-control"/>
+    	</div>
+    </div>
+    {{/mentee}}
     <h5 style="padding-left:5px; color:#5264AE">시작시간</h5>
   	<div class="form-group">
   		<center>
@@ -152,6 +162,7 @@
         	obj.style.height = "1px";
         	obj.style.height = (20+obj.scrollHeight)+"px";
       	}
+      	function doPost(){}
     </script>
   </body>
 </html>

@@ -31,8 +31,8 @@ import com.google.gson.JsonPrimitive;
 @Path("/report")
 public class View_Report {
 
-	private final Logger logger = Logger.getLogger(View_Report .class);
-	
+	private final Logger logger = Logger.getLogger(View_Report.class);
+
 	@GET
 	@Path("/list/{id}")
 	@Produces("text/html")
@@ -77,9 +77,11 @@ public class View_Report {
 		DocumentUtil dutil = new DocumentUtil("somarecord");
 		JSONObject project = new JSONObject(dutil.getDoc(id).getAsJsonObject()
 				.toString());
+		System.out.println(project.toString());
 		JSONObject jo = new JSONObject();
 		jo.put("pid", id);
 		jo.put("pname", project.get("title").toString());
+		jo.put("mentee", project.get("mentee"));
 		return new Viewable("/reportwrite.mustache", MustacheHelper.toMap(jo));
 	}
 

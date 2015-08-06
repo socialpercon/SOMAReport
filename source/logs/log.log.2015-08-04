@@ -1,0 +1,244 @@
+[2015-08-04 13:18:43]  INFO (Controller.StatisticsController - getUserList:27) - info level
+[2015-08-04 13:18:43]  WARN (Controller.StatisticsController - getUserList:28) - warn level
+[2015-08-04 13:18:43] FATAL (Controller.StatisticsController - getUserList:30) - fatal level
+[2015-08-04 20:49:14] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 20:49:21] DEBUG (Utilities.GdriveAPI - authorize:105) - HOST:localhost
+
+[2015-08-04 20:49:21] DEBUG (Utilities.GdriveAPI - authorize:106) - PORT:-1
+
+[2015-08-04 20:49:21] DEBUG (Utilities.GdriveAPI - authorize:111) - Credentials saved to /Users/devholic/.credentials/drive-api-quickstart
+[2015-08-04 20:49:21] DEBUG (Utilities.GdriveAPI - authorize:105) - HOST:localhost
+
+[2015-08-04 20:49:21] DEBUG (Utilities.GdriveAPI - authorize:106) - PORT:-1
+
+[2015-08-04 20:49:21] DEBUG (Utilities.GdriveAPI - authorize:111) - Credentials saved to /Users/devholic/.credentials/drive-api-quickstart
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:76) - Files:
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:76) - Files:
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(1zpNLx90alV-VjH2c1agJCXNLLs8vGcNto1vpUYrY7pA)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - Untitled(0B2UzRRhe6c6IcUVUNzVuOUdUYmc)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - [서식20]IT기기구매신청서 (1).hwp(0B2UzRRhe6c6Ib3JQaTRKRjVjOEk)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(1zpNLx90alV-VjH2c1agJCXNLLs8vGcNto1vpUYrY7pA)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - Untitled(0B2UzRRhe6c6IcUVUNzVuOUdUYmc)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - [서식20]IT기기구매신청서 (1).hwp(0B2UzRRhe6c6Ib3JQaTRKRjVjOEk)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(11U0nL-hqL62Cy0qDa3f57x7sks-60RYO1r3Nkn_-yCA)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(1R65uHbmPdWU0trvJiiBNuWznueGMi3jOUjfCcOp78Ks)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(1vzBdBTu2iKYG0fks6LlOkzFmYOSPytQ5qfDRzRZhtO0)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(0B2UzRRhe6c6Icms2YjdDZzlmeDg)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(0B2UzRRhe6c6ISUpES1M2NmxuNE0)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(12SqyZnfiGVD-f8BPfFQSZmkuTGgzmUS8ZMbe0g2sXCo)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(0B2UzRRhe6c6ISXdVbGYyNE1NVHNXQVFJWnk3VUJvR0RWdjVZ)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(11U0nL-hqL62Cy0qDa3f57x7sks-60RYO1r3Nkn_-yCA)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(1R65uHbmPdWU0trvJiiBNuWznueGMi3jOUjfCcOp78Ks)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(1vzBdBTu2iKYG0fks6LlOkzFmYOSPytQ5qfDRzRZhtO0)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(0B2UzRRhe6c6Icms2YjdDZzlmeDg)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(0B2UzRRhe6c6ISUpES1M2NmxuNE0)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(12SqyZnfiGVD-f8BPfFQSZmkuTGgzmUS8ZMbe0g2sXCo)
+
+[2015-08-04 20:49:23] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(0B2UzRRhe6c6ISXdVbGYyNE1NVHNXQVFJWnk3VUJvR0RWdjVZ)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - authorize:105) - HOST:localhost
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - authorize:106) - PORT:-1
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - authorize:111) - Credentials saved to /Users/devholic/.credentials/drive-api-quickstart
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - authorize:105) - HOST:localhost
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - authorize:106) - PORT:-1
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - authorize:111) - Credentials saved to /Users/devholic/.credentials/drive-api-quickstart
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:76) - Files:
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(1zpNLx90alV-VjH2c1agJCXNLLs8vGcNto1vpUYrY7pA)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - Untitled(0B2UzRRhe6c6IcUVUNzVuOUdUYmc)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - [서식20]IT기기구매신청서 (1).hwp(0B2UzRRhe6c6Ib3JQaTRKRjVjOEk)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(11U0nL-hqL62Cy0qDa3f57x7sks-60RYO1r3Nkn_-yCA)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(1R65uHbmPdWU0trvJiiBNuWznueGMi3jOUjfCcOp78Ks)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(1vzBdBTu2iKYG0fks6LlOkzFmYOSPytQ5qfDRzRZhtO0)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(0B2UzRRhe6c6Icms2YjdDZzlmeDg)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(0B2UzRRhe6c6ISUpES1M2NmxuNE0)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(12SqyZnfiGVD-f8BPfFQSZmkuTGgzmUS8ZMbe0g2sXCo)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(0B2UzRRhe6c6ISXdVbGYyNE1NVHNXQVFJWnk3VUJvR0RWdjVZ)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:76) - Files:
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(1zpNLx90alV-VjH2c1agJCXNLLs8vGcNto1vpUYrY7pA)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - Untitled(0B2UzRRhe6c6IcUVUNzVuOUdUYmc)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - [서식20]IT기기구매신청서 (1).hwp(0B2UzRRhe6c6Ib3JQaTRKRjVjOEk)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(11U0nL-hqL62Cy0qDa3f57x7sks-60RYO1r3Nkn_-yCA)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(1R65uHbmPdWU0trvJiiBNuWznueGMi3jOUjfCcOp78Ks)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(1vzBdBTu2iKYG0fks6LlOkzFmYOSPytQ5qfDRzRZhtO0)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(0B2UzRRhe6c6Icms2YjdDZzlmeDg)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(0B2UzRRhe6c6ISUpES1M2NmxuNE0)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(12SqyZnfiGVD-f8BPfFQSZmkuTGgzmUS8ZMbe0g2sXCo)
+
+[2015-08-04 20:50:22] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(0B2UzRRhe6c6ISXdVbGYyNE1NVHNXQVFJWnk3VUJvR0RWdjVZ)
+
+[2015-08-04 20:51:45] DEBUG (Utilities.GdriveAPI - authorize:105) - HOST:localhost
+
+[2015-08-04 20:51:45] DEBUG (Utilities.GdriveAPI - authorize:106) - PORT:-1
+
+[2015-08-04 20:51:45] DEBUG (Utilities.GdriveAPI - authorize:111) - Credentials saved to /Users/devholic/.credentials/drive-api-quickstart
+[2015-08-04 20:51:45] DEBUG (Utilities.GdriveAPI - authorize:105) - HOST:localhost
+
+[2015-08-04 20:51:45] DEBUG (Utilities.GdriveAPI - authorize:106) - PORT:-1
+
+[2015-08-04 20:51:45] DEBUG (Utilities.GdriveAPI - authorize:111) - Credentials saved to /Users/devholic/.credentials/drive-api-quickstart
+[2015-08-04 20:51:46] DEBUG (Utilities.GdriveAPI - test_main:76) - Files:
+[2015-08-04 20:51:46] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(1zpNLx90alV-VjH2c1agJCXNLLs8vGcNto1vpUYrY7pA)
+
+[2015-08-04 20:51:46] DEBUG (Utilities.GdriveAPI - test_main:78) - Untitled(0B2UzRRhe6c6IcUVUNzVuOUdUYmc)
+
+[2015-08-04 20:51:46] DEBUG (Utilities.GdriveAPI - test_main:78) - [서식20]IT기기구매신청서 (1).hwp(0B2UzRRhe6c6Ib3JQaTRKRjVjOEk)
+
+[2015-08-04 20:51:46] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(11U0nL-hqL62Cy0qDa3f57x7sks-60RYO1r3Nkn_-yCA)
+
+[2015-08-04 20:51:46] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(1R65uHbmPdWU0trvJiiBNuWznueGMi3jOUjfCcOp78Ks)
+
+[2015-08-04 20:51:46] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(1vzBdBTu2iKYG0fks6LlOkzFmYOSPytQ5qfDRzRZhtO0)
+
+[2015-08-04 20:51:46] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(0B2UzRRhe6c6Icms2YjdDZzlmeDg)
+
+[2015-08-04 20:51:46] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(0B2UzRRhe6c6ISUpES1M2NmxuNE0)
+
+[2015-08-04 20:51:46] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(12SqyZnfiGVD-f8BPfFQSZmkuTGgzmUS8ZMbe0g2sXCo)
+
+[2015-08-04 20:51:46] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(0B2UzRRhe6c6ISXdVbGYyNE1NVHNXQVFJWnk3VUJvR0RWdjVZ)
+
+[2015-08-04 20:51:47] DEBUG (Utilities.GdriveAPI - test_main:76) - Files:
+[2015-08-04 20:51:47] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(1zpNLx90alV-VjH2c1agJCXNLLs8vGcNto1vpUYrY7pA)
+
+[2015-08-04 20:51:47] DEBUG (Utilities.GdriveAPI - test_main:78) - Untitled(0B2UzRRhe6c6IcUVUNzVuOUdUYmc)
+
+[2015-08-04 20:51:47] DEBUG (Utilities.GdriveAPI - test_main:78) - [서식20]IT기기구매신청서 (1).hwp(0B2UzRRhe6c6Ib3JQaTRKRjVjOEk)
+
+[2015-08-04 20:51:47] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(11U0nL-hqL62Cy0qDa3f57x7sks-60RYO1r3Nkn_-yCA)
+
+[2015-08-04 20:51:47] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(1R65uHbmPdWU0trvJiiBNuWznueGMi3jOUjfCcOp78Ks)
+
+[2015-08-04 20:51:47] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(1vzBdBTu2iKYG0fks6LlOkzFmYOSPytQ5qfDRzRZhtO0)
+
+[2015-08-04 20:51:47] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(0B2UzRRhe6c6Icms2YjdDZzlmeDg)
+
+[2015-08-04 20:51:47] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(0B2UzRRhe6c6ISUpES1M2NmxuNE0)
+
+[2015-08-04 20:51:47] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(12SqyZnfiGVD-f8BPfFQSZmkuTGgzmUS8ZMbe0g2sXCo)
+
+[2015-08-04 20:51:47] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(0B2UzRRhe6c6ISXdVbGYyNE1NVHNXQVFJWnk3VUJvR0RWdjVZ)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - authorize:105) - HOST:localhost
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - authorize:106) - PORT:-1
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - authorize:111) - Credentials saved to /Users/devholic/.credentials/drive-api-quickstart
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - authorize:105) - HOST:localhost
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - authorize:106) - PORT:-1
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - authorize:111) - Credentials saved to /Users/devholic/.credentials/drive-api-quickstart
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:76) - Files:
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(1zpNLx90alV-VjH2c1agJCXNLLs8vGcNto1vpUYrY7pA)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - Untitled(0B2UzRRhe6c6IcUVUNzVuOUdUYmc)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - [서식20]IT기기구매신청서 (1).hwp(0B2UzRRhe6c6Ib3JQaTRKRjVjOEk)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(11U0nL-hqL62Cy0qDa3f57x7sks-60RYO1r3Nkn_-yCA)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(1R65uHbmPdWU0trvJiiBNuWznueGMi3jOUjfCcOp78Ks)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(1vzBdBTu2iKYG0fks6LlOkzFmYOSPytQ5qfDRzRZhtO0)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(0B2UzRRhe6c6Icms2YjdDZzlmeDg)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(0B2UzRRhe6c6ISUpES1M2NmxuNE0)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(12SqyZnfiGVD-f8BPfFQSZmkuTGgzmUS8ZMbe0g2sXCo)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(0B2UzRRhe6c6ISXdVbGYyNE1NVHNXQVFJWnk3VUJvR0RWdjVZ)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:76) - Files:
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(1zpNLx90alV-VjH2c1agJCXNLLs8vGcNto1vpUYrY7pA)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - Untitled(0B2UzRRhe6c6IcUVUNzVuOUdUYmc)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - [서식20]IT기기구매신청서 (1).hwp(0B2UzRRhe6c6Ib3JQaTRKRjVjOEk)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(11U0nL-hqL62Cy0qDa3f57x7sks-60RYO1r3Nkn_-yCA)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(1R65uHbmPdWU0trvJiiBNuWznueGMi3jOUjfCcOp78Ks)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(1vzBdBTu2iKYG0fks6LlOkzFmYOSPytQ5qfDRzRZhtO0)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - test.csv(0B2UzRRhe6c6Icms2YjdDZzlmeDg)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - train.csv(0B2UzRRhe6c6ISUpES1M2NmxuNE0)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(12SqyZnfiGVD-f8BPfFQSZmkuTGgzmUS8ZMbe0g2sXCo)
+
+[2015-08-04 20:52:07] DEBUG (Utilities.GdriveAPI - test_main:78) - 2015년 SW Maestro 과정 하계 집체교육 수강신청_강성훈.xlsx(0B2UzRRhe6c6ISXdVbGYyNE1NVHNXQVFJWnk3VUJvR0RWdjVZ)
+
+[2015-08-04 20:52:57] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 20:53:04] DEBUG (Utilities.GdriveAPI - authorize:105) - HOST:localhost
+
+[2015-08-04 20:53:04] DEBUG (Utilities.GdriveAPI - authorize:105) - HOST:localhost
+
+[2015-08-04 20:53:04] DEBUG (Utilities.GdriveAPI - authorize:106) - PORT:-1
+
+[2015-08-04 20:53:04] DEBUG (Utilities.GdriveAPI - authorize:106) - PORT:-1
+
+[2015-08-04 21:11:39] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:12:04] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:13:16] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:13:43] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:14:11] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:15:24] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:17:03] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:18:24] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:18:52] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:22:21] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:35:24] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:36:21] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:37:55] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:39:18] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:45:35] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:46:28] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:47:14] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:47:37] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:52:15] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:53:21] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:53:58] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 21:56:16] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
+[2015-08-04 22:01:29] DEBUG (SOMAReport.Application - main:34) - Hit enter to stop server
