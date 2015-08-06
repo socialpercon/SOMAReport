@@ -9,7 +9,7 @@ public class RegistrationUtilTest {
 	@Test
 	public void testRegisterMentee() {
 		regit = new RegistrationUtil();
-	//	regit.registerMentee();
+		regit.registerMentee();
 	}
 
 	@Test

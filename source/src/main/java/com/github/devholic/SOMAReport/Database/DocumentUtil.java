@@ -1,5 +1,7 @@
 package com.github.devholic.SOMAReport.Database;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,7 +12,6 @@ import org.apache.log4j.Logger;
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
 import com.cloudant.client.api.model.Response;
-import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -144,4 +145,53 @@ public class DocumentUtil {
 		return putDoc(report);
 
 	}
+	
+	public List<String> getUUID(int count) {
+		return client.uuids(count);
+	}
+	
+	public JsonArray getUserAuthInfo (String account) {
+		List<JsonObject> userInfo = db.view("get_doc/password_by_account").key(account)
+				.includeDocs(false).reduce(false).query(JsonObject.class);
+		if (userInfo.size() == 0) return null;
+		else return userInfo.get(0).get("value").getAsJsonArray();
+	}
+	
+	public boolean userAuthentication (String account, String password) {
+		JsonArray user = getUserAuthInfo(account);
+		if (user == null) {
+			logger.debug("wrong account");
+			return false;
+		}
+		else {
+			logger.info(user.toString());
+			String inputPwd = encryptPassword(password, user.get(1).getAsString());
+			if (inputPwd.equals(user.get(0).getAsString())) 
+				return true;
+			else {
+				logger.debug("wrong password");
+				return false;
+			}
+		}
+	}
+	
+	private static String encryptPassword (String password, String salt)
+    {
+        String encryptedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(salt.getBytes());
+            byte[] bytes = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            encryptedPassword = sb.toString();
+        }
+        catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return encryptedPassword;
+    }
 }

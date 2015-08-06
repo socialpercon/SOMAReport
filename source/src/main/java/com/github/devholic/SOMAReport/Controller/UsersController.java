@@ -25,7 +25,7 @@ public class UsersController {
 	private final Logger logger = Logger.getLogger(UsersController .class);
 	
 	ReferenceUtil reference_util = new ReferenceUtil("somarecord");
-	DocumentUtil doc_util = new DocumentUtil("somarecord");
+	static DocumentUtil doc_util = new DocumentUtil("somarecord");
 
 	/**
 	 * 로그인
@@ -39,14 +39,15 @@ public class UsersController {
 		
 		static_logger.debug("email :" + email + "/ password:" + password);
 		
-		boolean result = false;
-		Users us = new Users(email);
-		if (us.getUserId() != null) {
-			result = true;
-		} else {
-			result = false;
-		}
-		return result;
+//		boolean result = false;
+//		Users us = new Users(email);
+//		if (us.getUserId() != null) {
+//			result = true;
+//		} else {
+//			result = false;
+//		}
+//		return result;
+		return doc_util.userAuthentication(email, password);
 	}
 
 	/**************************************************************************
