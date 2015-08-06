@@ -40,19 +40,17 @@ public class View_Demo {
 	@Path("/form")
 	@Produces("text/html")
 	public Viewable demoFormGet() {
-		return new Viewable("/demoform.mustache");
+		return new Viewable("/demopostarray.mustache");
 	}
 
 	@POST
 	@Path("/form")
 	@Produces("text/html")
-	public Viewable demoFormPost(@FormParam("username") String username) {
-		JSONObject jo1 = new JSONObject();
-		jo1.put("name", username);
-		Map<String, Object> retMap = new Gson().fromJson(jo1.toString(),
-				new TypeToken<HashMap<String, Object>>() {
-				}.getType());
-		return new Viewable("/demo.mustache", retMap);
+	public Viewable demoFormPost(@FormParam("array[]") String test[]) {
+		for (int i = 0; i < test.length; i++) {
+			System.out.println(test[i]);
+		}
+		return new Viewable("/login.mustache");
 	}
 
 	@GET
