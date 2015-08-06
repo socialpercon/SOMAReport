@@ -113,19 +113,20 @@
     </div>
     <div class="checkbox checkbox-helper">
 		<label>
-			<input type="checkbox"><span class="checkbox-material"><span class="check"></span></span>	멘토의견 공개
+			<input name="opinion-public"type="checkbox"><span class="checkbox-material"><span class="check"></span></span>	멘토의견 공개
 		</label>
-	</div>
+	  </div>
     <div class="group materialst-input">      
       <input name="etc" type="text" value="아몰랑!" required>
       <span class="highlight"></span>
       <span class="bar"></span>
       <label>기타</label>
     </div>
-    <h4>내용</h4>
+    <h5 style="padding-left:5px; color:#5264AE">내용</h5>
     <div class="group materialst-input">      
-      <textarea style="width:100%;max-width:100%;overflow:visible" type="text" onkeyup="resize(this)" required></textarea>  
+      <textarea style="width:100%;max-width:100%;overflow:visible" name="content" type="text" onkeyup="resize(this)" required></textarea>  
     </div>
+    <h5 style="padding-left:5px; color:#5264AE">인증사진</h5>
     <input type="file" name="file">
     <div>
     <button class="btn btn-default btn-raised">작성완료<div class="ripple-wrapper"></div></button>
@@ -162,7 +163,11 @@
         	obj.style.height = "1px";
         	obj.style.height = (20+obj.scrollHeight)+"px";
       	}
-      	function doPost(){}
+      	function doPost(){
+          var form = document.createElement("form");
+          form.setAttribute("method", "post");
+          form.setAttribute("action", "/report/write");
+        }
     </script>
   </body>
 </html>
