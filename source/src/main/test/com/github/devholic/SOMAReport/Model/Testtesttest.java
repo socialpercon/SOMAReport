@@ -65,9 +65,5 @@ public class Testtesttest {
     @Test
     public void testUserAuthentication() {
     	DocumentUtil doc = new DocumentUtil("somarecord");
-    	assertTrue(doc.userAuthentication("ppyong0@gmail.com", "lalala"));
-    	assertFalse(doc.userAuthentication("ppyong@gmail.com", "lalala"));
-    	assertFalse(doc.userAuthentication("ppyong0@gmail.com", "lalalala"));
-    	
     }
 }
