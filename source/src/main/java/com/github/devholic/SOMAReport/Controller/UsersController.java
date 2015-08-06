@@ -24,8 +24,8 @@ public class UsersController {
 	
 	private final Logger logger = Logger.getLogger(UsersController .class);
 	
-	ReferenceUtil reference_util = new ReferenceUtil("somarecord");
-	DocumentUtil doc_util = new DocumentUtil("somarecord");
+	ReferenceUtil reference_util = new ReferenceUtil("");
+	DocumentUtil doc_util = new DocumentUtil("");
 
 	/**
 	 * 로그인
@@ -62,8 +62,7 @@ public class UsersController {
 		List<JsonObject> result = new ArrayList<JsonObject>();
 
 		try {
-			ReferenceUtil util = new ReferenceUtil("somarecord");
-			result = util.getAllMentee();
+			result = reference_util.getAllMentee();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,8 +84,7 @@ public class UsersController {
 		List<JsonObject> result = new ArrayList<JsonObject>();
 
 		try {
-			ReferenceUtil util = new ReferenceUtil("somarecord");
-			result = util.getAllMentor();
+			result = reference_util.getAllMentor();
 
 		} catch (Exception e) {
 			e.printStackTrace();

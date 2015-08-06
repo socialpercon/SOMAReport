@@ -22,12 +22,12 @@ import com.google.gson.JsonObject;
 
 @Path("/projects")
 public class ProjectsController {
-
+	
 	//Log4j setting
 	private final Logger logger = Logger.getLogger(ProjectsController .class);
-		
-	ReferenceUtil reference_util = new ReferenceUtil("somarecord");
-	DocumentUtil doc_util = new DocumentUtil("somarecord");
+    
+	ReferenceUtil reference_util = new ReferenceUtil("");
+	DocumentUtil doc_util = new DocumentUtil("");
 	
 	
 	/**************************************************************************
@@ -35,7 +35,8 @@ public class ProjectsController {
 	 * @param email
 	 * @return
 	 *************************************************************************/
-	
+	@GET
+	@Path("/getMyProjects")
 	public JSONArray getMyProjects(String email){
 		JSONArray result = new JSONArray();
 		try{
