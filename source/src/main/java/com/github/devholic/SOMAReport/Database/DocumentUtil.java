@@ -45,7 +45,6 @@ public class DocumentUtil {
 	}
 
 	public JsonObject getUserDoc(String account) {
-		// 멘토, 멘티
 		// 계정 정보를 통해 해당 유저의 정보를 가져온다
 		List<JsonObject> result = db.view("get_doc/user_by_account")
 				.key(account).includeDocs(true).reduce(false)
@@ -58,11 +57,13 @@ public class DocumentUtil {
 	}
 
 	public String getUserId(String name) {
-		JsonObject user = db.view("get_doc/user_by_name").key(name)
-				.includeDocs(false).reduce(false).query(JsonObject.class)
-				.get(0).getAsJsonObject();
-
-		return user.get("value").getAsString();
+		// 해당 이름을 가진 user 문서의 _id값을 가져온다
+		List<JsonObject> user = db.view("get_doc/user_by_name").key(name)
+				.includeDocs(false).reduce(false).query(JsonObject.class);
+		if (user.size() == 0) 
+			return null;
+		else 
+			return user.get(0).get("value").getAsString();
 	}
 
 	public JsonObject getDoc(String id) {
@@ -72,7 +73,7 @@ public class DocumentUtil {
 
 	public String putDoc(JsonObject document) {
 		// document를 db에 넣는다
-		// _id값을 받아와 리턴
+		// 생성_id값을 받아와 리턴
 		Response response = db.save(document);
 		return response.getId();
 	}
@@ -80,6 +81,7 @@ public class DocumentUtil {
 	public Response deleteDoc(String id) {
 		// _id에 해당하는 문서 삭제.
 		JsonObject doc = getDoc(id);
+		if (doc.isJsonNull()) return null;
 		String rev = doc.get("_rev").getAsString();
 		Response response = db.remove(id, rev);
 		return response;
@@ -87,13 +89,13 @@ public class DocumentUtil {
 
 	public Response updateDoc(JsonObject document) {
 		// 이때 document는 db내에 존재하던 문서로 _id, _rev값을 갖고 있어야 함
-		// 앞으로 생성될 update기능 세부사항에 따라 수정/확장 필요
+		// 주로 getDoc() 등으로 직접 불러온 뒤 사용할 것
 		Response response = db.update(document);
 		return response;
 	}
 
 	public int calWholeTime(JsonObject report_info) {
-
+		// report_info 내의 시작/끝 시간을 통해 멘토링이 진행된 전체 시간을 구한다
 		int whole_time = 0;
 		JsonArray time = report_info.get("start_time").getAsJsonArray();
 		String timeString = "";
@@ -132,14 +134,16 @@ public class DocumentUtil {
 	}
 
 	public String getDate(JsonObject report_info) {
+		// report_info내의 시작시간으로부터 해당 날짜를 String으로 리턴
 		String date = "";
 		JsonArray start_time = report_info.get("start_time").getAsJsonArray();
-		date = start_time.get(0).getAsString() + "_" + 
-				start_time.get(1).getAsString() + "_" + start_time.get(2).getAsString();
+		for (int i=0; i<start_time.size(); i++)
+			date += start_time.get(i).getAsString();
 		return date;
 	}
 
 	public String putReportDoc(JsonObject report_input) {
+		// 입력된 report_input에 기본 정보를 더해 데이터베이스에 PUT
 		logger.debug(report_input.toString());
 		JsonObject report = new JsonObject();
 		report.addProperty("type", "report");
@@ -163,10 +167,12 @@ public class DocumentUtil {
 	}
 	
 	public List<String> getUUID(int count) {
+		// UUID를 count개 생성
 		return client.uuids(count);
 	}
 	
 	public JsonArray getUserAuthInfo (String account) {
+		// 사용자의 account로부터 인증에 필요한 정보 (_id, password, salt)를 가져온다
 		List<JsonObject> userInfo = db.view("get_doc/auth_by_account").key(account)
 				.includeDocs(false).reduce(false).query(JsonObject.class);
 		if (userInfo.size() == 0) return null;
@@ -174,6 +180,8 @@ public class DocumentUtil {
 	}
 	
 	public String userAuthentication (String account, String password) {
+		// log-in method
+		// account로 인증정보를 받아와 해싱하여 password의 일치 여부를 확인
 		JsonArray user = getUserAuthInfo(account);
 		if (user == null) {
 			logger.debug("wrong account");
@@ -192,8 +200,8 @@ public class DocumentUtil {
 		}
 	}
 	
-	private static String encryptPassword (String password, String salt)
-    {
+	private static String encryptPassword (String password, String salt) {
+		// password와 salt를 함께 hash
         String encryptedPassword = null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

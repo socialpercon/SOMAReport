@@ -28,6 +28,7 @@ public class View_Project {
 			throws URISyntaxException {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
+			System.out.println("checkId: "+session.getAttribute("user_id").toString());
 			ProjectsController p = new ProjectsController();
 			JSONArray ja = new JSONArray(p.getMyProjects(
 					session.getAttribute("user_id").toString()).toString());
