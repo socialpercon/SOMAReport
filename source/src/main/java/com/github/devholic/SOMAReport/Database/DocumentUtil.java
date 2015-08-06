@@ -89,7 +89,7 @@ public class DocumentUtil {
 
 	public Response updateDoc(JsonObject document) {
 		// 이때 document는 db내에 존재하던 문서로 _id, _rev값을 갖고 있어야 함
-		// 주로 getDoc() 등으로 직접 불러온 뒤 사용할 
+		// 주로 getDoc() 등으로 직접 불러온 뒤 사용할 것
 		Response response = db.update(document);
 		return response;
 	}
@@ -167,10 +167,12 @@ public class DocumentUtil {
 	}
 	
 	public List<String> getUUID(int count) {
+		// UUID를 count개 생성
 		return client.uuids(count);
 	}
 	
 	public JsonArray getUserAuthInfo (String account) {
+		// 사용자의 account로부터 인증에 필요한 정보 (_id, password, salt)를 가져온다
 		List<JsonObject> userInfo = db.view("get_doc/auth_by_account").key(account)
 				.includeDocs(false).reduce(false).query(JsonObject.class);
 		if (userInfo.size() == 0) return null;
@@ -178,6 +180,8 @@ public class DocumentUtil {
 	}
 	
 	public String userAuthentication (String account, String password) {
+		// log-in method
+		// account로 인증정보를 받아와 해싱하여 password의 일치 여부를 확인
 		JsonArray user = getUserAuthInfo(account);
 		if (user == null) {
 			logger.debug("wrong account");
@@ -196,8 +200,8 @@ public class DocumentUtil {
 		}
 	}
 	
-	private static String encryptPassword (String password, String salt)
-    {
+	private static String encryptPassword (String password, String salt) {
+		// password와 salt를 함께 hash
         String encryptedPassword = null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

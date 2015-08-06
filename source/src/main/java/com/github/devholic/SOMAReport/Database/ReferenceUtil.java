@@ -46,8 +46,6 @@ public class ReferenceUtil {
 	}
 
 	public JSONArray getMyProjects(String user_id) {
-
-		// 멘토, 멘티
 		// 자신이 속한 프로젝트 조회
 		List<JsonObject> lists = db.view("user_view/all_my_project")
 				.startKey(new Object[] { user_id + " ", " " })
@@ -86,37 +84,38 @@ public class ReferenceUtil {
 	}
 
 	public List<JsonObject> getAllMentor() {
-		// 사무국
-		// 모든 멘토 리스트 불러오기
+		// 모든 멘토 리스트 조회
 		return db.view("admin_view/all_docs").key("mentor").includeDocs(true)
 				.reduce(false).query(JsonObject.class);
 	}
 
 	public List<JsonObject> getAllMentee() {
-		// 사무국
-		// 모든 멘티 리스트 불러오기
+		// 모든 멘티 리스트 조회
 		return db.view("admin_view/all_docs").key("mentee").includeDocs(true)
 				.reduce(false).query(JsonObject.class);
 	}
 
 	public List<JsonObject> getAllProjects() {
+		// 모든 프로젝트 리스트 조회
 		return db.view("admin_viewcurrent_project").includeDocs(true)
 				.reduce(false).query(JsonObject.class);
 	}
 
 	public List<JsonObject> getAllReports() {
+		// 모든 레포트 리스트 조회
 		return db.view("project_view/all_report").includeDocs(true)
 				.reduce(false).query(JsonObject.class);
 	}
 
 	public List<JsonObject> getCurrentProjects(int[] current) {
-		// 사무국
 		// 현재 기수, 단계, 차수에 해당하는 모든 프로젝트 조회
 		return db.view("admin_view/current_project").key(current)
 				.includeDocs(true).reduce(false).query(JsonObject.class);
 	}
 	
 	public JsonObject getProjectInfo (String project_id) {
+		// 프로젝트의 기본 정보를 가져온다
+		// project_type, title, mentor, section(by mentor), stage, field, mentoring_num(횟수), mentee(리스트)
 		JsonObject projectInfo = new JsonObject();
 		DocumentUtil docutil = new DocumentUtil("");
 		JsonObject project = docutil.getDoc(project_id);
@@ -136,6 +135,7 @@ public class ReferenceUtil {
 	}
 	
 	public String getUserName (String id) {
+		// user의 id를 받아 이름을 조회
 		List<JsonObject> result = db.view("user_name_by_id")
 				.key(id).includeDocs(false).reduce(false).query(JsonObject.class);
 		if (result.isEmpty()) return null;
@@ -143,6 +143,7 @@ public class ReferenceUtil {
 	}
 	
 	public String getMentorName (String project_id) {
+		// project의 id를 통해 소속 멘토의 이름을 조회
 		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
 				.key(project_id).includeDocs(false).reduce(false).query(JsonObject.class);
 		if (result.isEmpty()) return null;
@@ -151,6 +152,7 @@ public class ReferenceUtil {
 	}
 	
 	public String[] getMenteeName (String project_id) {
+		// project의 id를 통해 소속 멘티들의 이름을 조회
 		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
 				.key(project_id).includeDocs(false).reduce(false).query(JsonObject.class);
 		if (result.isEmpty()) return null;
@@ -162,6 +164,7 @@ public class ReferenceUtil {
 	}
 	
 	public String[] getAllMemberName (String project_id) {
+		// project의 id를 통해 소속 멘토, 멘티들의 이름을 한 번에 조회
 		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
 				.key(project_id).includeDocs(false).reduce(false).query(JsonObject.class);
 		if (result.isEmpty()) return null;
