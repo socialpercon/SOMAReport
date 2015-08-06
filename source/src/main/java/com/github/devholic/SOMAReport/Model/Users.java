@@ -40,7 +40,7 @@ public class Users {
 
 	public Users(String account) {
 		logger.debug(account);
-		DocumentUtil docUtil = new DocumentUtil("somarecord");
+		DocumentUtil docUtil = new DocumentUtil("");
 		
 		logger.debug(docUtil);
 		JsonObject userDoc = docUtil.getUserDoc(account);
@@ -107,7 +107,7 @@ public class Users {
 	public JSONArray getMyProjects() {
 		// 사용자가 소속된 프로젝트의 리스트를 리턴
 		// 포함된 정보: {id, stage, title, mentor, mentee}
-		ReferenceUtil refutil = new ReferenceUtil("somarecord");
+		ReferenceUtil refutil = new ReferenceUtil("");
 		return refutil.getMyProjects(userId);
 
 	}

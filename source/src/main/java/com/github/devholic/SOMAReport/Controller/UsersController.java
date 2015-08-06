@@ -24,8 +24,8 @@ public class UsersController {
 	
 	private final Logger logger = Logger.getLogger(UsersController .class);
 	
-	ReferenceUtil reference_util = new ReferenceUtil("somarecord");
-	static DocumentUtil doc_util = new DocumentUtil("somarecord");
+	ReferenceUtil reference_util = new ReferenceUtil("");
+	DocumentUtil doc_util = new DocumentUtil("");
 
 	/**
 	 * 로그인
@@ -36,6 +36,7 @@ public class UsersController {
 	 */
 	public static boolean login(String email, String password) {
 		Logger static_logger = Logger.getLogger(UsersController .class);
+		DocumentUtil doc_util = new DocumentUtil("");
 		
 		static_logger.debug("email :" + email + "/ password:" + password);
 		
@@ -63,8 +64,7 @@ public class UsersController {
 		List<JsonObject> result = new ArrayList<JsonObject>();
 
 		try {
-			ReferenceUtil util = new ReferenceUtil("somarecord");
-			result = util.getAllMentee();
+			result = reference_util.getAllMentee();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -86,8 +86,7 @@ public class UsersController {
 		List<JsonObject> result = new ArrayList<JsonObject>();
 
 		try {
-			ReferenceUtil util = new ReferenceUtil("somarecord");
-			result = util.getAllMentor();
+			result = reference_util.getAllMentor();
 
 		} catch (Exception e) {
 			e.printStackTrace();

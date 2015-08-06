@@ -1,11 +1,13 @@
 package com.github.devholic.SOMAReport.Database;
 
+import java.io.FileInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
@@ -22,10 +24,24 @@ public class DocumentUtil {
 	CloudantClient client;
 	Database db;
 
-	public DocumentUtil(String dbName) {
-		client = new CloudantClient("http://somareport.cloudant.com",
-				"somareport", "somasoma");
-		db = client.database(dbName, true);
+	public DocumentUtil(String dbname){
+		try{
+			//get config value 
+			Properties prop = new Properties();
+			FileInputStream fileInput = new FileInputStream("config.xml");
+			prop.loadFromXML(fileInput);
+			
+			client = new CloudantClient(prop.getProperty("cloudant_url"),
+					prop.getProperty("cloudant_id"), prop.getProperty("cloudant_pwd"));
+			if(dbname == null || dbname.equals("")){
+				db = client.database(prop.getProperty("database_name"), true);
+			}else{
+				db = client.database(dbname, true);
+			}
+				
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public JsonObject getUserDoc(String account) {

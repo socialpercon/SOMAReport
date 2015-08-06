@@ -1,24 +1,50 @@
 package com.github.devholic.SOMAReport.Database;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
+import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class ReferenceUtil {
 
+	//Log4j setting
+	private final Logger logger = Logger.getLogger(ProjectsController .class);
+		
 	public CloudantClient client;
 	public Database db;
 
-	public ReferenceUtil(String dbName) {
-		client = new CloudantClient("http://somareport.cloudant.com",
-				"somareport", "somasoma");
-		db = client.database(dbName, true);
+	public ReferenceUtil(String dbname){
+		try{
+			//get config value 
+			Properties prop = new Properties();
+			FileInputStream fileInput = new FileInputStream("config.xml");
+			prop.loadFromXML(fileInput);
+			
+			logger.debug("xml database_name :"+prop.getProperty("database_name")+"\n");
+			logger.debug("xml test :"+prop.getProperty("test")+"\n");
+			
+			client = new CloudantClient(prop.getProperty("cloudant_url"),
+					prop.getProperty("cloudant_id"), prop.getProperty("cloudant_pwd"));
+			if(dbname == null || dbname.equals("")){
+				db = client.database(prop.getProperty("database_name"), true);
+			}else{
+				db = client.database(dbname, true);
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public JSONArray getMyProjects(String user_id) {
@@ -94,7 +120,7 @@ public class ReferenceUtil {
 	
 	public JsonObject getProjectInfo (String project_id) {
 		JsonObject projectInfo = new JsonObject();
-		DocumentUtil docutil = new DocumentUtil("somarecord");
+		DocumentUtil docutil = new DocumentUtil("");
 		JsonObject project = docutil.getDoc(project_id);
 
 		projectInfo.add("project_type", project.get("project_type"));
@@ -109,5 +135,44 @@ public class ReferenceUtil {
 		projectInfo.add("mentee", project.get("mentee"));
 		
 		return projectInfo;
+	}
+	
+	public String getUserName (String id) {
+		List<JsonObject> result = db.view("user_name_by_id")
+				.key(id).includeDocs(false).reduce(false).query(JsonObject.class);
+		if (result.isEmpty()) return null;
+		return result.get(0).get("value").getAsString();
+	}
+	
+	public String getMentorName (String project_id) {
+		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
+				.key(project_id).includeDocs(false).reduce(false).query(JsonObject.class);
+		if (result.isEmpty()) return null;
+		String mentorId = result.get(0).get("mentor").getAsString();
+		return getUserName(mentorId);
+	}
+	
+	public String[] getMenteeName (String project_id) {
+		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
+				.key(project_id).includeDocs(false).reduce(false).query(JsonObject.class);
+		if (result.isEmpty()) return null;
+		JsonArray menteeList = result.get(0).get("mentee").getAsJsonArray();
+		String[] mentee = new String[menteeList.size()];
+		for (int i=0; i<menteeList.size(); i++) 
+			mentee[i] = menteeList.get(i).getAsString();
+		return mentee;
+	}
+	
+	public String[] getAllMemberName (String project_id) {
+		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
+				.key(project_id).includeDocs(false).reduce(false).query(JsonObject.class);
+		if (result.isEmpty()) return null;
+		String mentorId = result.get(0).get("mentor").getAsString();
+		JsonArray menteeList = result.get(0).get("mentee").getAsJsonArray();
+		String[] members = new String[menteeList.size() + 1];
+		members[0] = getUserName(mentorId);
+		for (int i=1; i<menteeList.size(); i++) 
+			members[i] = menteeList.get(i).getAsString();
+		return members;
 	}
 }
