@@ -18,15 +18,12 @@ public class RegistrationUtil {
 
 	DocumentUtil doc_util = new DocumentUtil("registtest");
 	Workbook workbook;
-	Sheet mentor;
-	Sheet mentee;
+	Sheet sheet;
 
-	public RegistrationUtil() {
+	public RegistrationUtil(FileInputStream fileInput) {
 		try {
-			FileInputStream fileInput = new FileInputStream("example.xlsx");
 			workbook = new XSSFWorkbook(fileInput);
-			mentor = workbook.getSheet("mentor");
-			mentee = workbook.getSheet("mentee");
+			sheet = workbook.getSheetAt(0);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -41,13 +38,13 @@ public class RegistrationUtil {
 		Cell cell;
 
 		// 등록연도 가져오기 (기수 정보)
-		row = mentor.getRow(4);
+		row = sheet.getRow(4);
 		cell = row.getCell(1);
 		int year = (int) cell.getNumericCellValue();
-		int num = mentor.getLastRowNum();
+		int num = sheet.getLastRowNum();
 
 		for (int rowIndex = 7; rowIndex <= num; rowIndex++) {
-			row = mentor.getRow(rowIndex);
+			row = sheet.getRow(rowIndex);
 			
 			if (row != null) {
 				cell = row.getCell(1);
@@ -99,13 +96,13 @@ public class RegistrationUtil {
 		Cell cell;
 
 		// 등록연도 가져오기 (기수 정보)
-		row = mentee.getRow(4);
+		row = sheet.getRow(4);
 		cell = row.getCell(1);
 		int year = (int) cell.getNumericCellValue();
-		int num = mentee.getLastRowNum();
+		int num = sheet.getLastRowNum();
 
 		for (int rowIndex = 7; rowIndex <= num; rowIndex++) {
-			row = mentee.getRow(rowIndex);
+			row = sheet.getRow(rowIndex);
 			if (row != null) {
 				registerDoc = new JsonObject();
 				registerDoc.addProperty("type", "mentee");
@@ -120,6 +117,55 @@ public class RegistrationUtil {
 				cell = row.getCell(3);
 				registerDoc.addProperty("belong", cell.getStringCellValue());
 
+				System.out.println(doc_util.putDoc(registerDoc));
+			}
+		}
+	}
+	
+	public void registerProject() {
+		
+		JsonObject registerDoc = new JsonObject();
+		Row row;
+		Cell cell;
+		
+		//등록정보 가져오기 (기수, 단계, 차수)
+		cell = sheet.getRow(3).getCell(1);
+		int year = (int) cell.getNumericCellValue();
+		System.out.println(year);
+		cell = sheet.getRow(4).getCell(1);
+		int level = (int) cell.getNumericCellValue();
+		System.out.println(level);
+		cell = sheet.getRow(5).getCell(1);
+		int st = (int) cell.getNumericCellValue();
+		System.out.println(st);
+		
+		JsonArray stage = new JsonArray();
+		stage.add(new JsonPrimitive(year));
+		stage.add(new JsonPrimitive(level));
+		stage.add(new JsonPrimitive(st));
+		System.out.println(stage.toString());
+
+		int num = sheet.getLastRowNum();
+		for (int rowIndex = 8; rowIndex < num; rowIndex++) {
+			row = sheet.getRow(rowIndex);
+			if (row != null) {
+				registerDoc = new JsonObject();
+				registerDoc.addProperty("type", "project");
+				cell = row.getCell(0);
+				registerDoc.addProperty("project_type", cell.getStringCellValue());
+				registerDoc.add("stage", stage);
+				cell = row.getCell(1);
+				registerDoc.addProperty("mentor", doc_util.getUserId(cell.getStringCellValue()));
+				cell = row.getCell(2);
+				registerDoc.addProperty("title", cell.getStringCellValue());
+				cell = row.getCell(3);
+				registerDoc.addProperty("field", cell.getStringCellValue());
+				
+				JsonArray menteeList = new JsonArray();
+				for(int i=4; i<row.getLastCellNum(); i++)  
+					menteeList.add(new JsonPrimitive(row.getCell(i).getStringCellValue()));
+				registerDoc.add("mentee", menteeList);
+				System.out.println(registerDoc);
 				System.out.println(doc_util.putDoc(registerDoc));
 			}
 		}

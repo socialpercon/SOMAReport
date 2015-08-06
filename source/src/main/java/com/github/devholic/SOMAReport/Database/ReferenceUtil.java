@@ -136,4 +136,43 @@ public class ReferenceUtil {
 		
 		return projectInfo;
 	}
+	
+	public String getUserName (String id) {
+		List<JsonObject> result = db.view("user_name_by_id")
+				.key(id).includeDocs(false).reduce(false).query(JsonObject.class);
+		if (result.isEmpty()) return null;
+		return result.get(0).get("value").getAsString();
+	}
+	
+	public String getMentorName (String project_id) {
+		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
+				.key(project_id).includeDocs(false).reduce(false).query(JsonObject.class);
+		if (result.isEmpty()) return null;
+		String mentorId = result.get(0).get("mentor").getAsString();
+		return getUserName(mentorId);
+	}
+	
+	public String[] getMenteeName (String project_id) {
+		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
+				.key(project_id).includeDocs(false).reduce(false).query(JsonObject.class);
+		if (result.isEmpty()) return null;
+		JsonArray menteeList = result.get(0).get("mentee").getAsJsonArray();
+		String[] mentee = new String[menteeList.size()];
+		for (int i=0; i<menteeList.size(); i++) 
+			mentee[i] = menteeList.get(i).getAsString();
+		return mentee;
+	}
+	
+	public String[] getAllMemberName (String project_id) {
+		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
+				.key(project_id).includeDocs(false).reduce(false).query(JsonObject.class);
+		if (result.isEmpty()) return null;
+		String mentorId = result.get(0).get("mentor").getAsString();
+		JsonArray menteeList = result.get(0).get("mentee").getAsJsonArray();
+		String[] members = new String[menteeList.size() + 1];
+		members[0] = getUserName(mentorId);
+		for (int i=1; i<menteeList.size(); i++) 
+			members[i] = menteeList.get(i).getAsString();
+		return members;
+	}
 }
