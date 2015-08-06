@@ -16,14 +16,13 @@ import org.apache.log4j.Logger;
 
 import com.github.devholic.SOMAReport.Database.DocumentUtil;
 import com.github.devholic.SOMAReport.Database.ReferenceUtil;
-import com.github.devholic.SOMAReport.Model.Users;
 import com.google.gson.JsonObject;
 
 @Path("/users")
 public class UsersController {
-	
-	private final Logger logger = Logger.getLogger(UsersController .class);
-	
+
+	private final Logger logger = Logger.getLogger(UsersController.class);
+
 	ReferenceUtil reference_util = new ReferenceUtil("");
 	DocumentUtil doc_util = new DocumentUtil("");
 
@@ -35,19 +34,19 @@ public class UsersController {
 	 * @return
 	 */
 	public static String login(String email, String password) {
-		Logger static_logger = Logger.getLogger(UsersController .class);
+		Logger static_logger = Logger.getLogger(UsersController.class);
 		DocumentUtil doc_util = new DocumentUtil("");
-		
+
 		static_logger.debug("email :" + email + "/ password:" + password);
-		
-//		boolean result = false;
-//		Users us = new Users(email);
-//		if (us.getUserId() != null) {
-//			result = true;
-//		} else {
-//			result = false;
-//		}
-//		return result;
+
+		// boolean result = false;
+		// Users us = new Users(email);
+		// if (us.getUserId() != null) {
+		// result = true;
+		// } else {
+		// result = false;
+		// }
+		// return result;
 		return doc_util.userAuthentication(email, password);
 	}
 
@@ -93,31 +92,6 @@ public class UsersController {
 		}
 
 		return result;
-	}
-
-	/**************************************************************************
-	 * 사용자 상세정보를 가져온다
-	 * 
-	 * @param userId
-	 * @return Users
-	 *************************************************************************/
-	@GET
-	@Path("/{userId}")
-	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public Users getUserDetails(@PathParam("userId") String userId) {
-
-		Users user = new Users();
-
-		try {
-			logger.debug("param userId =[" + userId + "]");
-
-			user.setUserId(userId);
-			user.setUserName("min");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return user;
 	}
 
 	/*************************************************************************
