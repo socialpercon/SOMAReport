@@ -22,8 +22,8 @@ import com.google.gson.JsonObject;
 
 @Path("/reports")
 public class ReportsController {
-	
-	private final Logger logger = Logger.getLogger(ReportsController .class);
+
+	private final Logger logger = Logger.getLogger(ReportsController.class);
 
 	ReferenceUtil ref_util = new ReferenceUtil("");
 	DocumentUtil doc_util = new DocumentUtil("");
@@ -39,10 +39,12 @@ public class ReportsController {
 		JSONArray ja = new JSONArray();
 		try {
 			reports_list = ref_util.getReports(projectId);
+			logger.info("reports_list " + reports_list.toString());
+			logger.info("list_size " + reports_list.size());
 			for (int i = 0; i < reports_list.size(); i++) {
-				logger.debug(reports_list.get(i).toString());
 				JSONObject jo = new JSONObject();
 				jo.put("id", reports_list.get(i).get("_id").getAsString());
+				logger.info("id " + reports_list.get(i).get("_id").getAsString());
 				jo.put("reportTitle", reports_list.get(i).get("report_info")
 						.getAsJsonObject().get("date").getAsString()
 						.replaceAll("-", ""));
@@ -55,7 +57,7 @@ public class ReportsController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		logger.debug(ja.toString());
+		logger.info(ja.toString());
 		return ja;
 	}
 
@@ -106,9 +108,7 @@ public class ReportsController {
 		List<JsonObject> report_list = new ArrayList<JsonObject>();
 
 		try {
-
 			report_list = ref_util.getAllReports();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

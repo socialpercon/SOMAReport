@@ -150,8 +150,8 @@ public class View_Report {
 		sja.add(new JsonPrimitive(Integer.parseInt(endArr[0])));
 		sja.add(new JsonPrimitive(Integer.parseInt(endArr[1])));
 		info.add("end_time", sja);
-		info.add("attendee", attendeeArray);
-		info.add("absentee", absenteeArray);
+		jo.add("attendee", attendeeArray);
+		jo.add("absentee", absenteeArray);
 		info.addProperty("except_time", 0);
 		jo.add("report_info", info);
 		JsonObject details = new JsonObject();
