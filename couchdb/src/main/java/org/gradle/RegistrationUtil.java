@@ -146,6 +146,7 @@ public class RegistrationUtil {
 		System.out.println(stage.toString());
 
 		int num = sheet.getLastRowNum();
+		System.out.println(num);
 		for (int rowIndex = 8; rowIndex < num; rowIndex++) {
 			row = sheet.getRow(rowIndex);
 			if (row != null) {
@@ -162,11 +163,14 @@ public class RegistrationUtil {
 				registerDoc.addProperty("field", cell.getStringCellValue());
 				
 				JsonArray menteeList = new JsonArray();
-				for(int i=4; i<row.getLastCellNum(); i++)  
-					menteeList.add(new JsonPrimitive(row.getCell(i).getStringCellValue()));
+				for(int i=4; i<row.getLastCellNum(); i++){  
+					String name = row.getCell(i).getStringCellValue();
+					System.out.println(name);
+					menteeList.add(new JsonPrimitive(doc_util.getUserId(name)));
+				}
 				registerDoc.add("mentee", menteeList);
 				System.out.println(registerDoc);
-				System.out.println(doc_util.putDoc(registerDoc));
+				System.out.println(rowIndex + " : "+ doc_util.putDoc(registerDoc));
 			}
 		}
 	}

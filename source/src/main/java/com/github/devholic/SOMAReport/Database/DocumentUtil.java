@@ -167,26 +167,27 @@ public class DocumentUtil {
 	}
 	
 	public JsonArray getUserAuthInfo (String account) {
-		List<JsonObject> userInfo = db.view("get_doc/password_by_account").key(account)
+		List<JsonObject> userInfo = db.view("get_doc/auth_by_account").key(account)
 				.includeDocs(false).reduce(false).query(JsonObject.class);
 		if (userInfo.size() == 0) return null;
 		else return userInfo.get(0).get("value").getAsJsonArray();
 	}
 	
-	public boolean userAuthentication (String account, String password) {
+	public String userAuthentication (String account, String password) {
 		JsonArray user = getUserAuthInfo(account);
 		if (user == null) {
 			logger.debug("wrong account");
-			return false;
+			return null;
 		}
 		else {
 			logger.info(user.toString());
-			String inputPwd = encryptPassword(password, user.get(1).getAsString());
-			if (inputPwd.equals(user.get(0).getAsString())) 
-				return true;
+			String inputPwd = encryptPassword(password, user.get(2).getAsString());
+			if (inputPwd.equals(user.get(1).getAsString())) {
+				return user.get(0).getAsString();
+			}
 			else {
 				logger.debug("wrong password");
-				return false;
+				return null;
 			}
 		}
 	}

@@ -34,7 +34,7 @@ public class UsersController {
 	 * @param password
 	 * @return
 	 */
-	public static boolean login(String email, String password) {
+	public static String login(String email, String password) {
 		Logger static_logger = Logger.getLogger(UsersController .class);
 		DocumentUtil doc_util = new DocumentUtil("");
 		
