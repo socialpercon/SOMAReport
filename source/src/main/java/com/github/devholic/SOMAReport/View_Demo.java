@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.FormParam;
@@ -46,9 +47,9 @@ public class View_Demo {
 	@POST
 	@Path("/form")
 	@Produces("text/html")
-	public Viewable demoFormPost(@FormParam("array[]") String test[]) {
-		for (int i = 0; i < test.length; i++) {
-			System.out.println(test[i]);
+	public Viewable demoFormPost(@FormParam("array") List<String> param) {
+		for (int i = 0; i < param.size(); i++) {
+			System.out.println(param.get(i));
 		}
 		return new Viewable("/login.mustache");
 	}
