@@ -1,7 +1,4 @@
 .metadata/
-
 *.log
-
 source/logs/log.log
-
 source/.DS_Store
