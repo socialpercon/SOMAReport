@@ -1,12 +1,20 @@
 package com.github.devholic.SOMAReport;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
+
+import org.apache.log4j.Logger;
+
+import com.github.devholic.SOMAReport.Utilities.GdriveAPI;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
@@ -231,6 +239,55 @@ public class API_GoogleDrive {
 		// No refresh token has been retrieved.
 		String authorizationUrl = getAuthorizationUrl(emailAddress, state);
 		throw new NoRefreshTokenException(authorizationUrl);
+	}
+	
+	/**
+	 * File Upload through GDrive API
+	 * @throws IOException
+	 */
+	public static void insertFile(java.io.File imageFile) throws IOException{
+		
+		Logger static_logger = Logger.getLogger(GdriveAPI .class);
+//		Drive service = getDriveService();s
+		
+		//URL 을 이용하여 File을 upload
+		String uploadURL = "https://www.googleapis.com/upload/drive/v2/files?uploadType=media";
+		
+		URL obj = new URL(uploadURL);
+		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+ 
+		con.setRequestMethod("POST");
+//		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+		
+		//Sending Image Set
+		String urlParameters = "data="+imageFile;
+		
+ 
+		// Send post request
+		con.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.writeBytes(urlParameters);
+		wr.flush();
+		wr.close();
+ 
+		int responseCode = con.getResponseCode();
+		static_logger.debug("\nSending 'POST' request to URL : " + uploadURL);
+		static_logger.debug("Post parameters : " + urlParameters);
+		static_logger.debug("Response Code : " + responseCode);
+		
+		BufferedReader in = new BufferedReader(
+		        new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+ 
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+ 
+		//print result
+		static_logger.debug(response.toString());
+	
 	}
 
 }
