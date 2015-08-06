@@ -43,7 +43,8 @@
   		<div>
             <div class="circular-img">
     		</div>
-            <input id="a1reason" name="reason_u1" type='text' placeholder="불참사유" class="form-control"/>
+            <input type="hidden" name="attendee" value="{{.}}">
+            <input type="text" name="attendeeReason" placeholder="불참사유" class="form-control"/>
     	</div>
     </div>
     {{/mentee}}
