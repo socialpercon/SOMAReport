@@ -14,8 +14,8 @@ public class RegistrationUtilTest {
 		FileInputStream fileInput;
 		try {
 			fileInput = new FileInputStream("example.xlsx");
-//			regit = new RegistrationUtil(fileInput);
-//			regit.registerMentee();
+			regit = new RegistrationUtil(fileInput);
+			regit.registerMentee();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -26,8 +26,8 @@ public class RegistrationUtilTest {
 		FileInputStream fileInput;
 		try {
 			fileInput = new FileInputStream("example.xlsx");
-//			regit = new RegistrationUtil(fileInput);
-//			regit.registerMentor();
+			regit = new RegistrationUtil(fileInput);
+			regit.registerMentor();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

@@ -44,17 +44,32 @@ public class View_Login {
 				return Response.seeOther(
 						new URI("http://localhost:8080/project/list")).build();
 			} else {
-				if (UsersController.login(email, password)) {
-					return Response.seeOther(new URI("http://localhost:8080/project/list/"))
+				String result = UsersController.login(email, password);
+				if (result != null) {
+					session.setAttribute("user_id", result);
+					return Response.seeOther(
+							new URI("http://localhost:8080/project/list/"))
 							.build();
 				} else {
-					return Response.seeOther(new URI("http://localhost:8080/login"))
-							.build();
+					return Response.seeOther(
+							new URI("http://localhost:8080/login")).build();
 				}
 			}
 		} else {
 			return Response.seeOther(new URI("http://localhost:8080/login"))
 					.build();
 		}
+	}
+
+	@GET
+	@Path("/logout")
+	public Response doLogout(@Context Request request)
+			throws URISyntaxException {
+		Session session = request.getSession();
+		if (session.getAttribute("user_id") != null) {
+			session.removeAttribute("user_id");
+		}
+		return Response.seeOther(new URI("http://localhost:8080/login"))
+				.build();
 	}
 }
