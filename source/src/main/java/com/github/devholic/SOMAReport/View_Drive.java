@@ -1,28 +1,25 @@
 package com.github.devholic.SOMAReport;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
-import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.auth.oauth2.Credential.AccessMethod;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
+import com.google.api.client.http.FileContent;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpResponse;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
@@ -52,21 +49,39 @@ public class View_Drive {
 		}
 	}
 
-	@GET
-	@Path("/api/drive/{id}")
-	public Response driveQ(@QueryParam("code") String code,
-			@PathParam("id") String id) throws URISyntaxException, IOException,
+	public static String driveUploadImage(String gid, String name,
+			java.io.File file) throws URISyntaxException, IOException,
 			ParseException {
 		Credential c = API_GoogleDrive
 				.fuckFuck(
 						"ya29.yAF8kUZ_J3uUzJPbQvPYv-sFlM6qjP9FyHKOvgRON09Hrj7OFxxmJWbRkdoPjc20wgZH",
 						"1/yXfCfi7fAiPmVzqJ6NrtkZxaDuyH2yqiKU_5aoK1yCw");
 		Drive drive = API_GoogleDrive.buildService(c);
-		FileList fl = drive.files().list().setMaxResults(3).execute();
-		List<File> fll = fl.getItems();
-		for (int i = 0; i < fll.size(); i++) {
-			System.out.println("Fll : " + fll.get(i).getTitle());
-		}
-		return Response.ok().build();
+		File body = new File();
+		body.setTitle(name);
+		java.io.File fileContent = file;
+		FileContent mediaContent = new FileContent("", fileContent);
+		drive.files().insert(body, mediaContent).execute();
+		return "";
+	}
+
+	@GET
+	@Path("/api/drive/image")
+	@Produces("image/jpeg")
+	public Response getDriveImage(@QueryParam("id") String id)
+			throws IOException {
+		System.out.println(id);
+		Credential c = API_GoogleDrive
+				.fuckFuck(
+						"ya29.yAF8kUZ_J3uUzJPbQvPYv-sFlM6qjP9FyHKOvgRON09Hrj7OFxxmJWbRkdoPjc20wgZH",
+						"1/yXfCfi7fAiPmVzqJ6NrtkZxaDuyH2yqiKU_5aoK1yCw");
+		Drive drive = API_GoogleDrive.buildService(c);
+		FileList fl = drive.files().list().setQ("title = '" + id + "'")
+				.execute();
+		File file = fl.getItems().get(0);
+		HttpResponse resp = drive.getRequestFactory()
+				.buildGetRequest(new GenericUrl(file.getDownloadUrl()))
+				.execute();
+		return Response.ok(resp.getContent()).build();
 	}
 }

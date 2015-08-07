@@ -118,17 +118,14 @@ public class ReportsController {
 	 * @param document
 	 * @return
 	 ***************************************************************/
-	public boolean insertReport(JsonObject document) {
-		boolean result = false;
+	public String insertReport(JsonObject document) {
+		String id = null;
 		try {
-			logger.debug(document.toString());
-			String id = doc_util.putReportDoc(document);
-			logger.debug("inserted | report id = " + id);
-			result = true;
+			id = doc_util.putReportDoc(document);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		return id;
 	}
 
 	@PUT

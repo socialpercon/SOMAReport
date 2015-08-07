@@ -19,27 +19,28 @@ import com.google.gson.JsonObject;
 
 public class DocumentUtil {
 
-	private final Logger logger = Logger.getLogger(DocumentUtil .class);
-	
+	private final Logger logger = Logger.getLogger(DocumentUtil.class);
+
 	CloudantClient client;
 	Database db;
 
-	public DocumentUtil(String dbname){
-		try{
-			//get config value 
+	public DocumentUtil(String dbname) {
+		try {
+			// get config value
 			Properties prop = new Properties();
 			FileInputStream fileInput = new FileInputStream("config.xml");
 			prop.loadFromXML(fileInput);
-			
+
 			client = new CloudantClient(prop.getProperty("cloudant_url"),
-					prop.getProperty("cloudant_id"), prop.getProperty("cloudant_pwd"));
-			if(dbname == null || dbname.equals("")){
+					prop.getProperty("cloudant_id"),
+					prop.getProperty("cloudant_pwd"));
+			if (dbname == null || dbname.equals("")) {
 				db = client.database(prop.getProperty("database_name"), true);
-			}else{
+			} else {
 				db = client.database(dbname, true);
 			}
-				
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -60,9 +61,9 @@ public class DocumentUtil {
 		// 해당 이름을 가진 user 문서의 _id값을 가져온다
 		List<JsonObject> user = db.view("get_doc/user_by_name").key(name)
 				.includeDocs(false).reduce(false).query(JsonObject.class);
-		if (user.size() == 0) 
+		if (user.size() == 0)
 			return null;
-		else 
+		else
 			return user.get(0).get("value").getAsString();
 	}
 
@@ -81,7 +82,8 @@ public class DocumentUtil {
 	public Response deleteDoc(String id) {
 		// _id에 해당하는 문서 삭제.
 		JsonObject doc = getDoc(id);
-		if (doc.isJsonNull()) return null;
+		if (doc.isJsonNull())
+			return null;
 		String rev = doc.get("_rev").getAsString();
 		Response response = db.remove(id, rev);
 		return response;
@@ -141,7 +143,8 @@ public class DocumentUtil {
 		report.add("project", report_input.get("project"));
 		JsonObject report_info = report_input.get("report_info")
 				.getAsJsonObject();
-		report_info.addProperty("date",report_input.get("date").getAsString());
+		report_info.addProperty("date", report_input.get("report_info")
+				.getAsJsonObject().get("date").getAsString());
 		int whole_time = calWholeTime(report_info);
 		int total_time = whole_time - report_info.get("except_time").getAsInt();
 		report_info.addProperty("whole_time", whole_time);
@@ -156,57 +159,58 @@ public class DocumentUtil {
 		return putDoc(report);
 
 	}
-	
+
 	public List<String> getUUID(int count) {
 		// UUID를 count개 생성
 		return client.uuids(count);
 	}
-	
-	public JsonArray getUserAuthInfo (String account) {
+
+	public JsonArray getUserAuthInfo(String account) {
 		// 사용자의 account로부터 인증에 필요한 정보 (_id, password, salt)를 가져온다
-		List<JsonObject> userInfo = db.view("get_doc/auth_by_account").key(account)
-				.includeDocs(false).reduce(false).query(JsonObject.class);
-		if (userInfo.size() == 0) return null;
-		else return userInfo.get(0).get("value").getAsJsonArray();
+		List<JsonObject> userInfo = db.view("get_doc/auth_by_account")
+				.key(account).includeDocs(false).reduce(false)
+				.query(JsonObject.class);
+		if (userInfo.size() == 0)
+			return null;
+		else
+			return userInfo.get(0).get("value").getAsJsonArray();
 	}
-	
-	public String userAuthentication (String account, String password) {
+
+	public String userAuthentication(String account, String password) {
 		// log-in method
 		// account로 인증정보를 받아와 해싱하여 password의 일치 여부를 확인
 		JsonArray user = getUserAuthInfo(account);
 		if (user == null) {
 			logger.debug("wrong account");
 			return null;
-		}
-		else {
-			String inputPwd = encryptPassword(password, user.get(2).getAsString());
+		} else {
+			String inputPwd = encryptPassword(password, user.get(2)
+					.getAsString());
 			if (inputPwd.equals(user.get(1).getAsString())) {
 				return user.get(0).getAsString();
-			}
-			else {
+			} else {
 				logger.debug("wrong password");
 				return null;
 			}
 		}
 	}
-	
-	private static String encryptPassword (String password, String salt) {
+
+	private static String encryptPassword(String password, String salt) {
 		// password와 salt를 함께 hash
-        String encryptedPassword = null;
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(salt.getBytes());
-            byte[] bytes = md.digest(password.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++)
-            {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            encryptedPassword = sb.toString();
-        }
-        catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return encryptedPassword;
-    }
+		String encryptedPassword = null;
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			md.update(salt.getBytes());
+			byte[] bytes = md.digest(password.getBytes());
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < bytes.length; i++) {
+				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16)
+						.substring(1));
+			}
+			encryptedPassword = sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return encryptedPassword;
+	}
 }

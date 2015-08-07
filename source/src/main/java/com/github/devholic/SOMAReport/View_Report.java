@@ -27,6 +27,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.simple.parser.ParseException;
 
 import com.github.devholic.SOMAReport.Controller.ReportsController;
 import com.github.devholic.SOMAReport.Database.DocumentUtil;
@@ -149,7 +150,7 @@ public class View_Report {
 			@FormDataParam("content") String content,
 			@FormDataParam("file") InputStream is,
 			@FormDataParam("file") FormDataContentDisposition formData)
-			throws URISyntaxException {
+			throws URISyntaxException, IOException, ParseException {
 		String fileLocation = formData.getFileName();
 		try {
 			saveFile(is, fileLocation);
@@ -204,7 +205,12 @@ public class View_Report {
 		details.addProperty("opinion", opinion);
 		details.addProperty("etc", etc);
 		jo.add("report_details", details);
-		r.insertReport(jo);
+		String rid = r.insertReport(jo);
+		if (rid != null) {
+			View_Drive.driveUploadImage("0", rid, new File(fileLocation));
+		} else {
+			// Error
+		}
 		return Response.seeOther(
 				new URI("http://localhost:8080/report/list/" + pid)).build();
 	}

@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,6 +36,8 @@ import com.google.api.services.drive.model.ParentReference;
 
 public class API_GoogleDrive {
 
+	// http://stackoverflow.com/questions/21440101/what-is-an-example-of-using-oauth-2-0-and-google-spreadsheet-api-with-java
+	
 	private static final String CLIENTSECRET_LOCATION = "client_secret.json";
 	private static final String APPLICATION_NAME = "SOMA Report";
 	public static final String REDIRECT_URI = "http://localhost:8080/api/drive";
