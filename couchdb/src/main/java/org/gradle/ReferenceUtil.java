@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 public class ReferenceUtil {
 
@@ -95,5 +97,49 @@ public class ReferenceUtil {
 		projectInfo.add("mentee", project.get("mentee"));
 		
 		return projectInfo;
+	}
+	public String getUserName(String id) {
+		// user의 id를 받아 이름을 조회
+		List<JsonObject> result = db.view("get_doc/user_name_by_id").key(id)
+				.includeDocs(false).reduce(false).query(JsonObject.class);
+		if (result.isEmpty())
+			return null;
+		return result.get(0).get("value").getAsString();
+	}
+	
+	public String getMentorName(String project_id) {
+		// project의 id를 통해 소속 멘토의 이름을 조회
+		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
+				.key(project_id).includeDocs(true).reduce(false)
+				.query(JsonObject.class);
+		if (result.isEmpty())
+			return null;
+		String mentorId = result.get(0).get("mentor").getAsString();
+		return getUserName(mentorId);
+	}
+	
+	public JsonObject getReportWithNames (String report_id) {
+		JsonObject report = db.find(JsonObject.class, report_id);
+		String name = getMentorName(report.get("project").getAsString());
+		report.addProperty("mentor", name);
+		JsonArray mentee = report.get("attendee").getAsJsonArray();
+		JsonArray names = new JsonArray();
+		for(int i=0; i<mentee.size(); i++) {
+			names.add(new JsonPrimitive(getUserName(mentee.get(i).getAsString())));
+		}
+		report.add("attendee", names);
+		names = new JsonArray();
+		mentee = report.get("absentee").getAsJsonArray();
+		if (mentee.size() > 0) {
+			for(int i=0; i<mentee.size(); i++) {
+				JsonObject abs = new JsonObject();
+				abs.addProperty("id", getUserName(mentee.getAsJsonArray().get(i).getAsJsonObject().get("id").getAsString()));
+				abs.add("reason", mentee.getAsJsonArray().get(i).getAsJsonObject().get("reason"));
+				names.add(abs);
+			}
+			report.add("absentee", names);
+		}
+			
+		return report;
 	}
 }

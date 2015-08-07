@@ -13,6 +13,7 @@ import com.cloudant.client.api.Database;
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 public class ReferenceUtil {
 
@@ -143,7 +144,7 @@ public class ReferenceUtil {
 
 	public String getUserName(String id) {
 		// user의 id를 받아 이름을 조회
-		List<JsonObject> result = db.view("user_name_by_id").key(id)
+		List<JsonObject> result = db.view("get_doc/user_name_by_id").key(id)
 				.includeDocs(false).reduce(false).query(JsonObject.class);
 		if (result.isEmpty())
 			return null;
@@ -153,8 +154,9 @@ public class ReferenceUtil {
 	public String getMentorName(String project_id) {
 		// project의 id를 통해 소속 멘토의 이름을 조회
 		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
-				.key(project_id).includeDocs(false).reduce(false)
+				.key(project_id).includeDocs(true).reduce(false)
 				.query(JsonObject.class);
+	logger.debug(result.toString());
 		if (result.isEmpty())
 			return null;
 		String mentorId = result.get(0).get("mentor").getAsString();
@@ -164,7 +166,7 @@ public class ReferenceUtil {
 	public String[] getMenteeName(String project_id) {
 		// project의 id를 통해 소속 멘티들의 이름을 조회
 		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
-				.key(project_id).includeDocs(false).reduce(false)
+				.key(project_id).includeDocs(true).reduce(false)
 				.query(JsonObject.class);
 		if (result.isEmpty())
 			return null;
@@ -189,5 +191,35 @@ public class ReferenceUtil {
 		for (int i = 1; i < menteeList.size(); i++)
 			members[i] = menteeList.get(i).getAsString();
 		return members;
+	}
+	
+	public JSONObject getReportWithNames (String report_id) {
+		JsonObject report = db.find(JsonObject.class, report_id);
+	logger.info("report: "+report);
+		String name = getMentorName(report.get("project").getAsString());
+
+		logger.info("mentor: "+ name);
+		report.addProperty("mentor", name);
+		JsonArray mentee = report.get("attendee").getAsJsonArray();
+		JsonArray names = new JsonArray();
+		for(int i=0; i<mentee.size(); i++) {
+			names.add(new JsonPrimitive(getUserName(mentee.get(i).getAsString())));
+		}
+	logger.info("attendee: " + names.toString());
+		report.add("attendee", names);
+		names = new JsonArray();
+		mentee = report.get("absentee").getAsJsonArray();
+		if (mentee.size() > 0) {
+			for(int i=0; i<mentee.size(); i++) {
+				JsonObject abs = new JsonObject();
+				abs.addProperty("id", getUserName(mentee.getAsJsonArray().get(i).getAsJsonObject().get("id").getAsString()));
+				abs.add("reason", mentee.getAsJsonArray().get(i).getAsJsonObject().get("reason"));
+				names.add(abs);
+			}
+			logger.info("absentee: "+names.toString());
+			report.add("absentee", names);
+		}
+	logger.info("report: "+report.toString());
+		return new JSONObject(report.toString());
 	}
 }
