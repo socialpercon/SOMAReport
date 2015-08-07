@@ -179,7 +179,6 @@ public class DocumentUtil {
 			return null;
 		}
 		else {
-			logger.info(user.toString());
 			String inputPwd = encryptPassword(password, user.get(2).getAsString());
 			if (inputPwd.equals(user.get(1).getAsString())) {
 				return user.get(0).getAsString();
