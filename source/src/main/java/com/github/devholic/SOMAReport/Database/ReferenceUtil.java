@@ -195,21 +195,20 @@ public class ReferenceUtil {
 	
 	public JSONObject getReportWithNames (String report_id) {
 		JsonObject report = db.find(JsonObject.class, report_id);
-	logger.info("report: "+report);
+		logger.info("report: "+report);
 		String name = getMentorName(report.get("project").getAsString());
 
-		logger.info("mentor: "+ name);
 		report.addProperty("mentor", name);
 		JsonArray mentee = report.get("attendee").getAsJsonArray();
 		JsonArray names = new JsonArray();
 		for(int i=0; i<mentee.size(); i++) {
 			names.add(new JsonPrimitive(getUserName(mentee.get(i).getAsString())));
 		}
-	logger.info("attendee: " + names.toString());
 		report.add("attendee", names);
 		names = new JsonArray();
-		mentee = report.get("absentee").getAsJsonArray();
-		if (mentee.size() > 0) {
+		if (report.has("absentee")) {
+			mentee = report.get("absentee").getAsJsonArray();
+			
 			for(int i=0; i<mentee.size(); i++) {
 				JsonObject abs = new JsonObject();
 				abs.addProperty("id", getUserName(mentee.getAsJsonArray().get(i).getAsJsonObject().get("id").getAsString()));
