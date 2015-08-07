@@ -72,7 +72,6 @@ public class ReferenceUtil {
 				.startKey(new Object[] { project_id + " ", " " })
 				.endKey(new Object[] { project_id, " " }).descending(true)
 				.includeDocs(true).reduce(false).query(JsonObject.class);
-
 	}
 
 	public int calTotalMentoring(String project_id) {
