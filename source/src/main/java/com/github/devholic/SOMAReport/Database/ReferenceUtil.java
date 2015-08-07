@@ -16,31 +16,33 @@ import com.google.gson.JsonObject;
 
 public class ReferenceUtil {
 
-	//Log4j setting
-	private final Logger logger = Logger.getLogger(ProjectsController .class);
-		
+	// Log4j setting
+	private final Logger logger = Logger.getLogger(ProjectsController.class);
+
 	public CloudantClient client;
 	public Database db;
 
-	public ReferenceUtil(String dbname){
-		try{
-			//get config value 
+	public ReferenceUtil(String dbname) {
+		try {
+			// get config value
 			Properties prop = new Properties();
 			FileInputStream fileInput = new FileInputStream("config.xml");
 			prop.loadFromXML(fileInput);
-			
-			logger.debug("xml database_name :"+prop.getProperty("database_name")+"\n");
-			logger.debug("xml test :"+prop.getProperty("test")+"\n");
-			
+
+			logger.debug("xml database_name :"
+					+ prop.getProperty("database_name") + "\n");
+			logger.debug("xml test :" + prop.getProperty("test") + "\n");
+
 			client = new CloudantClient(prop.getProperty("cloudant_url"),
-					prop.getProperty("cloudant_id"), prop.getProperty("cloudant_pwd"));
-			if(dbname == null || dbname.equals("")){
+					prop.getProperty("cloudant_id"),
+					prop.getProperty("cloudant_pwd"));
+			if (dbname == null || dbname.equals("")) {
 				db = client.database(prop.getProperty("database_name"), true);
-			}else{
+			} else {
 				db = client.database(dbname, true);
 			}
-			
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -56,8 +58,13 @@ public class ReferenceUtil {
 			JSONObject jo = new JSONObject();
 			jo.put("id", project.get("_id").getAsString());
 			JsonArray sja = project.get("stage").getAsJsonArray();
-			jo.put("stage", sja.get(0) + "기 " + sja.get(1) + "단계 " + sja.get(2)
-					+ "차 프로젝트");
+			if (sja.size() == 2) {
+				jo.put("stage", sja.get(0) + "기 " + sja.get(1) + "단계 프로젝트");
+			} else {
+				jo.put("stage",
+						sja.get(0) + "기 " + sja.get(1) + "단계 " + sja.get(2)
+								+ "차 프로젝트");
+			}
 			jo.put("title", project.get("title").getAsString());
 			jo.put("mentor", project.get("mentor"));
 			// projectInfo.add("mentee", project.get("mentee"));
@@ -112,10 +119,11 @@ public class ReferenceUtil {
 		return db.view("admin_view/current_project").key(current)
 				.includeDocs(true).reduce(false).query(JsonObject.class);
 	}
-	
-	public JsonObject getProjectInfo (String project_id) {
+
+	public JsonObject getProjectInfo(String project_id) {
 		// 프로젝트의 기본 정보를 가져온다
-		// project_type, title, mentor, section(by mentor), stage, field, mentoring_num(횟수), mentee(리스트)
+		// project_type, title, mentor, section(by mentor), stage, field,
+		// mentoring_num(횟수), mentee(리스트)
 		JsonObject projectInfo = new JsonObject();
 		DocumentUtil docutil = new DocumentUtil("");
 		JsonObject project = docutil.getDoc(project_id);
@@ -123,56 +131,63 @@ public class ReferenceUtil {
 		projectInfo.add("project_type", project.get("project_type"));
 		projectInfo.add("title", project.get("title"));
 		projectInfo.add("mentor", project.get("mentor"));
-		
+
 		JsonObject mentor = docutil.getDoc(project.get("mentor").getAsString());
 		projectInfo.add("section", mentor.get("section"));
 		projectInfo.add("stage", project.get("stage"));
 		projectInfo.add("field", project.get("field"));
 		projectInfo.addProperty("mentoring_num", getReports(project_id).size());
 		projectInfo.add("mentee", project.get("mentee"));
-		
+
 		return projectInfo;
 	}
-	
-	public String getUserName (String id) {
+
+	public String getUserName(String id) {
 		// user의 id를 받아 이름을 조회
-		List<JsonObject> result = db.view("user_name_by_id")
-				.key(id).includeDocs(false).reduce(false).query(JsonObject.class);
-		if (result.isEmpty()) return null;
+		List<JsonObject> result = db.view("user_name_by_id").key(id)
+				.includeDocs(false).reduce(false).query(JsonObject.class);
+		if (result.isEmpty())
+			return null;
 		return result.get(0).get("value").getAsString();
 	}
-	
-	public String getMentorName (String project_id) {
+
+	public String getMentorName(String project_id) {
 		// project의 id를 통해 소속 멘토의 이름을 조회
 		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
-				.key(project_id).includeDocs(false).reduce(false).query(JsonObject.class);
-		if (result.isEmpty()) return null;
+				.key(project_id).includeDocs(false).reduce(false)
+				.query(JsonObject.class);
+		if (result.isEmpty())
+			return null;
 		String mentorId = result.get(0).get("mentor").getAsString();
 		return getUserName(mentorId);
 	}
-	
-	public String[] getMenteeName (String project_id) {
+
+	public String[] getMenteeName(String project_id) {
 		// project의 id를 통해 소속 멘티들의 이름을 조회
 		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
-				.key(project_id).includeDocs(false).reduce(false).query(JsonObject.class);
-		if (result.isEmpty()) return null;
+				.key(project_id).includeDocs(false).reduce(false)
+				.query(JsonObject.class);
+		if (result.isEmpty())
+			return null;
 		JsonArray menteeList = result.get(0).get("mentee").getAsJsonArray();
 		String[] mentee = new String[menteeList.size()];
-		for (int i=0; i<menteeList.size(); i++) 
+		for (int i = 0; i < menteeList.size(); i++)
 			mentee[i] = menteeList.get(i).getAsString();
 		return mentee;
 	}
-	
-	public String[] getAllMemberName (String project_id) {
+
+	public String[] getAllMemberName(String project_id) {
 		// project의 id를 통해 소속 멘토, 멘티들의 이름을 한 번에 조회
 		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
-				.key(project_id).includeDocs(false).reduce(false).query(JsonObject.class);
-		if (result.isEmpty()) return null;
+				.key(project_id).includeDocs(false).reduce(false)
+				.query(JsonObject.class);
+		if (result.isEmpty())
+			return null;
 		String mentorId = result.get(0).get("mentor").getAsString();
 		JsonArray menteeList = result.get(0).get("mentee").getAsJsonArray();
 		String[] members = new String[menteeList.size() + 1];
 		members[0] = getUserName(mentorId);
-		for (int i=1; i<menteeList.size(); i++) 
+		for (int i = 1; i < menteeList.size(); i++)
 			members[i] = menteeList.get(i).getAsString();
 		return members;
 	}

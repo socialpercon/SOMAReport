@@ -39,12 +39,9 @@ public class ReportsController {
 		JSONArray ja = new JSONArray();
 		try {
 			reports_list = ref_util.getReports(projectId);
-			logger.info("reports_list " + reports_list.toString());
-			logger.info("list_size " + reports_list.size());
 			for (int i = 0; i < reports_list.size(); i++) {
 				JSONObject jo = new JSONObject();
 				jo.put("id", reports_list.get(i).get("_id").getAsString());
-				logger.info("id " + reports_list.get(i).get("_id").getAsString());
 				jo.put("reportTitle", reports_list.get(i).get("report_info")
 						.getAsJsonObject().get("date").getAsString()
 						.replaceAll("-", ""));
@@ -57,7 +54,6 @@ public class ReportsController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		logger.info(ja.toString());
 		return ja;
 	}
 

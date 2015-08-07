@@ -15,10 +15,13 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
+import org.glassfish.grizzly.http.server.Request;
+import org.glassfish.grizzly.http.server.Session;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.mvc.Viewable;
@@ -39,18 +42,54 @@ public class View_Report {
 
 	@GET
 	@Path("/list/{id}")
-	@Produces("text/html")
-	public Viewable report(@PathParam("id") String id) {
+	public Response report(@Context Request request, @PathParam("id") String id)
+			throws URISyntaxException {
 		ReportsController r = new ReportsController();
 		JSONArray ja = r.getReportByProjectId(id);
-		logger.debug(ja.toString());
-		JSONObject jo = new JSONObject();// /.
-		jo.put("reportList", ja);
-		DocumentUtil dutil = new DocumentUtil("");
-		jo.put("pid", id);
-		jo.put("pname", dutil.getDoc(id).getAsJsonObject().get("title")
-				.getAsString());
-		return new Viewable("/reportlist.mustache", MustacheHelper.toMap(jo));
+		if (ja.length() != 0) {
+			Session session = request.getSession();
+			if (session.getAttribute("user_id") != null) {
+				DocumentUtil dutil = new DocumentUtil("somarecord");
+				JsonObject project = dutil.getDoc(id).getAsJsonObject();
+				boolean checked = false;
+				if (project.get("mentor").equals(
+						session.getAttribute("user_id"))) {
+					checked = true;
+				} else {
+					for (int i = 0; i < project.get("mentee").getAsJsonArray()
+							.size(); i++) {
+						if (project.get("mentee").getAsJsonArray().get(i)
+								.getAsString()
+								.equals(session.getAttribute("user_id"))) {
+							checked = true;
+							break;
+						}
+					}
+				}
+				if (checked) {
+					JSONObject jo = new JSONObject();
+					jo.put("reportList", ja);
+					jo.put("pid", id);
+					jo.put("pname",
+							dutil.getDoc(id).getAsJsonObject().get("title")
+									.getAsString());
+					return Response.ok(
+							new Viewable("/reportlist.mustache", MustacheHelper
+									.toMap(jo))).build();
+				} else {
+					return Response.seeOther(
+							new URI("http://localhost:8080/project/list"))
+							.build();
+				}
+			} else {
+				return Response
+						.seeOther(new URI("http://localhost:8080/login"))
+						.build();
+			}
+		} else {
+			return Response.seeOther(
+					new URI("http://localhost:8080/project/list")).build();
+		}
 	}
 
 	@GET

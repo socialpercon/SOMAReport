@@ -4,11 +4,10 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -16,8 +15,6 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
@@ -39,7 +36,7 @@ import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.ParentReference;
 
 public class API_GoogleDrive {
-	
+
 	private static final String CLIENTSECRET_LOCATION = "client_secret.json";
 	private static final String APPLICATION_NAME = "SOMA Report";
 	public static final String REDIRECT_URI = "http://localhost:8080/api/drive";
@@ -255,96 +252,102 @@ public class API_GoogleDrive {
 		String authorizationUrl = getAuthorizationUrl(emailAddress, state);
 		throw new NoRefreshTokenException(authorizationUrl);
 	}
-	
+
 	/**
 	 * insertFile v0
+	 * 
 	 * @throws IOException
 	 */
-//	public static void insertFile(java.io.File imageFile) throws IOException{
-	public static void insertFile(InputStream imageFile) throws IOException{
-		
-		Logger static_logger = Logger.getLogger(GdriveAPI .class);
-//		Drive service = getDriveService();
-		
-		//URL 을 이용하여 File을 upload
+	// public static void insertFile(java.io.File imageFile) throws IOException{
+	public static void insertFile(InputStream imageFile) throws IOException {
+
+		Logger static_logger = Logger.getLogger(GdriveAPI.class);
+		// Drive service = getDriveService();
+
+		// URL 을 이용하여 File을 upload
 		String uploadURL = "https://www.googleapis.com/upload/drive/v2/files?uploadType=media";
-		
+
 		URL obj = new URL(uploadURL);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
- 
+
 		con.setRequestMethod("POST");
-//		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-		
-		//Sending Image Set
+		// con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+
+		// Sending Image Set
 		InputStream inputStream = imageFile;
-		String urlParameters = "data="+imageFile;
-		
- 
+		String urlParameters = "data=" + imageFile;
+
 		// Send post request
 		con.setDoOutput(true);
 		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 		wr.writeBytes(urlParameters);
 		wr.flush();
 		wr.close();
- 
+
 		int responseCode = con.getResponseCode();
 		static_logger.debug("\nSending 'POST' request to URL : " + uploadURL);
 		static_logger.debug("Post parameters : " + urlParameters);
 		static_logger.debug("Response Code : " + responseCode);
-		
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				con.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();
- 
+
 		while ((inputLine = in.readLine()) != null) {
 			response.append(inputLine);
 		}
 		in.close();
- 
-		//print result
+
+		// print result
 		static_logger.debug(response.toString());
 	}
-	
+
 	/**
-	   * Insert new file.v1
-	   *
-	   * @param service Drive API service instance.
-	   * @param title Title of the file to insert, including the extension.
-	   * @param description Description of the file to insert.
-	   * @param parentId Optional parent folder's ID.
-	   * @param mimeType MIME type of the file to insert.
-	   * @param filename Filename of the file to insert.
-	   */
+	 * Insert new file.v1
+	 *
+	 * @param service
+	 *            Drive API service instance.
+	 * @param title
+	 *            Title of the file to insert, including the extension.
+	 * @param description
+	 *            Description of the file to insert.
+	 * @param parentId
+	 *            Optional parent folder's ID.
+	 * @param mimeType
+	 *            MIME type of the file to insert.
+	 * @param filename
+	 *            Filename of the file to insert.
+	 */
 	@SuppressWarnings("unused")
-	private static void insertFile(Drive service, String title, String description,
-	      String parentId, String mimeType, String filename) {
-		
+	private static void insertFile(Drive service, String title,
+			String description, String parentId, String mimeType,
+			String filename) {
+
 		File body = new File();
-	    body.setTitle(title);
-	    body.setDescription(description);
-	    body.setMimeType(mimeType);
+		body.setTitle(title);
+		body.setDescription(description);
+		body.setMimeType(mimeType);
 
-	    // Set the parent folder.
-	    if (parentId != null && parentId.length() > 0) {
-	      body.setParents(
-	          Arrays.asList(new ParentReference().setId(parentId)));
-	    }
+		// Set the parent folder.
+		if (parentId != null && parentId.length() > 0) {
+			body.setParents(Arrays.asList(new ParentReference().setId(parentId)));
+		}
 
-	    // File's content.
-	    java.io.File fileContent = new java.io.File(filename);
-	    FileContent mediaContent = new FileContent(mimeType, fileContent);
-	    try {
-	      File file = service.files().insert(body, mediaContent).execute();
+		// File's content.
+		java.io.File fileContent = new java.io.File(filename);
+		FileContent mediaContent = new FileContent(mimeType, fileContent);
+		try {
+			File file = service.files().insert(body, mediaContent).execute();
 
-	      // Uncomment the following line to print the File ID.
-	      // System.out.println("File ID: " + file.getId());
+			// Uncomment the following line to print the File ID.
+			// System.out.println("File ID: " + file.getId());
 
-	    } catch (IOException e) {
-	      System.out.println("An error occured: " + e);
-	    }
-	  }
-	
+		} catch (IOException e) {
+			System.out.println("An error occured: " + e);
+		}
+	}
+
 	/*******************************
 	 * insertFile v2
 	 * 
@@ -357,72 +360,53 @@ public class API_GoogleDrive {
 	 *******************************/
 	@GET
 	@Path("/api/insertFile")
-	public static void insertFile(String title, 
-							      String parentId, 
-							      String mimeType, 
-							      String filename, 
-							      InputStream stream) {
+	public static void insertFile(String title, String parentId,
+			String mimeType, String filename, InputStream stream) {
 
-		Logger logger = Logger.getLogger(ProjectsController .class);
-		
-		try{
+		Logger logger = Logger.getLogger(ProjectsController.class);
+
+		try {
 			HttpTransport httpTransport = new NetHttpTransport();
 			JacksonFactory jsonFactory = new JacksonFactory();
-			
-//			Credential credential = getCredentials("0", "", "200");
-			GoogleCredential credential = new GoogleCredential.Builder().setTransport(httpTransport)
-                    .setJsonFactory(JSON_FACTORY)
-                    .setServiceAccountId("mindevtest@gmail.com")
-                    .setServiceAccountScopes(SCOPES)
-                    .build();
-			
-			Drive driveService = new Drive.Builder(httpTransport, jsonFactory, null)
-									.setApplicationName(APPLICATION_NAME)
-									.setHttpRequestInitializer(credential)
-									.build();
-			// File's metadata.
+			GoogleCredential credential = new GoogleCredential.Builder()
+					.setTransport(httpTransport).setJsonFactory(JSON_FACTORY)
+					.setServiceAccountId("mindevtest@gmail.com")
+					.setServiceAccountScopes(SCOPES).build();
+			Drive driveService = new Drive.Builder(httpTransport, jsonFactory,
+					null).setApplicationName(APPLICATION_NAME)
+					.setHttpRequestInitializer(credential).build();
 			File body = new File();
 			body.setTitle(title);
 			body.setMimeType(mimeType);
-
-			// Set the parent folder.
 			if (parentId != null && parentId.length() > 0) {
-			  body.setParents(
-			      Arrays.asList(new ParentReference().setId(parentId)));
+				body.setParents(Arrays.asList(new ParentReference()
+						.setId(parentId)));
 			}
+			InputStreamContent mediaContent = new InputStreamContent(mimeType,
+					new BufferedInputStream(stream));
+			driveService.files().insert(body, mediaContent).execute();
 
-			// File's content.
-			InputStreamContent mediaContent = new InputStreamContent(mimeType, new BufferedInputStream(stream));  	
-
-			//save file
-			driveService.files().insert(body, mediaContent).execute(); 
-	
-		}catch(IOException ioe){
+		} catch (IOException ioe) {
 			ioe.printStackTrace();
-			logger.warn("un error en drive service: "+ ioe);
+			logger.warn("un error en drive service: " + ioe);
 		}
-		
-    }
 
-	
-	@GET
-	@Path("/api/drive")
-	public Response driveAuth(@QueryParam("code") String code)
-			throws URISyntaxException, IOException {
-		if (code != null) {
-			GoogleAuthorizationCodeFlow flow = API_GoogleDrive.getFlow();
-			GoogleTokenResponse resp = flow.newTokenRequest(code)
-					.setRedirectUri(API_GoogleDrive.REDIRECT_URI).execute();
-			System.out.println("count number:"+resp.toString());
-			return Response.seeOther(new URI("http://localhost:8080")).build();
-		} else {
-			GoogleAuthorizationCodeFlow flow = API_GoogleDrive.getFlow();
-			GoogleAuthorizationCodeRequestUrl urlBuilder = flow
-					.newAuthorizationUrl().setRedirectUri(
-							API_GoogleDrive.REDIRECT_URI);
-			urlBuilder.set("user_id", "1");
-			String gUrl = urlBuilder.build();
-			return Response.seeOther(new URI(gUrl)).build();
-		}
+	}
+
+	static Credential fuckFuck(String accessToken, String refreshToken)
+			throws IOException {
+		InputStream in = new FileInputStream(CLIENTSECRET_LOCATION);
+		GoogleClientSecrets clientSecret = GoogleClientSecrets.load(
+				JSON_FACTORY, new InputStreamReader(in));
+		HttpTransport transport = new NetHttpTransport();
+		JacksonFactory jsonFactory = new JacksonFactory();
+		return new GoogleCredential.Builder().setClientSecrets(clientSecret)
+				.setJsonFactory(jsonFactory).setTransport(transport).build()
+				.setAccessToken(accessToken).setRefreshToken(refreshToken);
+	}
+
+	static Drive buildService(Credential credentials) {
+		return new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, credentials)
+				.setApplicationName(APPLICATION_NAME).build();
 	}
 }
