@@ -75,7 +75,7 @@ public class View_Drive {
 						"ya29.yAF8kUZ_J3uUzJPbQvPYv-sFlM6qjP9FyHKOvgRON09Hrj7OFxxmJWbRkdoPjc20wgZH",
 						"1/yXfCfi7fAiPmVzqJ6NrtkZxaDuyH2yqiKU_5aoK1yCw");
 		Drive drive = API_GoogleDrive.buildService(c);
-		FileList fl = drive.files().list().setQ("title = '" + id + "'")
+		FileList fl = drive.files().list().setQ("title contains '" + id + "'")
 				.execute();
 		File file = fl.getItems().get(0);
 		HttpResponse resp = drive.getRequestFactory()

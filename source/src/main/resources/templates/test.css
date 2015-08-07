@@ -184,13 +184,17 @@ body, html {
 }
 
 .circular-img {
-    width: 36px;
-    height: 36px;
-    border-radius: 18px;
-    -webkit-border-radius: 18px;
-    -moz-border-radius: 18px;
-    background: url(https://lh3.googleusercontent.com/-0IDicuqc3fc/AAAAAAAAAAI/AAAAAAAAAAA/3EWb3PAaGEs/w150-h150-rw/photo.jpg) no-repeat;
-    background-size: 36px 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
+  -webkit-border-radius: 18px;
+  -moz-border-radius: 18px;
+  background: url(https://lh3.googleusercontent.com/-0IDicuqc3fc/AAAAAAAAAAI/AAAAAAAAAAA/3EWb3PAaGEs/w150-h150-rw/photo.jpg) no-repeat;
+}
+
+.circular-img img {
+  opacity: 0;
+  filter: alpha(opacity=0);
 }
 
 .circular-img-small {
