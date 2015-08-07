@@ -2,3 +2,7 @@
 *.log
 source/logs/log.log
 source/.DS_Store
+
+source/logs/log.log.*
+
+
