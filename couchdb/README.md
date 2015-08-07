@@ -110,7 +110,7 @@
 	  "project": "58387a05c00dcded6f7936c1173e3f5a",
 	  "report_info": {
 	    "mentoring_num": 1,
-	    "date": "2015-07-28",
+	    "date": "20150728",
 	    "place": "aram7-7",
 		"start_time": [2015, 7, 28, 17, 0],
 		"end_time": [2015, 7, 28, 22, 0],

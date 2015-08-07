@@ -31,6 +31,7 @@ import org.json.simple.parser.ParseException;
 
 import com.github.devholic.SOMAReport.Controller.ReportsController;
 import com.github.devholic.SOMAReport.Database.DocumentUtil;
+import com.github.devholic.SOMAReport.Database.ReferenceUtil;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -99,9 +100,9 @@ public class View_Report {
 	@Produces("text/html")
 	public Viewable reportDetail(@PathParam("id") String id) {
 		DocumentUtil dutil = new DocumentUtil("");
+		ReferenceUtil rutil = new ReferenceUtil("");
 		JSONObject jo = new JSONObject();
-		JSONObject report = new JSONObject(dutil.getDoc(id).getAsJsonObject()
-				.toString());
+		JSONObject report = rutil.getReportWithNames(id);
 		JSONObject project = new JSONObject(dutil
 				.getDoc(report.get("project").toString()).getAsJsonObject()
 				.toString());
