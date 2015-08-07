@@ -7,7 +7,6 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -34,19 +33,7 @@ public class UsersController {
 	 * @return
 	 */
 	public static String login(String email, String password) {
-		Logger static_logger = Logger.getLogger(UsersController.class);
 		DocumentUtil doc_util = new DocumentUtil("");
-
-		static_logger.debug("email :" + email + "/ password:" + password);
-
-		// boolean result = false;
-		// Users us = new Users(email);
-		// if (us.getUserId() != null) {
-		// result = true;
-		// } else {
-		// result = false;
-		// }
-		// return result;
 		return doc_util.userAuthentication(email, password);
 	}
 

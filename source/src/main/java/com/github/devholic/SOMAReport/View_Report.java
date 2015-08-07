@@ -136,6 +136,7 @@ public class View_Report {
 		String[] startArr = start.split(" ");
 		String[] endArr = end.split(":");
 		String startDay = startArr[0].toString();
+		info.addProperty("date", startDay);
 		JsonArray sja = new JsonArray();
 		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(0, 4))));
 		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(4, 6))));

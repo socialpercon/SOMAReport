@@ -133,15 +133,6 @@ public class DocumentUtil {
 		return whole_time;
 	}
 
-	public String getDate(JsonObject report_info) {
-		// report_info내의 시작시간으로부터 해당 날짜를 String으로 리턴
-		String date = "";
-		JsonArray start_time = report_info.get("start_time").getAsJsonArray();
-		for (int i=0; i<start_time.size(); i++)
-			date += start_time.get(i).getAsString();
-		return date;
-	}
-
 	public String putReportDoc(JsonObject report_input) {
 		// 입력된 report_input에 기본 정보를 더해 데이터베이스에 PUT
 		logger.debug(report_input.toString());
@@ -150,7 +141,7 @@ public class DocumentUtil {
 		report.add("project", report_input.get("project"));
 		JsonObject report_info = report_input.get("report_info")
 				.getAsJsonObject();
-		report_info.addProperty("date", getDate(report_info));
+		report_info.addProperty("date",report_input.get("date").getAsString());
 		int whole_time = calWholeTime(report_info);
 		int total_time = whole_time - report_info.get("except_time").getAsInt();
 		report_info.addProperty("whole_time", whole_time);
