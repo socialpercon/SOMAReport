@@ -74,6 +74,7 @@ public class View_Report {
 					jo.put("pname",
 							dutil.getDoc(id).getAsJsonObject().get("title")
 									.getAsString());
+					System.out.println(jo.toString());
 					return Response.ok(
 							new Viewable("/reportlist.mustache", MustacheHelper
 									.toMap(jo))).build();

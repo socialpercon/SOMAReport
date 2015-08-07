@@ -70,7 +70,6 @@ public class View_Drive {
 	@Produces("image/jpeg")
 	public Response getDriveImage(@QueryParam("id") String id)
 			throws IOException {
-		System.out.println(id);
 		Credential c = API_GoogleDrive
 				.fuckFuck(
 						"ya29.yAF8kUZ_J3uUzJPbQvPYv-sFlM6qjP9FyHKOvgRON09Hrj7OFxxmJWbRkdoPjc20wgZH",
