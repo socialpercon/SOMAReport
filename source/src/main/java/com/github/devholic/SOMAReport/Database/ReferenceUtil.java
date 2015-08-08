@@ -13,7 +13,6 @@ import com.cloudant.client.api.Database;
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 public class ReferenceUtil {
 
@@ -197,28 +196,28 @@ public class ReferenceUtil {
 		JsonObject report = db.find(JsonObject.class, report_id);
 		logger.info("report: "+report);
 		String name = getMentorName(report.get("project").getAsString());
-
 		report.addProperty("mentor", name);
 		JsonArray mentee = report.get("attendee").getAsJsonArray();
-		JsonArray names = new JsonArray();
+		JsonArray attendee = new JsonArray();
 		for(int i=0; i<mentee.size(); i++) {
-			names.add(new JsonPrimitive(getUserName(mentee.get(i).getAsString())));
+			JsonObject at = new JsonObject();
+			at.addProperty("id", mentee.get(i).getAsString());
+			at.addProperty("name", mentee.get(i).getAsString());
+			attendee.add(at);
 		}
-		report.add("attendee", names);
-		names = new JsonArray();
+		report.add("attendee", attendee);
+		JsonArray absentee = new JsonArray();
 		if (report.has("absentee")) {
 			mentee = report.get("absentee").getAsJsonArray();
-			
 			for(int i=0; i<mentee.size(); i++) {
-				JsonObject abs = new JsonObject();
-				abs.addProperty("id", getUserName(mentee.getAsJsonArray().get(i).getAsJsonObject().get("id").getAsString()));
-				abs.add("reason", mentee.getAsJsonArray().get(i).getAsJsonObject().get("reason"));
-				names.add(abs);
+				JsonObject at = new JsonObject();
+				at.addProperty("id", mentee.getAsJsonArray().get(i).getAsJsonObject().get("id").getAsString());
+				at.addProperty("name", getUserName(mentee.getAsJsonArray().get(i).getAsJsonObject().get("id").getAsString()));
+				at.addProperty("reason", mentee.getAsJsonArray().get(i).getAsJsonObject().get("reason").getAsString());
+				absentee.add(at);
 			}
-			logger.info("absentee: "+names.toString());
-			report.add("absentee", names);
+			report.add("absentee", absentee);
 		}
-	logger.info("report: "+report.toString());
 		return new JSONObject(report.toString());
 	}
 }

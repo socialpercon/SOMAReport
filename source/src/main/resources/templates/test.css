@@ -190,6 +190,7 @@ body, html {
   -webkit-border-radius: 18px;
   -moz-border-radius: 18px;
   background: url(https://lh3.googleusercontent.com/-0IDicuqc3fc/AAAAAAAAAAI/AAAAAAAAAAA/3EWb3PAaGEs/w150-h150-rw/photo.jpg) no-repeat;
+  background-size: 36px 36px;
 }
 
 .circular-img img {

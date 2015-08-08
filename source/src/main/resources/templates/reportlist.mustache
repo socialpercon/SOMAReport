@@ -40,11 +40,11 @@
     <table><tr>
       {{#attendee}}
       <td>
-      <div class="circular-img mentee"><img src="http://localhost:8080/api/drive/image?id={{.}}" alt="" /></div>
+      <div class="circular-img mentee" style='background-image: url(http://localhost:8080/api/drive/image?id={{.}});background-size="36px 36px"'><img src="http://localhost:8080/api/drive/image?id={{.}}" alt="" style="width:36px;height:36px" /></div>
       </td>
       {{/attendee}}
       </tr>
-    </table>   
+    </table>
     </div>
     <div style="height:15px">
     </div>

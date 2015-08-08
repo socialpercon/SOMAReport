@@ -28,13 +28,12 @@ public class View_Project {
 			throws URISyntaxException {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
-			System.out.println("checkId: "+session.getAttribute("user_id").toString());
 			ProjectsController p = new ProjectsController();
 			JSONArray ja = new JSONArray(p.getMyProjects(
 					session.getAttribute("user_id").toString()).toString());
 			JSONObject jo = new JSONObject();
 			jo.put("projectList", ja);
-			System.out.println(ja.toString());
+			System.out.println(jo.toString());
 			return Response
 					.status(200)
 					.entity(new Viewable("/projectlist.mustache",

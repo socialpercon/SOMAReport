@@ -48,50 +48,50 @@ public class View_Report {
 			throws URISyntaxException {
 		ReportsController r = new ReportsController();
 		JSONArray ja = r.getReportByProjectId(id);
-		if (ja.length() != 0) {
-			Session session = request.getSession();
-			if (session.getAttribute("user_id") != null) {
-				DocumentUtil dutil = new DocumentUtil("somarecord");
-				JsonObject project = dutil.getDoc(id).getAsJsonObject();
-				boolean checked = false;
-				if (project.get("mentor").equals(
-						session.getAttribute("user_id"))) {
-					checked = true;
-				} else {
-					for (int i = 0; i < project.get("mentee").getAsJsonArray()
-							.size(); i++) {
-						if (project.get("mentee").getAsJsonArray().get(i)
-								.getAsString()
-								.equals(session.getAttribute("user_id"))) {
-							checked = true;
-							break;
-						}
+		Session session = request.getSession();
+		if (session.getAttribute("user_id") != null) {
+			DocumentUtil dutil = new DocumentUtil("somarecord");
+			JsonObject project = dutil.getDoc(id).getAsJsonObject();
+			boolean checked = false;
+			if (project.get("mentor").equals(session.getAttribute("user_id"))) {
+				checked = true;
+			} else {
+				for (int i = 0; i < project.get("mentee").getAsJsonArray()
+						.size(); i++) {
+					if (project.get("mentee").getAsJsonArray().get(i)
+							.getAsString()
+							.equals(session.getAttribute("user_id"))) {
+						checked = true;
+						break;
 					}
 				}
-				if (checked) {
-					JSONObject jo = new JSONObject();
-					jo.put("reportList", ja);
-					jo.put("pid", id);
-					jo.put("pname",
-							dutil.getDoc(id).getAsJsonObject().get("title")
-									.getAsString());
-					System.out.println(jo.toString());
-					return Response.ok(
-							new Viewable("/reportlist.mustache", MustacheHelper
-									.toMap(jo))).build();
-				} else {
-					return Response.seeOther(
-							new URI("http://localhost:8080/project/list"))
-							.build();
+			}
+			if (checked) {
+				JSONObject jo = new JSONObject();
+				jo.put("reportList", ja);
+				for (int i = 0; i < ja.length(); i++) {
+					JSONArray attendee = new JSONArray();
+					JsonArray gja = (JsonArray) ja.getJSONObject(i).get(
+							"attendee");
+					for (int j = 0; j < gja.size(); j++) {
+						attendee.put(gja.get(j).getAsString());
+					}
+					ja.getJSONObject(i).remove("attendee");
+					ja.getJSONObject(i).put("attendee", attendee);
 				}
+				jo.put("pid", id);
+				jo.put("pname", dutil.getDoc(id).getAsJsonObject().get("title")
+						.getAsString());
+				return Response.ok(
+						new Viewable("/reportlist.mustache", MustacheHelper
+								.toMap(jo))).build();
 			} else {
-				return Response
-						.seeOther(new URI("http://localhost:8080/login"))
-						.build();
+				return Response.seeOther(
+						new URI("http://localhost:8080/project/list")).build();
 			}
 		} else {
-			return Response.seeOther(
-					new URI("http://localhost:8080/project/list")).build();
+			return Response.seeOther(new URI("http://localhost:8080/login"))
+					.build();
 		}
 	}
 
@@ -112,7 +112,6 @@ public class View_Report {
 		jo.put("pid", project.get("_id").toString());
 		jo.put("pname", project.get("title").toString());
 		jo.put("report", report);
-		logger.debug(report.toString());
 		return new Viewable("/reportdetail.mustache", MustacheHelper.toMap(jo));
 	}
 
