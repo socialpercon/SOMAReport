@@ -66,8 +66,13 @@ public class ReferenceUtil {
 								+ "차 프로젝트");
 			}
 			jo.put("title", project.get("title").getAsString());
-			jo.put("mentor", project.get("mentor"));
-			// projectInfo.add("mentee", project.get("mentee"));
+			jo.put("mentor", project.get("mentor").getAsString());
+			JSONArray mentee = new JSONArray();
+			JsonArray raw = project.get("mentee").getAsJsonArray();
+			for (int i = 0; i < raw.size(); i++) {
+				mentee.put(raw.get(i).getAsString());
+			}
+			jo.put("mentee", mentee);
 			projectList.put(jo);
 		}
 		return projectList;
@@ -155,7 +160,7 @@ public class ReferenceUtil {
 		List<JsonObject> result = db.view("admin_view/all_docs_by_id")
 				.key(project_id).includeDocs(true).reduce(false)
 				.query(JsonObject.class);
-	logger.debug(result.toString());
+		logger.debug(result.toString());
 		if (result.isEmpty())
 			return null;
 		String mentorId = result.get(0).get("mentor").getAsString();
@@ -191,15 +196,15 @@ public class ReferenceUtil {
 			members[i] = menteeList.get(i).getAsString();
 		return members;
 	}
-	
-	public JSONObject getReportWithNames (String report_id) {
+
+	public JSONObject getReportWithNames(String report_id) {
 		JsonObject report = db.find(JsonObject.class, report_id);
-		logger.info("report: "+report);
+		logger.info("report: " + report);
 		String name = getMentorName(report.get("project").getAsString());
 		report.addProperty("mentor", name);
 		JsonArray mentee = report.get("attendee").getAsJsonArray();
 		JsonArray attendee = new JsonArray();
-		for(int i=0; i<mentee.size(); i++) {
+		for (int i = 0; i < mentee.size(); i++) {
 			JsonObject at = new JsonObject();
 			at.addProperty("id", mentee.get(i).getAsString());
 			at.addProperty("name", mentee.get(i).getAsString());
@@ -209,11 +214,15 @@ public class ReferenceUtil {
 		JsonArray absentee = new JsonArray();
 		if (report.has("absentee")) {
 			mentee = report.get("absentee").getAsJsonArray();
-			for(int i=0; i<mentee.size(); i++) {
+			for (int i = 0; i < mentee.size(); i++) {
 				JsonObject at = new JsonObject();
-				at.addProperty("id", mentee.getAsJsonArray().get(i).getAsJsonObject().get("id").getAsString());
-				at.addProperty("name", getUserName(mentee.getAsJsonArray().get(i).getAsJsonObject().get("id").getAsString()));
-				at.addProperty("reason", mentee.getAsJsonArray().get(i).getAsJsonObject().get("reason").getAsString());
+				at.addProperty("id", mentee.getAsJsonArray().get(i)
+						.getAsJsonObject().get("id").getAsString());
+				at.addProperty("name",
+						getUserName(mentee.getAsJsonArray().get(i)
+								.getAsJsonObject().get("id").getAsString()));
+				at.addProperty("reason", mentee.getAsJsonArray().get(i)
+						.getAsJsonObject().get("reason").getAsString());
 				absentee.add(at);
 			}
 			report.add("absentee", absentee);
