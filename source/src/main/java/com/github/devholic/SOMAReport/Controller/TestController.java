@@ -17,20 +17,37 @@ import org.apache.log4j.Logger;
 public class TestController {
 
 	//Log4j setting
-	private final Logger logger = Logger.getLogger(StatisticsController .class);
+	private final Logger logger = Logger.getLogger(TestController .class);
 	
 	@GET
 	@Path("/xmlpropertiesTest")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
 	public Response xmlpropertiesTest(){
-		 
-		try{
-			logger.debug("xmlpropertiesTest invoked..");
+		logger.debug("xmlpropertiesTest invoked..");
 		
+		try{
+
 			Properties prop = new Properties();
 		    FileInputStream fis = new FileInputStream("config.xml");
 		    prop.loadFromXML(fis);
 		    logger.debug("\n URL: " + prop.getProperty("test"));
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return Response.status(200).type(MediaType.APPLICATION_JSON).build();
+	}
+	
+	
+	
+	@GET
+	@Path("/elasticsearch_searchTest")
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
+	public Response elasticsearch_searchTest(){
+		logger.debug("elasticsearch_searchTest invoked..");
+		
+		try{
 			
 		}catch(Exception e){
 			e.printStackTrace();
