@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Expires" content="-1"> 
-    <meta http-equiv="Pragma" content="no-cache"> 
-    <meta http-equiv="Cache-Control" content="No-Cache"> 
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="No-Cache">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>somareport</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -41,7 +41,7 @@
       {{#report}}
       {{#attendee}}
       <td>
-      <div class="circular-img"></div>
+      <div class="circular-img mentee" style='background-image: url(http://localhost:8080/api/drive/image?id={{id}});background-size="36px 36px"'><img src="http://localhost:8080/api/drive/image?id={{id}}" alt="" style="width:36px;height:36px" /></div>
       </td>
       {{/attendee}}
       {{/report}}
@@ -52,13 +52,13 @@
       {{#report}}
       {{#absentee}}
       <td>
-      <div class="circular-img"></div>
+      <div class="circular-img mentee" style='background-image: url(http://localhost:8080/api/drive/image?id={{id}});background-size="36px 36px"'><img src="http://localhost:8080/api/drive/image?id={{id}}" alt="" style="width:36px;height:36px" /></div>
       </td>
       <td>
       <div class="mentor-divider"></div>
       </td>
       <td>
-      <span style="height:36px;line-height:36px;text-align:center;" class="mentee">{{id}} : {{reason}}</span>
+      <span style="height:36px;line-height:36px;text-align:center;" class="mentee">{{name}} : {{reason}}</span>
       </td>
       {{/absentee}}
       {{/report}}
@@ -84,8 +84,16 @@
     <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{solution}}</h5>
     <h3 style="margin-top:1em">향후계획</h3>
     <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{plan}}</h5>
+    {{#opinion-public}}
     <h3 style="margin-top:1em">멘토의견</h3>
     <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{opinion}}</h5>
+    {{/opinion-public}}
+    {{#etc}}
+    <h3 style="margin-top:1em">기타</h3>
+    <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{.}}</h5>
+    {{/etc}}
+    <h3 style="margin-top:1em">내용</h3>
+    <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{content}}</h5>
     {{/report_details}}
     {{/report}}
     <h3 style="margin-top:1em">이미지</h3>

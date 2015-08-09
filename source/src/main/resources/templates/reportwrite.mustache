@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Expires" content="-1"> 
-    <meta http-equiv="Pragma" content="no-cache"> 
-    <meta http-equiv="Cache-Control" content="No-Cache"> 
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="No-Cache">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>somareport</title>
     <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
@@ -44,88 +44,88 @@
             <div class="circular-img">
     		</div>
             <input type="hidden" name="attendee" value="{{.}}">
-            <input type="text" name="attendeeReason" placeholder="불참사유" class="form-control"/>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="attendeeReason" placeholder="불참사유" class="form-control" />
     	</div>
     </div>
     {{/mentee}}
-    <h5 style="padding-left:5px; color:#5264AE">시작시간</h5>
+    <h5 style="padding-left:5px; color:#5264AE">시작시간 (*)</h5>
   	<div class="form-group">
   		<center>
         <div class='input-group date' id='datetimepicker1'>
-            <input type='text' onkeypress="return false;" style="padding-left:5px;" name="start" class="form-control"/>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" onkeypress="return false;" type="text" name="start" placeholder="오른쪽 달력버튼을 눌러주세요." class="form-control" required/>
             <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
         	</span>
     	</div>
     	</center>
     </div>
-    <h5 style="padding-left:5px; color:#5264AE">종료시간</h5>
-    <div class="form-group" style="margin-bottom:45px;">
+    <h5 style="padding-left:5px; color:#5264AE">종료시간 (*)</h5>
+    <div class="form-group">
   		<center>
         <div class='input-group date' id='datetimepicker2'>
-            <input type='text' onkeypress="return false;" style="padding-left:5px;" name="end" class="form-control"/>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" onkeypress="return false;" type="text" name="end" placeholder="오른쪽 시계버튼을 눌러주세요." class="form-control" required/>
             <span class="input-group-addon">
             <span class="glyphicon glyphicon-time"></span>
         	</span>
     	</div>
     	</center>
     </div>
-    <div class="group materialst-input">      
-      <input name="place" type="text" value="아람7-6" required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>장소</label>
+    <h5 style="padding-left:5px; color:#5264AE">장소 (*)</h5>
+    <div class="form-group">
+      <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="place" placeholder="필수항목" class="form-control" required/>
+      </div>
     </div>
-    <div class="group materialst-input">      
-      <input name="topic" type="text" value="북경오리" required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>주제</label>
+    <h5 style="padding-left:5px; color:#5264AE">주제 (*)</h5>
+    <div class="form-group">
+      <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="topic" placeholder="필수항목" class="form-control" required/>
+      </div>
     </div>
-    <div class="group materialst-input">      
-      <input name="goal" type="text" value="먹고싶다" required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>목표</label>
+    <h5 style="padding-left:5px; color:#5264AE">목표 (*)</h5>
+    <div class="form-group">
+      <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="goal" placeholder="필수항목" class="form-control" required/>
+      </div>
     </div>
-    <div class="group materialst-input">      
-      <input name="issue" type="text" value="간절하게 원하면 이루어질것이다." required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>추진내용</label>
+    <h5 style="padding-left:5px; color:#5264AE">추진내용 (*)</h5>
+    <div class="form-group">
+      <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="issue" placeholder="필수항목" class="form-control" required/>
+      </div>
     </div>
-    <div class="group materialst-input">      
-      <input name="solution" type="text" value="돈을벌어서 사먹으면 된다." required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>해결방안</label>
+    <h5 style="padding-left:5px; color:#5264AE">해결방안 (*)</h5>
+    <div class="form-group">
+      <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="solution" placeholder="필수항목" class="form-control" required/>
+      </div>
     </div>
-    <div class="group materialst-input">      
-      <input name="plan" type="text" value="두마리를 시킨다." required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>향후계획</label>
+    <h5 style="padding-left:5px; color:#5264AE">향후계획 (*)</h5>
+    <div class="form-group">
+      <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="plan" placeholder="필수항목" class="form-control" required/>
+      </div>
     </div>
-    <div class="group-c materialst-input">
-      <input name="opinion" type="text" value="내가 사준다." required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>멘토의견</label>
+    <h5 style="padding-left:5px; color:#5264AE">멘토의견 (*)</h5>
+    <div class="form-group">
+      <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="opinion" placeholder="필수항목" class="form-control" required/>
+      </div>
     </div>
     <div class="checkbox checkbox-helper">
 		<label>
-			<input name="opinion-public"type="checkbox"><span class="checkbox-material"><span class="check"></span></span>	멘토의견 공개
+			<input name="opinion-public" type="checkbox"><span class="checkbox-material"><span class="check"></span></span>	멘토의견 공개
 		</label>
 	  </div>
-    <div class="group materialst-input">      
-      <input name="etc" type="text" value="아몰랑!" required>
-      <span class="highlight"></span>
-      <span class="bar"></span>
-      <label>기타</label>
+    <h5 style="padding-left:5px; color:#5264AE">기타</h5>
+    <div class="form-group">
+      <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="etc" placeholder="선택항목" class="form-control"/>
+      </div>
     </div>
-    <h5 style="padding-left:5px; color:#5264AE">내용</h5>
-    <div class="group materialst-input">      
-      <textarea style="width:100%;max-width:100%;overflow:visible" name="content" type="text" onkeyup="resize(this)" required></textarea>  
+    <h5 style="padding-left:5px; color:#5264AE">내용 (*)</h5>
+    <div class="group materialst-input" style="margin-bottom:0px">
+      <textarea style="width:100%;max-width:100%;overflow:visible" name="content" type="text" onkeyup="resize(this)" required></textarea>
     </div>
     <h5 style="padding-left:5px; color:#5264AE">인증사진</h5>
     <input type="file" name="file">
