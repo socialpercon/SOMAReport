@@ -19,7 +19,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.Request;
 import org.glassfish.grizzly.http.server.Session;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -39,8 +38,6 @@ import com.google.gson.JsonPrimitive;
 
 @Path("/report")
 public class View_Report {
-
-	private final Logger logger = Logger.getLogger(View_Report.class);
 
 	@GET
 	@Path("/list/{id}")
@@ -98,21 +95,54 @@ public class View_Report {
 	@GET
 	@Path("/{id}")
 	@Produces("text/html")
-	public Viewable reportDetail(@PathParam("id") String id) {
-		DocumentUtil dutil = new DocumentUtil("");
-		ReferenceUtil rutil = new ReferenceUtil("");
-		JSONObject jo = new JSONObject();
-		JSONObject report = rutil.getReportWithNames(id);
-		JSONObject project = new JSONObject(dutil
-				.getDoc(report.get("project").toString()).getAsJsonObject()
-				.toString());
-		jo.put("rid", id);
-		jo.put("title", report.getJSONObject("report_info").get("date")
-				.toString().replaceAll("-", ""));
-		jo.put("pid", project.get("_id").toString());
-		jo.put("pname", project.get("title").toString());
-		jo.put("report", report);
-		return new Viewable("/reportdetail.mustache", MustacheHelper.toMap(jo));
+	public Response reportDetail(@Context Request request,
+			@PathParam("id") String id) throws URISyntaxException {
+		Session session = request.getSession();
+		if (session.getAttribute("user_id") != null) {
+			DocumentUtil dutil = new DocumentUtil("");
+			ReferenceUtil rutil = new ReferenceUtil("");
+			JSONObject jo = new JSONObject();
+			JSONObject report = rutil.getReportWithNames(id);
+			JsonObject project_raw = dutil.getDoc(
+					report.get("project").toString()).getAsJsonObject();
+			JSONObject project = new JSONObject(dutil
+					.getDoc(report.get("project").toString()).getAsJsonObject()
+					.toString());
+			boolean auth = false;
+			if (project.getString("mentor").equals(
+					session.getAttribute("user_id").toString())) {
+				jo.put("isMentor", true);
+				auth = true;
+				report.getJSONObject("report_details").put("opinion-public", "true");
+			} else {
+				JsonArray menteeList = project_raw.get("mentee")
+						.getAsJsonArray();
+				for (int i = 0; i < menteeList.size(); i++) {
+					if (menteeList.get(i).getAsString()
+							.equals(session.getAttribute("user_id").toString())) {
+						auth = true;
+						break;
+					}
+				}
+			}
+			if (!auth) {
+				return Response.seeOther(
+						new URI("http://localhost:8080/project/list")).build();
+			} else {
+				jo.put("rid", id);
+				jo.put("title", report.getJSONObject("report_info").get("date")
+						.toString().replaceAll("-", ""));
+				jo.put("pid", project.get("_id").toString());
+				jo.put("pname", project.get("title").toString());
+				jo.put("report", report);
+				return Response.ok(
+						new Viewable("/reportdetail.mustache", MustacheHelper
+								.toMap(jo))).build();
+			}
+		} else {
+			return Response.seeOther(new URI("http://localhost:8080/login"))
+					.build();
+		}
 	}
 
 	@GET
@@ -146,6 +176,7 @@ public class View_Report {
 			@FormDataParam("solution") String solution,
 			@FormDataParam("plan") String plan,
 			@FormDataParam("opinion") String opinion,
+			@FormDataParam("opinion-public") String opinion_public,
 			@FormDataParam("etc") String etc,
 			@FormDataParam("content") String content,
 			@FormDataParam("file") InputStream is,
@@ -153,7 +184,9 @@ public class View_Report {
 			throws URISyntaxException, IOException, ParseException {
 		String fileLocation = formData.getFileName();
 		try {
-			saveFile(is, fileLocation);
+			if (fileLocation.length() != 0) {
+				saveFile(is, fileLocation);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -203,13 +236,21 @@ public class View_Report {
 		details.addProperty("solution", solution);
 		details.addProperty("plan", plan);
 		details.addProperty("opinion", opinion);
-		details.addProperty("etc", etc);
+		if (opinion_public != null) {
+			details.addProperty("opinion-public", "true");
+		}
+		if (etc != null) {
+			details.addProperty("etc", etc);
+		}
+		details.addProperty("content", content);
 		jo.add("report_details", details);
 		String rid = r.insertReport(jo);
-		if (rid != null) {
-			View_Drive.driveUploadImage("0", rid, new File(fileLocation));
-		} else {
-			// Error
+		if (fileLocation.length() != 0) {
+			if (rid != null) {
+				View_Drive.driveUploadImage("0", rid, new File(fileLocation));
+			} else {
+				// Error
+			}
 		}
 		return Response.seeOther(
 				new URI("http://localhost:8080/report/list/" + pid)).build();

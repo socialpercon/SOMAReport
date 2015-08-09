@@ -33,7 +33,6 @@ public class View_Project {
 					session.getAttribute("user_id").toString()).toString());
 			JSONObject jo = new JSONObject();
 			jo.put("projectList", ja);
-			System.out.println(jo.toString());
 			return Response
 					.status(200)
 					.entity(new Viewable("/projectlist.mustache",
