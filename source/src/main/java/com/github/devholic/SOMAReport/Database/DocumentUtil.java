@@ -149,8 +149,8 @@ public class DocumentUtil {
 		int total_time = whole_time - report_info.get("except_time").getAsInt();
 		report_info.addProperty("whole_time", whole_time);
 		report_info.addProperty("total_time", total_time);
+		report_info.addProperty("mentoring_num", (1+numberOfMentoring(report_input.get("project").getAsString())));
 		report.add("report_info", report_info);
-
 		report.add("attendee", report_input.get("attendee"));
 		report.add("absentee", report_input.get("absentee"));
 		report.add("report_details", report_input.get("report_details"));
@@ -212,5 +212,21 @@ public class DocumentUtil {
 			e.printStackTrace();
 		}
 		return encryptedPassword;
+	}
+	
+	public int numberOfMentoring (String project_id) {
+		// 현재까지 진행된 멘토링 횟수를 리턴한다
+		List<JsonObject> numOfMentoring = db.view("project_view/all_report")
+				.startKey(new Object[] { project_id + " ", " " })
+				.endKey(new Object[] { project_id, " " }).descending(true)
+				.includeDocs(false).reduce(true).groupLevel(1).query(JsonObject.class);
+		if (numOfMentoring.isEmpty())  {
+			logger.debug("numberOfMentoring:: no report docs in this project");
+			return 0;
+		}
+		else {
+			return numOfMentoring.get(0).get("value").getAsInt();
+		}
+	
 	}
 }
