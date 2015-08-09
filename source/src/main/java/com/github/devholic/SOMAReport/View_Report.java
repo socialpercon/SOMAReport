@@ -50,7 +50,7 @@ public class View_Report {
 			DocumentUtil dutil = new DocumentUtil("somarecord");
 			JsonObject project = dutil.getDoc(id).getAsJsonObject();
 			boolean checked = false;
-			if (project.get("mentor").equals(session.getAttribute("user_id"))) {
+			if (project.get("mentor").getAsString().equals(session.getAttribute("user_id"))) {
 				checked = true;
 			} else {
 				for (int i = 0; i < project.get("mentee").getAsJsonArray()

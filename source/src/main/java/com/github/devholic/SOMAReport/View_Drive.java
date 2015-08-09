@@ -78,9 +78,13 @@ public class View_Drive {
 		FileList fl = drive.files().list().setQ("title contains '" + id + "'")
 				.execute();
 		File file = fl.getItems().get(0);
-		HttpResponse resp = drive.getRequestFactory()
-				.buildGetRequest(new GenericUrl(file.getDownloadUrl()))
-				.execute();
-		return Response.ok(resp.getContent()).build();
+		if (file != null) {
+			HttpResponse resp = drive.getRequestFactory()
+					.buildGetRequest(new GenericUrl(file.getDownloadUrl()))
+					.execute();
+			return Response.ok(resp.getContent()).build();
+		} else {
+			return Response.noContent().build();
+		}
 	}
 }
