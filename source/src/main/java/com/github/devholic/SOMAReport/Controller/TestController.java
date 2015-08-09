@@ -10,6 +10,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
+
+import com.cloudant.client.api.model.SearchResult;
+import com.github.devholic.SOMAReport.Database.DocumentUtil;
+import com.google.gson.JsonObject;
 
 
 
@@ -18,6 +27,7 @@ public class TestController {
 
 	//Log4j setting
 	private final Logger logger = Logger.getLogger(TestController .class);
+	DocumentUtil doc_util = new DocumentUtil("");
 	
 	@GET
 	@Path("/xmlpropertiesTest")
@@ -48,7 +58,8 @@ public class TestController {
 		logger.debug("elasticsearch_searchTest invoked..");
 		
 		try{
-			
+			SearchResult<JsonObject> result = doc_util.searchReport("북경");
+			System.out.println(result);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

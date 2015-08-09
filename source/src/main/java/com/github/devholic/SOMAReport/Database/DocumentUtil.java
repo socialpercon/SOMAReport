@@ -13,7 +13,10 @@ import org.apache.log4j.Logger;
 
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
+import com.cloudant.client.api.Search;
+import com.cloudant.client.api.model.DesignDocument;
 import com.cloudant.client.api.model.Response;
+import com.cloudant.client.api.model.SearchResult;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -212,5 +215,32 @@ public class DocumentUtil {
 			e.printStackTrace();
 		}
 		return encryptedPassword;
+	}
+	
+	/**
+	 * report searching
+	 * @param query
+	 * @return
+	 */
+	public SearchResult<JsonObject> searchReport(String query){
+		SearchResult<JsonObject> rslt = new SearchResult<JsonObject>();
+		
+		try{
+//			DesignDocument designDoc = db.design().getFromDesk("_design/search");
+//			db.design().synchronizeWithDb(designDoc);
+			
+			DesignDocument designDocument = new DesignDocument();
+			designDocument.setId("_design/search");
+			db.design().synchronizeWithDb(designDocument);
+			
+			Search search = db.search("_design/search/report_search");
+			rslt= search.limit(10)
+                 .includeDocs(true)
+//                 .counts(new String[] {"topic"})
+                 .querySearchResult(query, JsonObject.class);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return rslt;
 	}
 }
