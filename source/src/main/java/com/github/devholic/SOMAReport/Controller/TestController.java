@@ -1,23 +1,23 @@
 package com.github.devholic.SOMAReport.Controller;
 
 import java.io.FileInputStream;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.json.simple.JSONObject;
 
 import com.cloudant.client.api.model.SearchResult;
-import com.github.devholic.SOMAReport.Database.DocumentUtil;
+import com.cloudant.client.api.model.SearchResult.SearchResultRows;
+import com.github.devholic.SOMAReport.Database.ReferenceUtil;
 import com.google.gson.JsonObject;
 
 
@@ -27,7 +27,8 @@ public class TestController {
 
 	//Log4j setting
 	private final Logger logger = Logger.getLogger(TestController .class);
-	DocumentUtil doc_util = new DocumentUtil("");
+//	DocumentUtil doc_util = new DocumentUtil("");
+	ReferenceUtil ref_util = new ReferenceUtil("");
 	
 	@GET
 	@Path("/xmlpropertiesTest")
@@ -50,20 +51,23 @@ public class TestController {
 	}
 	
 	
-	
 	@GET
-	@Path("/elasticsearch_searchTest")
+	@Path("/search/{query}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-	public Response elasticsearch_searchTest(){
-		logger.debug("elasticsearch_searchTest invoked..");
-		
+	public JsonObject elasticsearch_searchTest(@PathParam("query") String query){
+
+		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
+		JsonObject jo = new JsonObject();
 		try{
-			SearchResult<JsonObject> result = doc_util.searchReport("북경");
-			System.out.println(result);
+			result = ref_util.searchReport(query);
+			jo = result.getRows().get(0).getDoc();
+			
+			logger.info(query+"'s searchDoc:"+result.getRows().get(0).getDoc());
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		return Response.status(200).type(MediaType.APPLICATION_JSON).build();
+		return jo;
 	}
 }

@@ -217,33 +217,6 @@ public class DocumentUtil {
 		return encryptedPassword;
 	}
 	
-	/**
-	 * report searching
-	 * @param query
-	 * @return
-	 */
-	public SearchResult<JsonObject> searchReport(String query){
-		SearchResult<JsonObject> rslt = new SearchResult<JsonObject>();
-		
-		try{
-//			DesignDocument designDoc = db.design().getFromDesk("_design/search");
-//			db.design().synchronizeWithDb(designDoc);
-			
-			DesignDocument designDocument = new DesignDocument();
-			designDocument.setId("_design/search");
-			db.design().synchronizeWithDb(designDocument);
-			
-			Search search = db.search("_design/search/report_search");
-			rslt= search.limit(10)
-                 .includeDocs(true)
-//                 .counts(new String[] {"topic"})
-                 .querySearchResult(query, JsonObject.class);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return rslt;
-	}
-	
 	public int numberOfMentoring (String project_id) {
 		// 현재까지 진행된 멘토링 횟수를 리턴한다
 		List<JsonObject> numOfMentoring = db.view("project_view/all_report")

@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
+import com.cloudant.client.api.Search;
+import com.cloudant.client.api.model.SearchResult;
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -28,11 +30,7 @@ public class ReferenceUtil {
 			Properties prop = new Properties();
 			FileInputStream fileInput = new FileInputStream("config.xml");
 			prop.loadFromXML(fileInput);
-
-			logger.debug("xml database_name :"
-					+ prop.getProperty("database_name") + "\n");
-			logger.debug("xml test :" + prop.getProperty("test") + "\n");
-
+			
 			client = new CloudantClient(prop.getProperty("cloudant_url"),
 					prop.getProperty("cloudant_id"),
 					prop.getProperty("cloudant_pwd"));
@@ -228,5 +226,53 @@ public class ReferenceUtil {
 			report.add("absentee", absentee);
 		}
 		return new JSONObject(report.toString());
+	}
+	
+	/*****************************
+	 * report searching
+	 * @param query
+	 * @return
+	 *****************************/
+	public SearchResult<JsonObject> searchReport(String query){
+	
+		CloudantClient client = new CloudantClient("http://somareport.cloudant.com","somareport","somasoma");
+
+		logger.debug("Connected to Cloudant");
+		logger.debug("Server Version: " + client.serverVersion());
+		
+		Database search_db = client.database("somarecord", false);
+		logger.debug("Database Name:" + search_db.info().getDbName());
+	
+		Search search = search_db.search("search/report_search");
+		SearchResult<JsonObject> result= search.limit(10)
+	                                        .includeDocs(true)
+                                            .counts(new String[] {"topic"})
+	                                        .querySearchResult("topic:"+query, JsonObject.class);
+		
+		return result;
+	}
+	
+	/*****************************
+	 * project searching
+	 * @param query
+	 * @return
+	 *****************************/
+	public SearchResult<JsonObject> searchProject(String query){
+	
+		CloudantClient client = new CloudantClient("http://somareport.cloudant.com","somareport","somasoma");
+
+		logger.debug("Connected to Cloudant");
+		logger.debug("Server Version: " + client.serverVersion());
+		
+		Database search_db = client.database("somarecord", false);
+		logger.debug("Database Name:" + search_db.info().getDbName());
+	
+		Search search = search_db.search("search/project_search");
+		SearchResult<JsonObject> result= search.limit(10)
+	                                        .includeDocs(true)
+                                            .counts(new String[] {"title"})
+	                                        .querySearchResult("title:"+query, JsonObject.class);
+		
+		return result;
 	}
 }
