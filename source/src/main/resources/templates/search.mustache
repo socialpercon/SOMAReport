@@ -29,31 +29,36 @@
       </div>
     </nav>
     <div id="soma-container" class="container">
-    {{#projectList}}
     <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
-    <a href="http://localhost:8080/report/list/{{id}}"><h3 style="margin-top:0.2em;margin-bottom:0.2em">{{title}}</h3></a>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{stage}}</h5>
+    <form method="post" action="http://localhost:8080/report/write" enctype="multipart/form-data">
+    <h5 style="padding-left:5px; color:#5264AE">검색 키워드</h5>
+    <div class="form-group">
+      <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="place" placeholder="필수항목" class="form-control" required/>
+      </div>
+    </div>
+    <div>
+    <button class="btn btn-default btn-raised" type="submit">검색<div class="ripple-wrapper"></div></button>
+    </div>
+    </form>
+    </div>
+    {{#reportList}}
+    <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
+    <a href="http://localhost:8080/report/{{id}}"><h3 style="margin-top:0.2em;margin-bottom:0.2em">#{{reportTitle}}</h3></a>
+    <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{reportTopic}}</h5>
     <div class="divider"></div>
     <table><tr>
-      {{#mentor}}
+      {{#attendee}}
       <td>
       <div class="circular-img mentee" style='background-image: url(http://localhost:8080/api/drive/image?id={{.}});background-size="36px 36px"'><img src="http://localhost:8080/api/drive/image?id={{.}}" alt="" style="width:36px;height:36px" /></div>
       </td>
-      {{/mentor}}
-      <td>
-      <div class="mentor-divider"></div>
-      </td>
-      {{#mentee}}
-      <td>
-      <div class="circular-img mentee" style='background-image: url(http://localhost:8080/api/drive/image?id={{.}});background-size="36px 36px"'><img src="http://localhost:8080/api/drive/image?id={{.}}" alt="" style="width:36px;height:36px" /></div>
-      </td>
-      {{/mentee}}
+      {{/attendee}}
       </tr>
     </table>
     </div>
     <div style="height:15px">
     </div>
-    {{/projectList}}
+    {{/reportList}}
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
