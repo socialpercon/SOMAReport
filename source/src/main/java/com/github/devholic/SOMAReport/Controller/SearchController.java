@@ -1,7 +1,6 @@
 package com.github.devholic.SOMAReport.Controller;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -60,6 +59,31 @@ public class SearchController {
 		
 		try{
 			result = ref_util.searchProject(query);
+
+			for(int i=0; i<result.getTotalRows(); i++){
+				jo = result.getRows().get(i).getDoc();
+				logger.info(query+"'s project searchDoc:"+result.getRows().get(i).getDoc()+"\n");
+				jo_list.add(jo);
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return jo_list;
+	}
+	
+	@GET
+	@Path("/user/{query}")
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
+	public ArrayList<JsonObject> searchUserController(@PathParam("query") String query){
+
+		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
+		JsonObject jo = new JsonObject();
+		ArrayList<JsonObject> jo_list = new ArrayList<JsonObject>();
+		
+		try{
+			result = ref_util.searchUser(query);
 
 			for(int i=0; i<result.getTotalRows(); i++){
 				jo = result.getRows().get(i).getDoc();

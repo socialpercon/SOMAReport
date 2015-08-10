@@ -235,16 +235,10 @@ public class ReferenceUtil {
 	 *****************************/
 	public SearchResult<JsonObject> searchReport(String query){
 	
-		CloudantClient client = new CloudantClient("http://somareport.cloudant.com","somareport","somasoma");
-
-		logger.debug("Connected to Cloudant");
-		logger.debug("Server Version: " + client.serverVersion());
-		
-		Database search_db = client.database("somarecord", false);
-		logger.debug("Database Name:" + search_db.info().getDbName());
+		logger.debug("searchReport query:"+query);
 	
-		Search search = search_db.search("search/report_search");
-		SearchResult<JsonObject> result= search.limit(10)
+		Search search = db.search("search/report_search");
+		SearchResult<JsonObject> result= search.limit(100)
 	                                        .includeDocs(true)
                                             .counts(new String[] {"topic"})
 	                                        .querySearchResult("topic:"+query, JsonObject.class);
@@ -259,20 +253,32 @@ public class ReferenceUtil {
 	 *****************************/
 	public SearchResult<JsonObject> searchProject(String query){
 	
-		CloudantClient client = new CloudantClient("http://somareport.cloudant.com","somareport","somasoma");
-
-		logger.debug("Connected to Cloudant");
-		logger.debug("Server Version: " + client.serverVersion());
-		
-		Database search_db = client.database("somarecord", false);
-		logger.debug("Database Name:" + search_db.info().getDbName());
+		logger.debug("searchProject query:"+query);
 	
-		Search search = search_db.search("search/project_search");
-		SearchResult<JsonObject> result= search.limit(10)
+		Search search = db.search("search/project_search");
+		SearchResult<JsonObject> result= search.limit(100)
 	                                        .includeDocs(true)
                                             .counts(new String[] {"title"})
 	                                        .querySearchResult("title:"+query, JsonObject.class);
 		
+		return result;
+	}
+	
+	/*****************************
+	 * user searching
+	 * @param query
+	 * @return
+	 *****************************/
+	public SearchResult<JsonObject> searchUser(String query){
+	
+		logger.debug("searchUser query:"+query);
+		
+		Search search = db.search("search/user_search");
+		SearchResult<JsonObject> result= search.limit(100)
+	                                        .includeDocs(true)
+                                            .counts(new String[] {"name"})
+	                                        .querySearchResult("name:"+query, JsonObject.class);
+
 		return result;
 	}
 }
