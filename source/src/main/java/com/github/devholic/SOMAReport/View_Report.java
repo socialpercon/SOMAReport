@@ -19,7 +19,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.Request;
 import org.glassfish.grizzly.http.server.Session;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -40,8 +39,6 @@ import com.google.gson.JsonPrimitive;
 @Path("/report")
 public class View_Report {
 
-	private final Logger logger = Logger.getLogger(View_Report.class);
-
 	@GET
 	@Path("/list/{id}")
 	public Response report(@Context Request request, @PathParam("id") String id)
@@ -53,7 +50,8 @@ public class View_Report {
 			DocumentUtil dutil = new DocumentUtil("somarecord");
 			JsonObject project = dutil.getDoc(id).getAsJsonObject();
 			boolean checked = false;
-			if (project.get("mentor").equals(session.getAttribute("user_id"))) {
+			if (project.get("mentor").getAsString()
+					.equals(session.getAttribute("user_id"))) {
 				checked = true;
 			} else {
 				for (int i = 0; i < project.get("mentee").getAsJsonArray()
@@ -98,35 +96,78 @@ public class View_Report {
 	@GET
 	@Path("/{id}")
 	@Produces("text/html")
-	public Viewable reportDetail(@PathParam("id") String id) {
-		DocumentUtil dutil = new DocumentUtil("");
-		ReferenceUtil rutil = new ReferenceUtil("");
-		JSONObject jo = new JSONObject();
-		JSONObject report = rutil.getReportWithNames(id);
-		JSONObject project = new JSONObject(dutil
-				.getDoc(report.get("project").toString()).getAsJsonObject()
-				.toString());
-		jo.put("rid", id);
-		jo.put("title", report.getJSONObject("report_info").get("date")
-				.toString().replaceAll("-", ""));
-		jo.put("pid", project.get("_id").toString());
-		jo.put("pname", project.get("title").toString());
-		jo.put("report", report);
-		return new Viewable("/reportdetail.mustache", MustacheHelper.toMap(jo));
+	public Response reportDetail(@Context Request request,
+			@PathParam("id") String id) throws URISyntaxException {
+		Session session = request.getSession();
+		if (session.getAttribute("user_id") != null) {
+			DocumentUtil dutil = new DocumentUtil("");
+			ReferenceUtil rutil = new ReferenceUtil("");
+			JSONObject jo = new JSONObject();
+			JSONObject report = rutil.getReportWithNames(id);
+			JsonObject project_raw = dutil.getDoc(
+					report.get("project").toString()).getAsJsonObject();
+			JSONObject project = new JSONObject(dutil
+					.getDoc(report.get("project").toString()).getAsJsonObject()
+					.toString());
+			boolean auth = false;
+			if (project.getString("mentor").equals(
+					session.getAttribute("user_id").toString())) {
+				jo.put("isMentor", true);
+				auth = true;
+				report.getJSONObject("report_details").put("opinion-public",
+						"true");
+			} else {
+				JsonArray menteeList = project_raw.get("mentee")
+						.getAsJsonArray();
+				for (int i = 0; i < menteeList.size(); i++) {
+					if (menteeList.get(i).getAsString()
+							.equals(session.getAttribute("user_id").toString())) {
+						auth = true;
+						break;
+					}
+				}
+			}
+			if (!auth) {
+				return Response.seeOther(
+						new URI("http://localhost:8080/project/list")).build();
+			} else {
+				jo.put("rid", id);
+				jo.put("title", report.getJSONObject("report_info").get("date")
+						.toString().replaceAll("-", ""));
+				jo.put("pid", project.get("_id").toString());
+				jo.put("pname", project.get("title").toString());
+				jo.put("report", report);
+				return Response.ok(
+						new Viewable("/reportdetail.mustache", MustacheHelper
+								.toMap(jo))).build();
+			}
+		} else {
+			return Response.seeOther(new URI("http://localhost:8080/login"))
+					.build();
+		}
 	}
 
 	@GET
 	@Path("/write/{id}")
 	@Produces("text/html")
-	public Viewable writeReport(@PathParam("id") String id) {
-		DocumentUtil dutil = new DocumentUtil("somarecord");
-		JSONObject project = new JSONObject(dutil.getDoc(id).getAsJsonObject()
-				.toString());
-		JSONObject jo = new JSONObject();
-		jo.put("pid", id);
-		jo.put("pname", project.get("title").toString());
-		jo.put("mentee", project.get("mentee"));
-		return new Viewable("/reportwrite.mustache", MustacheHelper.toMap(jo));
+	public Response writeReport(@Context Request request,
+			@PathParam("id") String id) throws URISyntaxException {
+		Session session = request.getSession();
+		if (session.getAttribute("user_id") != null) {
+			DocumentUtil dutil = new DocumentUtil("somarecord");
+			JSONObject project = new JSONObject(dutil.getDoc(id)
+					.getAsJsonObject().toString());
+			JSONObject jo = new JSONObject();
+			jo.put("pid", id);
+			jo.put("pname", project.get("title").toString());
+			jo.put("mentee", project.get("mentee"));
+			return Response.ok(
+					new Viewable("/reportwrite.mustache", MustacheHelper
+							.toMap(jo))).build();
+		} else {
+			return Response.seeOther(
+					new URI("http://localhost:8080/project/list")).build();
+		}
 	}
 
 	@POST
@@ -146,6 +187,7 @@ public class View_Report {
 			@FormDataParam("solution") String solution,
 			@FormDataParam("plan") String plan,
 			@FormDataParam("opinion") String opinion,
+			@FormDataParam("opinion-public") String opinion_public,
 			@FormDataParam("etc") String etc,
 			@FormDataParam("content") String content,
 			@FormDataParam("file") InputStream is,
@@ -153,7 +195,9 @@ public class View_Report {
 			throws URISyntaxException, IOException, ParseException {
 		String fileLocation = formData.getFileName();
 		try {
-			saveFile(is, fileLocation);
+			if (fileLocation.length() != 0) {
+				saveFile(is, fileLocation);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -203,16 +247,64 @@ public class View_Report {
 		details.addProperty("solution", solution);
 		details.addProperty("plan", plan);
 		details.addProperty("opinion", opinion);
-		details.addProperty("etc", etc);
+		if (opinion_public != null) {
+			details.addProperty("opinion-public", "true");
+		}
+		if (etc != null) {
+			details.addProperty("etc", etc);
+		}
+		details.addProperty("content", content);
 		jo.add("report_details", details);
 		String rid = r.insertReport(jo);
-		if (rid != null) {
-			View_Drive.driveUploadImage("0", rid, new File(fileLocation));
-		} else {
-			// Error
+		if (fileLocation.length() != 0) {
+			if (rid != null) {
+				View_Drive.driveUploadImage("0", rid, new File(fileLocation));
+			} else {
+				// Error
+			}
 		}
 		return Response.seeOther(
 				new URI("http://localhost:8080/report/list/" + pid)).build();
+	}
+
+	@GET
+	@Path("/update/{id}")
+	@Produces("text/html")
+	public Response updateReport(@PathParam("id") String id) {
+		DocumentUtil dutil = new DocumentUtil("somarecord");
+		JSONObject report = new JSONObject(dutil.getDoc(id).getAsJsonObject()
+				.toString());
+		JSONObject jo = new JSONObject();
+		jo.put("pid", id);
+		jo.put("rid", report.get("project"));
+		jo.put("date", report.getJSONObject("report_info").get("date"));
+		jo.put("topic", report.getJSONObject("report_details").get("topic"));
+		jo.put("goal", report.getJSONObject("report_details").get("goal"));
+		jo.put("issue", report.getJSONObject("report_details").get("issue"));
+		jo.put("solution",
+				report.getJSONObject("report_details").get("solution"));
+		jo.put("plan", report.getJSONObject("report_details").get("plan"));
+		jo.put("opinion", report.getJSONObject("report_details").get("opinion"));
+		return Response
+				.ok(new Viewable("/reportupdate.mustache", MustacheHelper
+						.toMap(jo))).build();
+	}
+
+	@POST
+	@Path("/update/{id}")
+	@Produces("text/html")
+	public Response doUpdateReport(@PathParam("id") String id,
+			@FormDataParam("topic") String date,
+			@FormDataParam("goal") String goal,
+			@FormDataParam("date") String issue,
+			@FormDataParam("date") String solution,
+			@FormDataParam("date") String plan,
+			@FormDataParam("date") String opinion) throws URISyntaxException {
+		DocumentUtil dutil = new DocumentUtil("somarecord");
+		JSONObject report = new JSONObject(dutil.getDoc(id).getAsJsonObject()
+				.toString());
+		return Response.seeOther(new URI("http://localhost:8080/project/list"))
+				.build();
 	}
 
 	private void saveFile(InputStream is, String fileLocation)

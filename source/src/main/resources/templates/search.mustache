@@ -21,17 +21,27 @@
           <a class="navbar-brand" href="/"><span class="logo-front">SOMA</span><span class="logo-back">REPORT</span></a>
         </div>
         <ul class="nav navbar-nav">
-          <li><a href="http://localhost:8080/project/list" class="disable">프로젝트 리스트</a></li>
-          <li><a class="disabled">></a></li>
-          <li><a href="http://localhost:8080/report/list/{{pid}}">{{pname}}</a></li>
+          <li><a href="http://localhost:8080/search" class="disable">검색</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/search">검색</a></li>
           <li><a href="/logout">로그아웃</a></li>
         </ul>
       </div>
     </nav>
     <div id="soma-container" class="container">
+    <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
+    <form method="post" action="http://localhost:8080/report/write" enctype="multipart/form-data">
+    <h5 style="padding-left:5px; color:#5264AE">검색 키워드</h5>
+    <div class="form-group">
+      <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="place" placeholder="필수항목" class="form-control" required/>
+      </div>
+    </div>
+    <div>
+    <button class="btn btn-default btn-raised" type="submit">검색<div class="ripple-wrapper"></div></button>
+    </div>
+    </form>
+    </div>
     {{#reportList}}
     <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
     <a href="http://localhost:8080/report/{{id}}"><h3 style="margin-top:0.2em;margin-bottom:0.2em">#{{reportTitle}}</h3></a>
@@ -49,7 +59,6 @@
     <div style="height:15px">
     </div>
     {{/reportList}}
-    <a href="http://localhost:8080/report/write/{{pid}}" class="btn btn-fab btn-raised btn-primary" style="position:fixed;right:56px;bottom:56px;"><i class="mdi-image-edit"></i><div class="ripple-wrapper"></div></a>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>

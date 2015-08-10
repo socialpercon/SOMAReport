@@ -84,12 +84,26 @@
     <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{solution}}</h5>
     <h3 style="margin-top:1em">향후계획</h3>
     <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{plan}}</h5>
+    {{#opinion-public}}
     <h3 style="margin-top:1em">멘토의견</h3>
     <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{opinion}}</h5>
+    {{/opinion-public}}
+    {{#etc}}
+    <h3 style="margin-top:1em">기타</h3>
+    <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{.}}</h5>
+    {{/etc}}
+    <h3 style="margin-top:1em">내용</h3>
+    <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{content}}</h5>
     {{/report_details}}
     {{/report}}
     <h3 style="margin-top:1em">이미지</h3>
     <img src="http://localhost:8080/api/drive/image?id={{rid}}"/>
+    {{^isFinal}}
+    <div>
+    <button class="btn btn-default btn-raised" onclick="location.href='http://localhost:8080/report/update/{{pid}}'">수정<div class="ripple-wrapper"></div></button>
+    <button class="btn btn-default btn-raised">최종본으로 표시<div class="ripple-wrapper"></div></button>
+    </div>
+    {{/isFinal}}
     </div>
     <div style="height:15px">
     </div>

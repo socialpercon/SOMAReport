@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
+import com.cloudant.client.api.Search;
+import com.cloudant.client.api.model.SearchResult;
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -28,11 +30,7 @@ public class ReferenceUtil {
 			Properties prop = new Properties();
 			FileInputStream fileInput = new FileInputStream("config.xml");
 			prop.loadFromXML(fileInput);
-
-			logger.debug("xml database_name :"
-					+ prop.getProperty("database_name") + "\n");
-			logger.debug("xml test :" + prop.getProperty("test") + "\n");
-
+			
 			client = new CloudantClient(prop.getProperty("cloudant_url"),
 					prop.getProperty("cloudant_id"),
 					prop.getProperty("cloudant_pwd"));
@@ -207,7 +205,7 @@ public class ReferenceUtil {
 		for (int i = 0; i < mentee.size(); i++) {
 			JsonObject at = new JsonObject();
 			at.addProperty("id", mentee.get(i).getAsString());
-			at.addProperty("name", mentee.get(i).getAsString());
+			at.addProperty("name", getUserName(mentee.get(i).getAsString()));
 			attendee.add(at);
 		}
 		report.add("attendee", attendee);
@@ -228,5 +226,59 @@ public class ReferenceUtil {
 			report.add("absentee", absentee);
 		}
 		return new JSONObject(report.toString());
+	}
+	
+	/*****************************
+	 * report searching
+	 * @param query
+	 * @return
+	 *****************************/
+	public SearchResult<JsonObject> searchReport(String query){
+	
+		logger.debug("searchReport query:"+query);
+	
+		Search search = db.search("search/report_search");
+		SearchResult<JsonObject> result= search.limit(100)
+	                                        .includeDocs(true)
+                                            .counts(new String[] {"topic"})
+	                                        .querySearchResult("topic:"+query, JsonObject.class);
+		
+		return result;
+	}
+	
+	/*****************************
+	 * project searching
+	 * @param query
+	 * @return
+	 *****************************/
+	public SearchResult<JsonObject> searchProject(String query){
+	
+		logger.debug("searchProject query:"+query);
+	
+		Search search = db.search("search/project_search");
+		SearchResult<JsonObject> result= search.limit(100)
+	                                        .includeDocs(true)
+                                            .counts(new String[] {"title"})
+	                                        .querySearchResult("title:"+query, JsonObject.class);
+		
+		return result;
+	}
+	
+	/*****************************
+	 * user searching
+	 * @param query
+	 * @return
+	 *****************************/
+	public SearchResult<JsonObject> searchUser(String query){
+	
+		logger.debug("searchUser query:"+query);
+		
+		Search search = db.search("search/user_search");
+		SearchResult<JsonObject> result= search.limit(100)
+	                                        .includeDocs(true)
+                                            .counts(new String[] {"name"})
+	                                        .querySearchResult("name:"+query, JsonObject.class);
+
+		return result;
 	}
 }

@@ -2,13 +2,16 @@
 <resources>
     <color name="black">#000</color>
 
-    <color name="background">#FFF</color>
+    <color name="background">#FFFFFFFF</color>
+    <color name="backgroundLight">#deeeeeee</color>
 
     <color name="colorPrimary">#616161</color>
     <color name="colorPrimaryDark">#212121</color>
-    <color name="colorAccent">#D32F2F</color>
+    <color name="colorAccent">#6289D9</color>
+    <color name="colorAccentSub">#009688</color>
     <color name="colorAccentDark">#B71C1C</color>
 
+    <color name="textColorTitle">#009688</color>
     <color name="textColorPrimary">#DD000000</color>
     <color name="textColorSecondary">#89000000</color>
     <color name="textColorHint">#42000000</color>
