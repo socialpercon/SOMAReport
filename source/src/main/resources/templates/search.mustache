@@ -21,35 +21,39 @@
           <a class="navbar-brand" href="/"><span class="logo-front">SOMA</span><span class="logo-back">REPORT</span></a>
         </div>
         <ul class="nav navbar-nav">
-          <li><a href="http://localhost:8080/project/list" class="disable">프로젝트 리스트</a></li>
-          <li><a class="disabled">></a></li>
-          <li><a href="http://localhost:8080/report/list/{{pid}}">{{pname}}</a></li>
+          <li><a href="http://localhost:8080/search" class="disable">검색</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/search">검색</a></li>
           <li><a href="/logout">로그아웃</a></li>
         </ul>
       </div>
     </nav>
     <div id="soma-container" class="container">
-    {{#reportList}}
+    {{#projectList}}
     <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
-    <a href="http://localhost:8080/report/{{id}}"><h3 style="margin-top:0.2em;margin-bottom:0.2em">#{{reportTitle}}</h3></a>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{reportTopic}}</h5>
+    <a href="http://localhost:8080/report/list/{{id}}"><h3 style="margin-top:0.2em;margin-bottom:0.2em">{{title}}</h3></a>
+    <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{stage}}</h5>
     <div class="divider"></div>
     <table><tr>
-      {{#attendee}}
+      {{#mentor}}
       <td>
       <div class="circular-img mentee" style='background-image: url(http://localhost:8080/api/drive/image?id={{.}});background-size="36px 36px"'><img src="http://localhost:8080/api/drive/image?id={{.}}" alt="" style="width:36px;height:36px" /></div>
       </td>
-      {{/attendee}}
+      {{/mentor}}
+      <td>
+      <div class="mentor-divider"></div>
+      </td>
+      {{#mentee}}
+      <td>
+      <div class="circular-img mentee" style='background-image: url(http://localhost:8080/api/drive/image?id={{.}});background-size="36px 36px"'><img src="http://localhost:8080/api/drive/image?id={{.}}" alt="" style="width:36px;height:36px" /></div>
+      </td>
+      {{/mentee}}
       </tr>
     </table>
     </div>
     <div style="height:15px">
     </div>
-    {{/reportList}}
-    <a href="http://localhost:8080/report/write/{{pid}}" class="btn btn-fab btn-raised btn-primary" style="position:fixed;right:56px;bottom:56px;"><i class="mdi-image-edit"></i><div class="ripple-wrapper"></div></a>
+    {{/projectList}}
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>

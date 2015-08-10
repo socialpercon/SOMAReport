@@ -50,7 +50,8 @@ public class View_Report {
 			DocumentUtil dutil = new DocumentUtil("somarecord");
 			JsonObject project = dutil.getDoc(id).getAsJsonObject();
 			boolean checked = false;
-			if (project.get("mentor").getAsString().equals(session.getAttribute("user_id"))) {
+			if (project.get("mentor").getAsString()
+					.equals(session.getAttribute("user_id"))) {
 				checked = true;
 			} else {
 				for (int i = 0; i < project.get("mentee").getAsJsonArray()
@@ -113,7 +114,8 @@ public class View_Report {
 					session.getAttribute("user_id").toString())) {
 				jo.put("isMentor", true);
 				auth = true;
-				report.getJSONObject("report_details").put("opinion-public", "true");
+				report.getJSONObject("report_details").put("opinion-public",
+						"true");
 			} else {
 				JsonArray menteeList = project_raw.get("mentee")
 						.getAsJsonArray();
@@ -148,15 +150,24 @@ public class View_Report {
 	@GET
 	@Path("/write/{id}")
 	@Produces("text/html")
-	public Viewable writeReport(@PathParam("id") String id) {
-		DocumentUtil dutil = new DocumentUtil("somarecord");
-		JSONObject project = new JSONObject(dutil.getDoc(id).getAsJsonObject()
-				.toString());
-		JSONObject jo = new JSONObject();
-		jo.put("pid", id);
-		jo.put("pname", project.get("title").toString());
-		jo.put("mentee", project.get("mentee"));
-		return new Viewable("/reportwrite.mustache", MustacheHelper.toMap(jo));
+	public Response writeReport(@Context Request request,
+			@PathParam("id") String id) throws URISyntaxException {
+		Session session = request.getSession();
+		if (session.getAttribute("user_id") != null) {
+			DocumentUtil dutil = new DocumentUtil("somarecord");
+			JSONObject project = new JSONObject(dutil.getDoc(id)
+					.getAsJsonObject().toString());
+			JSONObject jo = new JSONObject();
+			jo.put("pid", id);
+			jo.put("pname", project.get("title").toString());
+			jo.put("mentee", project.get("mentee"));
+			return Response.ok(
+					new Viewable("/reportwrite.mustache", MustacheHelper
+							.toMap(jo))).build();
+		} else {
+			return Response.seeOther(
+					new URI("http://localhost:8080/project/list")).build();
+		}
 	}
 
 	@POST
@@ -254,6 +265,46 @@ public class View_Report {
 		}
 		return Response.seeOther(
 				new URI("http://localhost:8080/report/list/" + pid)).build();
+	}
+
+	@GET
+	@Path("/update/{id}")
+	@Produces("text/html")
+	public Response updateReport(@PathParam("id") String id) {
+		DocumentUtil dutil = new DocumentUtil("somarecord");
+		JSONObject report = new JSONObject(dutil.getDoc(id).getAsJsonObject()
+				.toString());
+		JSONObject jo = new JSONObject();
+		jo.put("pid", id);
+		jo.put("rid", report.get("project"));
+		jo.put("date", report.getJSONObject("report_info").get("date"));
+		jo.put("topic", report.getJSONObject("report_details").get("topic"));
+		jo.put("goal", report.getJSONObject("report_details").get("goal"));
+		jo.put("issue", report.getJSONObject("report_details").get("issue"));
+		jo.put("solution",
+				report.getJSONObject("report_details").get("solution"));
+		jo.put("plan", report.getJSONObject("report_details").get("plan"));
+		jo.put("opinion", report.getJSONObject("report_details").get("opinion"));
+		return Response
+				.ok(new Viewable("/reportupdate.mustache", MustacheHelper
+						.toMap(jo))).build();
+	}
+
+	@POST
+	@Path("/update/{id}")
+	@Produces("text/html")
+	public Response doUpdateReport(@PathParam("id") String id,
+			@FormDataParam("topic") String date,
+			@FormDataParam("goal") String goal,
+			@FormDataParam("date") String issue,
+			@FormDataParam("date") String solution,
+			@FormDataParam("date") String plan,
+			@FormDataParam("date") String opinion) throws URISyntaxException {
+		DocumentUtil dutil = new DocumentUtil("somarecord");
+		JSONObject report = new JSONObject(dutil.getDoc(id).getAsJsonObject()
+				.toString());
+		return Response.seeOther(new URI("http://localhost:8080/project/list"))
+				.build();
 	}
 
 	private void saveFile(InputStream is, String fileLocation)

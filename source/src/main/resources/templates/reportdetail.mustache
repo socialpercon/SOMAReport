@@ -98,6 +98,12 @@
     {{/report}}
     <h3 style="margin-top:1em">이미지</h3>
     <img src="http://localhost:8080/api/drive/image?id={{rid}}"/>
+    {{^isFinal}}
+    <div>
+    <button class="btn btn-default btn-raised" onclick="location.href='http://localhost:8080/report/update/{{pid}}'">수정<div class="ripple-wrapper"></div></button>
+    <button class="btn btn-default btn-raised">최종본으로 표시<div class="ripple-wrapper"></div></button>
+    </div>
+    {{/isFinal}}
     </div>
     <div style="height:15px">
     </div>
