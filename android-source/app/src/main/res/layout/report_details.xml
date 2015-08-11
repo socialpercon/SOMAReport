@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/report_details_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:minHeight="?attr/actionBarSize" >
+
+    </android.support.v7.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundLight"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:elevation="20dp"
+                android:background="@color/background"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/report_details_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#20150808"
+                    android:textColor="@color/textColorTitle"
+                    android:textSize="@dimen/textDisplay1"
+                    android:layout_marginBottom="20dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="참석자"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/textTitle"/>
+
+                <LinearLayout
+                    android:id="@+id/report_details_attendee"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp">
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="불참자"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/textTitle"/>
+
+                <LinearLayout
+                    android:id="@+id/report_details_absentee"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp">
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="회차"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/textTitle"/>
+
+                <TextView
+                    android:id="@+id/report_details_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="8회"
+                    android:textSize="@dimen/textSubhead"
+                    android:textColor="@color/textColorPrimary"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="장소"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/textTitle"/>
+
+                <TextView
+                    android:id="@+id/report_details_place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="아람 7-6"
+                    android:textSize="@dimen/textSubhead"
+                    android:textColor="@color/textColorPrimary"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="멘토링 시간"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/textTitle"
+                    />
+
+                <TextView
+                    android:id="@+id/report_details_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="5 (제외시간 1)"
+                    android:textSize="@dimen/textSubhead"
+                    android:textColor="@color/textColorPrimary"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="주제"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/textTitle"
+                    />
+
+                <TextView
+                    android:id="@+id/report_details_topic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="1차 릴리즈까지 진행 계획"
+                    android:textSize="@dimen/textSubhead"
+                    android:textColor="@color/textColorPrimary"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="목표"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/textTitle"
+                    />
+
+                <TextView
+                    android:id="@+id/report_details_goal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="대부분의 기능이 완성되어야한다"
+                    android:textSize="@dimen/textSubhead"
+                    android:textColor="@color/textColorPrimary"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="추진 내용"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/textTitle"
+                    />
+
+                <TextView
+                    android:id="@+id/report_details_issue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="Elastic search, Backup, Android"
+                    android:textSize="@dimen/textSubhead"
+                    android:textColor="@color/textColorPrimary"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="해결 방안"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/textTitle"
+                    />
+
+                <TextView
+                    android:id="@+id/report_details_solution"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="안자면 됨^0^"
+                    android:textSize="@dimen/textSubhead"
+                    android:textColor="@color/textColorPrimary"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="향후 계획"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/textTitle"
+                    />
+
+                <TextView
+                    android:id="@+id/report_details_plan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="빠릿하게 하기"
+                    android:textSize="@dimen/textSubhead"
+                    android:textColor="@color/textColorPrimary"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="멘토 의견"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/textTitle"/>
+
+                <TextView
+                    android:id="@+id/report_details_opinion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="그래갖고 되겠니"
+                    android:textSize="@dimen/textSubhead"
+                    android:textColor="@color/textColorPrimary"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="멘토링 사진"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/textTitle"/>
+
+                <ImageView
+                    android:id="@+id/report_details_photo"
+                    android:layout_width="fill_parent"
+                    android:layout_height="200dp"
+                    android:background="#FFFFFF"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/textTitle"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:contentDescription="" />
+            </LinearLayout>
+
+        </ScrollView>
+
+</LinearLayout>

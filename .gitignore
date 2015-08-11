@@ -2,7 +2,9 @@
 *.log
 source/logs/log.log
 source/.DS_Store
-
+*.DS_Store
 source/logs/
 
 
+
+source/src/main/.DS_Store

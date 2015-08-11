@@ -205,7 +205,7 @@ public class ReferenceUtil {
 		for (int i = 0; i < mentee.size(); i++) {
 			JsonObject at = new JsonObject();
 			at.addProperty("id", mentee.get(i).getAsString());
-			at.addProperty("name", mentee.get(i).getAsString());
+			at.addProperty("name", getUserName(mentee.get(i).getAsString()));
 			attendee.add(at);
 		}
 		report.add("attendee", attendee);

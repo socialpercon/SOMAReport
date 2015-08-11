@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- FontSize -->
-    <dimen name="textDisplay1">34sp</dimen>
+    <dimen name="textDisplay1">30sp</dimen>
     <dimen name="textHeadline">24sp</dimen>
     <dimen name="textTitle">20sp</dimen>
     <dimen name="textSubhead">16sp</dimen>
