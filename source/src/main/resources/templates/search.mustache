@@ -21,7 +21,7 @@
           <a class="navbar-brand" href="/"><span class="logo-front">SOMA</span><span class="logo-back">REPORT</span></a>
         </div>
         <ul class="nav navbar-nav">
-          <li><a href="http://localhost:8080/search" class="disable">검색</a></li>
+          <li><a href="http://localhost:8080/search" class="disable">레포트 검색</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/logout">로그아웃</a></li>
@@ -30,11 +30,11 @@
     </nav>
     <div id="soma-container" class="container">
     <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
-    <form method="post" action="http://localhost:8080/report/write" enctype="multipart/form-data">
+    <form method="get" action="http://localhost:8080/searchv" enctype="multipart/form-data">
     <h5 style="padding-left:5px; color:#5264AE">검색 키워드</h5>
     <div class="form-group">
       <div>
-            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="place" placeholder="필수항목" class="form-control" required/>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="q" placeholder="검색할 키워드를 입력해주세요." value="{{q}}" class="form-control" required/>
       </div>
     </div>
     <div>
@@ -42,10 +42,12 @@
     </div>
     </form>
     </div>
-    {{#reportList}}
+    <div style="height:15px">
+    </div>
+    {{#result}}
     <div style="background-color:#fff" class="shadow-z-1 soma-list-card">
-    <a href="http://localhost:8080/report/{{id}}"><h3 style="margin-top:0.2em;margin-bottom:0.2em">#{{reportTitle}}</h3></a>
-    <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{reportTopic}}</h5>
+    <a href="http://localhost:8080/report/{{id}}"><h3 style="margin-top:0.2em;margin-bottom:0.2em">#{{date}}</h3></a>
+    <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{topic}}</h5>
     <div class="divider"></div>
     <table><tr>
       {{#attendee}}
@@ -58,7 +60,7 @@
     </div>
     <div style="height:15px">
     </div>
-    {{/reportList}}
+    {{/result}}
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>

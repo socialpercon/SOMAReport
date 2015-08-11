@@ -37,7 +37,6 @@ public class SearchController {
 
 			for(int i=0; i<result.getTotalRows(); i++){
 				jo = result.getRows().get(i).getDoc();
-				logger.info(query+"'s report searchDoc:"+result.getRows().get(i).getDoc()+"\n");
 				jo_list.add(jo);
 			}
 			
