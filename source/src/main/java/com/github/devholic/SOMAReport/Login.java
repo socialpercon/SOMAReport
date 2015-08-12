@@ -17,15 +17,15 @@ import org.glassfish.grizzly.http.server.Request;
 import org.glassfish.grizzly.http.server.Session;
 import org.glassfish.jersey.server.mvc.Viewable;
 
-import com.github.devholic.SOMAReport.Controller.UsersController;
+import com.github.devholic.SOMAReport.Controller.UserController;
 
 @Path("/")
 public class Login {
 
+	private final static Logger Log = Logger.getLogger(Login.class);
+
 	@Context
 	UriInfo uri;
-
-	private final static Logger Log = Logger.getLogger(Login.class);
 
 	// API
 	@POST
@@ -38,7 +38,7 @@ public class Login {
 			if (session.getAttribute("user_id") != null) { // 세션에 user_id가 있는경우
 				return Response.status(412).build(); // 사전조건 실패
 			} else {
-				String result = UsersController.login(email, password); // 로그인
+				String result = UserController.Login(email, password); // 로그인
 				if (result != null) { // 결과값이 null이 아닌경우
 					session.setAttribute("user_id", result); // 세션에 user_id를 설정
 					return Response.status(200).build(); // 200 리턴
@@ -94,7 +94,7 @@ public class Login {
 			if (session.getAttribute("user_id") != null) { // 세션에 user_id가 있는경우
 				return Response.seeOther(builder.build()).build();
 			} else {
-				String result = UsersController.login(email, password); // 로그인
+				String result = UserController.Login(email, password); // 로그인
 				if (result != null) { // 결과값이 null이 아닌경우
 					session.setAttribute("user_id", result); // 세션에 user_id를 설정
 					return Response.seeOther(builder.build()).build();

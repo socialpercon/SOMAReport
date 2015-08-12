@@ -13,10 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.cloudant.client.api.CloudantClient;
 import com.cloudant.client.api.Database;
-import com.cloudant.client.api.Search;
-import com.cloudant.client.api.model.DesignDocument;
 import com.cloudant.client.api.model.Response;
-import com.cloudant.client.api.model.SearchResult;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
