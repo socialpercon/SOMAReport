@@ -101,7 +101,7 @@ public class LoginAPITest extends JerseyTestNg.ContainerPerMethodTest {
 	}
 
 	@Test
-	public void LogoutAPI_UseridExists_HTTP200_200() {
+	public void LogoutAPI_AlreadyLogin_HTTP200_200() {
 		Form form = new Form();
 		form.param("email", TestData.correctEmail);
 		form.param("password", TestData.correctPassword);

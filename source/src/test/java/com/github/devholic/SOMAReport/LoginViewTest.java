@@ -105,7 +105,7 @@ public class LoginViewTest extends JerseyTestNg.ContainerPerMethodTest {
 	}
 
 	@Test
-	public void LogoutView_UseridExists_HTTP302_302() {
+	public void LogoutView_AlreadyLogin_HTTP302_302() {
 		WebTarget target = target();
 		target.property(ClientProperties.FOLLOW_REDIRECTS, false);
 		Form form = new Form();

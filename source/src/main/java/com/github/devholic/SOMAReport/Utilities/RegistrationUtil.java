@@ -1,4 +1,4 @@
-package com.github.devholic.SOMAReport.Database;
+package com.github.devholic.SOMAReport.Utilities;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
