@@ -1,3 +1,7 @@
+// https://docs.google.com/spreadsheets/d/1AhNqZxIMev22Ik77Leh_Sm8eLk3JGKORaqlocAzi0K0/edit#gid=0
+// 테스트 작성자 : 강성훈
+// StringFactory 테스트
+
 package com.github.devholic.SOMAReport;
 
 import static org.junit.Assert.*;
@@ -10,7 +14,7 @@ import com.github.devholic.SOMAReport.Utilities.StringFactory;
 public class StringFactoryTest {
 
 	@Test
-	public void Salt_NotEqual_Pass() {
+	public void Salt_Random_NotEqual() {
 		String a = StringFactory.createSalt();
 		String b = StringFactory.createSalt();
 		assertThat(a, not(equalTo(b)));

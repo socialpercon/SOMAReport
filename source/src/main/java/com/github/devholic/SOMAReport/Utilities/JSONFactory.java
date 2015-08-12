@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class JSONFactory {
+
 	public static JSONArray getData(JSONObject raw) {
 		if (raw.has("rows")) {
 			return raw.getJSONArray("rows");
@@ -11,7 +12,7 @@ public class JSONFactory {
 			return null;
 		}
 	}
-	
+
 	public static JSONArray getValue(JSONObject data) {
 		if (data.has("value")) {
 			return data.getJSONArray("value");
@@ -19,4 +20,5 @@ public class JSONFactory {
 			return null;
 		}
 	}
+
 }

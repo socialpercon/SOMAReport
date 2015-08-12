@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MustacheHelper {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static Map<String, Object> toMap(JSONObject object)
 			throws JSONException {
 		Map<String, Object> map = new HashMap();
@@ -22,6 +23,7 @@ public class MustacheHelper {
 		return map;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static List toList(JSONArray array) throws JSONException {
 		List list = new ArrayList();
 		for (int i = 0; i < array.length(); i++) {
