@@ -307,6 +307,27 @@ public class View_Report {
 				.build();
 	}
 
+	@GET
+	@Path("/write/finish/{id}")
+	@Produces("text/html")
+	public Response finishReport(@Context Request request,
+			@PathParam("id") String id) throws URISyntaxException {
+		Session session = request.getSession();
+		if (session.getAttribute("user_id") != null) {
+			DocumentUtil dutil = new DocumentUtil("somarecord");
+			JSONObject project = new JSONObject(dutil.getDoc(id)
+					.getAsJsonObject().toString());
+			JSONObject jo = new JSONObject();
+			jo.put("isDone", true);
+			return Response.ok(
+					new Viewable("/reportwrite.mustache", MustacheHelper
+							.toMap(jo))).build();
+		} else {
+			return Response.seeOther(
+					new URI("http://localhost:8080/project/list")).build();
+		}
+	}
+
 	private void saveFile(InputStream is, String fileLocation)
 			throws IOException {
 		OutputStream os = new FileOutputStream(new File(fileLocation));
