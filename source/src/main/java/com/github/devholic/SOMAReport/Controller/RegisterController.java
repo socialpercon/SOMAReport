@@ -1,8 +1,10 @@
 package com.github.devholic.SOMAReport.Controller;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -131,7 +133,7 @@ public class RegisterController {
 				cell = row.getCell(0);
 				registerDoc.put("name", cell.getStringCellValue());
 				cell = row.getCell(1);
-				registerDoc.put("account", cell.getStringCellValue());
+				registerDoc.put("email", cell.getStringCellValue());
 				cell = row.getCell(2);
 				registerDoc.put("phone_num", cell.getStringCellValue());
 				cell = row.getCell(3);
@@ -192,7 +194,7 @@ public class RegisterController {
 					registerDoc.put("project_type", cell.getStringCellValue());
 					registerDoc.put("stage", stage);
 					cell = row.getCell(1);
-					registerDoc.put("mentor", db.getIdbyName(cell.getStringCellValue()));
+					registerDoc.put("mentor", getIdbyName(cell.getStringCellValue()));
 					cell = row.getCell(2);
 					registerDoc.put("title", cell.getStringCellValue());
 					cell = row.getCell(3);
@@ -201,7 +203,7 @@ public class RegisterController {
 					JSONArray menteeList = new JSONArray();
 					for (int i = 4; i < row.getLastCellNum(); i++) {
 						String name = row.getCell(i).getStringCellValue();
-						menteeList.put(db.getIdbyName(name));
+						menteeList.put(getIdbyName(name));
 					}
 					registerDoc.put("mentee", menteeList);
 					Map<String, Object> m = db.createDoc(registerDoc);
@@ -214,5 +216,23 @@ public class RegisterController {
 			Log.debug("Total " + num + "projects are inserted in " + stage.toString());
 		}
 		return registered;
+	}
+	
+	public String getIdbyName(String name) {
+		// 이름을 통해 해당 사용자 문서의 _id를 가져온다
+		BufferedReader is = new BufferedReader(new InputStreamReader(db.getByView("_design/user", "search_by_name", name, false, false)));
+		try {
+			String str, doc = "";
+			while ((str = is.readLine())!= null) {	doc += str;	}
+			JSONArray results = new JSONObject(doc).getJSONArray("rows");
+			if (results.length() == 0)	throw new Exception();
+			return results.getJSONObject(0).getString("value");
+		} catch (IOException e) {
+			Log.error(e.getLocalizedMessage());
+			return null;
+		} catch (Exception e) {
+			Log.error(e.getLocalizedMessage());
+			return null;
+		}
 	}
 }

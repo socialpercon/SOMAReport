@@ -1,7 +1,5 @@
 package com.github.devholic.SOMAReport.Database;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.elasticsearch.action.delete.DeleteResponse;
@@ -10,7 +8,6 @@ import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
-import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -19,6 +16,11 @@ public class ElasticSearchUtil {
 	Node node;
 	Client client;
 	
+	/**************************************************************************************
+	 * ElasticSearch를 local에서 돌릴 때 사용하는 index,search,delete 이다.
+	 * 하지만, 우리는 elastic search demon 을 따로 돌리기 때문에 transport를 이용하기로 하여
+	 * 이 유틸은 현재 사용하지 않는다
+	 **************************************************************************************/
 	
 	public ElasticSearchUtil() {
 		try {

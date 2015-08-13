@@ -1,11 +1,7 @@
 package com.github.devholic.SOMAReport.Controller;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -18,7 +14,6 @@ import org.ektorp.http.HttpClient;
 import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbConnector;
 import org.ektorp.impl.StdCouchDbInstance;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
@@ -36,28 +31,42 @@ public class DatabaseController {
 			Properties prop = new Properties();
 			FileInputStream fileInput = new FileInputStream("config.xml");
 			prop.loadFromXML(fileInput);
-			couchClient = new StdHttpClient.Builder()
-					.url(prop.getProperty("couchdb_url"))
-					.username(prop.getProperty("couchdb_id"))
-					.password(prop.getProperty("couchdb_password")).build();
+			couchClient = new StdHttpClient.Builder().url(prop.getProperty("couchdb_url"))
+					.username(prop.getProperty("couchdb_id")).password(prop.getProperty("couchdb_password")).build();
 			dbInstance = new StdCouchDbInstance(couchClient);
-			db = new StdCouchDbConnector(prop.getProperty("couchdb_name"),
-					dbInstance);
+			db = new StdCouchDbConnector(prop.getProperty("couchdb_name"), dbInstance);
 		} catch (Exception e) {
 			Log.error(e.getMessage());
 		}
 	}
 
-	public InputStream getByView(String docId, String viewName, String key) {
+	public InputStream getByView(String docId, String viewName, boolean includeDocs, boolean descending) {
+		// view 결과를 조회
+		// key 없음
+		// includeDocs (true : 문서 통째로 리턴) / (false : value만 리턴)
+		// descending (true : key역순) / (false : key순)
 		ViewQuery q = new ViewQuery().designDocId(docId).viewName(viewName)
-				.key(key);
+				.reduce(false).includeDocs(includeDocs).descending(descending);
+		return db.queryForStream(q);
+	}
+	
+	public InputStream getByView(String docId, String viewName, Object key, boolean includeDocs, boolean descending) {
+		// view 결과를 조회
+		// key검색 (단일, 배열 모두 가능) 
+		// includeDocs (true : 문서 통째로 리턴) / (false : value만 리턴)
+		// descending (true : key역순) / (false : key순)
+		ViewQuery q = new ViewQuery().designDocId(docId).viewName(viewName).key(key)
+				.reduce(false).includeDocs(includeDocs).descending(descending);
 		return db.queryForStream(q);
 	}
 
-	public InputStream getByViewIncludeDoc(String docId, String viewName,
-			String key) {
-		ViewQuery q = new ViewQuery().designDocId(docId).viewName(viewName)
-				.key(key).includeDocs(true);
+	public InputStream getByView(String docId, String viewName, Object startKey, Object endKey, boolean includeDocs, boolean descending) {
+		// view 결과를 조회
+		// start-end 범위 검색 (key 설정시 descending에 따른 순서 주의)
+		// includeDocs (true : 문서 통째로 리턴) / (false : value만 리턴)
+		// descending (true : key역순) / (false : key순)
+		ViewQuery q = new ViewQuery().designDocId(docId).viewName(viewName).startKey(startKey).endKey(endKey)
+				.reduce(false).includeDocs(includeDocs).descending(descending);
 		return db.queryForStream(q);
 	}
 
@@ -93,52 +102,10 @@ public class DatabaseController {
 			return false;
 		}
 	}
-	
+
 	public InputStream getDoc(String id) {
 		// id로 문서를 가져온다
 		return db.getAsStream(id);
 	}
 	
-	public boolean isAlreadyRegistered(String email) {
-		// 이메일을 통해 이미 등록된 사용자인지를 확인한다
-		BufferedReader is = new BufferedReader(new InputStreamReader(getByView("_design/user", "search_by_email", email)));
-		try {
-			String str, doc = "";
-			while ((str = is.readLine())!= null) {	doc += str;	}
-			JSONArray results = new JSONObject(doc).getJSONArray("rows");
-			if (results.length() == 0) 
-				return false;
-			else
-				return true;
-		} catch (IOException e) {
-			Log.error(e.getLocalizedMessage());
-			return false;
-		}
-	}
-	
-	public String getIdbyName(String name) {
-		// 이름을 통해 해당 사용자 문서의 _id를 가져온다
-		BufferedReader is = new BufferedReader(new InputStreamReader(getByView("_design/user", "search_by_name", name)));
-		try {
-			String str, doc = "";
-			while ((str = is.readLine())!= null) {	doc += str;	}
-			JSONArray results = new JSONObject(doc).getJSONArray("rows");
-			if (results.length() == 0)	throw new Exception();
-			return results.getJSONObject(0).getString("value");
-		} catch (IOException e) {
-			Log.error(e.getLocalizedMessage());
-			return null;
-		} catch (Exception e) {
-			Log.error(e.getLocalizedMessage());
-			return null;
-		}
-	}
-	
-	public void getMyProject(String id) {
-		// 사용자가 속한 프로젝트의 정보를 불러온다
-		// key: 사용자 문서의 _id
-		// return: [{title, mentor, mentee[]}]
-		
-		//BufferedReader reader = new BufferedReader(new InputStreamReader(getByBiew("_design/")))
-	}
 }

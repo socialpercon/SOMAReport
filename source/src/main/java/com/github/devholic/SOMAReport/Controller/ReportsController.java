@@ -1,7 +1,6 @@
 package com.github.devholic.SOMAReport.Controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStream;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,57 +15,50 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.github.devholic.SOMAReport.Utilities.DocumentUtil;
-import com.github.devholic.SOMAReport.Utilities.ReferenceUtil;
-import com.google.gson.JsonObject;
+import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
 @Path("/reports")
 public class ReportsController {
 
 	private final Logger logger = Logger.getLogger(ReportsController.class);
 
-	ReferenceUtil ref_util = new ReferenceUtil("");
-	DocumentUtil doc_util = new DocumentUtil("");
+	DatabaseController dbCtrl = new DatabaseController();
 
 	/**************************************************************************
 	 * 프로젝트 아이디로 레포트 가져오기
 	 * 
 	 * @param projectId
-	 * @return
+	 * @return JSONArray
 	 *************************************************************************/
 	public JSONArray getReportByProjectId(String projectId) {
-		List<JsonObject> reports_list = new ArrayList<JsonObject>();
-		JSONArray ja = new JSONArray();
+		JSONArray list = new JSONArray();
+
 		try {
-			reports_list = ref_util.getReports(projectId);
-			for (int i = 0; i < reports_list.size(); i++) {
-				JSONObject jo = new JSONObject();
-				jo.put("id", reports_list.get(i).get("_id").getAsString());
-				jo.put("reportTitle", reports_list.get(i).get("report_info")
-						.getAsJsonObject().get("date").getAsString()
-						.replaceAll("-", ""));
-				jo.put("reportTopic", reports_list.get(i).get("report_details")
-						.getAsJsonObject().get("topic").getAsString());
-				jo.put("attendee", reports_list.get(i).get("attendee")
-						.getAsJsonArray());
-				ja.put(jo);
-			}
+			InputStream is = dbCtrl.getByView("_design/report", "all_by_project", 
+					new Object[] { projectId + " ", " " }, new Object[] { projectId, " " }, true, true);
+			JSONArray a = JSONFactory.getData(JSONFactory.inputStreamToJson(is));
+			for (int i = 0; i < a.length(); i++)
+				list.put(a.getJSONObject(i).get("doc"));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getLocalizedMessage());
 		}
-		return ja;
+		return list;
 	}
 
 	/**************************************************************************
 	 * 레포트 아이디로 레포트 상세정보 가져오기
+	 * 
+	 * @param reportId
+	 * @Return JSONObject
 	 *************************************************************************/
-	public JsonObject getDetailByReportId(String reportId) {
-		JsonObject detail = new JsonObject();
+	public JSONObject getDetailByReportId(String reportId) {
+		JSONObject detail = new JSONObject();
 
 		try {
-			detail = doc_util.getDoc(reportId);
+			InputStream is = dbCtrl.getDoc(reportId);
+			detail = JSONFactory.inputStreamToJson(is);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getLocalizedMessage());
 		}
 		return detail;
 	}
@@ -80,36 +72,38 @@ public class ReportsController {
 	@GET
 	@Path("/{reportId}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public JsonObject getReportDetailByReportId(
-			@PathParam("reportId") String reportId) {
-		JsonObject detail = new JsonObject();
+	public JSONObject getReportDetailByReportId(@PathParam("reportId") String reportId) {
+		JSONObject detail = new JSONObject();
 		try {
-			detail = doc_util.getDoc(reportId);
+			InputStream is = dbCtrl.getDoc(reportId);
+			detail = JSONFactory.inputStreamToJson(is);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getLocalizedMessage());
 		}
 		return detail;
 
 	}
 
 	/**************************************************************************
-	 * 레포트 리스트를 가져온다.
+	 * 전체 레포트 리스트를 가져온다.
 	 * 
 	 * @return List<Reports>
 	 *************************************************************************/
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public List<JsonObject> getReportList() {
-
-		List<JsonObject> report_list = new ArrayList<JsonObject>();
-
+	public JSONArray getReportList() {
+		JSONArray reportList = new JSONArray();
 		try {
-			report_list = ref_util.getAllReports();
+			InputStream is = dbCtrl.getByView("_design/report", "all_by_project", true, true);
+			JSONArray jo = JSONFactory.getData(JSONFactory.inputStreamToJson(is));
+			for (int i = 0; i < jo.length(); i++) {
+				reportList.put(jo.getJSONObject(i).get("doc"));
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getLocalizedMessage());
 		}
 
-		return report_list;
+		return reportList;
 	}
 
 	/****************************************************************
@@ -118,12 +112,12 @@ public class ReportsController {
 	 * @param document
 	 * @return
 	 ***************************************************************/
-	public String insertReport(JsonObject document) {
+	public String insertReport(JSONObject document) {
 		String id = null;
 		try {
-			id = doc_util.putReportDoc(document);
+			id = dbCtrl.createDoc(document).get("_id").toString();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getLocalizedMessage());
 		}
 		return id;
 	}
@@ -131,13 +125,11 @@ public class ReportsController {
 	@PUT
 	public Response updateReport() {
 		try {
-			return Response.status(200).type(MediaType.APPLICATION_JSON)
-					.entity("put : 200").build();
+			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("put : 200").build();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getLocalizedMessage());
 		}
-		return Response.status(500).type(MediaType.APPLICATION_JSON)
-				.entity("put : 500").build();
+		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("put : 500").build();
 	}
 
 	/************************************************************************
@@ -151,11 +143,12 @@ public class ReportsController {
 		boolean result = false;
 
 		try {
+			JSONObject jo = JSONFactory.inputStreamToJson(dbCtrl.getDoc(reportId));
+			String rev = jo.getString("_rev");
+			result = dbCtrl.deleteDoc(reportId, rev);
 			logger.debug("delete | report id = " + reportId + "\n");
-			doc_util.deleteDoc(reportId);
-			result = true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getLocalizedMessage());
 		}
 		return result;
 	}

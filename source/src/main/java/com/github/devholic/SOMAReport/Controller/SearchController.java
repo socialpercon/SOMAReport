@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -33,85 +34,87 @@ public class SearchController {
 
 	private final Logger logger = Logger.getLogger(SearchController.class);
 
-//	ReferenceUtil ref_util = new ReferenceUtil("");
-//	DocumentUtil doc_util = new DocumentUtil("");
+	ReferenceUtil ref_util = new ReferenceUtil("");
+	DocumentUtil doc_util = new DocumentUtil("");
 				
-//	@GET
-//	@Path("/report/{query}")
-//	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-//	public ArrayList<JsonObject> searchReport_cloudantsearch(@PathParam("query") String query){
-//
-//		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
-//		JsonObject jo = new JsonObject();
-//		ArrayList<JsonObject> jo_list = new ArrayList<JsonObject>();
-//		
-//		try{
-//			result = ref_util.searchReport(query);
-//
-//			for(int i=0; i<result.getTotalRows(); i++){
-//				jo = result.getRows().get(i).getDoc();
-//				jo_list.add(jo);
-//			}
-//			
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//		
-//		return jo_list;
-//	}
-//	
-//	@GET
-//	@Path("/project/{query}")
-//	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-//	public ArrayList<JsonObject> searchProject_cloudantsearch(@PathParam("query") String query){
-//
-//		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
-//		JsonObject jo = new JsonObject();
-//		ArrayList<JsonObject> jo_list = new ArrayList<JsonObject>();
-//		
-//		try{
-//			result = ref_util.searchProject(query);
-//
-//			for(int i=0; i<result.getTotalRows(); i++){
-//				jo = result.getRows().get(i).getDoc();
-//				logger.info(query+"'s project searchDoc:"+result.getRows().get(i).getDoc()+"\n");
-//				jo_list.add(jo);
-//			}
-//			
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//		
-//		return jo_list;
-//	}
-//	
-//	@GET
-//	@Path("/user/{query}")
-//	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-//	public ArrayList<JsonObject> searchUser_cloudantsearch(@PathParam("query") String query){
-//
-//		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
-//		JsonObject jo = new JsonObject();
-//		ArrayList<JsonObject> jo_list = new ArrayList<JsonObject>();
-//		
-//		try{
-//			result = ref_util.searchUser(query);
-//
-//			for(int i=0; i<result.getTotalRows(); i++){
-//				jo = result.getRows().get(i).getDoc();
-//				logger.info(query+"'s project searchDoc:"+result.getRows().get(i).getDoc()+"\n");
-//				jo_list.add(jo);
-//			}
-//			
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//		
-//		return jo_list;
-//	}
+	@GET
+	@Path("/report/{query}")
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
+	public ArrayList<JsonObject> searchReport_cloudantsearch(@PathParam("query") String query){
+
+		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
+		JsonObject jo = new JsonObject();
+		ArrayList<JsonObject> jo_list = new ArrayList<JsonObject>();
+		
+		try{
+			result = ref_util.searchReport(query);
+
+			for(int i=0; i<result.getTotalRows(); i++){
+				jo = result.getRows().get(i).getDoc();
+				jo_list.add(jo);
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return jo_list;
+	}
+	
+	@GET
+	@Path("/project/{query}")
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
+	public ArrayList<JsonObject> searchProject_cloudantsearch(@PathParam("query") String query){
+
+		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
+		JsonObject jo = new JsonObject();
+		ArrayList<JsonObject> jo_list = new ArrayList<JsonObject>();
+		
+		try{
+			result = ref_util.searchProject(query);
+
+			for(int i=0; i<result.getTotalRows(); i++){
+				jo = result.getRows().get(i).getDoc();
+				logger.info(query+"'s project searchDoc:"+result.getRows().get(i).getDoc()+"\n");
+				jo_list.add(jo);
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return jo_list;
+	}
+	
+	@GET
+	@Path("/user/{query}")
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
+	public ArrayList<JsonObject> searchUser_cloudantsearch(@PathParam("query") String query){
+
+		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
+		JsonObject jo = new JsonObject();
+		ArrayList<JsonObject> jo_list = new ArrayList<JsonObject>();
+		
+		try{
+			result = ref_util.searchUser(query);
+
+			for(int i=0; i<result.getTotalRows(); i++){
+				jo = result.getRows().get(i).getDoc();
+				logger.info(query+"'s project searchDoc:"+result.getRows().get(i).getDoc()+"\n");
+				jo_list.add(jo);
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return jo_list;
+	}
 	
 	/*************************************************
-	 * couchDB에 넣는 json을 넣어주면된다.
+	 * couchDB에 넣는 JSONObject(couchDB에 들어가는 Json) 을 넣어주면된다.
+	 * 
+	 * ex. localhost:8080/elastic_index/report/주제입니다만
 	 * 
 	 * @param JSONObject jo : json 형식으로 doc을 추가한다.
 	 * @param target => report,user,project 중 하나를 입력
@@ -142,38 +145,39 @@ public class SearchController {
 			prop.loadFromXML(fileInput);
 			String elastic_base_url = prop.getProperty("elasticsearch_base");
 			
-			String url = elastic_base_url+"/somareport/"+target;
+			String url = elastic_base_url+"/somareport/"+target+"/";
 			URL obj = new URL(url);
-			URLConnection con = (URLConnection) obj.openConnection();
-
-			//add reuqest header
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 			con.setDoOutput(true);
-			con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+			con.setDoInput(true);
+			con.setRequestProperty("Content-Type", "application/json");
+			con.setRequestProperty("Accept", "application/json");
+			con.setRequestMethod("POST");
 
-			String urlParameters = jo.toString();
-			
 			// Send post request
-			con.setDoOutput(true);
-			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-			wr.writeBytes(urlParameters);
+			OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
+			wr.write(jo.toString());
 			wr.flush();
-			wr.close();
 
 			System.out.println("\nSending 'POST' request to URL : " + url);
-			System.out.println("Post parameters : " + urlParameters);
-
-			BufferedReader in = new BufferedReader(
-			        new InputStreamReader(con.getInputStream()));
-			String inputLine;
-			StringBuffer response = new StringBuffer();
-
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
-			}
-			in.close();
+			System.out.println("Post parameters : " + jo.toString());
 			
-			//print result
-			System.out.println(response.toString());
+			StringBuilder sb = new StringBuilder();  
+			int HttpResult = con.getResponseCode(); 
+			if(HttpResult == HttpURLConnection.HTTP_OK){
+			    BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(),"utf-8"));  
+			    String line = null;  
+			    while ((line = br.readLine()) != null) {  
+			        sb.append(line + "\n");  
+			    }  
+
+			    br.close();  
+
+			    System.out.println(""+sb.toString());  
+
+			}else{
+			    System.out.println(con.getResponseMessage());  
+			}  
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -184,7 +188,8 @@ public class SearchController {
 	
 	/**************************************************************************
 	 * 키워드를 query에 넣어주면 report topic 기준으로 검색을 해서 결과를 보내준다.
-	 * @param query - report :topic / user :name / project :title 기준으로 검색을 한다.
+	 * 
+	 * @param query - report :topic / user :name / project :title 기준으로 검색을 한다.- 전체단어검색 
 	 * @param target => report,user,project 중 하나를 입력
 	 * @return query가 없거나, target이 잘못 입력되면 status 500을 return 한다.
 	 *************************************************************************/
