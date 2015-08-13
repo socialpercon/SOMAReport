@@ -20,4 +20,12 @@ public class StringFactoryTest {
 		assertThat(a, not(equalTo(b)));
 	}
 
+	@Test
+	public void testEncryptPassword() {
+		String password = "password";
+		String salt = StringFactory.createSalt();
+		String encrypted = StringFactory.encryptPassword(password, salt);
+		String reencrypted = StringFactory.encryptPassword(password, salt);
+		assertEquals(encrypted, reencrypted);
+	}
 }

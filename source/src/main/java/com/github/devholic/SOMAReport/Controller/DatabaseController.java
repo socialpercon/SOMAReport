@@ -1,7 +1,10 @@
 package com.github.devholic.SOMAReport.Controller;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.Properties;
 
@@ -14,6 +17,7 @@ import org.ektorp.http.HttpClient;
 import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbConnector;
 import org.ektorp.impl.StdCouchDbInstance;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
@@ -86,6 +90,46 @@ public class DatabaseController {
 		} catch (UpdateConflictException e) {
 			Log.error(e.getMessage());
 			return false;
+		}
+	}
+	
+	public InputStream getDoc(String id) {
+		// id로 문서를 가져온다
+		return db.getAsStream(id);
+	}
+	
+	public boolean isAlreadyRegistered(String email) {
+		// 이메일을 통해 이미 등록된 사용자인지를 확인한다
+		BufferedReader is = new BufferedReader(new InputStreamReader(getByView("_design/user", "search_by_email", email)));
+		try {
+			String str, doc = "";
+			while ((str = is.readLine())!= null) {	doc += str;	}
+			JSONArray results = new JSONObject(doc).getJSONArray("rows");
+			if (results.length() == 0) 
+				return false;
+			else
+				return true;
+		} catch (IOException e) {
+			Log.error(e.getLocalizedMessage());
+			return false;
+		}
+	}
+	
+	public String getIdbyName(String name) {
+		// 이름을 통해 해당 사용자 문서의 _id를 가져온다
+		BufferedReader is = new BufferedReader(new InputStreamReader(getByView("_design/user", "search_by_name", name)));
+		try {
+			String str, doc = "";
+			while ((str = is.readLine())!= null) {	doc += str;	}
+			JSONArray results = new JSONObject(doc).getJSONArray("rows");
+			if (results.length() == 0)	throw new Exception();
+			return results.getJSONObject(0).getString("value");
+		} catch (IOException e) {
+			Log.error(e.getLocalizedMessage());
+			return null;
+		} catch (Exception e) {
+			Log.error(e.getLocalizedMessage());
+			return null;
 		}
 	}
 }
