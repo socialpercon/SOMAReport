@@ -29,7 +29,7 @@ public class View_Project {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
 			ProjectsController p = new ProjectsController();
-			JSONArray ja = new JSONArray(p.getMyProjects(
+			JSONArray ja = new JSONArray(p.getMyProject(
 					session.getAttribute("user_id").toString()).toString());
 			JSONObject jo = new JSONObject();
 			jo.put("projectList", ja);

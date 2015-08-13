@@ -113,7 +113,7 @@ public class DatabaseControllerTest {
 							fw.close();
 						} catch (IOException e) {
 							Log.error(e.getLocalizedMessage());
-						}		
+						}
 					}
 				}
 			}
@@ -122,10 +122,4 @@ public class DatabaseControllerTest {
 		} 
 	}
 	
-	@Test
-	public void testGetIdByName() {
-		DatabaseController db = new DatabaseController();
-		assertEquals("9d898f7d5bfbf361939e1fafd50470e3", db.getIdbyName("김멘토"));
-		assertEquals("9d898f7d5bfbf361939e1fafd5031d8e", db.getIdbyName("이멘티"));
-	}
 }
