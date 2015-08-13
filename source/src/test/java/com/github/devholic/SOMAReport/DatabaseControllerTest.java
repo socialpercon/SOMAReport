@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import com.github.devholic.SOMAReport.Controller.DatabaseController;
+import com.github.devholic.SOMAReport.Controller.SearchController;
 import com.github.devholic.SOMAReport.Utilities.DocumentUtil;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -89,6 +90,7 @@ public class DatabaseControllerTest {
 	// docs 폴더에 넣고 싶은 json 파일을 넣고 실행
 	public void testCreateDoc() {
 		DatabaseController db = new DatabaseController();
+		SearchController sec = new SearchController();
 		try {
 			File inputDocs = new File("docs");
 			File[] list = inputDocs.listFiles();
@@ -99,8 +101,8 @@ public class DatabaseControllerTest {
 					if (!jo.has("_id") && !jo.has("_rev")) 	{
 						Map<String, Object> m = db.createDoc(jo);
 						Log.info(m.toString());
-//						jo.put("_id", m.get("_id"));
-//						jo.put("_rev", m.get("_rev"));
+
+						sec.elastic_index("report", jo);
 					}
 				}
 			}
