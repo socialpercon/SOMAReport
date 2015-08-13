@@ -31,9 +31,9 @@ public class DocumentUtil {
 			FileInputStream fileInput = new FileInputStream("config.xml");
 			prop.loadFromXML(fileInput);
 
-			client = new CloudantClient(prop.getProperty("cloudant_url"),
-					prop.getProperty("cloudant_id"),
-					prop.getProperty("cloudant_pwd"));
+			client = new CloudantClient(prop.getProperty("couchdb_url"),
+					prop.getProperty("couchdb_id"),
+					prop.getProperty("couchdb_password"));
 			if (dbname == null || dbname.equals("")) {
 				db = client.database(prop.getProperty("database_name"), true);
 			} else {

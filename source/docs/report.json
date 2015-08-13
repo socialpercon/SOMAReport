@@ -1,0 +1,43 @@
+{
+  "type": "report",
+	"project": "58387a05c00dcded6f7936c1173e3f5a",
+	"report_info": {
+		"date": "20150731",
+		"mentoring_num":1,
+		"place": "아람7-6",
+		"start_time": "201507311900",
+		"end_time": "201507312300",
+		"except_time": 0,
+		"whole_time": 4,
+		"total_time": 4
+	},
+	"attendee": [
+		{
+			"id":"9d898f7d5bfbf361939e1fafd5033819"
+		},
+		{
+			"id":"9d898f7d5bfbf361939e1fafd50347ee"
+		}
+	],
+	"absentee": [
+		{
+			"id": "9d898f7d5bfbf361939e1fafd5031d8e",
+			"reason": "잠의 노예"
+		}
+	],
+	"report_details": {
+		"topic": "주제입니다만",
+		"goal": "목푭니다만",
+		"issue": "추진내용입니다만",
+		"solution": "해결방안이요",
+		"plan": "계획입니다만",
+		"opinion": "의견입니다만",
+		"etc": "하고싶은말이남았어"
+	},
+	"report_attachments": {
+		"photo": false,
+		"reference": [
+
+		]
+	}
+}

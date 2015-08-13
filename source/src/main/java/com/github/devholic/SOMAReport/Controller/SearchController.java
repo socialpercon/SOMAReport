@@ -33,82 +33,82 @@ public class SearchController {
 
 	private final Logger logger = Logger.getLogger(SearchController.class);
 
-	ReferenceUtil ref_util = new ReferenceUtil("");
-	DocumentUtil doc_util = new DocumentUtil("");
+//	ReferenceUtil ref_util = new ReferenceUtil("");
+//	DocumentUtil doc_util = new DocumentUtil("");
 				
-	@GET
-	@Path("/report/{query}")
-	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-	public ArrayList<JsonObject> searchReport_cloudantsearch(@PathParam("query") String query){
-
-		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
-		JsonObject jo = new JsonObject();
-		ArrayList<JsonObject> jo_list = new ArrayList<JsonObject>();
-		
-		try{
-			result = ref_util.searchReport(query);
-
-			for(int i=0; i<result.getTotalRows(); i++){
-				jo = result.getRows().get(i).getDoc();
-				jo_list.add(jo);
-			}
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		
-		return jo_list;
-	}
-	
-	@GET
-	@Path("/project/{query}")
-	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-	public ArrayList<JsonObject> searchProject_cloudantsearch(@PathParam("query") String query){
-
-		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
-		JsonObject jo = new JsonObject();
-		ArrayList<JsonObject> jo_list = new ArrayList<JsonObject>();
-		
-		try{
-			result = ref_util.searchProject(query);
-
-			for(int i=0; i<result.getTotalRows(); i++){
-				jo = result.getRows().get(i).getDoc();
-				logger.info(query+"'s project searchDoc:"+result.getRows().get(i).getDoc()+"\n");
-				jo_list.add(jo);
-			}
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		
-		return jo_list;
-	}
-	
-	@GET
-	@Path("/user/{query}")
-	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-	public ArrayList<JsonObject> searchUser_cloudantsearch(@PathParam("query") String query){
-
-		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
-		JsonObject jo = new JsonObject();
-		ArrayList<JsonObject> jo_list = new ArrayList<JsonObject>();
-		
-		try{
-			result = ref_util.searchUser(query);
-
-			for(int i=0; i<result.getTotalRows(); i++){
-				jo = result.getRows().get(i).getDoc();
-				logger.info(query+"'s project searchDoc:"+result.getRows().get(i).getDoc()+"\n");
-				jo_list.add(jo);
-			}
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		
-		return jo_list;
-	}
+//	@GET
+//	@Path("/report/{query}")
+//	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
+//	public ArrayList<JsonObject> searchReport_cloudantsearch(@PathParam("query") String query){
+//
+//		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
+//		JsonObject jo = new JsonObject();
+//		ArrayList<JsonObject> jo_list = new ArrayList<JsonObject>();
+//		
+//		try{
+//			result = ref_util.searchReport(query);
+//
+//			for(int i=0; i<result.getTotalRows(); i++){
+//				jo = result.getRows().get(i).getDoc();
+//				jo_list.add(jo);
+//			}
+//			
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//		
+//		return jo_list;
+//	}
+//	
+//	@GET
+//	@Path("/project/{query}")
+//	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
+//	public ArrayList<JsonObject> searchProject_cloudantsearch(@PathParam("query") String query){
+//
+//		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
+//		JsonObject jo = new JsonObject();
+//		ArrayList<JsonObject> jo_list = new ArrayList<JsonObject>();
+//		
+//		try{
+//			result = ref_util.searchProject(query);
+//
+//			for(int i=0; i<result.getTotalRows(); i++){
+//				jo = result.getRows().get(i).getDoc();
+//				logger.info(query+"'s project searchDoc:"+result.getRows().get(i).getDoc()+"\n");
+//				jo_list.add(jo);
+//			}
+//			
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//		
+//		return jo_list;
+//	}
+//	
+//	@GET
+//	@Path("/user/{query}")
+//	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
+//	public ArrayList<JsonObject> searchUser_cloudantsearch(@PathParam("query") String query){
+//
+//		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
+//		JsonObject jo = new JsonObject();
+//		ArrayList<JsonObject> jo_list = new ArrayList<JsonObject>();
+//		
+//		try{
+//			result = ref_util.searchUser(query);
+//
+//			for(int i=0; i<result.getTotalRows(); i++){
+//				jo = result.getRows().get(i).getDoc();
+//				logger.info(query+"'s project searchDoc:"+result.getRows().get(i).getDoc()+"\n");
+//				jo_list.add(jo);
+//			}
+//			
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//		
+//		return jo_list;
+//	}
 	
 	/*************************************************
 	 * couchDB에 넣는 json을 넣어주면된다.
