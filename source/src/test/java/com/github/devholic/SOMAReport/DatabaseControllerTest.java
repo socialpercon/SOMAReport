@@ -100,6 +100,8 @@ public class DatabaseControllerTest {
 					JSONTokener tokener = new JSONTokener(new FileReader(f));
 					JSONObject jo = new JSONObject(tokener);
 					if (!jo.has("_id") && !jo.has("_rev")) 	{
+						sec.elastic_index("report", jo); // elastic_index 가 되도록 한다
+						
 						Map<String, Object> m = db.createDoc(jo);
 						Log.info(m.toString());
 						jo.put("_id", m.get("_id"));
@@ -111,8 +113,7 @@ public class DatabaseControllerTest {
 							fw.close();
 						} catch (IOException e) {
 							Log.error(e.getLocalizedMessage());
-						}
-						sec.elastic_index("report", jo);
+						}		
 					}
 				}
 			}
