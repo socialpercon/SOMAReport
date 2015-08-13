@@ -29,7 +29,7 @@ public class Application {
 	}
 
 	public static void main(final String[] args) throws Exception {
-		Logger logger = Logger.getLogger(Application .class);
+		Logger logger = Logger.getLogger(Application.class);
 		final HttpServer server = startServer();
 		logger.debug("Hit enter to stop server");
 		System.in.read();

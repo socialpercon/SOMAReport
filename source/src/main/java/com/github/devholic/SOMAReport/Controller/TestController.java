@@ -20,10 +20,7 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 
 import com.github.devholic.SOMAReport.Database.ElasticSearchUtil;
-import com.github.devholic.SOMAReport.Database.ReferenceUtil;
-
-
-
+import com.github.devholic.SOMAReport.Utilities.ReferenceUtil;
 @Path("/to_test")
 public class TestController {
 

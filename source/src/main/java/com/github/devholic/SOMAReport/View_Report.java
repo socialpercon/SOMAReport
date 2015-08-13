@@ -29,9 +29,9 @@ import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import com.github.devholic.SOMAReport.Controller.ReportsController;
-import com.github.devholic.SOMAReport.Database.DocumentUtil;
-import com.github.devholic.SOMAReport.Database.ReferenceUtil;
+import com.github.devholic.SOMAReport.Utilities.DocumentUtil;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
+import com.github.devholic.SOMAReport.Utilities.ReferenceUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -93,59 +93,7 @@ public class View_Report {
 		}
 	}
 
-	@GET
-	@Path("/{id}")
-	@Produces("text/html")
-	public Response reportDetail(@Context Request request,
-			@PathParam("id") String id) throws URISyntaxException {
-		Session session = request.getSession();
-		if (session.getAttribute("user_id") != null) {
-			DocumentUtil dutil = new DocumentUtil("");
-			ReferenceUtil rutil = new ReferenceUtil("");
-			JSONObject jo = new JSONObject();
-			JSONObject report = rutil.getReportWithNames(id);
-			JsonObject project_raw = dutil.getDoc(
-					report.get("project").toString()).getAsJsonObject();
-			JSONObject project = new JSONObject(dutil
-					.getDoc(report.get("project").toString()).getAsJsonObject()
-					.toString());
-			boolean auth = false;
-			if (project.getString("mentor").equals(
-					session.getAttribute("user_id").toString())) {
-				jo.put("isMentor", true);
-				auth = true;
-				report.getJSONObject("report_details").put("opinion-public",
-						"true");
-			} else {
-				JsonArray menteeList = project_raw.get("mentee")
-						.getAsJsonArray();
-				for (int i = 0; i < menteeList.size(); i++) {
-					if (menteeList.get(i).getAsString()
-							.equals(session.getAttribute("user_id").toString())) {
-						auth = true;
-						break;
-					}
-				}
-			}
-			if (!auth) {
-				return Response.seeOther(
-						new URI("http://localhost:8080/project/list")).build();
-			} else {
-				jo.put("rid", id);
-				jo.put("title", report.getJSONObject("report_info").get("date")
-						.toString().replaceAll("-", ""));
-				jo.put("pid", project.get("_id").toString());
-				jo.put("pname", project.get("title").toString());
-				jo.put("report", report);
-				return Response.ok(
-						new Viewable("/reportdetail.mustache", MustacheHelper
-								.toMap(jo))).build();
-			}
-		} else {
-			return Response.seeOther(new URI("http://localhost:8080/login"))
-					.build();
-		}
-	}
+
 
 	@GET
 	@Path("/write/{id}")
@@ -305,6 +253,27 @@ public class View_Report {
 				.toString());
 		return Response.seeOther(new URI("http://localhost:8080/project/list"))
 				.build();
+	}
+
+	@GET
+	@Path("/write/finish/{id}")
+	@Produces("text/html")
+	public Response finishReport(@Context Request request,
+			@PathParam("id") String id) throws URISyntaxException {
+		Session session = request.getSession();
+		if (session.getAttribute("user_id") != null) {
+			DocumentUtil dutil = new DocumentUtil("somarecord");
+			JSONObject project = new JSONObject(dutil.getDoc(id)
+					.getAsJsonObject().toString());
+			JSONObject jo = new JSONObject();
+			jo.put("isDone", true);
+			return Response.ok(
+					new Viewable("/reportwrite.mustache", MustacheHelper
+							.toMap(jo))).build();
+		} else {
+			return Response.seeOther(
+					new URI("http://localhost:8080/project/list")).build();
+		}
 	}
 
 	private void saveFile(InputStream is, String fileLocation)
