@@ -262,4 +262,82 @@ public class SearchController {
 		
 		return Response.status(200).type(MediaType.APPLICATION_JSON).build();
 	}
+	
+	/*************************************************
+	 * couchDB에 넣는 JSONObject(couchDB에 들어가는 Json) 을 넣어주면된다.
+	 * 
+	 * ex. localhost:8080/elastic_update/report/주제입니다만
+	 * 
+	 * @param JSONObject jo : 수정할 doc의 json을 넣어준다.
+	 * @param target => report,user,project 중 하나를 입력
+	 * @return JSONObject가 없거나, target이 잘못 입력되면 status 500을 return 한다.
+	 *************************************************/
+	@POST
+	@Path("/elastic_update/{target}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
+	public Response elastic_update(@PathParam("target") String target,
+            				      JSONObject jo, String _id){
+		logger.debug("elastic_update invoked..");
+		
+		try{
+			//target parameter valid check
+			ArrayList<String> valid_target = new ArrayList<String>();
+			valid_target.add("user");
+			valid_target.add("report");
+			valid_target.add("project");
+			
+			if(!valid_target.contains(target)|| target.equals("") || target == null || jo == null){
+				return Response.status(500).type(MediaType.APPLICATION_JSON).build();
+			}
+			
+			// get config value
+			Properties prop = new Properties();
+			FileInputStream fileInput = new FileInputStream("config.xml");
+			prop.loadFromXML(fileInput);
+			String elastic_base_url = prop.getProperty("elasticsearch_base");
+			
+			String url = elastic_base_url+"/somareport/"+target+"/"+_id+"/_update";
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+			con.setDoOutput(true);
+			con.setDoInput(true);
+			con.setRequestProperty("Content-Type", "application/json");
+			con.setRequestProperty("Accept", "application/json");
+			con.setRequestMethod("POST");
+
+			// Send post request
+			OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
+			JSONObject update_jo = new JSONObject();
+			update_jo.put("doc", jo);
+			System.out.println("update_jo:"+update_jo.toString());
+			wr.write(update_jo.toString());
+			wr.flush();
+
+			System.out.println("\nSending 'POST' request to URL : " + url);
+			System.out.println("Post parameters : " + jo.toString());
+			
+			StringBuilder sb = new StringBuilder();  
+			int HttpResult = con.getResponseCode(); 
+			if(HttpResult == HttpURLConnection.HTTP_OK){
+			    BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(),"utf-8"));  
+			    String line = null;  
+			    while ((line = br.readLine()) != null) {  
+			        sb.append(line + "\n");  
+			    }  
+
+			    br.close();  
+
+			    System.out.println(""+sb.toString());  
+
+			}else{
+			    System.out.println(con.getResponseMessage());  
+			}  
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return Response.status(200).type(MediaType.APPLICATION_JSON).build();
+	}
 }
