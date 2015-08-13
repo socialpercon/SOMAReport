@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
@@ -93,14 +94,22 @@ public class DatabaseControllerTest {
 			File inputDocs = new File("docs");
 			File[] list = inputDocs.listFiles();
 			for (File f : list) {
-				if (f.isFile() && !f.getName().startsWith(".")) {
+				if (f.isFile() && !f.getName().endsWith(".json")) {
 					JSONTokener tokener = new JSONTokener(new FileReader(f));
 					JSONObject jo = new JSONObject(tokener);
 					if (!jo.has("_id") && !jo.has("_rev")) 	{
 						Map<String, Object> m = db.createDoc(jo);
 						Log.info(m.toString());
-//						jo.put("_id", m.get("_id"));
-//						jo.put("_rev", m.get("_rev"));
+						jo.put("_id", m.get("_id"));
+						jo.put("_rev", m.get("_rev"));
+						FileWriter fw;
+						try {
+							fw = new FileWriter(f.getName());
+							fw.write(jo.toString());
+							fw.close();
+						} catch (IOException e) {
+							Log.error(e.getLocalizedMessage());
+						}
 					}
 				}
 			}

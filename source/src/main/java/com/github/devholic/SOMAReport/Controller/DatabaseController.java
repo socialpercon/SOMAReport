@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -131,5 +132,13 @@ public class DatabaseController {
 			Log.error(e.getLocalizedMessage());
 			return null;
 		}
+	}
+	
+	public void getMyProject(String id) {
+		// 사용자가 속한 프로젝트의 정보를 불러온다
+		// key: 사용자 문서의 _id
+		// return: [{title, mentor, mentee[]}]
+		
+		//BufferedReader reader = new BufferedReader(new InputStreamReader(getByBiew("_design/")))
 	}
 }
