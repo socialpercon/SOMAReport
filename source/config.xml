@@ -6,5 +6,6 @@
 <entry key="cloudant_url">http://somareport.cloudant.com</entry>
 <entry key="cloudant_id">somareport</entry>
 <entry key="cloudant_pwd">somasoma</entry>
+<entry key="elasticsearch_base">http://172.16.101.172:9200</entry>
 <entry key="test">test</entry>
 </properties>
