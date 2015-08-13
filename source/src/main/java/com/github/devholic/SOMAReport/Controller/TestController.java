@@ -66,7 +66,7 @@ public class TestController {
 			test_data.put("salt", "qawsedrf");
 			test_data.put("password", "somasoma");
 			
-//			el.index(test_data, "1");
+			el.index(test_data, "1");
 			Map<String, Object> result = el.search("1");
 			System.out.println(result.toString());
 			

@@ -35,7 +35,7 @@ public class ElasticSearchUtil {
 	public void index(Map<String, Object> jsonobject,String _id){
 
 		//indexing
-		IndexResponse response = client.prepareIndex("twitter", "tweet", _id)
+		IndexResponse response = client.prepareIndex("somareport", "report", _id)
 		        .setSource(jsonobject)
 		        .execute()
 		        .actionGet();
@@ -46,7 +46,7 @@ public class ElasticSearchUtil {
 	public Map<String, Object> search(String _id){
 		
 		//search
-		GetResponse response = client.prepareGet("twitter", "tweet", _id)
+		GetResponse response = client.prepareGet("somareport", "report", _id)
 		        .execute()
 		        .actionGet();
 		Assert.assertNotNull(response.getId());
@@ -62,7 +62,7 @@ public class ElasticSearchUtil {
 	@Test
 	public void delete(String _id){
 		
-		DeleteResponse response = client.prepareDelete("twitter", "tweet", _id)
+		DeleteResponse response = client.prepareDelete("somareport", "report", _id)
 		        .execute()
 		        .actionGet();
 		Assert.assertNotNull(response);

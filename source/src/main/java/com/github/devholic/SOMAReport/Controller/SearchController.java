@@ -11,16 +11,17 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 
 import com.cloudant.client.api.model.SearchResult;
 import com.github.devholic.SOMAReport.Utilities.DocumentUtil;
@@ -38,7 +39,7 @@ public class SearchController {
 	@GET
 	@Path("/report/{query}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-	public ArrayList<JsonObject> searchReportController(@PathParam("query") String query){
+	public ArrayList<JsonObject> searchReport_cloudantsearch(@PathParam("query") String query){
 
 		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
 		JsonObject jo = new JsonObject();
@@ -62,7 +63,7 @@ public class SearchController {
 	@GET
 	@Path("/project/{query}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-	public ArrayList<JsonObject> searchProjectController(@PathParam("query") String query){
+	public ArrayList<JsonObject> searchProject_cloudantsearch(@PathParam("query") String query){
 
 		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
 		JsonObject jo = new JsonObject();
@@ -87,7 +88,7 @@ public class SearchController {
 	@GET
 	@Path("/user/{query}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-	public ArrayList<JsonObject> searchUserController(@PathParam("query") String query){
+	public ArrayList<JsonObject> searchUser_cloudantsearch(@PathParam("query") String query){
 
 		SearchResult<JsonObject> result = new SearchResult<JsonObject>();
 		JsonObject jo = new JsonObject();
@@ -110,16 +111,18 @@ public class SearchController {
 	}
 	
 	/*************************************************
-	 * couchDB에 넣는 json을 string으로 변환해서 넣어주면된다.
-	 * @param stringParam
+	 * couchDB에 넣는 json을 넣어주면된다.
+	 * 
+	 * @param JSONObject jo : json 형식으로 doc을 추가한다.
 	 * @param target => report,user,project 중 하나를 입력
-	 * @return
+	 * @return JSONObject가 없거나, target이 잘못 입력되면 status 500을 return 한다.
 	 *************************************************/
 	@POST
-	@Path("/elastic_index")
+	@Path("/elastic_index/{target}")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8") 
-	public Response elastic_index(@QueryParam("target") String target,
-            				      @QueryParam("stringParam") String stringParam){
+	public Response elastic_index(@PathParam("target") String target,
+            				      JSONObject jo){
 		logger.debug("elastic_index invoked..");
 		
 		try{
@@ -129,7 +132,7 @@ public class SearchController {
 			valid_target.add("report");
 			valid_target.add("project");
 			
-			if(!valid_target.contains(target)|| target.equals("") || target == null || stringParam.equals("") || stringParam == null){
+			if(!valid_target.contains(target)|| target.equals("") || target == null || jo == null){
 				return Response.status(500).type(MediaType.APPLICATION_JSON).build();
 			}
 			
@@ -147,8 +150,7 @@ public class SearchController {
 			con.setDoOutput(true);
 			con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-			stringParam = stringParam.replaceAll("\"", "\\\"");
-			String urlParameters = stringParam;
+			String urlParameters = jo.toString();
 			
 			// Send post request
 			con.setDoOutput(true);
@@ -182,9 +184,9 @@ public class SearchController {
 	
 	/**************************************************************************
 	 * 키워드를 query에 넣어주면 report topic 기준으로 검색을 해서 결과를 보내준다.
-	 * @param query
+	 * @param query - report :topic / user :name / project :title 기준으로 검색을 한다.
 	 * @param target => report,user,project 중 하나를 입력
-	 * @return
+	 * @return query가 없거나, target이 잘못 입력되면 status 500을 return 한다.
 	 *************************************************************************/
 	@GET
 	@Path("/elastic_search/{target}/{query}")
@@ -209,10 +211,21 @@ public class SearchController {
 			prop.loadFromXML(fileInput);
 			String elastic_base_url = prop.getProperty("elasticsearch_base");
 			
+			String url = "";
+			if(target.equals("report")){
+				url = elastic_base_url
+						+"/somareport/"+target+"/_search?q=_source.topic="
+						+URLEncoder.encode(query, "utf-8");
+			}else if(target.equals("user")){
+				url = elastic_base_url
+						+"/somareport/"+target+"/_search?q=_source.name="
+						+URLEncoder.encode(query, "utf-8");
+			}else if(target.equals("project")){
+				url = elastic_base_url
+						+"/somareport/"+target+"/_search?q=_source.title="
+						+URLEncoder.encode(query, "utf-8");
+			}
 			
-			String url = elastic_base_url
-							+"/somareport/"+target+"/_search?q=_source.topic="
-							+URLEncoder.encode(query, "utf-8");
 
 			URL obj = new URL(url);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -220,7 +233,6 @@ public class SearchController {
 			// optional default is GET
 			con.setRequestMethod("GET");
 			//add request header
-//			con.setRequestProperty("User-Agent", USER_AGENT);
 
 			int responseCode = con.getResponseCode();
 			System.out.println("\nSending 'GET' request to URL : " + url);

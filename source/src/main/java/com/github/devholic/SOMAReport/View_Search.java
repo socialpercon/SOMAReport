@@ -27,7 +27,7 @@ public class View_Search {
 			jo.put("q", q);
 			JSONArray result = new JSONArray();
 			SearchController s = new SearchController();
-			ArrayList<JsonObject> arr = s.searchReportController(q);
+			ArrayList<JsonObject> arr = s.searchReport_cloudantsearch(q);
 			for (JsonObject o : arr) {
 				JSONObject d = new JSONObject();
 				d.put("id", o.get("project").getAsString());
