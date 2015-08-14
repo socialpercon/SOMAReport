@@ -1,32 +1,31 @@
 package com.github.devholic.SOMAReport;
 
-import static org.junit.Assert.*;
+import javax.ws.rs.core.Response;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.apache.log4j.Logger;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.mvc.mustache.MustacheMvcFeature;
+import org.glassfish.jersey.test.JerseyTestNg;
 import org.junit.Test;
 
-import com.github.devholic.SOMAReport.Controller.ProjectsController;
+public class ProjectControllerTest extends JerseyTestNg.ContainerPerMethodTest {
 
-public class ProjectControllerTest {
+	private final Logger Log = Logger.getLogger(ProjectControllerTest.class);
 
-	ProjectsController pc = new ProjectsController();
-	
+	@Override
+	protected javax.ws.rs.core.Application configure() {
+		return new ResourceConfig()
+				.property(MustacheMvcFeature.TEMPLATE_BASE_PATH, "templates")
+				.register(MustacheMvcFeature.class)
+				.register(MultiPartFeature.class)
+				.packages("com.github.devholic.SOMAReport");
+	}
+
 	@Test
 	public void testGetMyProjects() {
-		String id = "9d898f7d5bfbf361939e1fafd50470e3";
-		JSONArray result = pc.getMyProject(id);
-		for (int i=0; i<result.length(); i++) {
-			JSONObject jo = result.getJSONObject(i);
-			boolean isIn = false;
-			if (jo.getString("mentor").equals(id)) isIn = true;
-			else {
-				JSONArray ar = jo.getJSONArray("mentee");
-				for (int j=0; j<ar.length(); j++) {
-					if (ar.getString(j).equals(id)) isIn = true;
-				}
-			}
-			assertTrue(isIn);
-		}
+		final Response response = target()
+				.path("/project/id/" + TestData.sampleProject).request().get();
+		Log.info(response.readEntity(String.class));
 	}
 }

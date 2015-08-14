@@ -23,12 +23,11 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import com.github.devholic.SOMAReport.Controller.DatabaseController;
-import com.github.devholic.SOMAReport.Utilities.DocumentUtil;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DatabaseControllerTest {
 
-	private final Logger Log = Logger.getLogger(DocumentUtil.class);
+	private final Logger Log = Logger.getLogger(DatabaseControllerTest.class);
 
 	@Test
 	public void Test_Document_CreateDelete() {
