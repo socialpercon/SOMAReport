@@ -84,6 +84,8 @@ public class Report {
 			}
 		} else {
 			return Response.seeOther(new URI("http://localhost:8080/login"))
+					.header("Access-Control-Allow-Origin", "*")
+					.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
 					.build();
 		}
 	}

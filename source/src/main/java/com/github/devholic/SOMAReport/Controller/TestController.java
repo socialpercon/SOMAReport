@@ -46,7 +46,10 @@ public class TestController {
 			e.printStackTrace();
 		}
 		
-		return Response.status(200).type(MediaType.APPLICATION_JSON).build();
+		return Response.status(200).type(MediaType.APPLICATION_JSON)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.build();
 	}
 	
 	@GET
@@ -75,7 +78,10 @@ public class TestController {
 			e.printStackTrace();
 		}
 		
-		return Response.status(200).type(MediaType.APPLICATION_JSON).build();
+		return Response.status(200).type(MediaType.APPLICATION_JSON)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.build();
 	}
 	
 	@GET
@@ -120,7 +126,10 @@ public class TestController {
 			e.printStackTrace();
 		}
 		
-		return Response.status(200).type(MediaType.APPLICATION_JSON).build();
+		return Response.status(200).type(MediaType.APPLICATION_JSON)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.build();
 	}
 	
 	@GET
@@ -176,7 +185,10 @@ public class TestController {
 			e.printStackTrace();
 		}
 		
-		return Response.status(200).type(MediaType.APPLICATION_JSON).build();
+		return Response.status(200).type(MediaType.APPLICATION_JSON)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.build();
 	}
 	
 }

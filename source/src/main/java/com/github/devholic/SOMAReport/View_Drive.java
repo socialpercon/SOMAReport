@@ -37,7 +37,10 @@ public class View_Drive {
 			PrintWriter out = new PrintWriter("0.json");
 			out.println(resp.toString());
 			out.close();
-			return Response.seeOther(new URI("http://localhost:8080")).build();
+			return Response.seeOther(new URI("http://localhost:8080"))
+					.header("Access-Control-Allow-Origin", "*")
+					.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+					.build();
 		} else {
 			GoogleAuthorizationCodeFlow flow = API_GoogleDrive.getFlow();
 			GoogleAuthorizationCodeRequestUrl urlBuilder = flow
@@ -45,7 +48,10 @@ public class View_Drive {
 							API_GoogleDrive.REDIRECT_URI);
 			urlBuilder.set("user_id", "0");
 			String gUrl = urlBuilder.build();
-			return Response.seeOther(new URI(gUrl)).build();
+			return Response.seeOther(new URI(gUrl))
+					.header("Access-Control-Allow-Origin", "*")
+					.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+					.build();
 		}
 	}
 
@@ -82,9 +88,15 @@ public class View_Drive {
 			HttpResponse resp = drive.getRequestFactory()
 					.buildGetRequest(new GenericUrl(file.getDownloadUrl()))
 					.execute();
-			return Response.ok(resp.getContent()).build();
+			return Response.ok(resp.getContent())
+					.header("Access-Control-Allow-Origin", "*")
+					.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+					.build();
 		} else {
-			return Response.noContent().build();
+			return Response.noContent()
+					.header("Access-Control-Allow-Origin", "*")
+					.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+					.build();
 		}
 	}
 }

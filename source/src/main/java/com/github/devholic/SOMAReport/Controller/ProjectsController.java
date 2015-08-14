@@ -155,7 +155,10 @@ public class ProjectsController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("put : 500").build();
+		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("put : 500")
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.build();
 	}
 
 	/************************************************************************
