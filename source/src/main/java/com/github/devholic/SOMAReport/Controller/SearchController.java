@@ -105,7 +105,13 @@ public class SearchController {
 			e.printStackTrace();
 		}
 
-		return Response.status(200).type(MediaType.APPLICATION_JSON).build();
+		// CORS header 추가
+		return Response
+				.status(200)
+				.type(MediaType.APPLICATION_JSON)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods",
+						"GET, POST, DELETE, PUT").build();
 	}
 
 	/**************************************************************************
@@ -187,7 +193,13 @@ public class SearchController {
 			e.printStackTrace();
 		}
 
-		return Response.status(200).type(MediaType.APPLICATION_JSON).build();
+		// CORS header 추가
+		return Response
+				.status(200)
+				.type(MediaType.APPLICATION_JSON)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods",
+						"GET, POST, DELETE, PUT").build();
 	}
 
 	/*************************************************
@@ -272,6 +284,12 @@ public class SearchController {
 			e.printStackTrace();
 		}
 
-		return Response.status(200).type(MediaType.APPLICATION_JSON).build();
+		// CORS header 추가
+		return Response
+				.status(200)
+				.type(MediaType.APPLICATION_JSON)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods",
+						"GET, POST, DELETE, PUT").build();
 	}
 }
