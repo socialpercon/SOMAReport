@@ -28,4 +28,5 @@ public class StringFactoryTest {
 		String reencrypted = StringFactory.encryptPassword(password, salt);
 		assertEquals(encrypted, reencrypted);
 	}
+
 }

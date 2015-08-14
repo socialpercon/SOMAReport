@@ -31,7 +31,6 @@ import org.json.simple.parser.ParseException;
 import com.github.devholic.SOMAReport.Controller.ReportsController;
 import com.github.devholic.SOMAReport.Utilities.DocumentUtil;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
-import com.github.devholic.SOMAReport.Utilities.ReferenceUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -203,14 +202,14 @@ public class View_Report {
 		}
 		details.addProperty("content", content);
 		jo.add("report_details", details);
-		String rid = r.insertReport(jo);
-		if (fileLocation.length() != 0) {
-			if (rid != null) {
-				View_Drive.driveUploadImage("0", rid, new File(fileLocation));
-			} else {
-				// Error
-			}
-		}
+		//String rid = r.insertReport(jo);
+		//if (fileLocation.length() != 0) {
+		//	if (rid != null) {
+		//		View_Drive.driveUploadImage("0", rid, new File(fileLocation));
+		//	} else {
+		//		// Error
+		//	}
+		//}
 		return Response.seeOther(
 				new URI("http://localhost:8080/report/list/" + pid)).build();
 	}
