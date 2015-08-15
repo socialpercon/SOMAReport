@@ -17,6 +17,7 @@ import org.docx4j.model.datastorage.migration.VariablePrepare;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -42,7 +43,7 @@ public class TestDoc {
 		mappings.put("TAG2", "O");
 		mappings.put("TAG3", "");
 		mappings.put("projectName", "SoMa Report");
-		mappings.put("class", "웹");
+		mappings.put("class", "안");
 		mappings.put("section", "6기");
 		documentPart.variableReplace(mappings);
 		wordPackage.save(new File("mentoringfilled.docx"));
@@ -62,7 +63,7 @@ public class TestDoc {
 		contentStream.beginText();
 		contentStream.setFont(font, 12);
 		contentStream.newLineAtOffset(50, 760);
-		contentStream.showText("밯빪반발땊툼바품맔부삿붏웈찴뿞붛첦붖부쌵쎨뱌분쌵쳔얌부않모버윲옆엄엺퓴옆헐였촎몄썭엸억");
+		contentStream.showText("안녕하세요");
 		contentStream.endText();
 		contentStream.close();
 		document.save("pdfbox_test.pdf");
@@ -76,7 +77,7 @@ public class TestDoc {
 				BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		Font font = new Font(base, 12);
 		document.open();
-		document.add(new Paragraph("Helloㅎㅎ World!~~ 한글 테스트", font));
+		document.add(new Paragraph("Hello안녕하세요", font));
 		document.close();
 	}
 }
