@@ -27,7 +27,7 @@ public class Report {
 	// View
 	@GET
 	@Path("/report/list/{id}")
-	public Response View_Project(@Context Request request,
+	public Response View_Report(@Context Request request,
 			@PathParam("id") String id) {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
@@ -38,6 +38,30 @@ public class Report {
 			JSONArray userReport = reports.getReportByProjectId(id);
 			data.put("report", userReport);
 			Log.info(data.toString());
+			return Response
+					.status(200)
+					.entity(new Viewable("/user_report.mustache",
+							MustacheHelper.toMap(data))).build();
+		} else {
+			return Response.status(401).entity(new Viewable("/login.mustache"))
+					.build();
+		}
+	}
+
+	@GET
+	@Path("/report/{id}")
+	public Response View_ReportDetail(@Context Request request,
+			@PathParam("id") String id) {
+		Session session = request.getSession();
+		if (session.getAttribute("user_id") != null) {
+			JSONObject data = new JSONObject();
+			ReportsController reports = new ReportsController();
+			JSONObject detail = reports.getDetailByReportId(id);
+			data.put("detail", detail);
+			String pid = detail.getString("project");
+			data.put("report", reports.getReportByProjectId(pid));
+			ProjectsController project = new ProjectsController();
+			data.put("project", project.getDetailByProjectId(pid));
 			return Response
 					.status(200)
 					.entity(new Viewable("/user_report.mustache",

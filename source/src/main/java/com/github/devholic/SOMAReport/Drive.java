@@ -41,6 +41,27 @@ public class Drive {
 			return Response.noContent().build();
 		}
 	}
+
+	@GET
+	@Path("/drive/user/image")
+	@Produces("image/jpeg")
+	public Response getUserImage(@QueryParam("id") String id) {
+		DriveController drive = new DriveController();
+		File image = drive.getUserImage(id);
+		if (image != null) {
+			try {
+				return Response.status(200).entity(Files.toByteArray(image))
+						.build();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				Log.error(e.getMessage());
+				return Response.noContent().build();
+			}
+		} else {
+			return Response.noContent().build();
+		}
+	}
+	
 	// Google
 
 }
