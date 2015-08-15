@@ -36,8 +36,9 @@ public class SearchController {
 	 *            jo : json 형식으로 doc을 추가한다.
 	 * @param target
 	 *            => report,user,project 중 하나를 입력
-	 * @return JSONObject가 없거나, target이 잘못 입력되면 status 500을 return 한다.
+	 * @return JSONObject가 없거나, target이 잘못 입력되면 status 500을 return 한다. @
 	 *************************************************/
+
 	@POST
 	@Path("/elastic_index/{target}")
 	@Consumes(MediaType.APPLICATION_JSON)
