@@ -33,10 +33,8 @@ public class ElasticSearchUtil {
 	/************************************************
 	 * elasticsearch indexing
 	 * 
-	 * @param jsonobject
-	 *            : 입력할 json
-	 * @param _id
-	 *            : doc의 id
+	 * @param jsonobject : 입력할 json
+	 * @param _id : doc의 id
 	 ***********************************************/
 
 	public void index(Map<String, Object> jsonobject, String _id) {
@@ -51,8 +49,7 @@ public class ElasticSearchUtil {
 	/**********************************************
 	 * elasticsearch searching
 	 * 
-	 * @param _id
-	 *            : 검색할 doc의 id
+	 * @param _id  : 검색할 doc의 id
 	 * @return
 	 *********************************************/
 
@@ -74,8 +71,7 @@ public class ElasticSearchUtil {
 	/**********************************************
 	 * elasticsearch deleting
 	 * 
-	 * @param _id
-	 *            : 삭제할 doc 의 id
+	 * @param _id  : 삭제할 doc 의 id
 	 *********************************************/
 	public void delete(String _id) {
 

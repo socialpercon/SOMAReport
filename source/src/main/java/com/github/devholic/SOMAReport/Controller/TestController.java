@@ -105,8 +105,9 @@ public class TestController {
 			// con.setRequestProperty("User-Agent", USER_AGENT);
 
 			int responseCode = con.getResponseCode();
-			System.out.println("\nSending 'GET' request to URL : " + url);
-			System.out.println("Response Code : " + responseCode);
+
+			logger.debug("\nSending 'GET' request to URL : " + url);
+			logger.debug("Response Code : " + responseCode);
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					con.getInputStream()));
@@ -161,8 +162,8 @@ public class TestController {
 			wr.flush();
 			wr.close();
 
-			System.out.println("\nSending 'POST' request to URL : " + url);
-			System.out.println("Post parameters : " + urlParameters);
+			logger.debug("\nSending 'POST' request to URL : " + url);
+			logger.debug("Post parameters : " + urlParameters);
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					con.getInputStream()));
