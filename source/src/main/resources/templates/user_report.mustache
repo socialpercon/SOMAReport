@@ -23,6 +23,13 @@
           {{#project}}
             <li><a href="/project"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{title}}</a></li>
           {{/project}}
+            <li style="display:table">
+              <div class="form-group" style="height:60px;padding-left:20px;vertical-align:middle;display:table-cell">
+                <div>
+                  <input style="font-size: 18px;color:#ffffff" type="text" name="place" placeholder="검색" class="form-control" />
+                </div>
+              </div>
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right" style="margin-right:10px">
           <li><a href="/logout">로그아웃</a></li>
@@ -39,7 +46,7 @@
               <table><tr>
                 {{#attendee}}
                 <td>
-                  <div class="circular-img mentee" style='background-image: url(/drive/image/{{id}});background-size="36px 36px"'><img src="/drive/image/{{id}}" alt="" style="width:36px;height:36px" /></div>
+                  <div class="circular-img mentee" style='background-image: url(/drive/user/image?id={{id}});background-size="36px 36px"'><img src="/drive/user/image?id={{id}}" alt="" style="width:36px;height:36px" /></div>
                 </td>
                 {{/attendee}}
               </tr></table>
@@ -50,6 +57,67 @@
         </div>
       <div style="width:70%;height:100%;background-color:#F5F5F5;float:right;overflow:auto;padding-top:60px">
           {{#detail}}
+          <div style="background-color:#fff;margin:10px" class="shadow-z-1 soma-list-card">
+            {{#report_info}}
+            <h2 style="margin-top:0.2em;margin-bottom:0.2em">#{{date}}</h2>
+            {{/report_info}}
+            <h3 style="margin-top:1em">참석자</h3>
+            <table>
+              <tr>
+              {{#attendee}}
+                <td>
+                <div class="circular-img mentee" style='background-image: url(/drive/user/image?id={{id}});background-size="36px 36px"'><img src="/drive/user/image?id={{id}}" alt="" style="width:36px;height:36px" /></div>
+                </td>
+              {{/attendee}}
+              </tr>
+            </table>
+            <h3 style="margin-top:1em">불참석자</h3>
+            <table>
+              <tr>
+              {{#absentee}}
+                <td>
+                  <div class="circular-img mentee" style='background-image: url(/drive/user/image?id={{id}});background-size="36px 36px"'><img src="/drive/user/image?id={{id}}" alt="" style="width:36px;height:36px" /></div>
+                </td>
+                <td>
+                  <div class="mentor-divider"></div>
+                </td>
+                <td>
+                  <span style="height:36px;line-height:36px;text-align:center;" class="mentee">{{id}} : {{reason}}</span>
+                </td>
+              {{/absentee}}
+              </tr>
+            </table>
+            {{#report_info}}
+              <h3 style="margin-top:1em">회차</h3>
+              <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{mentoring_num}}회차</h5>
+              <h3 style="margin-top:1em">장소</h3>
+              <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{place}}</h5>
+              <h3 style="margin-top:1em">멘토링 시간</h3>
+              <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{start_time}} ~ {{end_time}} (제외시간 {{except_time}})</h5>
+            {{/report_info}}
+            {{#report_details}}
+              <h3 style="margin-top:1em">주제</h3>
+              <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{topic}}</h5>
+              <h3 style="margin-top:1em">목표</h3>
+              <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{goal}}</h5>
+              <h3 style="margin-top:1em">추진내용</h3>
+              <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{issue}}</h5>
+              <h3 style="margin-top:1em">해결방안</h3>
+              <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{solution}}</h5>
+              <h3 style="margin-top:1em">향후계획</h3>
+              <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{plan}}</h5>
+              {{#opinion-public}}
+                <h3 style="margin-top:1em">멘토의견</h3>
+                <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{opinion}}</h5>
+              {{/opinion-public}}
+              {{#etc}}
+                <h3 style="margin-top:1em">기타</h3>
+                <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{.}}</h5>
+              {{/etc}}
+              <h3 style="margin-top:1em">내용</h3>
+              <h5 style="margin-top:0.2em;margin-bottom:0.3em">{{content}}</h5>
+            {{/report_details}}
+          </div>
           {{/detail}}
           {{^detail}}
           <div style="height:100%;margin:0 auto;display:table;">
@@ -60,7 +128,7 @@
             </div>
           </div>
           {{/detail}}
-          <a href="http://localhost:8080/report/write/{{pid}}" class="btn btn-fab btn-raised btn-primary" style="position:fixed;right:56px;bottom:56px;"><i class="mdi-image-edit"></i><div class="ripple-wrapper"></div></a>
+          <a href="/report/write/{{pid}}" class="btn btn-fab btn-raised btn-primary" style="position:fixed;right:56px;bottom:56px;"><i class="mdi-image-edit"></i><div class="ripple-wrapper"></div></a>
       </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>

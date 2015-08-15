@@ -118,11 +118,8 @@ public class SearchController {
 	/**************************************************************************
 	 * 키워드를 query에 넣어주면 report topic 기준으로 검색을 해서 결과를 보내준다.
 	 * 
-	 * @param query
-	 *            - report :topic / user :name / project :title 기준으로 검색을 한다.-
-	 *            전체단어검색
-	 * @param target
-	 *            => report,user,project 중 하나를 입력
+	 * @param query - report :topic / user :name / project :title 기준으로 검색을 한다.- 전체단어검색
+	 * @param target => report,user,project 중 하나를 입력
 	 * @return query가 없거나, target이 잘못 입력되면 status 500을 return 한다.
 	 *************************************************************************/
 	@GET
@@ -208,10 +205,8 @@ public class SearchController {
 	 * 
 	 * ex. localhost:8080/elastic_update/report/주제입니다만
 	 * 
-	 * @param JSONObject
-	 *            jo : 수정할 doc의 json을 넣어준다.
-	 * @param target
-	 *            => report,user,project 중 하나를 입력
+	 * @param JSONObject jo : 수정할 doc의 json을 넣어준다.
+	 * @param target => report,user,project 중 하나를 입력
 	 * @return JSONObject가 없거나, target이 잘못 입력되면 status 500을 return 한다.
 	 *************************************************/
 	@POST

@@ -1,0 +1,54 @@
+{
+  "_id": "702e8f87765e4553a4d315ec6f3da8d7",
+  "_rev": "5-633ccda3525d87778c8346b2a25cddef",
+  "type": "report",
+  "project": "36be054d83f701154adfdd0cf174e3cc",
+  "report_info": {
+    "mentoring_num": 1,
+    "date": "20150720",
+    "place": "aram7-7",
+    "start_time": [
+      2015,
+      7,
+      20,
+      18,
+      0
+    ],
+    "end_time": [
+      2015,
+      7,
+      20,
+      24,
+      0
+    ],
+    "whole_time": 6,
+    "except_time": 2,
+    "total_time": 4
+  },
+  "attendee": [
+    {
+      "id":"a35fa2f4fd6d544d11fae6acf7ba6e01"
+    },
+    {
+      "id":"3f4ce9856efb3e2f5d86eeb4d5d16b01"
+    }
+  ],
+  "absentee": [
+    {
+      "id": "4c44d639b77c290955371694d3310194",
+      "reason": "잤어요"
+    }
+  ],
+  "report_details": {
+    "topic": "주제입니다만",
+    "goal": "목푭니다만",
+    "issue": "추진내용입니다만",
+    "solution": "해결방안인데요",
+    "plan": "계획입니다만",
+    "opinion": "의견입니다만"
+  },
+  "report_attachments": {
+    "photo": "linklinklink",
+    "reference": "refrefref"
+  }
+}

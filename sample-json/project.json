@@ -1,0 +1,19 @@
+{
+  "_id": "36be054d83f701154adfdd0cf16d9fef",
+  "_rev": "3-63a9d60c03cce6c21aa9cae96107a902",
+  "type": "project",
+  "project_type": "regular",
+  "stage": [
+    6,
+    1,
+    2
+  ],
+  "field": "web",
+  "title": "SOMAProject1-2",
+  "mentor": "3f4ce9856efb3e2f5d86eeb4d5abb8c6",
+  "mentee": [
+    "3f4ce9856efb3e2f5d86eeb4d5c10437",
+    "36be054d83f701154adfdd0cf1019d20",
+    "3f4ce9856efb3e2f5d86eeb4d5cfd236"
+  ]
+}

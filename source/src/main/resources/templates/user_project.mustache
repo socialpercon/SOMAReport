@@ -33,7 +33,7 @@
               <table><tr>
                 {{#mentor}}
                 <td>
-                  <div class="circular-img mentee" style='background-image: url(/drive/image/{{.}});background-size="36px 36px"'><img src="/drive/image/{{.}}" alt="" style="width:36px;height:36px" /></div>
+                  <div class="circular-img mentee" style='background-image: url(/drive/user/image?id={{.}});background-size="36px 36px"'><img src="/drive/user/image?id={{.}}" alt="" style="width:36px;height:36px" /></div>
                 </td>
                 {{/mentor}}
                 <td>
@@ -41,7 +41,7 @@
                 </td>
                 {{#mentee}}
                 <td>
-                  <div class="circular-img mentee" style='background-image: url(/drive/image/{{.}});background-size="36px 36px"'><img src="/drive/image/{{.}}" alt="" style="width:36px;height:36px" /></div>
+                  <div class="circular-img mentee" style='background-image: url(/drive/user/image?id={{.}});background-size="36px 36px"'><img src="/drive/user/image?id={{.}}" alt="" style="width:36px;height:36px" /></div>
                 </td>
                 {{/mentee}}
               </tr></table>
@@ -51,7 +51,13 @@
         </div>
       </div>
       <div style="width:70%;height:100%;background-color:#F5F5F5;float:right;overflow:auto;padding-top:60px">
-
+          <div style="height:100%;margin:0 auto;display:table;">
+            <div style="display:table-cell;vertical-align:middle;">
+              <center>
+                <h1><p>확인할 프로젝트를 선택해주세요!</p></h1>
+              </center>
+            </div>
+          </div>
       </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>

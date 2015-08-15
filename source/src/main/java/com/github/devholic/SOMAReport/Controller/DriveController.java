@@ -104,6 +104,15 @@ public class DriveController {
 		return null;
 	}
 
+	public java.io.File getUserImage(String id) {
+		java.io.File f = new java.io.File("cache/" + id);
+		if (f.isFile()) {
+			return f;
+		} else {
+			return createCache(id, "0");
+		}
+	}
+
 	public boolean deleteImage(String id) {
 		// delete cache
 		java.io.File f = new java.io.File("cache/" + id);
