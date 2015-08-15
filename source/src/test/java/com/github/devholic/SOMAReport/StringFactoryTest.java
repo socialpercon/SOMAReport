@@ -21,11 +21,13 @@ public class StringFactoryTest {
 	}
 
 	@Test
-	public void testEncryptPassword() {
-		String password = "password";
+	public void Password_Encrypt_Pass() {
 		String salt = StringFactory.createSalt();
-		String encrypted = StringFactory.encryptPassword(password, salt);
-		String reencrypted = StringFactory.encryptPassword(password, salt);
+		String encrypted = StringFactory.encryptPassword(
+				TestData.correctPassword, salt);
+		assertNotEquals(TestData.correctPassword, encrypted);
+		String reencrypted = StringFactory.encryptPassword(
+				TestData.correctPassword, salt);
 		assertEquals(encrypted, reencrypted);
 	}
 

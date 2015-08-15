@@ -22,7 +22,6 @@ import org.junit.Test;
 
 import com.github.devholic.SOMAReport.Controller.DatabaseController;
 import com.github.devholic.SOMAReport.Controller.RegisterController;
-import com.github.devholic.SOMAReport.Controller.UserController;
 
 public class RegisterControllerTest {
 
