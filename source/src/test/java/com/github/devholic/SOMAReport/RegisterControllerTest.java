@@ -28,14 +28,15 @@ public class RegisterControllerTest {
 
 	static RegisterController rc;
 	static DatabaseController dc;
-	
-	private final static Logger Log = Logger.getLogger(UserController.class);
-	
-	
+
+	private final static Logger Log = Logger
+			.getLogger(RegisterControllerTest.class);
+
 	@BeforeClass
 	public static void testRegisterController() {
 		try {
-			rc = new RegisterController(new FileInputStream("register_example.xlsx"));
+			rc = new RegisterController(new FileInputStream(
+					"register_example.xlsx"));
 			dc = new DatabaseController();
 			assertThat(rc, not(nullValue()));
 		} catch (FileNotFoundException e) {
@@ -48,14 +49,17 @@ public class RegisterControllerTest {
 	public void testRegisterMentor() {
 		JSONObject registered = rc.registerMentor();
 		JSONArray a = registered.getJSONArray("inserted");
-		for(int i=0; i<a.length(); i++) {
+		for (int i = 0; i < a.length(); i++) {
 			Log.info(a.get(i).toString());
 			String id = a.getJSONObject(i).getString("_id").toString();
-			
-			BufferedReader is = new BufferedReader(new InputStreamReader(dc.getDoc(id)));
+
+			BufferedReader is = new BufferedReader(new InputStreamReader(
+					dc.getDoc(id)));
 			String str, doc = "";
 			try {
-				while ((str = is.readLine())!= null) {	doc += str;	}
+				while ((str = is.readLine()) != null) {
+					doc += str;
+				}
 			} catch (IOException e) {
 				Log.error(e.getLocalizedMessage());
 				fail("fail..");
@@ -69,19 +73,23 @@ public class RegisterControllerTest {
 	@Test
 	public void testRegisterMentee() {
 		JSONArray registered = rc.registerMentee();
-		for (int i=0; i<registered.length(); i++)  {
+		for (int i = 0; i < registered.length(); i++) {
 			Log.info(registered.get(i).toString());
 			String id = registered.getJSONObject(i).getString("_id").toString();
-			BufferedReader is = new BufferedReader(new InputStreamReader(dc.getDoc(id)));
+			BufferedReader is = new BufferedReader(new InputStreamReader(
+					dc.getDoc(id)));
 			String str, doc = "";
 			try {
-				while ((str = is.readLine())!= null) {	doc += str;	}
+				while ((str = is.readLine()) != null) {
+					doc += str;
+				}
 			} catch (IOException e) {
 				Log.error(e.getLocalizedMessage());
 				fail("fail..");
 			}
 			JSONObject jo = new JSONObject(doc);
-			assertEquals(registered.getJSONObject(i).get("name").toString(), jo.getString("name"));
+			assertEquals(registered.getJSONObject(i).get("name").toString(),
+					jo.getString("name"));
 			assertTrue(dc.deleteDoc(jo.getString("_id"), jo.getString("_rev")));
 		}
 	}
@@ -93,23 +101,27 @@ public class RegisterControllerTest {
 		Iterator keys = registered.keys();
 		while (keys.hasNext()) {
 			String key = (String) keys.next();
-			Log.info("projects in sheet "+ key);
+			Log.info("projects in sheet " + key);
 			JSONArray arr = registered.getJSONArray(key);
-			for (int i=0; i<arr.length(); i++) {
-				Log.info(arr.get(i).toString()); 
+			for (int i = 0; i < arr.length(); i++) {
+				Log.info(arr.get(i).toString());
 				String id = arr.getJSONObject(i).getString("_id").toString();
-				BufferedReader is = new BufferedReader(new InputStreamReader(dc.getDoc(id)));
+				BufferedReader is = new BufferedReader(new InputStreamReader(
+						dc.getDoc(id)));
 				String str, doc = "";
 				try {
-					while ((str = is.readLine())!= null) {	doc += str;	}
+					while ((str = is.readLine()) != null) {
+						doc += str;
+					}
 				} catch (IOException e) {
 					Log.error(e.getLocalizedMessage());
 					fail("fail..");
 				}
 				JSONObject jo = new JSONObject(doc);
 				assertEquals(arr.getJSONObject(i).toString(), jo.toString());
-				assertTrue(dc.deleteDoc(jo.getString("_id"), jo.getString("_rev")));
-				
+				assertTrue(dc.deleteDoc(jo.getString("_id"),
+						jo.getString("_rev")));
+
 			}
 		}
 	}

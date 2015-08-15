@@ -90,36 +90,36 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 String urlst = "http://10.0.2.2:8080/login";
 
                 URL url = new URL(urlst);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                String body = "email="+params[0]+"&password="+params[1];
-                Log.d(TAG, body);
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("Accept", "text/html");
-                connection.setRequestProperty("Content-Type", "text/html;charset=UTF-8");
-                connection.setRequestProperty("User-Agent", "Android Application");
-                connection.setDoOutput(true);
-                connection.setDoInput(true);
-                OutputStream outputStream = new BufferedOutputStream(connection.getOutputStream());
-                outputStream.write(body.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
-                connection.connect();
-
-                int statusCode = connection.getResponseCode();
-                Log.d(TAG, "RESPONSECODE: "+Integer.toString(statusCode));
-                StringBuilder responseStringBuilder = new StringBuilder();
-                if (statusCode == HttpURLConnection.HTTP_OK){
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    for (;;){
-                        String stringLine = bufferedReader.readLine();
-                        if (stringLine == null ) break;
-                        responseStringBuilder.append(stringLine + '\n');
-                    }
-                    bufferedReader.close();
-                    Log.d(TAG, responseStringBuilder.toString());
-                }
-
-                connection.disconnect();
+//                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//                String body = "email="+params[0]+"&password="+params[1];
+//                Log.d(TAG, body);
+//                connection.setRequestMethod("POST");
+//                connection.setRequestProperty("Accept", "text/html");
+//                connection.setRequestProperty("Content-Type", "text/html;charset=UTF-8");
+//                connection.setRequestProperty("User-Agent", "Android Application");
+//                connection.setDoOutput(true);
+//                connection.setDoInput(true);
+//                OutputStream outputStream = new BufferedOutputStream(connection.getOutputStream());
+//                outputStream.write(body.getBytes("UTF-8"));
+//                outputStream.flush();
+//                outputStream.close();
+//                connection.connect();
+//
+//                int statusCode = connection.getResponseCode();
+//                Log.d(TAG, "RESPONSECODE: "+Integer.toString(statusCode));
+//                StringBuilder responseStringBuilder = new StringBuilder();
+//                if (statusCode == HttpURLConnection.HTTP_OK){
+//                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//                    for (;;){
+//                        String stringLine = bufferedReader.readLine();
+//                        if (stringLine == null ) break;
+//                        responseStringBuilder.append(stringLine + '\n');
+//                    }
+//                    bufferedReader.close();
+//                    Log.d(TAG, responseStringBuilder.toString());
+//                }
+//
+//                connection.disconnect();
 
 //                HttpClient httpClient= new DefaultHttpClient();
 //                HttpPost httpPost = new HttpPost("http://10.0.2.2:8080/login");

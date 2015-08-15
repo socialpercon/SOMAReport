@@ -136,12 +136,15 @@ public class ReportList extends AppCompatActivity {
                 holder.title.setText(report.get("reportTitle").toString());
                 holder.topic.setText(report.get("reportTopic").toString());
 
-                ImageLoader imageLoader;
+//                ImageLoaderOld imageLoader;
+                ProfileImageLoader profileImageLoader;
                 JSONArray attendee = new JSONArray(report.get("attendee").toString());
                 for (int i=0; i<attendee.length(); i++) {
                     CircleImageView circleImageView = new CircleImageView(holder.attendee.getContext());
-                    imageLoader = new ImageLoader(circleImageView);
-                    imageLoader.execute(attendee.get(i).toString());
+//                    imageLoader = new ImageLoaderOld(circleImageView);
+//                    imageLoader.execute(attendee.get(i).toString());
+                    profileImageLoader = new ProfileImageLoader(attendee.getString(i), circleImageView);
+                    profileImageLoader.getProfile();
                     holder.attendee.addView(circleImageView);
                 }
             } catch (JSONException e) {

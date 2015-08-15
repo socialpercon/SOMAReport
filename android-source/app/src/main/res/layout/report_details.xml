@@ -184,6 +184,8 @@
                     android:textSize="@dimen/textTitle"
                     />
 
+
+
                 <TextView
                     android:id="@+id/report_details_solution"
                     android:layout_width="wrap_content"
@@ -236,16 +238,18 @@
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/textTitle"/>
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/report_details_photo"
                     android:layout_width="fill_parent"
-                    android:layout_height="200dp"
-                    android:background="#FFFFFF"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="@dimen/textTitle"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:contentDescription="" />
+                    android:layout_height="240dp"
+                    android:layout_margin="30dp"
+                    android:background="@color/background"
+                    android:elevation="2dp"
+                    android:scaleType="fitCenter"
+                    style="?android:attr/borderlessButtonStyle"
+                    />
+
+
             </LinearLayout>
 
         </ScrollView>

@@ -152,14 +152,18 @@ public class ProjectList extends AppCompatActivity {
                 holder.stage.setText(project.get("stage").toString());
                 holder.title.setText(project.get("title").toString());
 
-                ImageLoader imageLoader = new ImageLoader(holder.mentor);
-                imageLoader.execute(project.get("mentor").toString());
+                ProfileImageLoader profileImageLoader = new ProfileImageLoader(project.get("mentor").toString(), holder.mentor);
+                profileImageLoader.getProfile();
+//                ImageLoaderOld imageLoader = new ImageLoaderOld(holder.mentor);
+//                imageLoader.execute(project.get("mentor").toString());
 
                 JSONArray mentee = new JSONArray(project.get("mentee").toString());
                 for (int i=0; i<mentee.length(); i++) {
                     CircleImageView menteeImage = new CircleImageView(holder.mentee.getContext());
-                    imageLoader = new ImageLoader(menteeImage);
-                    imageLoader.execute(mentee.get(i).toString());
+                    profileImageLoader = new ProfileImageLoader(mentee.get(i).toString(), menteeImage);
+                    profileImageLoader.getProfile();
+//                    imageLoader = new ImageLoaderOld(menteeImage);
+//                    imageLoader.execute(mentee.get(i).toString());
                     holder.mentee.addView(menteeImage);
                 }
             } catch (JSONException e) {

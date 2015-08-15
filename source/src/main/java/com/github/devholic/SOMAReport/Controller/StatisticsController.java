@@ -38,27 +38,42 @@ public class StatisticsController {
 			e.printStackTrace();
 		}
 		
-		return Response.status(200).type(MediaType.APPLICATION_JSON).entity(jo1)
+		return Response.status(200).type(MediaType.APPLICATION_JSON)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.entity(jo1)
 				.build();
 	}
 	
 	@PUT
 	public Response updateStatistics(){
 		try{
-			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("put : 200").build();
+			return Response.status(200).type(MediaType.APPLICATION_JSON)
+					.header("Access-Control-Allow-Origin", "*")
+					.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+					.entity("put : 200").build();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("put : 500").build();
+		return Response.status(500).type(MediaType.APPLICATION_JSON)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.entity("put : 500").build();
 	}
 	
 	@DELETE
 	public Response deleteStatistics(){
 		try{
-			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("delete : 200").build();
+			return Response.status(200).type(MediaType.APPLICATION_JSON)
+					.header("Access-Control-Allow-Origin", "*")
+					.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+					.entity("delete : 200").build();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("delete : 500").build();
+		return Response.status(500).type(MediaType.APPLICATION_JSON)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.entity("delete : 500").build();
 	}
 }
