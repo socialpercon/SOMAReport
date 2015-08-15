@@ -9,28 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -80,6 +61,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 loginTask.execute(email, pwd);
                 break;
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_right);
     }
 
     private class LoginTask extends AsyncTask<String, Void, Boolean> {
@@ -157,6 +144,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 id = "4c44d639b77c290955371694d3310194";
                 intent.putExtra("userId",id);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_right, R.anim.slide_left);
             }
             else {
                // Log.d(TAG, "Log in FAIL");

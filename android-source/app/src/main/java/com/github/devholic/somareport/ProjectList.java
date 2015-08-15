@@ -140,6 +140,7 @@ public class ProjectList extends AppCompatActivity {
                     Log.d(TAG, "projectdata: " + data.toString());
                     intent.putExtra("projectdata", data.toString());
                     startActivity(intent);
+                    overridePendingTransition(R.anim.slide_right, R.anim.slide_left);
                 }
             });
             return new ItemViewHolder(itemView);
@@ -152,16 +153,16 @@ public class ProjectList extends AppCompatActivity {
                 holder.stage.setText(project.get("stage").toString());
                 holder.title.setText(project.get("title").toString());
 
-                ProfileImageLoader profileImageLoader = new ProfileImageLoader(project.get("mentor").toString(), holder.mentor);
-                profileImageLoader.getProfile();
+//                ProfileImageLoader profileImageLoader = new ProfileImageLoader(project.get("mentor").toString(), holder.mentor);
+//                profileImageLoader.getProfile();
 //                ImageLoaderOld imageLoader = new ImageLoaderOld(holder.mentor);
 //                imageLoader.execute(project.get("mentor").toString());
 
                 JSONArray mentee = new JSONArray(project.get("mentee").toString());
                 for (int i=0; i<mentee.length(); i++) {
                     CircleImageView menteeImage = new CircleImageView(holder.mentee.getContext());
-                    profileImageLoader = new ProfileImageLoader(mentee.get(i).toString(), menteeImage);
-                    profileImageLoader.getProfile();
+//                    profileImageLoader = new ProfileImageLoader(mentee.get(i).toString(), menteeImage);
+//                    profileImageLoader.getProfile();
 //                    imageLoader = new ImageLoaderOld(menteeImage);
 //                    imageLoader.execute(mentee.get(i).toString());
                     holder.mentee.addView(menteeImage);
@@ -189,5 +190,11 @@ public class ProjectList extends AppCompatActivity {
                 mentee = (LinearLayout) v.findViewById(R.id.project_card_mentee);
             }
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_right);
     }
 }

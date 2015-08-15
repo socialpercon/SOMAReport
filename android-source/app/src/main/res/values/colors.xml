@@ -3,7 +3,7 @@
     <color name="black">#000</color>
 
     <color name="background">#FFFFFFFF</color>
-    <color name="backgroundLight">#deeeeeee</color>
+    <color name="backgroundLight">#ffdddddd</color>
 
     <color name="colorPrimary">#616161</color>
     <color name="colorPrimaryDark">#212121</color>
