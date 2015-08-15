@@ -35,7 +35,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-@Path("/report")
+@Path("/reportv")
 public class View_Report {
 
 	@GET

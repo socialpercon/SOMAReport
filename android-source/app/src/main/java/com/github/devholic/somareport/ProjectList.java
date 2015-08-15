@@ -30,6 +30,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProjectList extends AppCompatActivity {
 
     final String TAG = "Activity_ProjectList";
+    String cookie;
+
     // Toolbar
     @Bind(R.id.home_toolbar)
     Toolbar toolbar;
@@ -64,6 +66,7 @@ public class ProjectList extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         String id = getIntent().getStringExtra("userId");
+        cookie = getIntent().getStringExtra("cookie");
          /*
         * /project/list에서 프로젝트 정보를 JSONArray로 받아온다.
         * [{project title, stage, id, mentor, mentee[]}]

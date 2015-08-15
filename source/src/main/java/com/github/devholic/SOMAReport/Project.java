@@ -1,14 +1,11 @@
 package com.github.devholic.SOMAReport;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.Request;
 import org.glassfish.grizzly.http.server.Session;
 import org.glassfish.jersey.server.mvc.Viewable;
@@ -18,27 +15,31 @@ import org.json.JSONObject;
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 
-@Path("/project")
-public class View_Project {
+@Path("/")
+public class Project {
 
+	private final static Logger Log = Logger.getLogger(Project.class);
+
+	// API
+
+	// View
 	@GET
-	@Path("/list")
-	@Produces("text/html")
-	public Response projectList(@Context Request request)
-			throws URISyntaxException {
+	@Path("/project")
+	public Response View_Project(@Context Request request) {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
-			ProjectsController p = new ProjectsController();
-			JSONArray ja = new JSONArray(p.getMyProject(
-					session.getAttribute("user_id").toString()).toString());
-			JSONObject jo = new JSONObject();
-			jo.put("projectList", ja);
+			ProjectsController project = new ProjectsController();
+			JSONArray userProject = project.getMyProject(session.getAttribute(
+					"user_id").toString());
+			JSONObject data = new JSONObject();
+			data.put("project", userProject);
+			Log.info(data.toString());
 			return Response
 					.status(200)
-					.entity(new Viewable("/projectlist.mustache",
-							MustacheHelper.toMap(jo))).build();
+					.entity(new Viewable("/user_project.mustache", MustacheHelper
+							.toMap(data))).build();
 		} else {
-			return Response.seeOther(new URI("http://localhost:8080/login"))
+			return Response.status(401).entity(new Viewable("/login.mustache"))
 					.build();
 		}
 	}

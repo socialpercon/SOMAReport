@@ -9,9 +9,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,6 +35,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     final String TAG = "Activity_Login";
     String id="";
+    String cookie;
 
     @Bind(R.id.loginBtn)
     Button loginBtn;
@@ -55,7 +70,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                 String email = account.getText().toString();
                 String pwd = password.getText().toString();
-                Log.d(TAG, "login btn clicked");
+                Log.d(TAG, "email: " + email + " password: " + pwd + " login btn clicked");
 
                 LoginTask loginTask = new LoginTask();
                 loginTask.execute(email, pwd);
@@ -74,16 +89,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
         protected Boolean doInBackground(String... params) {
             try {
-                String urlst = "http://10.0.2.2:8080/login";
-
-                URL url = new URL(urlst);
+                String urlst = "http://10.0.2.2:8080/api/login";
+//
+//                URL url = new URL(urlst);
 //                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 //                String body = "email="+params[0]+"&password="+params[1];
 //                Log.d(TAG, body);
 //                connection.setRequestMethod("POST");
-//                connection.setRequestProperty("Accept", "text/html");
-//                connection.setRequestProperty("Content-Type", "text/html;charset=UTF-8");
-//                connection.setRequestProperty("User-Agent", "Android Application");
 //                connection.setDoOutput(true);
 //                connection.setDoInput(true);
 //                OutputStream outputStream = new BufferedOutputStream(connection.getOutputStream());
@@ -108,16 +120,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 //
 //                connection.disconnect();
 
-//                HttpClient httpClient= new DefaultHttpClient();
-//                HttpPost httpPost = new HttpPost("http://10.0.2.2:8080/login");
-//                List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
-//                nameValuePair.add(new BasicNameValuePair("email", params[0]));
-//                nameValuePair.add(new BasicNameValuePair("password", params[1]));
-//
-//                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
-//
-//                HttpResponse httpResponse = httpClient.execute(httpPost);
-//                Log.d(TAG, httpResponse.toString());
+                HttpClient httpClient= new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost("http://10.0.3.2:8080/api/login");
+                List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
+                nameValuePair.add(new BasicNameValuePair("email", params[0]));
+                nameValuePair.add(new BasicNameValuePair("password", params[1]));
+                Log.i(TAG, nameValuePair.toString());
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
+
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                Header[] headers = httpResponse.getAllHeaders();
+                for(Header h : headers) {
+                    System.out.println("Key : " + h.getName()
+                            + " ,Value : " + h.getValue());
+                    if (h.getName().equals("Set-Cookie"))
+                        cookie = h.getValue();
+                }
+
                 return true;
             }
             catch (MalformedURLException e) {
@@ -143,6 +162,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Intent intent = new Intent(Login.this, ProjectList.class);
                 id = "4c44d639b77c290955371694d3310194";
                 intent.putExtra("userId",id);
+                intent.putExtra("cookie", cookie);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_right, R.anim.slide_left);
             }
