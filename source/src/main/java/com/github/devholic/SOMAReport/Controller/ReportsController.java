@@ -2,12 +2,7 @@ package com.github.devholic.SOMAReport.Controller;
 
 import java.io.InputStream;
 
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -17,12 +12,11 @@ import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
-@Path("/reports")
 public class ReportsController {
 
-	private final Logger logger = Logger.getLogger(ReportsController.class);
+	private final Logger Log = Logger.getLogger(ReportsController.class);
 
-	DatabaseController dbCtrl = new DatabaseController();
+	DatabaseController db = new DatabaseController();
 
 	/**************************************************************************
 	 * 프로젝트 아이디로 레포트 가져오기
@@ -32,15 +26,27 @@ public class ReportsController {
 	 *************************************************************************/
 	public JSONArray getReportByProjectId(String projectId) {
 		JSONArray list = new JSONArray();
-
 		try {
-			InputStream is = dbCtrl.getByView("_design/report", "all_by_project", 
-					new Object[] { projectId + " ", " " }, new Object[] { projectId, " " }, true, true);
-			JSONArray a = JSONFactory.getData(JSONFactory.inputStreamToJson(is));
-			for (int i = 0; i < a.length(); i++)
-				list.put(a.getJSONObject(i).get("doc"));
+			InputStream is = db.getByView("_design/report", "all_by_project",
+					new Object[] { projectId + " ", " " }, new Object[] {
+							projectId, " " }, true, true);
+			JSONArray a = JSONFactory
+					.getData(JSONFactory.inputStreamToJson(is));
+			for (int i = 0; i < a.length(); i++) {
+				System.out.println(a.getJSONObject(i));
+				JSONObject doc = a.getJSONObject(i).getJSONObject("doc");
+				JSONObject reportInfo = new JSONObject();
+				reportInfo.put("_id", doc.getString("_id"));
+				reportInfo.put("date", doc.getJSONObject("report_info")
+						.getString("date"));
+				reportInfo.put("topic", doc.getJSONObject("report_details")
+						.getString("topic"));
+				reportInfo.put("attendee", doc.getJSONArray("attendee"));
+				reportInfo.put("absentee", doc.getJSONArray("absentee"));
+				list.put(reportInfo);
+			}
 		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
+			Log.error(e.getLocalizedMessage());
 		}
 		return list;
 	}
@@ -55,10 +61,10 @@ public class ReportsController {
 		JSONObject detail = new JSONObject();
 
 		try {
-			InputStream is = dbCtrl.getDoc(reportId);
+			InputStream is = db.getDoc(reportId);
 			detail = JSONFactory.inputStreamToJson(is);
 		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
+			Log.error(e.getLocalizedMessage());
 		}
 		return detail;
 	}
@@ -69,16 +75,14 @@ public class ReportsController {
 	 * @param reportId
 	 * @return
 	 **************************************************************************/
-	@GET
-	@Path("/{reportId}")
-	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public JSONObject getReportDetailByReportId(@PathParam("reportId") String reportId) {
+	public JSONObject getReportDetailByReportId(
+			@PathParam("reportId") String reportId) {
 		JSONObject detail = new JSONObject();
 		try {
-			InputStream is = dbCtrl.getDoc(reportId);
+			InputStream is = db.getDoc(reportId);
 			detail = JSONFactory.inputStreamToJson(is);
 		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
+			Log.error(e.getLocalizedMessage());
 		}
 		return detail;
 
@@ -89,18 +93,18 @@ public class ReportsController {
 	 * 
 	 * @return List<Reports>
 	 *************************************************************************/
-	@GET
-	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public JSONArray getReportList() {
 		JSONArray reportList = new JSONArray();
 		try {
-			InputStream is = dbCtrl.getByView("_design/report", "all_by_project", true, true);
-			JSONArray jo = JSONFactory.getData(JSONFactory.inputStreamToJson(is));
+			InputStream is = db.getByView("_design/report", "all_by_project",
+					true, true);
+			JSONArray jo = JSONFactory.getData(JSONFactory
+					.inputStreamToJson(is));
 			for (int i = 0; i < jo.length(); i++) {
 				reportList.put(jo.getJSONObject(i).get("doc"));
 			}
 		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
+			Log.error(e.getLocalizedMessage());
 		}
 
 		return reportList;
@@ -115,21 +119,22 @@ public class ReportsController {
 	public String insertReport(JSONObject document) {
 		String id = null;
 		try {
-			id = dbCtrl.createDoc(document).get("_id").toString();
+			id = db.createDoc(document).get("_id").toString();
 		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
+			Log.error(e.getLocalizedMessage());
 		}
 		return id;
 	}
 
-	@PUT
 	public Response updateReport() {
 		try {
-			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("put : 200").build();
+			return Response.status(200).type(MediaType.APPLICATION_JSON)
+					.entity("put : 200").build();
 		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
+			Log.error(e.getLocalizedMessage());
 		}
-		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("put : 500").build();
+		return Response.status(500).type(MediaType.APPLICATION_JSON)
+				.entity("put : 500").build();
 	}
 
 	/************************************************************************
@@ -138,17 +143,16 @@ public class ReportsController {
 	 * @param reportId
 	 * @return
 	 ***********************************************************************/
-	@DELETE
 	public boolean deleteReport(String reportId) {
 		boolean result = false;
 
 		try {
-			JSONObject jo = JSONFactory.inputStreamToJson(dbCtrl.getDoc(reportId));
+			JSONObject jo = JSONFactory.inputStreamToJson(db.getDoc(reportId));
 			String rev = jo.getString("_rev");
-			result = dbCtrl.deleteDoc(reportId, rev);
-			logger.debug("delete | report id = " + reportId + "\n");
+			result = db.deleteDoc(reportId, rev);
+			Log.debug("delete | report id = " + reportId + "\n");
 		} catch (Exception e) {
-			logger.error(e.getLocalizedMessage());
+			Log.error(e.getLocalizedMessage());
 		}
 		return result;
 	}

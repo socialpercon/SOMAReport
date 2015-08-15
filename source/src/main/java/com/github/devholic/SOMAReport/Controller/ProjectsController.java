@@ -27,15 +27,15 @@ public class ProjectsController {
 
 		JSONArray list = new JSONArray();
 		JSONObject jo = JSONFactory.inputStreamToJson(db.getByView(
-				"_design/project", "all_my_project", new Object[] {
-						userId + " ", " " }, new Object[] { userId, " " },
-				true, true));
+				"_design/project", "my_projects", new Object[] { userId + " ",
+						" " }, new Object[] { userId, " " }, true, true));
 		JSONArray arr = JSONFactory.getData(jo);
 
 		for (int i = 0; i < arr.length(); i++) {
 			logger.info(arr.get(i));
 			JSONObject doc = arr.getJSONObject(i).getJSONObject("doc");
 			JSONObject project = new JSONObject();
+			project.put("_id", doc.get("_id"));
 			project.put("title", doc.get("title"));
 			JSONArray stage = doc.getJSONArray("stage");
 			if (stage.length() == 2 || stage.getInt(2) == 0)
@@ -58,18 +58,6 @@ public class ProjectsController {
 	 * @return JSONObject
 	 *************************************************************************/
 	public JSONObject getDetailByProjectId(String projectId) {
-
-		JSONObject detail = JSONFactory.inputStreamToJson(db.getDoc(projectId));
-		return detail;
-	}
-
-	/**************************************************************************
-	 * 프로젝트 아이디로 프로젝트 상세정보 가져오기 _ URL Path GET
-	 * 
-	 * @param projectId
-	 * @return Projects
-	 *************************************************************************/
-	public JSONObject getProjectDetails(@PathParam("projectId") String projectId) {
 
 		JSONObject detail = JSONFactory.inputStreamToJson(db.getDoc(projectId));
 		return detail;
