@@ -2,14 +2,19 @@ package com.github.devholic.SOMAReport;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.github.devholic.SOMAReport.Controller.DriveController;
 import com.google.common.io.Files;
@@ -20,6 +25,17 @@ public class Drive {
 	private final static Logger Log = Logger.getLogger(Drive.class);
 
 	// API
+	@POST
+	@Path("/drive/upload/{id}")
+	@Produces("image/jpeg")
+	public Response uploadImage(@PathParam("id") String id,
+			@FormDataParam("file") InputStream is,
+			@FormDataParam("file") FormDataContentDisposition formData) {
+		for (String key : formData.getParameters().keySet()) {
+			Log.info(key);
+		}
+		return Response.ok().build();
+	}
 
 	// View
 	@GET
@@ -61,7 +77,7 @@ public class Drive {
 			return Response.noContent().build();
 		}
 	}
-	
+
 	// Google
 
 }

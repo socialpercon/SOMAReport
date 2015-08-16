@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Expires" content="-1">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="No-Cache">
+  <title>somareport</title>
+  <link rel="stylesheet" href="http://static.plusquare.com/somareport/disablereponsive.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
+  <link href="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+</head>
+<body>
+  <nav id="soma-nav" class="navbar navbar-fixed-top">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><span class="logo-front">SOMA</span><span class="logo-back">REPORT</span></a>
+    </div>
+    <ul class="nav navbar-nav">
+      {{#project}}
+      <li><a href="/project"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{title}}</a></li>
+      <li><a href="/drive/{{_id}}"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>드라이브</a></li>
+      {{/project}}
+      <li style="display:table">
+        <div class="form-group" style="height:60px;padding-left:20px;vertical-align:middle;display:table-cell">
+          <div>
+            <input style="font-size: 18px;color:#ffffff" type="text" name="place" placeholder="검색" class="form-control" />
+          </div>
+        </div>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right" style="margin-right:10px">
+      <li><a href="/logout">로그아웃</a></li>
+    </ul>
+  </nav>
+  <div style="width:30%;height:100%;background-color:#F5F5F5;float:left;overflow:auto;padding-top:60px;position:relative;">
+    <div style="overflow-y: auto;">
+      {{#report}}
+      <a href="/report/{{_id}}">
+        <div style="background-color:#fff;margin:10px" class="shadow-z-1 soma-list-card">
+          <h4 style="margin-top:0.2em;margin-bottom:0.2em;color:#212121">#{{date}}</h4>
+          <h6 style="margin-top:0.2em;margin-bottom:0.3em;color:#9E9E9E">{{topic}}</h6>
+          <div class="divider"></div>
+          <table><tr>
+            {{#attendee}}
+            <td>
+              <div class="circular-img mentee" style='background-image: url(/drive/user/image?id={{id}});background-size="36px 36px"'><img src="/drive/user/image?id={{id}}" alt="" style="width:36px;height:36px" /></div>
+            </td>
+            {{/attendee}}
+          </tr></table>
+        </div>
+      </a>
+      {{/report}}
+    </div>
+  </div>
+  <div style="width:70%;height:100%;background-color:#F5F5F5;float:right;overflow:auto;padding-top:60px">
+    <div style="background-color:#fff;margin:10px" class="shadow-z-1 soma-list-card">
+      <form id="reportForm" method="post" action="/report/write" enctype="multipart/form-data">
+        {{#write}}
+        <input type="hidden" name="projectid" value="{{pid}}">
+        {{/write}}
+        <h5 style="padding-left:5px; color:#5264AE">참석자</h5>
+        {{#project}}
+        {{#mentee}}
+        <div class="form-group">
+          <div>
+            <div class="circular-img">
+            </div>
+            <input type="hidden" name="attendee" value="{{.}}">
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="attendeeReason" placeholder="불참사유" class="form-control" />
+          </div>
+        </div>
+        {{/mentee}}
+        {{/project}}
+        <h5 style="padding-left:5px; color:#5264AE">시작시간 (*)</h5>
+        <div class="form-group">
+          <center>
+            <div class='input-group date' id='datetimepicker1'>
+              <input style="font-size: 18px;padding: 15px 10px 25px 5px;" onkeypress="return false;" type="text" name="start" placeholder="오른쪽 달력버튼을 눌러주세요." class="form-control" required/>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+          </center>
+        </div>
+        <h5 style="padding-left:5px; color:#5264AE">종료시간 (*)</h5>
+        <div class="form-group">
+          <center>
+            <div class='input-group date' id='datetimepicker2'>
+              <input style="font-size: 18px;padding: 15px 10px 25px 5px;" onkeypress="return false;" type="text" name="end" placeholder="오른쪽 시계버튼을 눌러주세요." class="form-control" required/>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-time"></span>
+              </span>
+            </div>
+          </center>
+        </div>
+        <h5 style="padding-left:5px; color:#5264AE">장소 (*)</h5>
+        <div class="form-group">
+          <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="place" placeholder="필수항목" class="form-control" required/>
+          </div>
+        </div>
+        <h5 style="padding-left:5px; color:#5264AE">주제 (*)</h5>
+        <div class="form-group">
+          <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="topic" placeholder="필수항목" class="form-control" required/>
+          </div>
+        </div>
+        <h5 style="padding-left:5px; color:#5264AE">목표 (*)</h5>
+        <div class="form-group">
+          <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="goal" placeholder="필수항목" class="form-control" required/>
+          </div>
+        </div>
+        <h5 style="padding-left:5px; color:#5264AE">추진내용 (*)</h5>
+        <div class="form-group">
+          <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="issue" placeholder="필수항목" class="form-control" required/>
+          </div>
+        </div>
+        <h5 style="padding-left:5px; color:#5264AE">해결방안 (*)</h5>
+        <div class="form-group">
+          <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="solution" placeholder="필수항목" class="form-control" required/>
+          </div>
+        </div>
+        <h5 style="padding-left:5px; color:#5264AE">향후계획 (*)</h5>
+        <div class="form-group">
+          <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="plan" placeholder="필수항목" class="form-control" required/>
+          </div>
+        </div>
+        <h5 style="padding-left:5px; color:#5264AE">멘토의견 (*)</h5>
+        <div class="form-group">
+          <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="opinion" placeholder="필수항목" class="form-control" required/>
+          </div>
+        </div>
+        <div class="checkbox checkbox-helper">
+          <label>
+            <input name="opinion-public" type="checkbox"><span class="checkbox-material"><span class="check"></span></span> 멘토의견 공개
+          </label>
+        </div>
+        <h5 style="padding-left:5px; color:#5264AE">기타</h5>
+        <div class="form-group">
+          <div>
+            <input style="font-size: 18px;padding: 15px 10px 25px 5px;" type="text" name="etc" placeholder="선택항목" class="form-control"/>
+          </div>
+        </div>
+        <h5 style="padding-left:5px; color:#5264AE">내용 (*)</h5>
+        <div class="group materialst-input" style="margin-bottom:0px">
+          <textarea style="width:100%;max-width:100%;overflow:visible" name="content" type="text" onkeyup="resize(this)" required></textarea>
+        </div>
+        <div>
+          <button class="btn btn-default btn-raised" type="submit">작성완료<div class="ripple-wrapper"></div></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+  <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+  <script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
+  <script>
+    $(function () {
+      $('#datetimepicker1').datetimepicker({
+        locale: 'ko',
+        format: 'YYYYMMDD HH:mm'
+      });
+      $('#datetimepicker2').datetimepicker({
+        locale: 'ko',
+        format: 'HH:mm'
+      });
+      $("#datetimepicker1").on("dp.change", function (e) {
+       $('#datetimepicker2').datetimepicker({
+        locale: 'ko',
+        sideBySide: true
+      });
+     });
+    });
+    function resize(obj) {
+      obj.style.height = "1px";
+      obj.style.height = (20+obj.scrollHeight)+"px";
+    }
+    function doPost(){
+      var form = document.createElement("form");
+      form.setAttribute("method", "post");
+      form.setAttribute("action", "/report/write");
+    }
+  </script>
+</body>
+</html>

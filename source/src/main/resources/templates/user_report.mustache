@@ -6,8 +6,8 @@
     <meta http-equiv="Expires" content="-1">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="No-Cache">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>somareport</title>
+    <link rel="stylesheet" href="http://static.plusquare.com/somareport/disablereponsive.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">
@@ -21,7 +21,8 @@
         </div>
         <ul class="nav navbar-nav">
           {{#project}}
-            <li><a href="/project"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{title}}</a></li>
+            <li><a href="/project"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>{{title}}</a></li>
+            <li><a href="/drive/{{_id}}"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>드라이브</a></li>
           {{/project}}
             <li style="display:table">
               <div class="form-group" style="height:60px;padding-left:20px;vertical-align:middle;display:table-cell">
@@ -128,7 +129,9 @@
             </div>
           </div>
           {{/detail}}
-          <a href="/report/write/{{pid}}" class="btn btn-fab btn-raised btn-primary" style="position:fixed;right:56px;bottom:56px;"><i class="mdi-image-edit"></i><div class="ripple-wrapper"></div></a>
+          {{#project}}
+          <a href="/report/write/{{_id}}" class="btn btn-fab btn-raised btn-primary" style="position:fixed;right:56px;bottom:56px;"><i class="mdi-image-edit"></i><div class="ripple-wrapper"></div></a>
+          {{/project}}
       </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>

@@ -118,8 +118,13 @@ public class ReportsController {
 	 ***************************************************************/
 	public String insertReport(JSONObject document) {
 		String id = null;
+		SearchController s = new SearchController();
+		
 		try {
+			//inserting couch DB
 			id = db.createDoc(document).get("_id").toString();
+			//indexing elastic search
+			s.elastic_index("report", document);
 		} catch (Exception e) {
 			Log.error(e.getLocalizedMessage());
 		}
