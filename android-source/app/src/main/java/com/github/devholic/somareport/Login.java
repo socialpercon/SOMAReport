@@ -9,20 +9,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.http.utils.ResponseUtils;
+
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpResponseFactory;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.ResponseContent;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +76,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 String pwd = password.getText().toString();
                 Log.d(TAG, "email: " + email + " password: " + pwd + " login btn clicked");
 
-                LoginTask loginTask = new LoginTask();
-                loginTask.execute(email, pwd);
+            //    LoginTask loginTask = new LoginTask();
+            //    loginTask.execute(email, pwd);
+                logInAccess(email, pwd);
                 break;
         }
     }
@@ -84,44 +89,35 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_right);
     }
 
+    private void logInAccess (String email, String pwd) {
+        String url = "http://10.0.3.2:8080/api/login";
+        try {
+            com.mashape.unirest.http.HttpResponse<JsonNode> httpResponse = Unirest.post(url)
+                    .field("email", email).field("password", pwd).asJson();
+            Log.i(TAG, httpResponse.getStatus()+httpResponse.getStatusText());
+            if (httpResponse.getStatus() == 200) {
+                Intent intent = new Intent(Login.this, ProjectList.class);
+                intent.putExtra("cookie", cookie);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_right, R.anim.slide_left);
+            } else {
+                // 로그인 실패
+
+            }
+
+        } catch (UnirestException e) {
+            Log.e(TAG, e.getLocalizedMessage());
+        }
+    }
+
     private class LoginTask extends AsyncTask<String, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(String... params) {
             try {
-                String urlst = "http://10.0.2.2:8080/api/login";
-//
-//                URL url = new URL(urlst);
-//                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//                String body = "email="+params[0]+"&password="+params[1];
-//                Log.d(TAG, body);
-//                connection.setRequestMethod("POST");
-//                connection.setDoOutput(true);
-//                connection.setDoInput(true);
-//                OutputStream outputStream = new BufferedOutputStream(connection.getOutputStream());
-//                outputStream.write(body.getBytes("UTF-8"));
-//                outputStream.flush();
-//                outputStream.close();
-//                connection.connect();
-//
-//                int statusCode = connection.getResponseCode();
-//                Log.d(TAG, "RESPONSECODE: "+Integer.toString(statusCode));
-//                StringBuilder responseStringBuilder = new StringBuilder();
-//                if (statusCode == HttpURLConnection.HTTP_OK){
-//                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-//                    for (;;){
-//                        String stringLine = bufferedReader.readLine();
-//                        if (stringLine == null ) break;
-//                        responseStringBuilder.append(stringLine + '\n');
-//                    }
-//                    bufferedReader.close();
-//                    Log.d(TAG, responseStringBuilder.toString());
-//                }
-//
-//                connection.disconnect();
-
+                String url = "http://10.0.3.2:8080/api/login";
                 HttpClient httpClient= new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost("http://10.0.3.2:8080/api/login");
+                HttpPost httpPost = new HttpPost(url);
                 List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
                 nameValuePair.add(new BasicNameValuePair("email", params[0]));
                 nameValuePair.add(new BasicNameValuePair("password", params[1]));

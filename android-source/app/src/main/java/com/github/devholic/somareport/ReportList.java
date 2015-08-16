@@ -33,11 +33,10 @@ public class ReportList extends AppCompatActivity {
     Toolbar toolbar;
 
     // Content
-    @Bind(R.id.recyclerView)
+    @Bind(R.id.report_list_recycler)
     RecyclerView recyclerView;
 
     private DetailRecyclerViewAdapter adapter;
-    private int featureId;
     private MenuItem item;
 
     @Override

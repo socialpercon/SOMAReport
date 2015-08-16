@@ -294,6 +294,8 @@ public class ReportDetails extends AppCompatActivity {
             else if (requestCode == GET_PICTURE_CAMERA) {
                 try {
                     selected = MediaStore.Images.Media.getBitmap(getContentResolver(), cameraPictureUri);
+                    File f = new File(cameraPictureUri.getPath());
+                    if (f.exists())  f.delete();
                 } catch (IOException e) {
                     Log.e(TAG, e.getLocalizedMessage());
                 }
@@ -320,8 +322,6 @@ public class ReportDetails extends AppCompatActivity {
             * upload on drive repository (_id.jpg)
             * */
 
-            File f = new File(cameraPictureUri.getPath());
-            if (f.exists())  f.delete();
         }
     }
 

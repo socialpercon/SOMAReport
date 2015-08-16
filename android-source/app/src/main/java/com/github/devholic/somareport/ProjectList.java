@@ -2,6 +2,7 @@ package com.github.devholic.somareport;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,10 +18,18 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -33,7 +42,7 @@ public class ProjectList extends AppCompatActivity {
     String cookie;
 
     // Toolbar
-    @Bind(R.id.home_toolbar)
+    @Bind(R.id.toolbar)
     Toolbar toolbar;
     ActionBarDrawerToggle drawerToggle;
 
@@ -42,7 +51,7 @@ public class ProjectList extends AppCompatActivity {
     DrawerLayout drawerLayout;
 
     // Content
-    @Bind(R.id.recyclerView)
+    @Bind(R.id.project_list_recycler)
     RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
 
@@ -71,6 +80,9 @@ public class ProjectList extends AppCompatActivity {
         * /project/list에서 프로젝트 정보를 JSONArray로 받아온다.
         * [{project title, stage, id, mentor, mentee[]}]
         * */
+        ProjectTask projectTask = new ProjectTask();
+        projectTask.execute();
+
         try {
             String json = "[{\"mentor\":\"3f4ce9856efb3e2f5d86eeb4d5b28f22\",\"stage\":\"6기 2단계 프로젝트\",\"id\":\"58387a05c00dcded6f7936c1173e3f5a\",\"title\":\"SOMAProject 2nd phase\",\"mentee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"]}," +
                     "{\"mentor\":\"3f4ce9856efb3e2f5d86eeb4d5b28f22\",\"stage\":\"6기 1단계 2차 프로젝트\",\"id\":\"36be054d83f701154adfdd0cf174e3cc\",\"title\":\"SOMAProject3-2\",\"mentee\":[\"4c44d639b77c290955371694d3310194\",\"a35fa2f4fd6d544d11fae6acf7ba6e01\",\"3f4ce9856efb3e2f5d86eeb4d5d16b01\"]}," +
@@ -199,5 +211,41 @@ public class ProjectList extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_right);
+    }
+
+    private class ProjectTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            String url = "http://10.0.3.2:8080/project";
+            try {
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpGet httpGet = new HttpGet(url);
+                httpGet.setHeader("Set-Cookie", cookie);
+                Header[] hs = httpGet.getAllHeaders();
+                for (Header h : hs) {
+                    System.out.println("Key : " + h.getName()
+                            + " ,Value : " + h.getValue());
+                }
+
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                Header[] headers = httpResponse.getAllHeaders();
+                for (Header h : headers) {
+                    System.out.println("Key : " + h.getName()
+                            + " ,Value : " + h.getValue());
+                }
+                InputStream is = httpResponse.getEntity().getContent();
+                StringBuilder stringBuilder = new StringBuilder();
+                byte[] b = new byte[4096];
+                for (int n; (n = is.read(b)) != -1;) {
+                    stringBuilder.append(new String(b, 0, n));
+                }
+                System.out.println(stringBuilder.toString());
+            } catch (ClientProtocolException e) {
+                Log.e(TAG, e.getLocalizedMessage());
+            } catch (IOException e) {
+                Log.e(TAG, e.getLocalizedMessage());
+            }
+            return null;
+        }
     }
 }
