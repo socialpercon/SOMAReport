@@ -40,33 +40,33 @@ public class DatabaseController {
 		}
 	}
 
-	public InputStream getByView(String docId, String viewName, boolean includeDocs, boolean descending) {
+	public InputStream getByView(String docId, String viewName, boolean includeDocs, boolean descending, boolean reduce) {
 		// view 결과를 조회
 		// key 없음
 		// includeDocs (true : 문서 통째로 리턴) / (false : value만 리턴)
 		// descending (true : key역순) / (false : key순)
 		ViewQuery q = new ViewQuery().designDocId(docId).viewName(viewName)
-				.reduce(false).includeDocs(includeDocs).descending(descending);
+				.reduce(reduce).includeDocs(includeDocs).descending(descending);
 		return db.queryForStream(q);
 	}
 	
-	public InputStream getByView(String docId, String viewName, Object key, boolean includeDocs, boolean descending) {
+	public InputStream getByView(String docId, String viewName, Object key, boolean includeDocs, boolean descending, boolean reduce) {
 		// view 결과를 조회
 		// key검색 (단일, 배열 모두 가능) 
 		// includeDocs (true : 문서 통째로 리턴) / (false : value만 리턴)
 		// descending (true : key역순) / (false : key순)
 		ViewQuery q = new ViewQuery().designDocId(docId).viewName(viewName).key(key)
-				.reduce(false).includeDocs(includeDocs).descending(descending);
+				.reduce(reduce).includeDocs(includeDocs).descending(descending);
 		return db.queryForStream(q);
 	}
 
-	public InputStream getByView(String docId, String viewName, Object startKey, Object endKey, boolean includeDocs, boolean descending) {
+	public InputStream getByView(String docId, String viewName, Object startKey, Object endKey, boolean includeDocs, boolean descending, boolean reduce) {
 		// view 결과를 조회
 		// start-end 범위 검색 (key 설정시 descending에 따른 순서 주의)
 		// includeDocs (true : 문서 통째로 리턴) / (false : value만 리턴)
 		// descending (true : key역순) / (false : key순)
 		ViewQuery q = new ViewQuery().designDocId(docId).viewName(viewName).startKey(startKey).endKey(endKey)
-				.reduce(false).includeDocs(includeDocs).descending(descending);
+				.reduce(reduce).includeDocs(includeDocs).descending(descending);
 		return db.queryForStream(q);
 	}
 

@@ -220,7 +220,7 @@ public class RegisterController {
 	
 	public String getIdbyName(String name) {
 		// 이름을 통해 해당 사용자 문서의 _id를 가져온다
-		BufferedReader is = new BufferedReader(new InputStreamReader(db.getByView("_design/user", "search_by_name", name, false, false)));
+		BufferedReader is = new BufferedReader(new InputStreamReader(db.getByView("_design/user", "search_by_name", name, false, false, false)));
 		try {
 			String str, doc = "";
 			while ((str = is.readLine())!= null) {	doc += str;	}

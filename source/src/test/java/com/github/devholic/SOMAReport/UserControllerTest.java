@@ -48,4 +48,8 @@ public class UserControllerTest {
 		}
 	}
 
+	@Test
+	public void testTotalMentoringInfo() {
+		UserController.totalMentoringInfo(UserController.ROLE_MENTOR);
+	}
 }

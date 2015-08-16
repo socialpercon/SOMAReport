@@ -29,7 +29,7 @@ public class ReportsController {
 		try {
 			InputStream is = db.getByView("_design/report", "all_by_project",
 					new Object[] { projectId + " ", " " }, new Object[] {
-							projectId, " " }, true, true);
+							projectId, " " }, true, true, false);
 			JSONArray a = JSONFactory
 					.getData(JSONFactory.inputStreamToJson(is));
 			for (int i = 0; i < a.length(); i++) {
@@ -97,7 +97,7 @@ public class ReportsController {
 		JSONArray reportList = new JSONArray();
 		try {
 			InputStream is = db.getByView("_design/report", "all_by_project",
-					true, true);
+					true, true, false);
 			JSONArray jo = JSONFactory.getData(JSONFactory
 					.inputStreamToJson(is));
 			for (int i = 0; i < jo.length(); i++) {

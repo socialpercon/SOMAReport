@@ -13,26 +13,25 @@ import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
 public class ProjectsController {
 
-	private final Logger logger = Logger.getLogger(ProjectsController.class);
+	private static final Logger logger = Logger.getLogger(ProjectsController.class);
 
-	DatabaseController db = new DatabaseController();
+	static DatabaseController db = new DatabaseController();
 
 	/**************************************************************************
 	 * 나의 프로젝트 가져오기
 	 * 
 	 * @param _id
-	 * @return JSONArray [{title, stage, mentor, mentee[]}]
+	 * @return JSONArray [{_id, title, stage, mentor, mentee[]}]
 	 *************************************************************************/
-	public JSONArray getMyProject(@PathParam("id") String userId) {
+	public static JSONArray getMyProject(@PathParam("id") String userId) {
 
 		JSONArray list = new JSONArray();
 		JSONObject jo = JSONFactory.inputStreamToJson(db.getByView(
 				"_design/project", "my_projects", new Object[] { userId + " ",
-						" " }, new Object[] { userId, " " }, true, true));
+						" " }, new Object[] { userId, " " }, true, true, false));
 		JSONArray arr = JSONFactory.getData(jo);
 
 		for (int i = 0; i < arr.length(); i++) {
-			logger.info(arr.get(i));
 			JSONObject doc = arr.getJSONObject(i).getJSONObject("doc");
 			JSONObject project = new JSONObject();
 			project.put("_id", doc.get("_id"));
@@ -72,12 +71,7 @@ public class ProjectsController {
 
 		JSONArray projectList = JSONFactory.getData(JSONFactory
 				.inputStreamToJson(db.getByView("_design/project",
-						"all_project", true, true)));
-		try {
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+						"all_project", true, true, false)));
 
 		return projectList;
 	}
