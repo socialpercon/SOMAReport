@@ -2,13 +2,13 @@ package com.github.devholic.SOMAReport.Controller;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
+import org.ektorp.DocumentNotFoundException;
 import org.ektorp.UpdateConflictException;
 import org.ektorp.ViewQuery;
 import org.ektorp.http.HttpClient;
@@ -139,7 +139,11 @@ public class DatabaseController {
 
 	public InputStream getDoc(String id) {
 		// id로 문서를 가져온다
-		return db.getAsStream(id);
+		try {
+			return db.getAsStream(id);
+		} catch (DocumentNotFoundException e) {
+			return null;
+		}
 	}
 
 }
