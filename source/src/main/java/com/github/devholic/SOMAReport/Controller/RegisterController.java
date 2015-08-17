@@ -196,7 +196,7 @@ public class RegisterController {
 			JSONArray stage = new JSONArray();
 			stage.put(year);
 			stage.put(level);
-			stage.put(st);
+			if (st != 0) stage.put(st);
 
 			for (int rowIndex = 8; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 				row = sheet.getRow(rowIndex);

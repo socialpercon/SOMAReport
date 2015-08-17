@@ -2,8 +2,6 @@ package com.github.devholic.SOMAReport.Controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -94,7 +92,6 @@ public class UserController {
 	
 	/**
 	 * 모든 멘토/멘티의 프로젝트별 멘토링 시간 총합 및 시행 횟수를 리턴
-	 * (멘티 아직 안됨)
 	 * 
 	 * @param int (mentor: ROLE_MENTOR=0, mentee: ROLE_MENTEE=1)
 	 * @return JSONArray [ {userId, name, projectId, stage, mentoringSum, mentoringNum} ] )
@@ -149,11 +146,8 @@ public class UserController {
 					String projectId = projects.getJSONObject(j).getString("_id");
 					menteeDoc.put("projectId", projectId);
 					menteeDoc.put("stage", projects.getJSONObject(j).get("stage"));
-					List<Object> keys =new ArrayList<Object>();
-					keys.add(menteeId);
-					keys.add(projectId);
-					System.out.println(keys);
-					InputStream is = db.getByView("_design/statistics", "total_time_by_mentee", keys, false, false, true);
+					
+					InputStream is = db.getByView("_design/statistics", "total_time_by_mentee", new Object[] {menteeId, projectId}, false, false, true);
 					JSONArray a = JSONFactory.getData(new JSONObject(StringFactory.inputStreamToString(is)));
 					System.out.println(a.toString());
 					
@@ -166,7 +160,7 @@ public class UserController {
 					else {
 						int sum = a.getJSONObject(0).getInt("value");
 						menteeDoc.put("mentoringSum", sum);
-						is = db.getByView("design/statistics", "total_time_by_mentee", keys, false, false, false);
+						is = db.getByView("_design/statistics", "total_time_by_mentee", new Object[] {menteeId, projectId}, false, false, false);
 						int num = JSONFactory.getData(new JSONObject(StringFactory.inputStreamToString(is))).length();
 						menteeDoc.put("mentoringNum", num);
 						Log.info(menteeDoc);
