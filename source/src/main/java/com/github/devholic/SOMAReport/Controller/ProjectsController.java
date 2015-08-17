@@ -77,7 +77,7 @@ public class ProjectsController {
 	 * 프로젝트 아이디로 프로젝트의 기본 정보를 가져온다
 	 * 
 	 * @param projectId
-	 * @return
+	 * @return {[project_type, mentoring_num, mentor, stage, field, section, title, mentee[]]}
 	 ********************************************************************/
 	public JSONObject getProjectInfo(String projectId) {
 
@@ -85,6 +85,7 @@ public class ProjectsController {
 		JSONObject project = JSONFactory.inputStreamToJson(db.getDoc(projectId));
 		if (project == null) return null;
 		projectInfo.put("project_type", project.getString("project_type"));
+		projectInfo.put("projectId", projectId);
 		projectInfo.put("title", project.getString("title"));
 		projectInfo.put("mentor", project.getString("mentor"));
 		JSONArray stage = project.getJSONArray("stage");
