@@ -15,7 +15,9 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.json.JSONObject;
 
+import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Controller.RegisterController;
+import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 
 @Path("/")
 public class Console_Project {
@@ -29,8 +31,13 @@ public class Console_Project {
 	@Path("/console/project")
 	public Response consoleProject() {
 		// getConsoleProject를 한 다음에 MustacheHelper.toMap으로 데이터를 넘겨주면 끗!
-		return Response.status(200)
-				.entity(new Viewable("/console_project.mustache")).build();
+		ProjectsController projects = new ProjectsController();
+		JSONObject jo = new JSONObject();
+		jo.put("stages", projects.existingStagesString());
+		return Response
+				.status(200)
+				.entity(new Viewable("/console_project.mustache",
+						MustacheHelper.toMap(jo))).build();
 	}
 
 	@POST
