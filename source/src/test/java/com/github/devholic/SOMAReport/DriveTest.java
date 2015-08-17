@@ -8,8 +8,9 @@ import com.github.devholic.SOMAReport.Controller.DriveController;
 
 public class DriveTest {
 	@Test
-	public void Drive_CreateCache_Pass() throws IOException {
-		DriveController d = new DriveController();
-		d.createCache("9d898f7d5bfbf361939e1fafd509b1bf", "0");
+	public void testDrive() throws IOException {
+		DriveController drive = new DriveController();
+		drive.uploadImageToProject("9d898f7d5bfbf361939e1fafd5041f4b", null);
+		drive.uploadImageToProject("9d898f7d5bfbf361939e1fafd5041f4bds", null);
 	}
 }

@@ -30,23 +30,37 @@
     </nav>
     </div>
       <!-- left -->
-      <div style="width:30%;height:100%;float:left;background:#fff;overflow:auto;padding:15px">
+      <div style="width:30%;height:100%;float:left;overflow:auto;padding:15px">
         {{#stageInfo}}
+        <a href="/console/project/{{infoId}}">
         <div class="card white">
             <div class="card-content black-text">
               <span class="card-title black-text">{{stage}}</span>
+              <div class="divider"></div>
               <p>{{projectNum}}개의 프로젝트가 있습니다.</p>
             </div>
           </div>
+        </a>
         {{/stageInfo}}
       </div>
       <!-- right -->
-      <div style="width:70%;height:100%;float:right;background:#fff;overflow:auto">
+      <div style="width:70%;height:100%;float:right;overflow:auto">
+        {{#stageInfo}}
+        <a href="/console/project/{{infoId}}">
+        <div class="card white">
+            <div class="card-content black-text">
+              <span class="card-title black-text">{{stage}}</span>
+              <div class="divider"></div>
+              <p>{{projectNum}}개의 프로젝트가 있습니다.</p>
+            </div>
+          </div>
+        </a>
+        {{/stageInfo}}
         <input type="file" name="file" id="upFile" style="visibility: hidden;">
         <a id="fileUpload" class="btn-floating btn-large waves-effect waves-light indigo lighten-1" style="position:fixed;right:56px;bottom:56px;" onclick="javascript:uploadFile()"><i class="material-icons">add</i></a>
           <center>
-          <div class="progress" style="width:50%;position:fixed;bottom:64px;right:170px">
-          <div id="progressBar" class="determinate" style="width: 0%"></div>
+          <div id="progressParent" class="progress" style="width:50%;position:fixed;bottom:64px;right:170px;visibility:hidden">
+          <div id="progressBar" class="determinate" style="width:0%;"></div>
           </div>
           </center>
       </div>
@@ -58,6 +72,9 @@
     <script>
       function uploadFile(){
         document.getElementById('upFile').click();
+      }
+      function updateVisibility(){
+        document.getElementById('progressParent').style.visibility = 'visible';
       }
      $(document).ready(function() {
     $('#upFile').fileupload({
@@ -78,6 +95,7 @@
                 data.submit();
             }
         }, progressall: function(e,data) {
+            updateVisibility();
             var progress = parseInt(data.loaded / data.total * 100, 10);
             $('#progressBar').css(
                 'width',
