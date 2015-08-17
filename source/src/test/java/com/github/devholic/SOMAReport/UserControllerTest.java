@@ -4,12 +4,16 @@
 
 package com.github.devholic.SOMAReport;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import org.json.JSONArray;
 import org.junit.Test;
 
+import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Controller.UserController;
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
@@ -50,6 +54,23 @@ public class UserControllerTest {
 
 	@Test
 	public void testTotalMentoringInfo() {
-		UserController.totalMentoringInfo(UserController.ROLE_MENTOR);
+		JSONArray mentorTotal = UserController.totalMentoringInfo(UserController.ROLE_MENTOR);
+		JSONArray menteeTotal = UserController.totalMentoringInfo(UserController.ROLE_MENTEE);
+		
+		assertEquals(ProjectsController.getProjectList().length(), mentorTotal.length());
+		for (int i=0; i<mentorTotal.length(); i++) {
+			assertThat(mentorTotal.getJSONObject(i).get("mentoringNum"), not(nullValue()));
+			assertThat(mentorTotal.getJSONObject(i).get("mentoringSum"), not(nullValue()));
+		}
+		for (int i=0; i<menteeTotal.length(); i++) {
+			assertThat(menteeTotal.getJSONObject(i).get("mentoringNum"), not(nullValue()));
+			assertThat(menteeTotal.getJSONObject(i).get("mentoringSum"), not(nullValue()));
+		}	
+	}
+	
+	@Test
+	public void testGetUserByEmail() {
+		assertEquals(UserController.getUserByEmail("mentor0@gmail.com").getString("email"), "mentor0@gmail.com");
+		assertThat(UserController.getUserByEmail("dfdf"), nullValue());
 	}
 }

@@ -67,7 +67,7 @@ public class ProjectsController {
 	 * 
 	 * @return List<JSONObject>
 	 *************************************************************************/
-	public JSONArray getProjectList() {
+	public static JSONArray getProjectList() {
 
 		JSONArray projectList = JSONFactory.getData(JSONFactory
 				.inputStreamToJson(db.getByView("_design/project",
