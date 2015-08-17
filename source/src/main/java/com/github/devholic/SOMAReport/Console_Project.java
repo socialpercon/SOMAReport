@@ -33,7 +33,7 @@ public class Console_Project {
 		// getConsoleProject를 한 다음에 MustacheHelper.toMap으로 데이터를 넘겨주면 끗!
 		ProjectsController projects = new ProjectsController();
 		JSONObject jo = new JSONObject();
-		jo.put("stages", projects.existingStagesString());
+		jo.put("stageInfo", projects.existingStage());
 		return Response
 				.status(200)
 				.entity(new Viewable("/console_project.mustache",
