@@ -33,7 +33,6 @@ public class ReportsController {
 			JSONArray a = JSONFactory
 					.getData(JSONFactory.inputStreamToJson(is));
 			for (int i = 0; i < a.length(); i++) {
-				System.out.println(a.getJSONObject(i));
 				JSONObject doc = a.getJSONObject(i).getJSONObject("doc");
 				JSONObject reportInfo = new JSONObject();
 				reportInfo.put("_id", doc.getString("_id"));

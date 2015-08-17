@@ -32,6 +32,7 @@ public class JSONFactory {
 	}
 	
 	public static JSONObject inputStreamToJson(InputStream is) {
+		if (is == null) return null;
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		String str, doc = "";
 		try {

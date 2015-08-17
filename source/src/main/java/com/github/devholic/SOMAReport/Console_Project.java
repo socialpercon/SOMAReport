@@ -5,6 +5,7 @@ import java.io.InputStream;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
@@ -34,6 +35,20 @@ public class Console_Project {
 		ProjectsController projects = new ProjectsController();
 		JSONObject jo = new JSONObject();
 		jo.put("stageInfo", projects.existingStage());
+		return Response
+				.status(200)
+				.entity(new Viewable("/console_project.mustache",
+						MustacheHelper.toMap(jo))).build();
+	}
+
+	@GET
+	@Path("/console/project/{id}")
+	public Response consoleProjectDetail(@PathParam("id") String id) {
+		// getConsoleProject를 한 다음에 MustacheHelper.toMap으로 데이터를 넘겨주면 끗!
+		ProjectsController projects = new ProjectsController();
+		JSONObject jo = new JSONObject();
+		jo.put("stageInfo", projects.existingStage());
+		jo.put("projects", projects.projectsInStage(id));
 		return Response
 				.status(200)
 				.entity(new Viewable("/console_project.mustache",

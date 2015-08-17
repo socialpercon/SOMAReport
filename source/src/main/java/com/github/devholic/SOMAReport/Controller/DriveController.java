@@ -51,6 +51,28 @@ public class DriveController {
 
 	private static GoogleAuthorizationCodeFlow flow = null;
 
+	public void uploadImageToProject(String projectId, java.io.File file) {
+		DatabaseController db = new DatabaseController();
+		JSONObject driveQuery = JSONFactory
+				.inputStreamToJson(db.getByView("_design/file", "projectdrive",
+						projectId, false, false, false));
+		if (JSONFactory.getData(driveQuery).length() == 0) {
+			JSONObject projectDrive = new JSONObject();
+			projectDrive.put("project", projectId);
+			projectDrive.put("type", "projectdrive");
+			projectDrive.put("files", new JSONArray());
+			Map<String, Object> map = db.createDoc(projectDrive);
+			String id = map.get("_id").toString();
+		}
+		JSONObject projectDrive = JSONFactory.getData(driveQuery)
+				.getJSONObject(0);
+		if (projectDrive == null) {
+			Log.info("null");
+		} else {
+			Log.info(projectDrive.toString());
+		}
+	}
+
 	public String uploadImage(java.io.File file) {
 		Long now = System.currentTimeMillis();
 		JSONObject imageData = new JSONObject();
@@ -78,7 +100,8 @@ public class DriveController {
 
 	public java.io.File getImage(String id) {
 		java.io.File f = new java.io.File("cache/" + id);
-		InputStream is = db.getByView("_design/file", "info", id, false, false, false);
+		InputStream is = db.getByView("_design/file", "info", id, false, false,
+				false);
 		JSONArray result = JSONFactory.getData(new JSONObject(StringFactory
 				.inputStreamToString(is)));
 		if (f.isFile()) {
@@ -119,7 +142,8 @@ public class DriveController {
 		if (f.exists()) {
 			f.delete();
 		}
-		InputStream is = db.getByView("_design/file", "info", id, true, false, false);
+		InputStream is = db.getByView("_design/file", "info", id, true, false,
+				false);
 		JSONArray result = JSONFactory.getData(new JSONObject(StringFactory
 				.inputStreamToString(is)));
 		if (db.deleteDoc(result.getJSONObject(0).getJSONObject("doc")

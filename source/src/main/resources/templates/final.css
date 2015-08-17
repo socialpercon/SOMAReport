@@ -27,6 +27,14 @@ body, html {
     justify-content : center;
 }
 
+.divider {
+    margin-top:0.9em;
+    margin-bottom:0.4em;
+    height: 1px;
+    width: 100%;
+    background-color: rgba(189, 189, 189, 1);
+}
+
 .logo {
     font-size: large;
     line-height: 60px;
