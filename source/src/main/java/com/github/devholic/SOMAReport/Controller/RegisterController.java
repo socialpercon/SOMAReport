@@ -1,10 +1,8 @@
 package com.github.devholic.SOMAReport.Controller;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +16,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.github.devholic.SOMAReport.Utilities.StringFactory;
+
 public class RegisterController {
 
 	private final static Logger Log = Logger.getLogger(UserController.class);
+
+	public final static int SHEET_USER = 0;
+	public final static int SHEET_PROJECT = 1;
 
 	DatabaseController db;
 
@@ -38,8 +41,7 @@ public class RegisterController {
 		}
 	}
 
-	public JSONObject registerMentor() {
-
+	public JSONArray registerMentor() {
 		sheet = workbook.getSheet("mentor");
 		if (sheet == null) {
 			Log.error("Mentor sheet does not exists.");
@@ -54,52 +56,56 @@ public class RegisterController {
 		cell = row.getCell(1);
 		int year = (int) cell.getNumericCellValue();
 		int updateNum = 0, insertNum = 0;
-		JSONArray updated = new JSONArray(), inserted = new JSONArray();
+		JSONArray inserted = new JSONArray();
 
 		for (int rowIndex = 7; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 			row = sheet.getRow(rowIndex);
 
 			if (row != null) {
+				String email = row.getCell(1).getStringCellValue();
+				if (UserController.isAlreadyRegistered(email)) {
+					// 이미 등록된 멘토는 연도를 업데이트
+					registerDoc = UserController.getUserByEmail(email);
+					JSONArray years = registerDoc.getJSONArray("years");
+					years.put(year);
+					registerDoc.put("years", years);
+					insertNum++;
+				} else {
+					// 신규 멘토 등
+					registerDoc = new JSONObject();
+					registerDoc.put("type", "account");
+					registerDoc.put("role", "mentor");
+					registerDoc.put("years", new int[] { year });
 
-				registerDoc = new JSONObject();
-				registerDoc.put("type", "account");
-				registerDoc.put("role", "mentor");
-				registerDoc.put("years", new int[] { year });
-				// registerDoc.put("salt", StringFactory.createSalt());
+					String salt = StringFactory.createSalt();
+					registerDoc.put("salt", salt);
+					String password = StringFactory.encryptPassword("password",
+							salt);
+					registerDoc.put("password", password);
 
-				// temporary config for test - password = "password"
-				registerDoc.put("salt",
-						"uKBH+w9OaZYwTaXM9VD6T6DHgGzn23plYWawbbbOqAs=");
-				registerDoc
-						.put("password",
-								"3d424d257f6a1e15cffc45b493e3f77c54852889e494fbb69c301802e3ebe75a");
-
-				cell = row.getCell(0);
-				registerDoc.put("name", cell.getStringCellValue());
-				cell = row.getCell(1);
-				registerDoc.put("email", cell.getStringCellValue());
-				cell = row.getCell(2);
-				registerDoc.put("phone_num", cell.getStringCellValue());
-				cell = row.getCell(3);
-				registerDoc.put("belong", cell.getStringCellValue());
-				cell = row.getCell(4);
-				registerDoc.put("section", cell.getStringCellValue());
-				Map<String, Object> m = db.createDoc(registerDoc);
-				registerDoc.put("_id", m.get("_id").toString());
-				registerDoc.put("_rev", m.get("_rev"));
-				inserted.put(registerDoc);
-				Log.info(registerDoc.toString());
-				insertNum++;
-
+					cell = row.getCell(0);
+					registerDoc.put("name", cell.getStringCellValue());
+					cell = row.getCell(1);
+					registerDoc.put("email", cell.getStringCellValue());
+					cell = row.getCell(2);
+					registerDoc.put("phone_num", cell.getStringCellValue());
+					cell = row.getCell(3);
+					registerDoc.put("belong", cell.getStringCellValue());
+					cell = row.getCell(4);
+					registerDoc.put("section", cell.getStringCellValue());
+					Map<String, Object> m = db.createDoc(registerDoc);
+					registerDoc.put("_id", m.get("_id").toString());
+					registerDoc.put("_rev", m.get("_rev"));
+					inserted.put(registerDoc);
+					Log.info(registerDoc.toString());
+					insertNum++;
+				}
 			}
 		}
 
-		JSONObject registered = new JSONObject();
-		registered.put("updated", updated);
-		registered.put("inserted", inserted);
 		Log.debug(updateNum + " mentors are updated and " + insertNum
 				+ " mentors are inserted.");
-		return registered;
+		return inserted;
 	}
 
 	public JSONArray registerMentee() {
@@ -127,14 +133,12 @@ public class RegisterController {
 				registerDoc.put("type", "account");
 				registerDoc.put("role", "mentee");
 				registerDoc.put("year", year);
-				// registerDoc.put("salt", StringFactory.createSalt());
 
-				// temporary config for test
-				registerDoc.put("salt",
-						"uKBH+w9OaZYwTaXM9VD6T6DHgGzn23plYWawbbbOqAs=");
-				registerDoc
-						.put("password",
-								"3d424d257f6a1e15cffc45b493e3f77c54852889e494fbb69c301802e3ebe75a");
+				String salt = StringFactory.createSalt();
+				registerDoc.put("salt", salt);
+				String password = StringFactory.encryptPassword("password",
+						salt);
+				registerDoc.put("password", password);
 
 				cell = row.getCell(0);
 				registerDoc.put("name", cell.getStringCellValue());
@@ -165,9 +169,11 @@ public class RegisterController {
 				projectSheets.add(workbook.getSheetAt(i));
 			}
 		}
-		if (projectSheets.size() == 0)
+		if (projectSheets.size() == 0) {
+			Log.error("Project sheet does not exists");
 			return null;
-		Log.debug(projectSheets.size() + " Sheets");
+		}
+		Log.debug("There are " + projectSheets.size() + " Sheets");
 
 		JSONObject registered = new JSONObject();
 		for (Sheet projectSheet : projectSheets) {
@@ -190,7 +196,8 @@ public class RegisterController {
 			JSONArray stage = new JSONArray();
 			stage.put(year);
 			stage.put(level);
-			stage.put(st);
+			if (st != 0)
+				stage.put(st);
 
 			for (int rowIndex = 8; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 				row = sheet.getRow(rowIndex);
@@ -201,8 +208,8 @@ public class RegisterController {
 					registerDoc.put("project_type", cell.getStringCellValue());
 					registerDoc.put("stage", stage);
 					cell = row.getCell(1);
-					registerDoc.put("mentor",
-							getIdbyName(cell.getStringCellValue()));
+					registerDoc.put("mentor", UserController.getIdbyName(cell
+							.getStringCellValue()));
 					cell = row.getCell(2);
 					registerDoc.put("title", cell.getStringCellValue());
 					cell = row.getCell(3);
@@ -211,7 +218,7 @@ public class RegisterController {
 					JSONArray menteeList = new JSONArray();
 					for (int i = 4; i < row.getLastCellNum(); i++) {
 						String name = row.getCell(i).getStringCellValue();
-						menteeList.put(getIdbyName(name));
+						menteeList.put(UserController.getIdbyName(name));
 					}
 					registerDoc.put("mentee", menteeList);
 					Map<String, Object> m = db.createDoc(registerDoc);
@@ -225,28 +232,5 @@ public class RegisterController {
 					+ stage.toString());
 		}
 		return registered;
-	}
-
-	public String getIdbyName(String name) {
-		// 이름을 통해 해당 사용자 문서의 _id를 가져온다
-		BufferedReader is = new BufferedReader(new InputStreamReader(
-				db.getByView("_design/user", "search_by_name", name, false,
-						false)));
-		try {
-			String str, doc = "";
-			while ((str = is.readLine()) != null) {
-				doc += str;
-			}
-			JSONArray results = new JSONObject(doc).getJSONArray("rows");
-			if (results.length() == 0)
-				throw new Exception();
-			return results.getJSONObject(0).getString("value");
-		} catch (IOException e) {
-			Log.error(e.getLocalizedMessage());
-			return null;
-		} catch (Exception e) {
-			Log.error(e.getLocalizedMessage());
-			return null;
-		}
 	}
 }

@@ -1,1 +1,7 @@
+<<<<<<< HEAD
+
+{"report_info":{"date":"20150731","mentoring_num":1,"start_time":"201507311900","except_time":0,"end_time":"201507312300","place":"아람7-6","whole_time":4,"total_time":4},"report_details":{"goal":"목푭니다만","issue":"추진내용입니다만","solution":"해결방안이요","etc":"하고싶은말이남았어","topic":"주제입니다만","plan":"계획입니다만","opinion":"의견입니다만"},"attendee":[{"id":"9d898f7d5bfbf361939e1fafd5033819"},{"id":"9d898f7d5bfbf361939e1fafd50347ee"}],"report_attachments":{"reference":[],"photo":false},"_rev":"1-005fdb24dff811cf50b1b1335f033c52","project":"58387a05c00dcded6f7936c1173e3f5a","_id":"9d898f7d5bfbf361939e1fafd509fd39","type":"report","absentee":[{"reason":"잠의 노예","id":"9d898f7d5bfbf361939e1fafd5031d8e"}]}
+
+=======
 {"report_info":{"date":"20150731","mentoring_num":1,"start_time":"201507311900","except_time":0,"end_time":"201507312300","place":"아람7-6","whole_time":4,"total_time":4},"report_details":{"goal":"목푭니다만","issue":"추진내용입니다만","solution":"해결방안이요","etc":"하고싶은말이남았어","topic":"주제입니다만","plan":"계획입니다만","opinion":"의견입니다만"},"attendee":[{"id":"9d898f7d5bfbf361939e1fafd5033819"},{"id":"9d898f7d5bfbf361939e1fafd50347ee"}],"report_attachments":{"reference":[],"photo":false},"_rev":"1-005fdb24dff811cf50b1b1335f033c52","project":"58387a05c00dcded6f7936c1173e3f5a","_id":"9d898f7d5bfbf361939e1fafd50ad933","type":"report","absentee":[{"reason":"잠의 노예","id":"9d898f7d5bfbf361939e1fafd5031d8e"}]}
+>>>>>>> ec8bd973059a0588dc4bc287594d94bb09aa8f73

@@ -15,19 +15,19 @@ import java.net.URL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ImageLoader extends AsyncTask<String, Void, Bitmap>{
+public class ImageLoaderOld extends AsyncTask<String, Void, Bitmap>{
 
-    final String TAG = "ImageLoader";
+    final String TAG = "ImageLoaderOld";
     CircleImageView circleView;
     ImageView imageView;
     boolean circle;
 
-    public ImageLoader(CircleImageView i) {
+    public ImageLoaderOld(CircleImageView i) {
         circle = true;
         this.circleView = i;
     }
 
-    public ImageLoader(ImageView i) {
+    public ImageLoaderOld(ImageView i) {
         imageView = i;
         circle = false;
     }

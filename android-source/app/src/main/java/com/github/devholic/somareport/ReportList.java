@@ -33,11 +33,10 @@ public class ReportList extends AppCompatActivity {
     Toolbar toolbar;
 
     // Content
-    @Bind(R.id.recyclerView)
+    @Bind(R.id.report_list_recycler)
     RecyclerView recyclerView;
 
     private DetailRecyclerViewAdapter adapter;
-    private int featureId;
     private MenuItem item;
 
     @Override
@@ -61,7 +60,6 @@ public class ReportList extends AppCompatActivity {
         JSONArray list = new JSONArray();
         try {
             JSONObject data = new JSONObject(getIntent().getStringExtra("projectdata"));
-            Log.d(TAG, "projectdata: " + data.toString());
             getSupportActionBar().setTitle(data.get("title").toString());
             getSupportActionBar().setSubtitle("멘토링 보고서 리스트");
             String pid =  data.get("id").toString();
@@ -122,6 +120,7 @@ public class ReportList extends AppCompatActivity {
                         Intent intent = new Intent(ReportList.this, ReportDetails.class);
                         intent.putExtra("reportdata", items.get(itemPosition).toString());
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slide_right, R.anim.slide_left);
                     }
                 });
                 return new DetailItemViewHolder(itemView);
@@ -132,16 +131,18 @@ public class ReportList extends AppCompatActivity {
         public void onBindViewHolder(DetailItemViewHolder holder, int position) {
             try {
                 JSONObject report = new JSONObject(items.get(position).toString());
-                Log.d(TAG, report.toString());
                 holder.title.setText(report.get("reportTitle").toString());
                 holder.topic.setText(report.get("reportTopic").toString());
 
-                ImageLoader imageLoader;
+//                ImageLoaderOld imageLoader;
+                ProfileImageLoader profileImageLoader;
                 JSONArray attendee = new JSONArray(report.get("attendee").toString());
                 for (int i=0; i<attendee.length(); i++) {
                     CircleImageView circleImageView = new CircleImageView(holder.attendee.getContext());
-                    imageLoader = new ImageLoader(circleImageView);
-                    imageLoader.execute(attendee.get(i).toString());
+//                    imageLoader = new ImageLoaderOld(circleImageView);
+//                    imageLoader.execute(attendee.get(i).toString());
+//                    profileImageLoader = new ProfileImageLoader(attendee.getString(i), circleImageView);
+//                    profileImageLoader.getProfile();
                     holder.attendee.addView(circleImageView);
                 }
             } catch (JSONException e) {
@@ -168,4 +169,9 @@ public class ReportList extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_right);
+    }
 }

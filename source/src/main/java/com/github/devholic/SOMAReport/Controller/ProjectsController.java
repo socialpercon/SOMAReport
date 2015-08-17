@@ -13,26 +13,25 @@ import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
 public class ProjectsController {
 
-	private final Logger logger = Logger.getLogger(ProjectsController.class);
+	private static final Logger logger = Logger.getLogger(ProjectsController.class);
 
-	DatabaseController db = new DatabaseController();
+	static DatabaseController db = new DatabaseController();
 
 	/**************************************************************************
 	 * 나의 프로젝트 가져오기
 	 * 
 	 * @param _id
-	 * @return JSONArray [{title, stage, mentor, mentee[]}]
+	 * @return JSONArray [{_id, title, stage, mentor, mentee[]}]
 	 *************************************************************************/
-	public JSONArray getMyProject(@PathParam("id") String userId) {
+	public static JSONArray getMyProject(@PathParam("id") String userId) {
 
 		JSONArray list = new JSONArray();
 		JSONObject jo = JSONFactory.inputStreamToJson(db.getByView(
 				"_design/project", "my_projects", new Object[] { userId + " ",
-						" " }, new Object[] { userId, " " }, true, true));
+						" " }, new Object[] { userId, " " }, true, true, false));
 		JSONArray arr = JSONFactory.getData(jo);
 
 		for (int i = 0; i < arr.length(); i++) {
-			logger.info(arr.get(i));
 			JSONObject doc = arr.getJSONObject(i).getJSONObject("doc");
 			JSONObject project = new JSONObject();
 			project.put("_id", doc.get("_id"));
@@ -68,16 +67,11 @@ public class ProjectsController {
 	 * 
 	 * @return List<JSONObject>
 	 *************************************************************************/
-	public JSONArray getProjectList() {
+	public static JSONArray getProjectList() {
 
 		JSONArray projectList = JSONFactory.getData(JSONFactory
 				.inputStreamToJson(db.getByView("_design/project",
-						"all_project", true, true)));
-		try {
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+						"all_project", true, true, false)));
 
 		return projectList;
 	}
@@ -141,6 +135,7 @@ public class ProjectsController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return Response
 				.status(500)
 				.type(MediaType.APPLICATION_JSON)
@@ -169,5 +164,50 @@ public class ProjectsController {
 		}
 		return result;
 	}
-
+	
+	/**
+	 * 입력된 기수에 해당하는 프로젝트 목록을 불러온다.
+	 * 
+	 * @param stage ( ex: {6, 1, 1})
+	 * @return JSONArray [{ "doc":{project_type, mentor, stage, field, _rev, _id, title, mentee[]} }]
+	 */
+	public static JSONArray projectsInStage (int[] stage) {
+		return JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/project", "project_stage", stage, true, true, false)));
+	}
+	
+	public static JSONArray projectsInStageByString (String stage) {
+		
+		return JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/project", "project_stage", stage, true, true, false)));
+	}
+	
+	
+	/***
+	 * 
+	 */
+	public static JSONArray existingStages () {
+		JSONArray stages = new JSONArray();
+		
+		JSONArray list = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/project", "project_stage", false, true, true)));
+		for (int i=0; i<list.length(); i++) {
+			JSONArray stg = list.getJSONObject(i).getJSONArray("key");
+			stages.put(stg);
+		}
+		
+		return stages;
+	}
+	
+	public static JSONArray existingStagesString () {
+		JSONArray stages = new JSONArray();
+		
+		JSONArray list = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/project", "project_stage", false, true, true)));
+		for (int i=0; i<list.length(); i++) {
+			JSONArray stg = list.getJSONObject(i).getJSONArray("key");
+			if (stg.length() == 2 || stg.getInt(2) == 0)
+				stages.put(stg.get(0) + "기 " + stg.get(1) + "단계 프로젝트");
+			else
+				stages.put(stg.get(0) + "기 " + stg.get(1) + "단계 " + stg.get(2) + "차 프로젝트");				
+		}
+		
+		return stages;
+	}
 }

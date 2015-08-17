@@ -78,7 +78,7 @@ public class DriveController {
 
 	public java.io.File getImage(String id) {
 		java.io.File f = new java.io.File("cache/" + id);
-		InputStream is = db.getByView("_design/file", "info", id, false, false);
+		InputStream is = db.getByView("_design/file", "info", id, false, false, false);
 		JSONArray result = JSONFactory.getData(new JSONObject(StringFactory
 				.inputStreamToString(is)));
 		if (f.isFile()) {
@@ -119,7 +119,7 @@ public class DriveController {
 		if (f.exists()) {
 			f.delete();
 		}
-		InputStream is = db.getByView("_design/file", "info", id, true, false);
+		InputStream is = db.getByView("_design/file", "info", id, true, false, false);
 		JSONArray result = JSONFactory.getData(new JSONObject(StringFactory
 				.inputStreamToString(is)));
 		if (db.deleteDoc(result.getJSONObject(0).getJSONObject("doc")

@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import com.github.devholic.SOMAReport.Controller.DatabaseController;
 import com.github.devholic.SOMAReport.Controller.RegisterController;
+import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
 public class RegisterControllerTest {
 
@@ -46,24 +47,11 @@ public class RegisterControllerTest {
 
 	@Test
 	public void testRegisterMentor() {
-		JSONObject registered = rc.registerMentor();
-		JSONArray a = registered.getJSONArray("inserted");
+		JSONArray a = rc.registerMentor();
 		for (int i = 0; i < a.length(); i++) {
 			Log.info(a.get(i).toString());
 			String id = a.getJSONObject(i).getString("_id").toString();
-
-			BufferedReader is = new BufferedReader(new InputStreamReader(
-					dc.getDoc(id)));
-			String str, doc = "";
-			try {
-				while ((str = is.readLine()) != null) {
-					doc += str;
-				}
-			} catch (IOException e) {
-				Log.error(e.getLocalizedMessage());
-				fail("fail..");
-			}
-			JSONObject jo = new JSONObject(doc);
+			JSONObject jo = JSONFactory.inputStreamToJson(dc.getDoc(id));
 			assertEquals(a.getJSONObject(i).get("name"), jo.getString("name"));
 			assertTrue(dc.deleteDoc(jo.getString("_id"), jo.getString("_rev")));
 		}
