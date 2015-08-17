@@ -36,7 +36,7 @@ public class RegisterControllerTest {
 	public static void testRegisterController() {
 		try {
 			rc = new RegisterController(new FileInputStream(
-					"register_example.xlsx"));
+					"example_project.xlsx"));
 			dc = new DatabaseController();
 			assertThat(rc, not(nullValue()));
 		} catch (FileNotFoundException e) {

@@ -26,12 +26,12 @@ public class ProjectsControllerTest {
 	@Test
 	public void testProjectsInStage() {
 		JSONArray res = ProjectsController
-				.projectsInStage(new int[] { 6, 1, 1 });
+				.projectsInStage(new int[] { 6, 1, 2 });
 		Log.info(res);
 		Log.info(res.length());
 		for (int i = 0; i < res.length(); i++) {
 			assertEquals(res.getJSONObject(i).getJSONObject("doc").get("stage")
-					.toString(), "[6,1,1]");
+					.toString(), "[6,1,2]");
 		}
 	}
 

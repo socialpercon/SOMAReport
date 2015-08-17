@@ -227,6 +227,22 @@ public class RegisterController {
 					array.put(registerDoc);
 				}
 			}
+			JSONObject stageInfo = new JSONObject();
+			stageInfo.put("type", "stageInfo");
+			stageInfo.put("stage", stage);
+			String stageString;
+			if (stage.length() == 2 || stage.getInt(2) == 0)
+				stageString = stage.get(0) + "기 " + stage.get(1) + "단계 프로젝트";
+			else
+				stageString = stage.get(0) + "기 " + stage.get(1) + "단계 " + stage.get(2) + "차 프로젝트";
+			stageInfo.put("stageString", stageString);
+			JSONArray projects = new JSONArray();
+			for (int i=0; i<array.length(); i++) {
+				projects.put(array.getJSONObject(i).get("_id"));
+			}
+			stageInfo.put("projects", projects);
+			Map<String, Object> m = db.createDoc(stageInfo);
+			Log.info(m.get("_id"));
 			registered.put(sheet.getSheetName(), array);
 			Log.debug("Total " + num + "projects are inserted in "
 					+ stage.toString());

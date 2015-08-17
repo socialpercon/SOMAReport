@@ -14,8 +14,7 @@ import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
 public class ProjectsController {
 
-	private static final Logger logger = Logger
-			.getLogger(ProjectsController.class);
+	private static final Logger logger = Logger.getLogger(ProjectsController.class);
 
 	static DatabaseController db = new DatabaseController();
 
@@ -28,10 +27,8 @@ public class ProjectsController {
 	public static JSONArray getMyProject(@PathParam("id") String userId) {
 
 		JSONArray list = new JSONArray();
-		JSONObject jo = JSONFactory
-				.inputStreamToJson(db.getByView("_design/project",
-						"my_projects", new Object[] { userId + " ", " " },
-						new Object[] { userId, " " }, true, true, false));
+		JSONObject jo = JSONFactory.inputStreamToJson(db.getByView("_design/project", "my_projects",
+				new Object[] { userId + " ", " " }, new Object[] { userId, " " }, true, true, false));
 		JSONArray arr = JSONFactory.getData(jo);
 
 		for (int i = 0; i < arr.length(); i++) {
@@ -41,11 +38,9 @@ public class ProjectsController {
 			project.put("title", doc.get("title"));
 			JSONArray stage = doc.getJSONArray("stage");
 			if (stage.length() == 2 || stage.getInt(2) == 0)
-				project.put("stage", stage.get(0) + "기 " + stage.get(1)
-						+ "단계 프로젝트");
+				project.put("stage", stage.get(0) + "기 " + stage.get(1) + "단계 프로젝트");
 			else
-				project.put("stage", stage.get(0) + "기 " + stage.get(1) + "단계 "
-						+ stage.get(2) + "차 프로젝트");
+				project.put("stage", stage.get(0) + "기 " + stage.get(1) + "단계 " + stage.get(2) + "차 프로젝트");
 			project.put("mentor", doc.get("mentor"));
 			project.put("mentee", doc.getJSONArray("mentee"));
 			list.put(project);
@@ -72,9 +67,8 @@ public class ProjectsController {
 	 *************************************************************************/
 	public static JSONArray getProjectList() {
 
-		JSONArray projectList = JSONFactory.getData(JSONFactory
-				.inputStreamToJson(db.getByView("_design/project",
-						"all_project", true, true, false)));
+		JSONArray projectList = JSONFactory.getData(
+				JSONFactory.inputStreamToJson(db.getByView("_design/project", "all_project", true, true, false)));
 
 		return projectList;
 	}
@@ -88,8 +82,7 @@ public class ProjectsController {
 	public JSONObject getProjectInfo(String projectId) {
 
 		JSONObject projectInfo = new JSONObject();
-		JSONObject project = JSONFactory
-				.inputStreamToJson(db.getDoc(projectId));
+		JSONObject project = JSONFactory.inputStreamToJson(db.getDoc(projectId));
 		project.put("project_type", project.getString("project_type"));
 		project.put("title", project.getString("title"));
 		project.put("mentor", project.getString("mentor"));
@@ -97,17 +90,14 @@ public class ProjectsController {
 		if (stage.length() == 2 || stage.getInt(2) == 0)
 			project.put("stage", stage.get(0) + "기 " + stage.get(1) + "단계 프로젝트");
 		else
-			project.put("stage", stage.get(0) + "기 " + stage.get(1) + "단계 "
-					+ stage.get(2) + "차 프로젝트");
+			project.put("stage", stage.get(0) + "기 " + stage.get(1) + "단계 " + stage.get(2) + "차 프로젝트");
 
-		JSONObject mentor = JSONFactory.inputStreamToJson(db.getDoc(project
-				.getString("mentor")));
+		JSONObject mentor = JSONFactory.inputStreamToJson(db.getDoc(project.getString("mentor")));
 		project.put("section", mentor.getString("section"));
 		project.put("field", project.getString("field"));
 		project.put("mentee", project.getString("mentee"));
 		ReportsController rCtrl = new ReportsController();
-		project.put("mentoring_num", rCtrl.getReportByProjectId(projectId)
-				.length());
+		project.put("mentoring_num", rCtrl.getReportByProjectId(projectId).length());
 
 		return projectInfo;
 	}
@@ -133,19 +123,14 @@ public class ProjectsController {
 	@PUT
 	public Response updateProject() {
 		try {
-			return Response.status(200).type(MediaType.APPLICATION_JSON)
-					.entity("put : 200").build();
+			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("put : 200").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return Response
-				.status(500)
-				.type(MediaType.APPLICATION_JSON)
-				.entity("put : 500")
+		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("put : 500")
 				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods",
-						"GET, POST, DELETE, PUT").build();
+				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").build();
 	}
 
 	/************************************************************************
@@ -177,39 +162,33 @@ public class ProjectsController {
 	 *         _id, title, mentee[]} }]
 	 */
 	public static JSONArray projectsInStage(int[] stage) {
-		return JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView(
-				"_design/project", "project_stage", stage, true, true, false)));
+		return JSONFactory.getData(JSONFactory
+				.inputStreamToJson(db.getByView("_design/project", "project_stage", stage, true, true, false)));
 	}
 
 	public static JSONArray projectsInStageByString(String stage) {
 
-		return JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView(
-				"_design/project", "project_stage", stage, true, true, false)));
+		return JSONFactory.getData(JSONFactory
+				.inputStreamToJson(db.getByView("_design/project", "project_stage", stage, true, true, false)));
 	}
 
 	/***
 	 * 
+	 * @return JSONArray [{infoId, stage, projectNum}]
 	 */
 
 	public JSONArray existingStage() {
 		JSONArray stage = new JSONArray();
-		JSONArray list = JSONFactory.getData(JSONFactory.inputStreamToJson(db
-				.getByView("_design/project", "project_stage", false, true,
-						true)));
+		JSONArray list = JSONFactory.getData(
+				JSONFactory.inputStreamToJson(db.getByView("_design/project", "stage_info", true, true, false)));
 		for (int i = 0; i < list.length(); i++) {
 			JSONObject stages = new JSONObject();
-			System.out.println(list.toString());
-			JSONArray stg = list.getJSONObject(i).getJSONArray("key");
-			if (stg.length() == 2 || stg.getInt(2) == 0)
-				stages.put("stage", stg.get(0) + "기 " + stg.get(1) + "단계 프로젝트");
-			else
-				stages.put("stage", stg.get(0) + "기 " + stg.get(1) + "단계 "
-						+ stg.get(2) + "차 프로젝트");
-			stages.put("projectNum", list.getJSONObject(i).get("value"));
-			stages.put("stages", stg);
+			stages.put("stage", list.getJSONObject(0).get("key"));
+			stages.put("infoId", list.getJSONObject(0).get("value"));
+			stages.put("projectNum", list.getJSONObject(i).getJSONObject("doc").getJSONArray("projects").length());
 			stage.put(stages);
 		}
-
+		
 		return stage;
 	}
 }
