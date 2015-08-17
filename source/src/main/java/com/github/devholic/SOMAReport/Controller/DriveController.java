@@ -62,14 +62,14 @@ public class DriveController {
 			projectDrive.put("type", "projectdrive");
 			projectDrive.put("files", new JSONArray());
 			Map<String, Object> map = db.createDoc(projectDrive);
+			String id = map.get("_id").toString();
+		}
+		JSONObject projectDrive = JSONFactory.getData(driveQuery)
+				.getJSONObject(0);
+		if (projectDrive == null) {
+			Log.info("null");
 		} else {
-			JSONObject projectDrive = JSONFactory.getData(driveQuery)
-					.getJSONObject(0);
-			if (projectDrive == null) {
-				Log.info("null");
-			} else {
-				Log.info(projectDrive.toString());
-			}
+			Log.info(projectDrive.toString());
 		}
 	}
 
