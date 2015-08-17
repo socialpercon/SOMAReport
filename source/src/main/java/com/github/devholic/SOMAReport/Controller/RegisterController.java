@@ -21,29 +21,27 @@ import com.github.devholic.SOMAReport.Utilities.StringFactory;
 public class RegisterController {
 
 	private final static Logger Log = Logger.getLogger(UserController.class);
-	
+
 	public final static int SHEET_USER = 0;
 	public final static int SHEET_PROJECT = 1;
-	
+
 	DatabaseController db;
-	
+
 	private Workbook workbook;
 	private Sheet sheet;
-	
+
 	public RegisterController(InputStream is) {
 		try {
 			workbook = new XSSFWorkbook(is);
 			db = new DatabaseController();
-		} catch(FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			Log.error(e.getLocalizedMessage());
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			Log.error(e.getLocalizedMessage());
 		}
 	}
-	
+
 	public JSONArray registerMentor() {
-		
 		sheet = workbook.getSheet("mentor");
 		if (sheet == null) {
 			Log.error("Mentor sheet does not exists.");
@@ -72,19 +70,19 @@ public class RegisterController {
 					years.put(year);
 					registerDoc.put("years", years);
 					insertNum++;
-				}
-				else {
-					//신규 멘토 등
+				} else {
+					// 신규 멘토 등
 					registerDoc = new JSONObject();
 					registerDoc.put("type", "account");
 					registerDoc.put("role", "mentor");
-					registerDoc.put("years", new int[]{year});
-					
+					registerDoc.put("years", new int[] { year });
+
 					String salt = StringFactory.createSalt();
 					registerDoc.put("salt", salt);
-					String password = StringFactory.encryptPassword("password", salt);
+					String password = StringFactory.encryptPassword("password",
+							salt);
 					registerDoc.put("password", password);
-					
+
 					cell = row.getCell(0);
 					registerDoc.put("name", cell.getStringCellValue());
 					cell = row.getCell(1);
@@ -104,8 +102,9 @@ public class RegisterController {
 				}
 			}
 		}
-		
-		Log.debug(updateNum +" mentors are updated and " + insertNum + " mentors are inserted.");
+
+		Log.debug(updateNum + " mentors are updated and " + insertNum
+				+ " mentors are inserted.");
 		return inserted;
 	}
 
@@ -137,9 +136,10 @@ public class RegisterController {
 
 				String salt = StringFactory.createSalt();
 				registerDoc.put("salt", salt);
-				String password = StringFactory.encryptPassword("password", salt);
+				String password = StringFactory.encryptPassword("password",
+						salt);
 				registerDoc.put("password", password);
-				
+
 				cell = row.getCell(0);
 				registerDoc.put("name", cell.getStringCellValue());
 				cell = row.getCell(1);
@@ -173,8 +173,8 @@ public class RegisterController {
 			Log.error("Project sheet does not exists");
 			return null;
 		}
-		Log.debug("There are "+projectSheets.size() + " Sheets");
-		
+		Log.debug("There are " + projectSheets.size() + " Sheets");
+
 		JSONObject registered = new JSONObject();
 		for (Sheet projectSheet : projectSheets) {
 			int num = 0;
@@ -182,7 +182,7 @@ public class RegisterController {
 			sheet = projectSheet;
 			Row row;
 			Cell cell;
-			
+
 			JSONArray array = new JSONArray();
 
 			// 등록정보 가져오기 (기수, 단계, 차수)
@@ -196,7 +196,8 @@ public class RegisterController {
 			JSONArray stage = new JSONArray();
 			stage.put(year);
 			stage.put(level);
-			if (st != 0) stage.put(st);
+			if (st != 0)
+				stage.put(st);
 
 			for (int rowIndex = 8; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 				row = sheet.getRow(rowIndex);
@@ -207,7 +208,8 @@ public class RegisterController {
 					registerDoc.put("project_type", cell.getStringCellValue());
 					registerDoc.put("stage", stage);
 					cell = row.getCell(1);
-					registerDoc.put("mentor", UserController.getIdbyName(cell.getStringCellValue()));
+					registerDoc.put("mentor", UserController.getIdbyName(cell
+							.getStringCellValue()));
 					cell = row.getCell(2);
 					registerDoc.put("title", cell.getStringCellValue());
 					cell = row.getCell(3);
@@ -226,10 +228,9 @@ public class RegisterController {
 				}
 			}
 			registered.put(sheet.getSheetName(), array);
-			Log.debug("Total " + num + "projects are inserted in " + stage.toString());
+			Log.debug("Total " + num + "projects are inserted in "
+					+ stage.toString());
 		}
 		return registered;
 	}
-	
-
 }

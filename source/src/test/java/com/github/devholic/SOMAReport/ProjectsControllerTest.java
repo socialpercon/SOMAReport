@@ -33,7 +33,7 @@ public class ProjectsControllerTest {
 	
 	@Test
 	public void testExistingStages() {
-		JSONArray res = ProjectsController.existingStages();
+		JSONArray res = ProjectsController.existingStage();
 		Log.info(res);
 		String a = "6기 1단계 1차";
 	}

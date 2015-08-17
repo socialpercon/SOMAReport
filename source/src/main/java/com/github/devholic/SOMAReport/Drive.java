@@ -27,7 +27,6 @@ public class Drive {
 	// API
 	@POST
 	@Path("/drive/upload/{id}")
-	@Produces("image/jpeg")
 	public Response uploadImage(@PathParam("id") String id,
 			@FormDataParam("file") InputStream is,
 			@FormDataParam("file") FormDataContentDisposition formData) {

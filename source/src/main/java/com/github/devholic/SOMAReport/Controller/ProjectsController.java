@@ -185,7 +185,7 @@ public class ProjectsController {
 	 * 
 	 */
 	
-	public static JSONArray existingStages () {
+	public static JSONArray existingStage () {
 		JSONArray stage = new JSONArray();
 		JSONObject stages = new JSONObject();
 		
@@ -197,6 +197,7 @@ public class ProjectsController {
 			else
 				stages.put("stage", stg.get(0) + "기 " + stg.get(1) + "단계 " + stg.get(2) + "차 프로젝트");	
 			stages.put("projectNum", list.getJSONObject(i).get("value"));
+			stages.put("stages", stg);
 			stage.put(stages);
 		}
 		
