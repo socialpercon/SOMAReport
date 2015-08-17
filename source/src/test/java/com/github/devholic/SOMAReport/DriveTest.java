@@ -11,6 +11,5 @@ public class DriveTest {
 	public void testDrive() throws IOException {
 		DriveController drive = new DriveController();
 		drive.uploadImageToProject("9d898f7d5bfbf361939e1fafd5041f4b", null);
-		drive.uploadImageToProject("9d898f7d5bfbf361939e1fafd5041f4bds", null);
 	}
 }

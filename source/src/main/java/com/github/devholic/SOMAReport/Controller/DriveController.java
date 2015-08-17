@@ -62,15 +62,16 @@ public class DriveController {
 			projectDrive.put("type", "projectdrive");
 			projectDrive.put("files", new JSONArray());
 			Map<String, Object> map = db.createDoc(projectDrive);
-			String id = map.get("_id").toString();
+			driveQuery = JSONFactory.inputStreamToJson(db.getByView(
+					"_design/file", "projectdrive", map.get("_id").toString(),
+					false, false, false));
 		}
-		JSONObject projectDrive = JSONFactory.getData(driveQuery)
-				.getJSONObject(0);
-		if (projectDrive == null) {
-			Log.info("null");
-		} else {
-			Log.info(projectDrive.toString());
-		}
+		JSONObject jo = JSONFactory.inputStreamToJson(db.getDoc(JSONFactory
+				.getData(driveQuery).getJSONObject(0).getString("id")));
+		Log.info(jo.toString());
+		String id = uploadImage(file);
+		jo.getJSONArray("files").put(id);
+		db.updateDoc(jo);
 	}
 
 	public String uploadImage(java.io.File file) {
