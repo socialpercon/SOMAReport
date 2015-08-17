@@ -164,5 +164,50 @@ public class ProjectsController {
 		}
 		return result;
 	}
-
+	
+	/**
+	 * 입력된 기수에 해당하는 프로젝트 목록을 불러온다.
+	 * 
+	 * @param stage ( ex: {6, 1, 1})
+	 * @return JSONArray [{ "doc":{project_type, mentor, stage, field, _rev, _id, title, mentee[]} }]
+	 */
+	public static JSONArray projectsInStage (int[] stage) {
+		return JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/project", "project_stage", stage, true, true, false)));
+	}
+	
+	public static JSONArray projectsInStageByString (String stage) {
+		
+		return JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/project", "project_stage", stage, true, true, false)));
+	}
+	
+	
+	/***
+	 * 
+	 */
+	public static JSONArray existingStages () {
+		JSONArray stages = new JSONArray();
+		
+		JSONArray list = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/project", "project_stage", false, true, true)));
+		for (int i=0; i<list.length(); i++) {
+			JSONArray stg = list.getJSONObject(i).getJSONArray("key");
+			stages.put(stg);
+		}
+		
+		return stages;
+	}
+	
+	public static JSONArray existingStagesString () {
+		JSONArray stages = new JSONArray();
+		
+		JSONArray list = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/project", "project_stage", false, true, true)));
+		for (int i=0; i<list.length(); i++) {
+			JSONArray stg = list.getJSONObject(i).getJSONArray("key");
+			if (stg.length() == 2 || stg.getInt(2) == 0)
+				stages.put(stg.get(0) + "기 " + stg.get(1) + "단계 프로젝트");
+			else
+				stages.put(stg.get(0) + "기 " + stg.get(1) + "단계 " + stg.get(2) + "차 프로젝트");				
+		}
+		
+		return stages;
+	}
 }

@@ -73,22 +73,6 @@ public class DatabaseController {
 		
 		return db.queryForStream(q);
 	}
-
-	public InputStream getByView(String docId, String viewName, List<Object> keys, boolean includeDocs, boolean descending, boolean reduce) {
-		// view 결과를 조회
-		// multiple keys : List<>
-		// includeDocs (true : 문서 통째로 리턴) / (false : value만 리턴)
-		// descending (true : key역순) / (false : key순)
-		ViewQuery q;
-		if (reduce) {
-			q = new ViewQuery().designDocId(docId).viewName(viewName).keys(keys)
-					.reduce(reduce).includeDocs(includeDocs).descending(descending).group(true); 
-		} else {
-			q = new ViewQuery().designDocId(docId).viewName(viewName).keys(keys)
-					.reduce(reduce).includeDocs(includeDocs).descending(descending); 
-		}
-		return db.queryForStream(q);
-	}
 	
 	public InputStream getByView(String docId, String viewName, Object startKey, Object endKey, boolean includeDocs, boolean descending, boolean reduce) {
 		// view 결과를 조회
