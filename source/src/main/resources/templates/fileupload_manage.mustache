@@ -30,37 +30,23 @@
     </nav>
     </div>
       <!-- left -->
-      <div style="width:30%;height:100%;float:left;overflow:auto;padding:15px">
+      <div style="width:30%;height:100%;float:left;background:#fff;overflow:auto;padding:15px">
         {{#stageInfo}}
-        <a href="/console/project/{{infoId}}">
         <div class="card white">
             <div class="card-content black-text">
               <span class="card-title black-text">{{stage}}</span>
-              <div class="divider"></div>
               <p>{{projectNum}}개의 프로젝트가 있습니다.</p>
             </div>
           </div>
-        </a>
         {{/stageInfo}}
       </div>
       <!-- right -->
-      <div style="width:70%;height:100%;float:right;overflow:auto">
-        {{#projects}}
-        <a href="/console/project/{{infoId}}">
-        <div class="card white">
-            <div class="card-content black-text">
-              <span class="card-title black-text">{{title}}</span>
-              <div class="divider"></div>
-              <p>{{section}}</p>
-            </div>
-          </div>
-        </a>
-        {{/projects}}
-        <input type="file" name="file" id="upFile" style="visibility: hidden;">
+      <div style="width:70%;height:100%;float:right;background:#fff;overflow:auto">
+        <input type="file" name="file" multiple id="upMultiFile" style="visibility: hidden;">
         <a id="fileUpload" class="btn-floating btn-large waves-effect waves-light indigo lighten-1" style="position:fixed;right:56px;bottom:56px;" onclick="javascript:uploadFile()"><i class="material-icons">add</i></a>
           <center>
-          <div id="progressParent" class="progress" style="width:50%;position:fixed;bottom:64px;right:170px;visibility:hidden">
-          <div id="progressBar" class="determinate" style="width:0%;"></div>
+          <div class="progress" style="width:50%;position:fixed;bottom:64px;right:170px">
+          <div id="progressBar" class="determinate" style="width: 0%"></div>
           </div>
           </center>
       </div>
@@ -71,23 +57,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
     <script>
       function uploadFile(){
-        document.getElementById('upFile').click();
-      }
-      function updateVisibility(){
-        document.getElementById('progressParent').style.visibility = 'visible';
+        document.getElementById('upMultiFile').click();
       }
      $(document).ready(function() {
-    $('#upFile').fileupload({
-        url : 'http://localhost:8080/console/project/upload',
+    $('#upMultiFile').fileupload({
+        url : 'http://localhost:8080/uploadMultiFile',
         dataType: 'json',
         //replaceFileInput: false,
         add: function(e, data){
+            console.log(data);
             var uploadFile = data.files[0];
             var isValid = true;
-            if (!(/xlsx/i).test(uploadFile.name)) {
-                alert('xlsx 만 가능합니다');
-                isValid = false;
-            } else if (uploadFile.size > 5000000) {
+            // if (!(/xlsx/i).test(uploadFile.name)) {
+            //     alert('xlsx 만 가능합니다');
+            //     isValid = false;
+            // } 
+            if (uploadFile.size > 5000000) {
                 alert('파일 용량은 5메가를 초과할 수 없습니다.');
                 isValid = false;
             }
@@ -95,7 +80,6 @@
                 data.submit();
             }
         }, progressall: function(e,data) {
-            updateVisibility();
             var progress = parseInt(data.loaded / data.total * 100, 10);
             $('#progressBar').css(
                 'width',

@@ -32,60 +32,74 @@ public class DatabaseController {
 			Properties prop = new Properties();
 			FileInputStream fileInput = new FileInputStream("config.xml");
 			prop.loadFromXML(fileInput);
-			couchClient = new StdHttpClient.Builder().url(prop.getProperty("couchdb_url"))
-					.username(prop.getProperty("couchdb_id")).password(prop.getProperty("couchdb_password")).build();
+			couchClient = new StdHttpClient.Builder()
+					.url(prop.getProperty("couchdb_url"))
+					.username(prop.getProperty("couchdb_id"))
+					.password(prop.getProperty("couchdb_password")).build();
 			dbInstance = new StdCouchDbInstance(couchClient);
-			db = new StdCouchDbConnector(prop.getProperty("couchdb_name"), dbInstance);
+			db = new StdCouchDbConnector(prop.getProperty("couchdb_name"),
+					dbInstance);
 		} catch (Exception e) {
 			Log.error(e.getMessage());
 		}
 	}
 
-	public InputStream getByView(String docId, String viewName, boolean includeDocs, boolean descending, boolean reduce) {
+	public InputStream getByView(String docId, String viewName,
+			boolean includeDocs, boolean descending, boolean reduce) {
 		// view 결과를 조회
 		// key 없음
 		// includeDocs (true : 문서 통째로 리턴) / (false : value만 리턴)
 		// descending (true : key역순) / (false : key순)
 		ViewQuery q;
 		if (reduce) {
-			q= new ViewQuery().designDocId(docId).viewName(viewName)
-					.reduce(reduce).includeDocs(includeDocs).descending(descending).group(true);			
+			q = new ViewQuery().designDocId(docId).viewName(viewName)
+					.reduce(reduce).includeDocs(includeDocs)
+					.descending(descending).group(true);
 		} else {
-			q= new ViewQuery().designDocId(docId).viewName(viewName)
-					.reduce(reduce).includeDocs(includeDocs).descending(descending);			
+			q = new ViewQuery().designDocId(docId).viewName(viewName)
+					.reduce(reduce).includeDocs(includeDocs)
+					.descending(descending);
 		}
 		return db.queryForStream(q);
 	}
-	
-	public InputStream getByView(String docId, String viewName, Object key, boolean includeDocs, boolean descending, boolean reduce) {
+
+	public InputStream getByView(String docId, String viewName, Object key,
+			boolean includeDocs, boolean descending, boolean reduce) {
 		// view 결과를 조회
 		// single key
 		// includeDocs (true : 문서 통째로 리턴) / (false : value만 리턴)
 		// descending (true : key역순) / (false : key순)
 		ViewQuery q;
 		if (reduce) {
-			q= new ViewQuery().designDocId(docId).viewName(viewName).key(key)
-					.reduce(reduce).includeDocs(includeDocs).descending(descending).group(true);	
+			q = new ViewQuery().designDocId(docId).viewName(viewName).key(key)
+					.reduce(reduce).includeDocs(includeDocs)
+					.descending(descending).group(true);
 		} else {
-			q= new ViewQuery().designDocId(docId).viewName(viewName).key(key)
-					.reduce(reduce).includeDocs(includeDocs).descending(descending);
+			q = new ViewQuery().designDocId(docId).viewName(viewName).key(key)
+					.reduce(reduce).includeDocs(includeDocs)
+					.descending(descending);
 		}
-		
+
 		return db.queryForStream(q);
 	}
-	
-	public InputStream getByView(String docId, String viewName, Object startKey, Object endKey, boolean includeDocs, boolean descending, boolean reduce) {
+
+	public InputStream getByView(String docId, String viewName,
+			Object startKey, Object endKey, boolean includeDocs,
+			boolean descending, boolean reduce) {
 		// view 결과를 조회
 		// start-end 범위 검색 (key 설정시 descending에 따른 순서 주의)
 		// includeDocs (true : 문서 통째로 리턴) / (false : value만 리턴)
 		// descending (true : key역순) / (false : key순)
 		ViewQuery q;
 		if (reduce) {
-			q= new ViewQuery().designDocId(docId).viewName(viewName).startKey(startKey).endKey(endKey)
-				.reduce(reduce).includeDocs(includeDocs).descending(descending).group(true);
+			q = new ViewQuery().designDocId(docId).viewName(viewName)
+					.startKey(startKey).endKey(endKey).reduce(reduce)
+					.includeDocs(includeDocs).descending(descending)
+					.group(true);
 		} else {
-			q= new ViewQuery().designDocId(docId).viewName(viewName).startKey(startKey).endKey(endKey)
-					.reduce(reduce).includeDocs(includeDocs).descending(descending);
+			q = new ViewQuery().designDocId(docId).viewName(viewName)
+					.startKey(startKey).endKey(endKey).reduce(reduce)
+					.includeDocs(includeDocs).descending(descending);
 		}
 		return db.queryForStream(q);
 	}
@@ -131,5 +145,5 @@ public class DatabaseController {
 			return null;
 		}
 	}
-	
+
 }

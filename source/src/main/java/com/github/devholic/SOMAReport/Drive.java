@@ -38,6 +38,25 @@ public class Drive {
 
 	// View
 	@GET
+	@Path("/drive/project/{id}")
+	public Response getProjectDrive(@QueryParam("id") String id) {
+		DriveController drive = new DriveController();
+		File image = drive.getImage(id);
+		if (image != null) {
+			try {
+				return Response.status(200).entity(Files.toByteArray(image))
+						.build();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				Log.error(e.getMessage());
+				return Response.noContent().build();
+			}
+		} else {
+			return Response.noContent().build();
+		}
+	}
+
+	@GET
 	@Path("/drive/image")
 	@Produces("image/jpeg")
 	public Response getDriveImage(@QueryParam("id") String id) {
