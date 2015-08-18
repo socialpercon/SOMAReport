@@ -59,7 +59,7 @@ public class DriveController {
 		if (JSONFactory.getData(driveQuery).length() == 0) {
 			JSONObject projectDrive = new JSONObject();
 			projectDrive.put("project", projectId);
-			projectDrive.put("type", "projectdrive");
+			projectDrive.put("type", "project_drive");
 			projectDrive.put("files", new JSONArray());
 			Map<String, Object> map = db.createDoc(projectDrive);
 			driveQuery = JSONFactory.inputStreamToJson(db.getByView(
@@ -128,14 +128,23 @@ public class DriveController {
 		return null;
 	}
 
-	public void getProjectImageList(String id) {
+	public JSONArray getProjectImageList(String id) {
 		JSONObject driveQuery = JSONFactory.inputStreamToJson(db.getByView(
 				"_design/file", "projectdrive", id, false, false, false));
-		JSONArray idList = JSONFactory.getValue(
-				JSONFactory.getData(driveQuery).getJSONObject(0)).getJSONArray(
-				1);
-
-		// return render;
+		if (JSONFactory.getData(driveQuery).length() == 0) {
+			JSONObject projectDrive = new JSONObject();
+			projectDrive.put("project", id);
+			projectDrive.put("type", "project_drive");
+			projectDrive.put("files", new JSONArray());
+			Map<String, Object> map = db.createDoc(projectDrive);
+			driveQuery = JSONFactory.inputStreamToJson(db.getByView(
+					"_design/file", "projectdrive", map.get("_id").toString(),
+					false, false, false));
+		}
+		JSONArray idList = JSONFactory.getValue(JSONFactory.getData(driveQuery)
+				.getJSONObject(0));
+		Log.info(idList.toString());
+		return idList;
 	}
 
 	public java.io.File getUserImage(String id) {
