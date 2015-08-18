@@ -30,26 +30,26 @@ public class FileUploadManager {
 	@GET
 	@Path("/fileupload")
 	public Response consoleProject() {
-		
-		
-		return Response
-				.status(200)
+
+		return Response.status(200)
 				.entity(new Viewable("/fileupload_manage.mustache")).build();
 	}
+	
 	
 	@POST
 	@Path("/uploadMultiFile")
 	public Response uploadMultiFile(@FormDataParam("file") InputStream is) {
-		Log.info("uploadMultiFile!!!!!!  is:"+is);
-		try{
+		Log.info("uploadMultiFile!!!!!!  is:" + is);
+		try {
 			File buffer_file = this.stream2file(is);
-			
+
 			DriveController dc = new DriveController();
-			dc.uploadImageToProject("9d898f7d5bfbf361939e1fafd518b7f0", buffer_file);	
-		}catch(Exception e){
+			dc.uploadFileToProject("9d898f7d5bfbf361939e1fafd518b7f0",
+					buffer_file);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return Response.status(200)
 				.entity("{\"code\":\"1\", \"msg\":\"file upload success.\"}")
 				.build();
@@ -59,15 +59,15 @@ public class FileUploadManager {
 	public File stream2file (InputStream in) throws IOException {
 
 		final File tempFile = File.createTempFile("stream2file", ".tmp");
-        tempFile.deleteOnExit();
-        
-        try {
-        	FileOutputStream fo = new FileOutputStream(tempFile);
-            IOUtils.copy(in, fo);
-        }catch(Exception e){
-        	e.printStackTrace();
-        }
+		tempFile.deleteOnExit();
 
-        return tempFile;
-    }
+		try {
+			FileOutputStream fo = new FileOutputStream(tempFile);
+			IOUtils.copy(in, fo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return tempFile;
+	}
 }

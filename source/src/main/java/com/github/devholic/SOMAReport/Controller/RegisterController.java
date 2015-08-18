@@ -79,8 +79,7 @@ public class RegisterController {
 
 					String salt = StringFactory.createSalt();
 					registerDoc.put("salt", salt);
-					String password = StringFactory.encryptPassword("password",
-							salt);
+					String password = StringFactory.encryptPassword("password", salt);
 					registerDoc.put("password", password);
 
 					cell = row.getCell(0);
@@ -103,8 +102,7 @@ public class RegisterController {
 			}
 		}
 
-		Log.debug(updateNum + " mentors are updated and " + insertNum
-				+ " mentors are inserted.");
+		Log.debug(updateNum + " mentors are updated and " + insertNum + " mentors are inserted.");
 		return inserted;
 	}
 
@@ -136,8 +134,7 @@ public class RegisterController {
 
 				String salt = StringFactory.createSalt();
 				registerDoc.put("salt", salt);
-				String password = StringFactory.encryptPassword("password",
-						salt);
+				String password = StringFactory.encryptPassword("password", salt);
 				registerDoc.put("password", password);
 
 				cell = row.getCell(0);
@@ -161,6 +158,7 @@ public class RegisterController {
 	}
 
 	public JSONObject registerProject() {
+		ProjectsController projectC = new ProjectsController();
 
 		List<Sheet> projectSheets = new ArrayList<Sheet>();
 		for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
@@ -196,8 +194,8 @@ public class RegisterController {
 			JSONArray stage = new JSONArray();
 			stage.put(year);
 			stage.put(level);
-			if (st != 0)
-				stage.put(st);
+			stage.put(st);
+			Object[] stageO = new Object[] { year, level, st };
 
 			for (int rowIndex = 8; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 				row = sheet.getRow(rowIndex);
@@ -208,8 +206,7 @@ public class RegisterController {
 					registerDoc.put("project_type", cell.getStringCellValue());
 					registerDoc.put("stage", stage);
 					cell = row.getCell(1);
-					registerDoc.put("mentor", UserController.getIdbyName(cell
-							.getStringCellValue()));
+					registerDoc.put("mentor", UserController.getIdbyName(cell.getStringCellValue()));
 					cell = row.getCell(2);
 					registerDoc.put("title", cell.getStringCellValue());
 					cell = row.getCell(3);
@@ -227,25 +224,34 @@ public class RegisterController {
 					array.put(registerDoc);
 				}
 			}
-			JSONObject stageInfo = new JSONObject();
-			stageInfo.put("type", "stageInfo");
-			stageInfo.put("stage", stage);
-			String stageString;
-			if (stage.length() == 2 || stage.getInt(2) == 0)
-				stageString = stage.get(0) + "기 " + stage.get(1) + "단계 프로젝트";
-			else
-				stageString = stage.get(0) + "기 " + stage.get(1) + "단계 " + stage.get(2) + "차 프로젝트";
-			stageInfo.put("stageString", stageString);
-			JSONArray projects = new JSONArray();
-			for (int i=0; i<array.length(); i++) {
-				projects.put(array.getJSONObject(i).get("_id"));
+			if (projectC.getStageInfo(stageO) != null) {
+				JSONObject stageInfo = projectC.getStageInfo(stageO);
+				JSONArray projects = stageInfo.getJSONArray("projects");
+				for (int i=0; i<array.length(); i++) {
+					projects.put(array.get(0));
+				}
+				stageInfo.put("projects", projects);
+				db.updateDoc(stageInfo);
+			} else {
+				JSONObject stageInfo = new JSONObject();
+				stageInfo.put("type", "stageInfo");
+				stageInfo.put("stage", stage);
+				String stageString;
+				if (stage.length() == 2 || stage.getInt(2) == 0)
+					stageString = stage.get(0) + "기 " + stage.get(1) + "단계 프로젝트";
+				else
+					stageString = stage.get(0) + "기 " + stage.get(1) + "단계 " + stage.get(2) + "차 프로젝트";
+				stageInfo.put("stageString", stageString);
+				JSONArray projects = new JSONArray();
+				for (int i = 0; i < array.length(); i++) {
+					projects.put(array.getJSONObject(i).get("_id"));
+				}
+				stageInfo.put("projects", projects);
+				Map<String, Object> m = db.createDoc(stageInfo);
+				Log.info(m.get("_id"));
+				registered.put(sheet.getSheetName(), array);
+				Log.debug("Total " + num + "projects are inserted in " + stage.toString());
 			}
-			stageInfo.put("projects", projects);
-			Map<String, Object> m = db.createDoc(stageInfo);
-			Log.info(m.get("_id"));
-			registered.put(sheet.getSheetName(), array);
-			Log.debug("Total " + num + "projects are inserted in "
-					+ stage.toString());
 		}
 		return registered;
 	}

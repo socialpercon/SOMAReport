@@ -54,7 +54,7 @@ public class DriveController {
 
 	private static GoogleAuthorizationCodeFlow flow = null;
 
-	public void uploadImageToProject(String projectId, java.io.File file) {
+	public void uploadFileToProject(String projectId, java.io.File file) {
 		Log.info("uploadImageToProject called!!!!!!");
 		DatabaseController db = new DatabaseController();
 		JSONObject driveQuery = JSONFactory
@@ -76,18 +76,19 @@ public class DriveController {
 		JSONObject jo = JSONFactory.inputStreamToJson(db.getDoc(JSONFactory
 				.getData(driveQuery).getJSONObject(0).getString("id")));
 		Log.info(jo.toString());
-		String id = uploadImage(file);
+		String id = uploadFile(file);
 		jo.getJSONArray("files").put(id);
 		db.updateDoc(jo);
 	}
 
-	public String uploadImage(java.io.File file) {
+	public String uploadFile(java.io.File file) {
 		Long now = System.currentTimeMillis();
 		JSONObject imageData = new JSONObject();
 		imageData.put("type", "file");
+		imageData.put("name", file.getName());
 		imageData.put("storage", "0");
 		imageData.put("modified_at", now);
-		imageData.put("cached_at", now);
+		imageData.put("cached_at", 0);
 		Map<String, Object> r = db.createDoc(imageData);
 		try {
 			

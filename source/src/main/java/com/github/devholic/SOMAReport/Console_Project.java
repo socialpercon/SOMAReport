@@ -48,7 +48,7 @@ public class Console_Project {
 		ProjectsController projects = new ProjectsController();
 		JSONObject jo = new JSONObject();
 		jo.put("stageInfo", projects.existingStage());
-		jo.put("projects", projects.projectsInStage(id));
+		jo.put("projects", projects.projectsInStageInfo(id));
 		return Response
 				.status(200)
 				.entity(new Viewable("/console_project.mustache",

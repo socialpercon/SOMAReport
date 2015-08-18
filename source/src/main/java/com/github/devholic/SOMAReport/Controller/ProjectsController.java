@@ -162,7 +162,7 @@ public class ProjectsController {
 	 * @return JSONArray [{ "doc":{project_type, mentor, stage, field, _rev,
 	 *         _id, title, mentee[]} }]
 	 */
-	public JSONArray projectsInStage(String id) {
+	public JSONArray projectsInStageInfo(String id) {
 		JSONArray projectList = new JSONArray();
 		
 		DatabaseController dbCtrl = new DatabaseController();
@@ -197,6 +197,19 @@ public class ProjectsController {
 		}
 		
 		return stage;
+	}
+	
+	/***
+	 * 해당 기수, 단계 정보 문서를 가져온다
+	 * 
+	 * @param JSONArray (기수/단계/차수 정보.  ex: [6, 1, 1] )
+	 * @return JSONObject {projects[], stage, stageString, _rev, _id, type}
+	 */
+	
+	public JSONObject getStageInfo (Object[] stages) {
+		JSONObject res = JSONFactory.inputStreamToJson(db.getByView("_design/project", "stage_info", stages, true, false, false));
+		if (JSONFactory.getData(res).length()==0) return null;
+		return JSONFactory.getData(res).getJSONObject(0).getJSONObject("doc");
 	}
 	
 }
