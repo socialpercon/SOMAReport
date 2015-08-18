@@ -27,6 +27,10 @@ public class FileUploadManager {
 	@Context
 	UriInfo uri;
 
+	/**************************************************
+	 * fileupload_manage template를 띄워주는 컨트롤러
+	 * @return
+	 *************************************************/
 	@GET
 	@Path("/fileupload")
 	public Response consoleProject() {
@@ -36,6 +40,11 @@ public class FileUploadManager {
 	}
 	
 	
+	/**************************************************
+	 * 여러개의 파일을 한번에 업로드 할때 사용하는 컨트롤러 
+	 * @param InputStream is
+	 * @return
+	 *************************************************/
 	@POST
 	@Path("/uploadMultiFile")
 	public Response uploadMultiFile(@FormDataParam("file") InputStream is) {
@@ -55,7 +64,12 @@ public class FileUploadManager {
 				.build();
 	}
 	
-	
+	/*************************************************
+	 * InputStream을 File로 변환해주는 메소드
+	 * @param InputStream in
+	 * @return File file
+	 * @throws IOException
+	 *************************************************/
 	public File stream2file (InputStream in) throws IOException {
 
 		final File tempFile = File.createTempFile("stream2file", ".tmp");

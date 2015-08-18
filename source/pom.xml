@@ -6,6 +6,11 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.docx4j</groupId>
+			<artifactId>docx4j</artifactId>
+			<version>3.2.1</version>
+		</dependency>
 		<!-- CouchDB -->
 		<dependency>
 			<groupId>org.ektorp</groupId>

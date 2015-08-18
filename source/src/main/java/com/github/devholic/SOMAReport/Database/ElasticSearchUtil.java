@@ -18,6 +18,7 @@ public class ElasticSearchUtil {
 	/**************************************************************************************
 	 * ElasticSearch를 local에서 돌릴 때 사용하는 index,search,delete 이다. 하지만, 우리는 elastic
 	 * search demon 을 따로 돌리기 때문에 transport를 이용하기로 하여 이 유틸은 현재 사용하지 않는다
+	 * 이것을 사용하면 project 아래에 /data/elasticsearch/nodes 가 생성되며, 그곳에 index가 잡힌다.
 	 **************************************************************************************/
 	public ElasticSearchUtil() {
 		try {
