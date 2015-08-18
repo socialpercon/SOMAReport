@@ -8,6 +8,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.Request;
@@ -20,14 +22,14 @@ import org.json.JSONObject;
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Controller.ReportsController;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 @Path("/")
 public class Report {
 
 	private final static Logger Log = Logger.getLogger(Report.class);
+
+	@Context
+	UriInfo uri;
 
 	// API
 
@@ -122,59 +124,67 @@ public class Report {
 			@FormDataParam("opinion-public") String opinion_public,
 			@FormDataParam("etc") String etc,
 			@FormDataParam("content") String content) {
-		JsonArray attendeeArray = new JsonArray();
-		JsonArray absenteeArray = new JsonArray();
+		ReportsController report = new ReportsController();
+		JSONArray attendeeArray = new JSONArray();
+		JSONArray absenteeArray = new JSONArray();
 		for (int a = 0; a < attendee.size(); a++) {
 			if (absenteeReason.get(a).length() == 0) {
-				attendeeArray.add(new JsonPrimitive(attendee.get(a)));
+				attendeeArray.put(attendee.get(a));
 			} else {
-				JsonObject abs = new JsonObject();
-				abs.addProperty("id", attendee.get(a));
-				abs.addProperty("reason", absenteeReason.get(a));
-				absenteeArray.add(abs);
+				JSONObject abs = new JSONObject();
+				abs.put("id", attendee.get(a));
+				abs.put("reason", absenteeReason.get(a));
+				absenteeArray.put(abs);
 			}
 		}
-		JsonObject jo = new JsonObject();
-		jo.addProperty("project", pid);
-		JsonObject info = new JsonObject();
-		info.addProperty("place", place);
+		JSONObject jo = new JSONObject();
+		jo.put("project", pid);
+		JSONObject info = new JSONObject();
+		info.put("place", place);
 		String[] startArr = start.split(" ");
 		String[] endArr = end.split(":");
 		String startDay = startArr[0].toString();
-		info.addProperty("date", startDay);
-		JsonArray sja = new JsonArray();
-		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(0, 4))));
-		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(4, 6))));
-		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(6, 8))));
-		sja.add(new JsonPrimitive(Integer.parseInt(startArr[1].split(":")[0])));
-		sja.add(new JsonPrimitive(Integer.parseInt(startArr[1].split(":")[1])));
-		info.add("start_time", sja);
-		sja = new JsonArray();
-		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(0, 4))));
-		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(4, 6))));
-		sja.add(new JsonPrimitive(Integer.parseInt(startDay.substring(6, 8))));
-		sja.add(new JsonPrimitive(Integer.parseInt(endArr[0])));
-		sja.add(new JsonPrimitive(Integer.parseInt(endArr[1])));
-		info.add("end_time", sja);
-		jo.add("attendee", attendeeArray);
-		jo.add("absentee", absenteeArray);
-		info.addProperty("except_time", 0);
-		jo.add("report_info", info);
-		JsonObject details = new JsonObject();
-		details.addProperty("topic", topic);
-		details.addProperty("goal", goal);
-		details.addProperty("issue", issue);
-		details.addProperty("solution", solution);
-		details.addProperty("plan", plan);
-		details.addProperty("opinion", opinion);
+		info.put("date", startDay);
+		JSONArray sja = new JSONArray();
+		sja.put(Integer.parseInt(startDay.substring(0, 4)));
+		sja.put(Integer.parseInt(startDay.substring(4, 6)));
+		sja.put(Integer.parseInt(startDay.substring(6, 8)));
+		sja.put(Integer.parseInt(startArr[1].split(":")[0]));
+		sja.put(Integer.parseInt(startArr[1].split(":")[1]));
+		info.put("start_time", sja);
+		sja = new JSONArray();
+		sja.put(Integer.parseInt(startDay.substring(0, 4)));
+		sja.put(Integer.parseInt(startDay.substring(4, 6)));
+		sja.put(Integer.parseInt(startDay.substring(6, 8)));
+		sja.put(Integer.parseInt(endArr[0]));
+		sja.put(Integer.parseInt(endArr[1]));
+		info.put("end_time", sja);
+		jo.put("attendee", attendeeArray);
+		jo.put("absentee", absenteeArray);
+		info.put("except_time", 0);
+		jo.put("report_info", info);
+		JSONObject details = new JSONObject();
+		details.put("topic", topic);
+		details.put("goal", goal);
+		details.put("issue", issue);
+		details.put("solution", solution);
+		details.put("plan", plan);
+		details.put("opinion", opinion);
 		if (opinion_public != null) {
-			details.addProperty("opinion-public", "true");
+			details.put("opinion-public", "true");
 		}
 		if (etc != null) {
-			details.addProperty("etc", etc);
+			details.put("etc", etc);
 		}
-		details.addProperty("content", content);
-		jo.add("report_details", details);
-		return Response.ok().build();
+		details.put("content", content);
+		jo.put("report_details", details);
+		String id = report.insertReport(jo);
+		UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
+		if (id != null) {
+			builder.path("report/" + id);
+		} else {
+			builder.path("report/list/" + pid);
+		}
+		return Response.seeOther(builder.build()).build();
 	}
 }
