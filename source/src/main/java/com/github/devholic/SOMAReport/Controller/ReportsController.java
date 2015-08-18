@@ -130,7 +130,7 @@ public class ReportsController {
 			reportDoc.put("project", document.get("project"));
 			
 			JSONObject reportInfo = document.getJSONObject("report_info");
-			reportInfo.put("date", reportInfo.getString("start_time"));
+			reportInfo.put("date", reportInfo.getString("date"));
 			reportInfo.put("mentoring_num", numOfReports(document.getString("project")) + 1);
 			int whole = calWholeTime(reportInfo);
 			reportInfo.put("whole_time", whole);
@@ -144,6 +144,7 @@ public class ReportsController {
 			reportDoc.put("report_attachments", document.get("report_attachments"));
 			id = db.createDoc(reportDoc).get("_id").toString();
 			reportDoc.put("_id", id);
+			Log.info(reportDoc);
 			
 			//indexing elastic search
 			s.elastic_index("report", reportDoc);
@@ -227,8 +228,19 @@ public class ReportsController {
 	public JSONObject getReportWithNames (String reportId) {
 		JSONObject reportDoc = JSONFactory.inputStreamToJson(db.getDoc(reportId));
 		
-		
-		
+		JSONArray attendee = reportDoc.getJSONArray("attendee");
+		for (int i=0; i<attendee.length(); i++) {
+			attendee.getJSONObject(i).put("name", UserController.getUserName(attendee.getJSONObject(i).getString("id")));
+		}
+		reportDoc.put("attendee", attendee);
+
+		if (reportDoc.has("absentee")) {
+			JSONArray absentee = reportDoc.getJSONArray("absentee");
+			for (int i=0; i<absentee.length(); i++) {
+				absentee.getJSONObject(i).put("name", UserController.getUserName(attendee.getJSONObject(i).getString("id")));
+			}
+			reportDoc.put("absentee", absentee);
+		}
 		return reportDoc;
 	}
 }

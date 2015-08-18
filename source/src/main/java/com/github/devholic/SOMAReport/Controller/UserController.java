@@ -89,11 +89,6 @@ public class UserController {
 			return null;
 		}
 	}
-
-	/***
-	 *  
-	 * 
-	 */
 	
 	/**
 	 * 모든 멘토/멘티의 프로젝트별 멘토링 시간 총합 및 시행 횟수를 리턴
@@ -180,6 +175,17 @@ public class UserController {
 		}
 
 		return sumList;
+	}
+
+	/**
+	 * _id에 맞는 이름을 가져온다.
+	 * 
+	 * @param userId
+	 * @return String (user name)
+	 */
+	public static String getUserName(String userId) {
+		JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(userId));
+		return userDoc.getString("name");
 	}
 	
 }
