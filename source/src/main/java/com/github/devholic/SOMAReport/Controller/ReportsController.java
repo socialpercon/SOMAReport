@@ -41,7 +41,7 @@ public class ReportsController {
 				reportInfo.put("topic", doc.getJSONObject("report_details")
 						.getString("topic"));
 				reportInfo.put("attendee", doc.getJSONArray("attendee"));
-				reportInfo.put("absentee", doc.getJSONArray("absentee"));
+				if(doc.has("absentee")) reportInfo.put("absentee", doc.getJSONArray("absentee"));
 				list.put(reportInfo);
 			}
 		} catch (Exception e) {
