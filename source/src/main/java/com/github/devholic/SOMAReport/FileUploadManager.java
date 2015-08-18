@@ -41,12 +41,12 @@ public class FileUploadManager {
 	@POST
 	@Path("/uploadMultiFile")
 	public Response uploadMultiFile(@FormDataParam("file") InputStream is) {
-		Log.info(is);
+		Log.info("uploadMultiFile!!!!!!  is:"+is);
 		try{
 			File buffer_file = this.stream2file(is);
 			
 			DriveController dc = new DriveController();
-			dc.uploadImage(buffer_file);	
+			dc.uploadImageToProject("9d898f7d5bfbf361939e1fafd518b7f0", buffer_file);	
 		}catch(Exception e){
 			e.printStackTrace();
 		}
