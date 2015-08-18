@@ -3,6 +3,7 @@ package com.github.devholic.SOMAReport.Controller;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -18,6 +19,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import com.github.devholic.SOMAReport.Database.ElasticSearchUtil;
 

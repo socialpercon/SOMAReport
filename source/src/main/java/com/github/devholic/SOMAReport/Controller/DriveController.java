@@ -3,11 +3,13 @@ package com.github.devholic.SOMAReport.Controller;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 import com.github.devholic.SOMAReport.Utilities.StringFactory;
@@ -87,9 +90,20 @@ public class DriveController {
 		imageData.put("cached_at", now);
 		Map<String, Object> r = db.createDoc(imageData);
 		try {
+			
+			
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse(new FileReader("0.json"));
+			org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject)obj;
+			
+			String access_token = (String)jsonObj.get("access_token");
+			String refresh_token = (String)jsonObj.get("refresh_token");
+			Log.debug("get access_token =["+access_token+"]");
+			Log.debug("get refresh_token =["+refresh_token+"]");
+					
 			Credential c = getCredential(
-					"ya29.yAF8kUZ_J3uUzJPbQvPYv-sFlM6qjP9FyHKOvgRON09Hrj7OFxxmJWbRkdoPjc20wgZH",
-					"1/yXfCfi7fAiPmVzqJ6NrtkZxaDuyH2yqiKU_5aoK1yCw");
+					access_token,
+					refresh_token);
 			com.google.api.services.drive.Drive drive = buildService(c);
 			File body = new File();
 			body.setTitle(r.get("_id").toString());
@@ -99,6 +113,8 @@ public class DriveController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			Log.error(e.getMessage());
+		} catch (org.json.simple.parser.ParseException pe){
+			Log.error(pe.getMessage());
 		}
 		return null;
 	}
@@ -176,9 +192,18 @@ public class DriveController {
 				.getString("_id"), result.getJSONObject(0).getJSONObject("doc")
 				.getString("_rev"))) {
 			try {
+				JSONParser parser = new JSONParser();
+				Object obj = parser.parse(new FileReader("0.json"));
+				org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject)obj;
+				
+				String access_token = (String)jsonObj.get("access_token");
+				String refresh_token = (String)jsonObj.get("refresh_token");
+				Log.debug("get access_token =["+access_token+"]");
+				Log.debug("get refresh_token =["+refresh_token+"]");
+				
 				Credential c = getCredential(
-						"ya29.yAF8kUZ_J3uUzJPbQvPYv-sFlM6qjP9FyHKOvgRON09Hrj7OFxxmJWbRkdoPjc20wgZH",
-						"1/yXfCfi7fAiPmVzqJ6NrtkZxaDuyH2yqiKU_5aoK1yCw");
+						access_token,
+						refresh_token);
 				com.google.api.services.drive.Drive drive = buildService(c);
 				FileList fl = drive.files().list().setQ("title = '" + id + "'")
 						.execute();
@@ -187,6 +212,8 @@ public class DriveController {
 				return true;
 			} catch (IOException e) {
 				Log.error(e.getMessage());
+			} catch (org.json.simple.parser.ParseException pe){
+				Log.error(pe.getMessage());
 			}
 		}
 		return false;
@@ -200,9 +227,18 @@ public class DriveController {
 
 	public java.io.File createCache(String id, String storage) {
 		try {
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse(new FileReader("0.json"));
+			org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject)obj;
+			
+			String access_token = (String)jsonObj.get("access_token");
+			String refresh_token = (String)jsonObj.get("refresh_token");
+			Log.debug("get access_token =["+access_token+"]");
+			Log.debug("get refresh_token =["+refresh_token+"]");
+			
 			Credential c = getCredential(
-					"ya29.yAF8kUZ_J3uUzJPbQvPYv-sFlM6qjP9FyHKOvgRON09Hrj7OFxxmJWbRkdoPjc20wgZH",
-					"1/yXfCfi7fAiPmVzqJ6NrtkZxaDuyH2yqiKU_5aoK1yCw");
+					access_token,
+					refresh_token);
 			com.google.api.services.drive.Drive drive = buildService(c);
 			FileList fl = drive.files().list().setQ("title = '" + id + "'")
 					.execute();
@@ -234,6 +270,8 @@ public class DriveController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			Log.error(e.getMessage());
+		} catch (org.json.simple.parser.ParseException pe){
+			Log.error(pe.getMessage());
 		}
 		return null;
 	}

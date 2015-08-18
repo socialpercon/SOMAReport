@@ -37,7 +37,6 @@ public class FileUploadManager {
 				.entity(new Viewable("/fileupload_manage.mustache")).build();
 	}
 	
-	@SuppressWarnings("static-access")
 	@POST
 	@Path("/uploadMultiFile")
 	public Response uploadMultiFile(@FormDataParam("file") InputStream is) {
@@ -57,7 +56,7 @@ public class FileUploadManager {
 	}
 	
 	
-	public static File stream2file (InputStream in) throws IOException {
+	public File stream2file (InputStream in) throws IOException {
 
 		final File tempFile = File.createTempFile("stream2file", ".tmp");
         tempFile.deleteOnExit();
