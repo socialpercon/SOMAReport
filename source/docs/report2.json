@@ -1,0 +1,40 @@
+
+  "type": "report",
+	"project": "9d898f7d5bfbf361939e1fafd518a9a2",
+	"report_info": {
+		"date": "20150814",
+		"mentoring_num":5,
+		"place": "아람7-6",
+		"start_time": "201508111900",
+		"end_time": "201508112300",
+		"except_time": 1,
+		"whole_time": 4,
+		"total_time": 3
+	},
+	"attendee": [
+		{
+			"id":"9d898f7d5bfbf361939e1fafd50e979d"
+		},
+		{
+			"id":"9d898f7d5bfbf361939e1fafd50eac9a"
+		},
+		{
+			"id": "9d898f7d5bfbf361939e1fafd50eba37"
+		}
+	],
+	"report_details": {
+		"topic": "일정 확정 및 진행도 확인",
+		"goal": "다음 주 목요일에 데모 시연을 포함한 인터뷰를 진행할 수 있도록 한다.",
+		"issue": "보여줄 기능의 범위는 어디까지?",
+		"solution": "기본 기능에 사무국 전용 통계, 등록 기능을 포함해 시연한다.",
+		"plan": "화요일에 중간점검, 수요일에 데모 잠깐 점검, 목요일에 인터뷰 진행",
+		"opinion": "기대할게요.",
+		"etc": "하고싶은말이남았어?"
+	},
+	"report_attachments": {
+		"photo": false,
+		"reference": [
+
+		]
+	}
+

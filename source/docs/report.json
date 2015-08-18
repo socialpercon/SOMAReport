@@ -1,38 +1,35 @@
-{
+
   "type": "report",
-	"project": "58387a05c00dcded6f7936c1173e3f5a",
+	"project": "9d898f7d5bfbf361939e1fafd5191ec1",
 	"report_info": {
-		"date": "20150731",
+		"date": "20150803",
 		"mentoring_num":1,
-		"place": "아람7-6",
-		"start_time": "201507311900",
-		"end_time": "201507312300",
-		"except_time": 0,
-		"whole_time": 4,
-		"total_time": 4
+		"place": "아람7-7",
+		"start_time": "201508081500",
+		"end_time": "201508182200",
+		"except_time": 1,
+		"whole_time": 7,
+		"total_time": 6
 	},
 	"attendee": [
 		{
-			"id":"9d898f7d5bfbf361939e1fafd5033819"
+			"id":"9d898f7d5bfbf361939e1fafd50eba37"
 		},
 		{
-			"id":"9d898f7d5bfbf361939e1fafd50347ee"
-		}
-	],
-	"absentee": [
+			"id":"9d898f7d5bfbf361939e1fafd50f3f64"
+		},
 		{
-			"id": "9d898f7d5bfbf361939e1fafd5031d8e",
-			"reason": "잠의 노예"
+			"id": "9d898f7d5bfbf361939e1fafd50f4992"
 		}
 	],
 	"report_details": {
-		"topic": "주제입니다만",
-		"goal": "목푭니다만",
-		"issue": "추진내용입니다만",
-		"solution": "해결방안이요",
-		"plan": "계획입니다만",
-		"opinion": "의견입니다만",
-		"etc": "하고싶은말이남았어"
+		"topic": "판사님 이건 주제입니다.",
+		"goal": "판사님 목표가 뭐예요.",
+		"issue": "이러이러한 주제를 잡아봅시다.",
+		"solution": "이러이러한 방법으로 해결합시다.",
+		"plan": "이러이러한 계획으로 진행합시다.",
+		"opinion": "이러이러한 의견이 있습니다.",
+		"etc": "양꼬치 토해내"
 	},
 	"report_attachments": {
 		"photo": false,
@@ -40,4 +37,4 @@
 
 		]
 	}
-}
+

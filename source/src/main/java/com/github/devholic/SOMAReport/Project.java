@@ -28,8 +28,7 @@ public class Project {
 	public Response View_Project(@Context Request request) {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
-			ProjectsController project = new ProjectsController();
-			JSONArray userProject = project.getMyProject(session.getAttribute(
+			JSONArray userProject = ProjectsController.getMyProject(session.getAttribute(
 					"user_id").toString());
 			JSONObject data = new JSONObject();
 			data.put("project", userProject);

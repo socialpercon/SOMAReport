@@ -11,9 +11,8 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -23,6 +22,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import com.github.devholic.SOMAReport.Controller.DatabaseController;
+import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DatabaseControllerTest {
@@ -65,19 +65,9 @@ public class DatabaseControllerTest {
 	@Test
 	public void Test_Document_Get() {
 		DatabaseController db = new DatabaseController();
-		String id = "9d898f7d5bfbf361939e1fafd5002b4c";
-		BufferedReader is = new BufferedReader(new InputStreamReader(
-				db.getDoc(id)));
-		String str, doc = "";
-		try {
-			while ((str = is.readLine()) != null) {
-				doc += str;
-			}
-		} catch (IOException e) {
-			Log.error(e.getLocalizedMessage());
-			fail("fail..");
-		}
-		JSONObject jo = new JSONObject(doc);
+		String id = "9d898f7d5bfbf361939e1fafd5109dc2";
+		InputStream is = db.getDoc(id);
+		JSONObject jo = JSONFactory.inputStreamToJson(is);
 		Log.info(jo.toString());
 		assertEquals(id, jo.get("_id"));
 	}

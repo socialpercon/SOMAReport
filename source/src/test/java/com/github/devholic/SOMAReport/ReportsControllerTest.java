@@ -51,7 +51,7 @@ public class ReportsControllerTest {
 	
 	@Test
 	public void testGetDetailByReportId() {
-		JSONObject report = rCtrl.getReportDetailByReportId("9d898f7d5bfbf361939e1fafd505dac9");
+		JSONObject report = rCtrl.getReportDetailByReportId("9d898f7d5bfbf361939e1fafd51a8aa0");
 		Log.info(report);
 		assertTrue(report.has("report_info"));
 		assertTrue(report.has("project"));

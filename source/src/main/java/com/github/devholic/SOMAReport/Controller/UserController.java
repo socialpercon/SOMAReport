@@ -67,11 +67,11 @@ public class UserController {
 	
 	public static JSONObject getUserByEmail (String email) {
 		// 이메일으 통해 사용자 문서를 가져온다 
-		JSONArray results = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/user", "search_by_email", email, false, false, false)));
+		JSONArray results = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/user", "search_by_email", email, true, false, false)));
 		if (results.length() == 0) 
 			return null; 
 		else
-			return results.getJSONObject(0).getJSONObject("value");
+			return results.getJSONObject(0).getJSONObject("doc");
 	}
 
 	public static String getIdbyName(String name) {
@@ -126,6 +126,7 @@ public class UserController {
 						is = db.getByView("_design/statistics", "total_time_by_project", projectId, false, false, false);
 						int num = JSONFactory.getData(new JSONObject(StringFactory.inputStreamToString(is))).length();
 						mentorDoc.put("mentoringNum", num);
+						Log.info(mentorDoc);
 						sumList.put(mentorDoc);
 					}
 				}
@@ -149,12 +150,10 @@ public class UserController {
 					
 					InputStream is = db.getByView("_design/statistics", "total_time_by_mentee", new Object[] {menteeId, projectId}, false, false, true);
 					JSONArray a = JSONFactory.getData(new JSONObject(StringFactory.inputStreamToString(is)));
-					System.out.println(a.toString());
 					
 					if (a.length() == 0) {
 						menteeDoc.put("mentoringSum", 0);
 						menteeDoc.put("mentoringNum", 0);
-						Log.info(menteeDoc);
 						sumList.put(menteeDoc);
 					}
 					else {
@@ -175,7 +174,7 @@ public class UserController {
 			Log.error("sumOfTotalMentoring: wrong role input");
 		}
 
-		Log.info(sumList);
 		return sumList;
 	}
+	
 }

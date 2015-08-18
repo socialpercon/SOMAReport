@@ -8,7 +8,6 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.mortbay.log.Log;
 
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
@@ -86,6 +85,7 @@ public class ProjectsController {
 		if (project == null) return null;
 		projectInfo.put("project_type", project.getString("project_type"));
 		projectInfo.put("projectId", projectId);
+		projectInfo.put("_rev", project.getString("_rev"));
 		projectInfo.put("title", project.getString("title"));
 		projectInfo.put("mentor", project.getString("mentor"));
 		JSONArray stage = project.getJSONArray("stage");

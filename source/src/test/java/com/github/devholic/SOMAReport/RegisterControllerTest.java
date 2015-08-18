@@ -36,7 +36,7 @@ public class RegisterControllerTest {
 	public static void testRegisterController() {
 		try {
 			rc = new RegisterController(new FileInputStream(
-					"example_project.xlsx"));
+					"registers_full.xlsx"));
 			dc = new DatabaseController();
 			assertThat(rc, not(nullValue()));
 		} catch (FileNotFoundException e) {
@@ -81,36 +81,36 @@ public class RegisterControllerTest {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
+//	@SuppressWarnings("rawtypes")
 	@Test
 	public void testRegisterProject() {
-		JSONObject registered = rc.registerProject();
-		Iterator keys = registered.keys();
-		while (keys.hasNext()) {
-			String key = (String) keys.next();
-			Log.info("projects in sheet " + key);
-			JSONArray arr = registered.getJSONArray(key);
-			for (int i = 0; i < arr.length(); i++) {
-				Log.info(arr.get(i).toString());
-				String id = arr.getJSONObject(i).getString("_id").toString();
-				BufferedReader is = new BufferedReader(new InputStreamReader(
-						dc.getDoc(id)));
-				String str, doc = "";
-				try {
-					while ((str = is.readLine()) != null) {
-						doc += str;
-					}
-				} catch (IOException e) {
-					Log.error(e.getLocalizedMessage());
-					fail("fail..");
-				}
-				JSONObject jo = new JSONObject(doc);
-				assertEquals(arr.getJSONObject(i).toString(), jo.toString());
-				assertTrue(dc.deleteDoc(jo.getString("_id"),
-						jo.getString("_rev")));
-
-			}
-		}
+//		JSONObject registered = rc.registerProject();
+//		Iterator keys = registered.keys();
+//		while (keys.hasNext()) {
+//			String key = (String) keys.next();
+//			Log.info("projects in sheet " + key);
+//			JSONArray arr = registered.getJSONArray(key);
+//			for (int i = 0; i < arr.length(); i++) {
+//				Log.info(arr.get(i).toString());
+//				String id = arr.getJSONObject(i).getString("_id").toString();
+//				BufferedReader is = new BufferedReader(new InputStreamReader(
+//						dc.getDoc(id)));
+//				String str, doc = "";
+//				try {
+//					while ((str = is.readLine()) != null) {
+//						doc += str;
+//					}
+//				} catch (IOException e) {
+//					Log.error(e.getLocalizedMessage());
+//					fail("fail..");
+//				}
+//				JSONObject jo = new JSONObject(doc);
+//				assertEquals(arr.getJSONObject(i).toString(), jo.toString());
+//				assertTrue(dc.deleteDoc(jo.getString("_id"),
+//						jo.getString("_rev")));
+//
+//			}
+//		}
 	}
 
 }
