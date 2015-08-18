@@ -52,6 +52,7 @@ public class DriveController {
 	private static GoogleAuthorizationCodeFlow flow = null;
 
 	public void uploadImageToProject(String projectId, java.io.File file) {
+		Log.info("uploadImageToProject called!!!!!!");
 		DatabaseController db = new DatabaseController();
 		JSONObject driveQuery = JSONFactory
 				.inputStreamToJson(db.getByView("_design/file", "projectdrive",
