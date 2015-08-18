@@ -56,16 +56,19 @@ public class DriveController {
 		JSONObject driveQuery = JSONFactory
 				.inputStreamToJson(db.getByView("_design/file", "projectdrive",
 						projectId, false, false, false));
+		Log.info(JSONFactory.getData(driveQuery).toString());
 		if (JSONFactory.getData(driveQuery).length() == 0) {
 			JSONObject projectDrive = new JSONObject();
 			projectDrive.put("project", projectId);
 			projectDrive.put("type", "project_drive");
 			projectDrive.put("files", new JSONArray());
 			Map<String, Object> map = db.createDoc(projectDrive);
+			Log.info(map.toString());
 			driveQuery = JSONFactory.inputStreamToJson(db.getByView(
-					"_design/file", "projectdrive", map.get("_id").toString(),
-					false, false, false));
+					"_design/file", "projectdrive", projectId, false, false,
+					false));
 		}
+		Log.info(JSONFactory.getData(driveQuery).toString());
 		JSONObject jo = JSONFactory.inputStreamToJson(db.getDoc(JSONFactory
 				.getData(driveQuery).getJSONObject(0).getString("id")));
 		Log.info(jo.toString());
@@ -132,15 +135,17 @@ public class DriveController {
 		JSONObject driveQuery = JSONFactory.inputStreamToJson(db.getByView(
 				"_design/file", "projectdrive", id, false, false, false));
 		if (JSONFactory.getData(driveQuery).length() == 0) {
+			Log.info("in");
 			JSONObject projectDrive = new JSONObject();
 			projectDrive.put("project", id);
 			projectDrive.put("type", "project_drive");
 			projectDrive.put("files", new JSONArray());
 			Map<String, Object> map = db.createDoc(projectDrive);
+			Log.info(map.toString());
 			driveQuery = JSONFactory.inputStreamToJson(db.getByView(
-					"_design/file", "projectdrive", map.get("_id").toString(),
-					false, false, false));
+					"_design/file", "projectdrive", id, false, false, false));
 		}
+		Log.info("Length " + JSONFactory.getData(driveQuery).length());
 		JSONArray idList = JSONFactory.getValue(JSONFactory.getData(driveQuery)
 				.getJSONObject(0));
 		Log.info(idList.toString());
