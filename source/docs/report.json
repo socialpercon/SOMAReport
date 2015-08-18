@@ -1,9 +1,6 @@
-
-  "type": "report",
+{
 	"project": "9d898f7d5bfbf361939e1fafd5191ec1",
 	"report_info": {
-		"date": "20150803",
-		"mentoring_num":1,
 		"place": "아람7-7",
 		"start_time": "201508081500",
 		"end_time": "201508182200",
@@ -37,4 +34,4 @@
 
 		]
 	}
-
+}
