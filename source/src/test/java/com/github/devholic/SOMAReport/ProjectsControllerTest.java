@@ -7,6 +7,7 @@ import static org.junit.Assert.assertThat;
 
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.Test;
 
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
@@ -37,9 +38,9 @@ public class ProjectsControllerTest {
 	}
 	
 	@Test
-	public void testProjectsInStage() {
+	public void testProjectsInStageInfo() {
 		ProjectsController p = new ProjectsController();
-		JSONArray res = p.projectsInStage("9d898f7d5bfbf361939e1fafd5193109");		
+		JSONArray res = p.projectsInStageInfo("9d898f7d5bfbf361939e1fafd5193109");		
 		for (int i=0; i<res.length(); i++) {
 			assertThat(res.get(i), not(nullValue()));
 			
@@ -53,4 +54,10 @@ public class ProjectsControllerTest {
 		Log.info(ja.toString());
 	}
 
+	@Test
+	public void testGetStageInfo() {
+		ProjectsController project = new ProjectsController();
+		JSONObject jo = project.getStageInfo(new Object[]{6, 1, 3});
+		System.out.println(jo);
+	}
 }
