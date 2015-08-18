@@ -69,6 +69,7 @@ public class Report {
 			data.put("detail", detail);
 			String pid = detail.getString("project");
 			data.put("report", reports.getReportByProjectId(pid));
+			Log.info(data);
 			ProjectsController project = new ProjectsController();
 			data.put("project", project.getDetailByProjectId(pid));
 			return Response
