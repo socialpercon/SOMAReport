@@ -91,10 +91,16 @@ public class TestDoc {
 		
 		
 		HashMap<String, String> mappings = new HashMap<String, String>();
+		
+		mappings.put("division1", "O");
+		mappings.put("division2", "");
+		mappings.put("division3", "");
+		mappings.put("division4", "");
+		
 		mappings.put("projectName","SOMAReport");
 		mappings.put("term","2015-07-01 ~ 2015.08-28");
 		mappings.put("main_mento","김태완");
-		mappings.put("sub_mento","");
+		mappings.put("sub_mento","고재관");
 		mappings.put("section","웹");
 		mappings.put("class","6기");
 		mappings.put("stage","1단계 1차");
@@ -123,9 +129,9 @@ public class TestDoc {
 		mappings.put("plan","다음주까지 개발 완성");
 		mappings.put("mento_opinion","잘하고 잇군요");
 		mappings.put("etc","안녕 이건 기타란이야");
+		mappings.put("content","안녕 이건 내용란이야 너는 무슨 내용이니?");
 		
 
-		
 		documentPart.variableReplace(mappings);
 		wordPackage.save(new File("mentoringReport_filled.docx"));
 		
