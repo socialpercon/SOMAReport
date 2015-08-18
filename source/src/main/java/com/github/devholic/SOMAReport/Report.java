@@ -65,7 +65,7 @@ public class Report {
 		if (session.getAttribute("user_id") != null) {
 			JSONObject data = new JSONObject();
 			ReportsController reports = new ReportsController();
-			JSONObject detail = reports.getDetailByReportId(id);
+			JSONObject detail = reports.getReportWithNames(id);
 			data.put("detail", detail);
 			String pid = detail.getString("project");
 			data.put("report", reports.getReportByProjectId(pid));
@@ -124,12 +124,15 @@ public class Report {
 			@FormDataParam("opinion-public") String opinion_public,
 			@FormDataParam("etc") String etc,
 			@FormDataParam("content") String content) {
+		Log.info("reportWrite start!#");
 		ReportsController report = new ReportsController();
 		JSONArray attendeeArray = new JSONArray();
 		JSONArray absenteeArray = new JSONArray();
 		for (int a = 0; a < attendee.size(); a++) {
 			if (absenteeReason.get(a).length() == 0) {
-				attendeeArray.put(attendee.get(a));
+				JSONObject att = new JSONObject();
+				att.put("id", attendee.get(a));
+				attendeeArray.put(att);
 			} else {
 				JSONObject abs = new JSONObject();
 				abs.put("id", attendee.get(a));
@@ -139,30 +142,20 @@ public class Report {
 		}
 		JSONObject jo = new JSONObject();
 		jo.put("project", pid);
+		jo.put("attendee", attendeeArray);
+		jo.put("absentee", absenteeArray);
 		JSONObject info = new JSONObject();
 		info.put("place", place);
 		String[] startArr = start.split(" ");
 		String[] endArr = end.split(":");
 		String startDay = startArr[0].toString();
 		info.put("date", startDay);
-		JSONArray sja = new JSONArray();
-		sja.put(Integer.parseInt(startDay.substring(0, 4)));
-		sja.put(Integer.parseInt(startDay.substring(4, 6)));
-		sja.put(Integer.parseInt(startDay.substring(6, 8)));
-		sja.put(Integer.parseInt(startArr[1].split(":")[0]));
-		sja.put(Integer.parseInt(startArr[1].split(":")[1]));
-		info.put("start_time", sja);
-		sja = new JSONArray();
-		sja.put(Integer.parseInt(startDay.substring(0, 4)));
-		sja.put(Integer.parseInt(startDay.substring(4, 6)));
-		sja.put(Integer.parseInt(startDay.substring(6, 8)));
-		sja.put(Integer.parseInt(endArr[0]));
-		sja.put(Integer.parseInt(endArr[1]));
-		info.put("end_time", sja);
-		jo.put("attendee", attendeeArray);
-		jo.put("absentee", absenteeArray);
+		String start_time = startDay+startArr[1].split(":")[0].toString()+startArr[1].split(":")[1].toString();
+		info.put("start_time", start_time);
+		info.put("end_time", startDay+endArr[0]+endArr[1]);
 		info.put("except_time", 0);
 		jo.put("report_info", info);
+		Log.info("inserted-report_info: "+jo.toString());
 		JSONObject details = new JSONObject();
 		details.put("topic", topic);
 		details.put("goal", goal);
@@ -178,7 +171,9 @@ public class Report {
 		}
 		details.put("content", content);
 		jo.put("report_details", details);
+		jo.put("report_attachments", new JSONObject());
 		String id = report.insertReport(jo);
+		Log.info("inserted: "+id);
 		UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
 		if (id != null) {
 			builder.path("report/" + id);
