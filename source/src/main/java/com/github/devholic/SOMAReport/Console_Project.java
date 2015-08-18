@@ -66,6 +66,5 @@ public class Console_Project {
 				.entity("{\"code\":\"1\", \"msg\":\"file upload success.\"}")
 				.build();
 	}
-	
-	
+
 }
