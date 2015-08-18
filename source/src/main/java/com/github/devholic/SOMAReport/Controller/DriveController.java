@@ -128,6 +128,16 @@ public class DriveController {
 		return null;
 	}
 
+	public void getProjectImageList(String id) {
+		JSONObject driveQuery = JSONFactory.inputStreamToJson(db.getByView(
+				"_design/file", "projectdrive", id, false, false, false));
+		JSONArray idList = JSONFactory.getValue(
+				JSONFactory.getData(driveQuery).getJSONObject(0)).getJSONArray(
+				1);
+
+		// return render;
+	}
+
 	public java.io.File getUserImage(String id) {
 		java.io.File f = new java.io.File("cache/" + id);
 		if (f.isFile()) {
