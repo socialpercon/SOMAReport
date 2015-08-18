@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +52,11 @@ public class DriveController {
 			.asList("https://www.googleapis.com/auth/drive");
 
 	private static GoogleAuthorizationCodeFlow flow = null;
-
+	
+	//credential file 의 이름을 지정한다.
+	private String credentialFileName = "0.json";
+	
+	
 	public void uploadFileToProject(String projectId, java.io.File file) {
 		Log.info("uploadImageToProject called!!!!!!");
 		DatabaseController db = new DatabaseController();
@@ -92,13 +95,13 @@ public class DriveController {
 		Map<String, Object> r = db.createDoc(imageData);
 		try {
 			
-			
 			JSONParser parser = new JSONParser();
-			Object obj = parser.parse(new FileReader("0.json"));
+			Object obj = parser.parse(new FileReader(credentialFileName));
 			org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject)obj;
 			
 			String access_token = (String)jsonObj.get("access_token");
 			String refresh_token = (String)jsonObj.get("refresh_token");
+
 			Log.debug("get access_token =["+access_token+"]");
 			Log.debug("get refresh_token =["+refresh_token+"]");
 					
@@ -194,11 +197,12 @@ public class DriveController {
 				.getString("_rev"))) {
 			try {
 				JSONParser parser = new JSONParser();
-				Object obj = parser.parse(new FileReader("0.json"));
+				Object obj = parser.parse(new FileReader(credentialFileName));
 				org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject)obj;
 				
 				String access_token = (String)jsonObj.get("access_token");
 				String refresh_token = (String)jsonObj.get("refresh_token");
+
 				Log.debug("get access_token =["+access_token+"]");
 				Log.debug("get refresh_token =["+refresh_token+"]");
 				
@@ -229,11 +233,12 @@ public class DriveController {
 	public java.io.File createCache(String id, String storage) {
 		try {
 			JSONParser parser = new JSONParser();
-			Object obj = parser.parse(new FileReader("0.json"));
+			Object obj = parser.parse(new FileReader(credentialFileName));
 			org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject)obj;
 			
 			String access_token = (String)jsonObj.get("access_token");
 			String refresh_token = (String)jsonObj.get("refresh_token");
+
 			Log.debug("get access_token =["+access_token+"]");
 			Log.debug("get refresh_token =["+refresh_token+"]");
 			
@@ -291,7 +296,7 @@ public class DriveController {
 			GoogleTokenResponse resp;
 			resp = flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI)
 					.execute();
-			PrintWriter out = new PrintWriter("0.json");
+			PrintWriter out = new PrintWriter(credentialFileName);
 			out.println(resp.toString());
 			out.close();
 		} catch (IOException e) {
