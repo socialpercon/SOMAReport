@@ -3,6 +3,7 @@ package com.github.devholic.SOMAReport.Controller;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,6 +16,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 import com.github.devholic.SOMAReport.Utilities.StringFactory;
@@ -50,8 +52,12 @@ public class DriveController {
 			.asList("https://www.googleapis.com/auth/drive");
 
 	private static GoogleAuthorizationCodeFlow flow = null;
-
-	public void uploadImageToProject(String projectId, java.io.File file) {
+	
+	//credential file 의 이름을 지정한다.
+	private String credentialFileName = "0.json";
+	
+	
+	public void uploadFileToProject(String projectId, java.io.File file) {
 		Log.info("uploadImageToProject called!!!!!!");
 		DatabaseController db = new DatabaseController();
 		JSONObject driveQuery = JSONFactory
@@ -73,23 +79,35 @@ public class DriveController {
 		JSONObject jo = JSONFactory.inputStreamToJson(db.getDoc(JSONFactory
 				.getData(driveQuery).getJSONObject(0).getString("id")));
 		Log.info(jo.toString());
-		String id = uploadImage(file);
+		String id = uploadFile(file);
 		jo.getJSONArray("files").put(id);
 		db.updateDoc(jo);
 	}
 
-	public String uploadImage(java.io.File file) {
+	public String uploadFile(java.io.File file) {
 		Long now = System.currentTimeMillis();
 		JSONObject imageData = new JSONObject();
 		imageData.put("type", "file");
+		imageData.put("name", file.getName());
 		imageData.put("storage", "0");
 		imageData.put("modified_at", now);
-		imageData.put("cached_at", now);
+		imageData.put("cached_at", 0);
 		Map<String, Object> r = db.createDoc(imageData);
 		try {
+			
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse(new FileReader(credentialFileName));
+			org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject)obj;
+			
+			String access_token = (String)jsonObj.get("access_token");
+			String refresh_token = (String)jsonObj.get("refresh_token");
+
+			Log.debug("get access_token =["+access_token+"]");
+			Log.debug("get refresh_token =["+refresh_token+"]");
+					
 			Credential c = getCredential(
-					"ya29.yAF8kUZ_J3uUzJPbQvPYv-sFlM6qjP9FyHKOvgRON09Hrj7OFxxmJWbRkdoPjc20wgZH",
-					"1/yXfCfi7fAiPmVzqJ6NrtkZxaDuyH2yqiKU_5aoK1yCw");
+					access_token,
+					refresh_token);
 			com.google.api.services.drive.Drive drive = buildService(c);
 			File body = new File();
 			body.setTitle(r.get("_id").toString());
@@ -99,6 +117,8 @@ public class DriveController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			Log.error(e.getMessage());
+		} catch (org.json.simple.parser.ParseException pe){
+			Log.error(pe.getMessage());
 		}
 		return null;
 	}
@@ -176,9 +196,19 @@ public class DriveController {
 				.getString("_id"), result.getJSONObject(0).getJSONObject("doc")
 				.getString("_rev"))) {
 			try {
+				JSONParser parser = new JSONParser();
+				Object obj = parser.parse(new FileReader(credentialFileName));
+				org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject)obj;
+				
+				String access_token = (String)jsonObj.get("access_token");
+				String refresh_token = (String)jsonObj.get("refresh_token");
+
+				Log.debug("get access_token =["+access_token+"]");
+				Log.debug("get refresh_token =["+refresh_token+"]");
+				
 				Credential c = getCredential(
-						"ya29.yAF8kUZ_J3uUzJPbQvPYv-sFlM6qjP9FyHKOvgRON09Hrj7OFxxmJWbRkdoPjc20wgZH",
-						"1/yXfCfi7fAiPmVzqJ6NrtkZxaDuyH2yqiKU_5aoK1yCw");
+						access_token,
+						refresh_token);
 				com.google.api.services.drive.Drive drive = buildService(c);
 				FileList fl = drive.files().list().setQ("title = '" + id + "'")
 						.execute();
@@ -187,6 +217,8 @@ public class DriveController {
 				return true;
 			} catch (IOException e) {
 				Log.error(e.getMessage());
+			} catch (org.json.simple.parser.ParseException pe){
+				Log.error(pe.getMessage());
 			}
 		}
 		return false;
@@ -200,9 +232,19 @@ public class DriveController {
 
 	public java.io.File createCache(String id, String storage) {
 		try {
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse(new FileReader(credentialFileName));
+			org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject)obj;
+			
+			String access_token = (String)jsonObj.get("access_token");
+			String refresh_token = (String)jsonObj.get("refresh_token");
+
+			Log.debug("get access_token =["+access_token+"]");
+			Log.debug("get refresh_token =["+refresh_token+"]");
+			
 			Credential c = getCredential(
-					"ya29.yAF8kUZ_J3uUzJPbQvPYv-sFlM6qjP9FyHKOvgRON09Hrj7OFxxmJWbRkdoPjc20wgZH",
-					"1/yXfCfi7fAiPmVzqJ6NrtkZxaDuyH2yqiKU_5aoK1yCw");
+					access_token,
+					refresh_token);
 			com.google.api.services.drive.Drive drive = buildService(c);
 			FileList fl = drive.files().list().setQ("title = '" + id + "'")
 					.execute();
@@ -234,6 +276,8 @@ public class DriveController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			Log.error(e.getMessage());
+		} catch (org.json.simple.parser.ParseException pe){
+			Log.error(pe.getMessage());
 		}
 		return null;
 	}
@@ -252,7 +296,7 @@ public class DriveController {
 			GoogleTokenResponse resp;
 			resp = flow.newTokenRequest(code).setRedirectUri(REDIRECT_URI)
 					.execute();
-			PrintWriter out = new PrintWriter("0.json");
+			PrintWriter out = new PrintWriter(credentialFileName);
 			out.println(resp.toString());
 			out.close();
 		} catch (IOException e) {

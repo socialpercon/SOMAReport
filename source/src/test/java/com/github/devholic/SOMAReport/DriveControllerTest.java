@@ -21,7 +21,7 @@ public class DriveControllerTest {
 	@Test
 	public void A_Drive_UploadImage_Pass() throws IOException {
 		DriveController d = new DriveController();
-		id = d.uploadImage(new File("test.jpg"));
+		id = d.uploadFile(new File("test.jpg"));
 		assertThat(id, is(notNullValue()));
 	}
 

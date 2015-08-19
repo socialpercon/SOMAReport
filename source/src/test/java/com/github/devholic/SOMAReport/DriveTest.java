@@ -1,5 +1,6 @@
 package com.github.devholic.SOMAReport;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
@@ -11,6 +12,6 @@ public class DriveTest {
 	public void testDrive() throws IOException {
 		DriveController drive = new DriveController();
 		drive.getProjectImageList("9d898f7d5bfbf361939e1fafd5");
-		drive.uploadImageToProject("9d898f7d5bfbf361939e1fafd5", null);
+		drive.uploadFileToProject("9d898f7d5bfbf361939e1fafd5", new File("test.jpg"));
 	}
 }
