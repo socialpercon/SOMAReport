@@ -10,29 +10,83 @@
     <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
+    <link rel="sytlesheet" href="http://semantic-ui.com/dist/semantic.min.css">
+    <link rel="stylesheet" href="http://semantic-ui.com/stylesheets/docs.css">
+    <link rel="stylesheet" href="http://semantic-ui.com/stylesheets/rtl.css">
   </head>
   <body>
-      <div style="width:100%;height:100%;background-color:#F5F5F5;float:left;overflow:auto;padding-top:20px;position:relative;">
-        <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">프로젝트 기수 선택<span class="caret"></span></button>
-            <ul class="dropdown-menu" role="menu">
-          {{#stages}}
-              <li role="presentation">
-                <a href="/console/statistics/project/{{infoId}}">
-                  {{stageString}}
-                </a>
-              </li>
-          {{/stages}}
-            </ul>
-        </div>
-
+    <div style="width:100%;height:100%;background-color:#F5F5F5;float:left;overflow:auto;padding-top:20px;position:relative;">
+     <div>
+      <select class="ui dropdown" onchange="location=this.options[this.selectedIndex].value;">
+        <option>프로젝트를 선택하세요</option>
+        {{#stages}}
+        <option value="/console/statistics/project/{{infoId}}">{{stageString}}</option>
+        {{/stages}}
+      </select>
+     </div>
+        <table id="mentor" class="display dataTable" cellspacing="0" width="100%" height="200px">
+          <thead>
+            <tr><td><label>멘토</label></td></tr>
+            <tr>
+              <th class="sorting">이름</th>
+              <th class="sorting">멘토링 횟수</th>
+              <th class="sorting">멘토링 시간</th>
+            </tr>
+           </thead>
+          <tbody>
+          {{#mentors}}
+            <tr>
+             <td>{{name}}</td>
+              <td>{{mentoringNum}}</td>
+              <td>{{mentoringSum}}</td>
+            </tr>
+          {{/mentors}}
+          </tbody>
+        </table>
+        <table id="mentee" class="display dataTable" cellspacing="0" width="100%" height="200px">
+          <thead>
+            <tr><td><label>멘티</label></td></tr>
+            <tr>
+              <th class="sorting">이름</th>
+              <th class="sorting">멘토링 횟수</th>
+              <th class="sorting">멘토링 시간</th>
+            </tr>
+          </thead>
+          <tbody>
+          {{#mentees}}
+            <tr>
+              <td>{{name}}</td>
+              <td>{{mentoringNum}}</td>
+              <td>{{mentoringSum}}</td>
+            </tr>
+          {{/mentees}}
+          </tbody>
+        </table>
       </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function() {
+      $('#mentor').DataTable( {
+          "scrollY":        "200px",
+          "scrollCollapse": true,
+          "paging":         false
+      } );
+} );</script>
+    <script>
+    $(document).ready(function() {
+      $('#mentee').DataTable( {
+          "scrollY":        "200px",
+          "scrollCollapse": true,
+          "paging":         false
+      } );
+} );</script>
   </body>
 </html>

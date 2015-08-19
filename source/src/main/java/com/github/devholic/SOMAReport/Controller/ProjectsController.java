@@ -196,7 +196,6 @@ public class ProjectsController {
 			stages.put("projectNum", list.getJSONObject(i).getJSONObject("doc").getJSONArray("projects").length());
 			stage.put(stages);
 		}
-		
 		return stage;
 	}
 	

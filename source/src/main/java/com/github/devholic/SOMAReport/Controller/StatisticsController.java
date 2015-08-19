@@ -115,7 +115,6 @@ public class StatisticsController {
 							int num = JSONFactory.getData(new JSONObject(StringFactory.inputStreamToString(is)))
 									.length();
 							mentorDoc.put("mentoringNum", num);
-							Log.info(mentorDoc);
 							sumList.put(mentorDoc);
 						}
 					}
@@ -155,7 +154,6 @@ public class StatisticsController {
 							int num = JSONFactory.getData(new JSONObject(StringFactory.inputStreamToString(is)))
 									.length();
 							menteeDoc.put("mentoringNum", num);
-							Log.info(menteeDoc);
 							sumList.put(menteeDoc);
 						}
 					}

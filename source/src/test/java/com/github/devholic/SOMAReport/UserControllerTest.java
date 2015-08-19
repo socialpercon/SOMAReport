@@ -58,8 +58,8 @@ public class UserControllerTest {
 	@Test
 	public void testTotalMentoringInfoByProject() {
 		StatisticsController st = new StatisticsController();
-		JSONArray mentorTotal = st.totalMentoringInfoByStage(UserController.ROLE_MENTOR, "6기 1단계 1차 프로젝트");
-		JSONArray menteeTotal = st.totalMentoringInfoByStage(UserController.ROLE_MENTEE, "6기 1단계 1차 프로젝트");
+		JSONArray mentorTotal = st.totalMentoringInfoByStage(UserController.ROLE_MENTOR, "9d898f7d5bfbf361939e1fafd518ea39");
+		JSONArray menteeTotal = st.totalMentoringInfoByStage(UserController.ROLE_MENTEE, "9d898f7d5bfbf361939e1fafd518ea39");
 		System.out.println(mentorTotal);
 	//	assertEquals(ProjectsController.getProjectList().length(), mentorTotal.length());
 		for (int i=0; i<mentorTotal.length(); i++) {
