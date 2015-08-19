@@ -4,7 +4,7 @@
 <comment>This is config file!</comment>
 <entry key="elasticsearch_base">http://172.16.101.172:9200</entry>
 <entry key="couchdb_name">somareport</entry>
-<entry key="couchdb_url">http://172.16.101.172:5984</entry>
+<entry key="couchdb_url">http://local.swmaestro.io:5984</entry>
 <entry key="couchdb_id">somareport</entry>
 <entry key="couchdb_password">somasoma</entry>
 <entry key="test">test</entry>

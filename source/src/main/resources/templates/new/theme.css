@@ -1,0 +1,51 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:100,300,400,500);
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans);
+
+body, html {
+    height: 100%;
+    width: 100%;
+}
+
+.divider {
+    margin-top:10px;
+    margin-bottom:10px;
+    height: 1px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+.block {
+  text-align: center;
+
+  /* May want to do this if there is risk the container may be narrower than the element inside */
+  white-space: nowrap;
+}
+
+/* The ghost, nudged to maintain perfect centering */
+.block:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -0.25em; /* Adjusts for spacing */
+}
+
+/* The element to be centered, can also be of any width and height */
+.centered {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+// Rules for using icons as black on a light background.
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+// Rules for using icons as white on a dark background.
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
