@@ -103,6 +103,28 @@ public class DatabaseController {
 		}
 		return db.queryForStream(q);
 	}
+	
+	public InputStream getByView(String docId, String viewName,
+			Object startKey, Object endKey, boolean includeDocs,
+			boolean descending, boolean reduce, int groupLevel) {
+		// view 결과를 조회
+		// start-end 범위 검색 (key 설정시 descending에 따른 순서 주의)
+		// includeDocs (true : 문서 통째로 리턴) / (false : value만 리턴)
+		// descending (true : key역순) / (false : key순)
+		// groupLevel (grouping level)
+		ViewQuery q;
+		if (reduce) {
+			q = new ViewQuery().designDocId(docId).viewName(viewName)
+					.startKey(startKey).endKey(endKey).reduce(reduce)
+					.includeDocs(includeDocs).descending(descending)
+					.groupLevel(groupLevel).group(true);
+		} else {
+			q = new ViewQuery().designDocId(docId).viewName(viewName)
+					.startKey(startKey).endKey(endKey).reduce(reduce)
+					.includeDocs(includeDocs).descending(descending);
+		}
+		return db.queryForStream(q);
+	}
 
 	public Map<String, Object> createDoc(JSONObject jo) {
 		Map<String, Object> doc = MustacheHelper.toMap(jo);

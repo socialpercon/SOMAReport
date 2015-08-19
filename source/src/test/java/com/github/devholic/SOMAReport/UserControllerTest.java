@@ -9,11 +9,14 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import org.json.JSONArray;
 import org.junit.Test;
+import org.mortbay.log.Log;
 
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
+import com.github.devholic.SOMAReport.Controller.StatisticsController;
 import com.github.devholic.SOMAReport.Controller.UserController;
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
@@ -53,24 +56,37 @@ public class UserControllerTest {
 	}
 
 	@Test
-	public void testTotalMentoringInfo() {
-//		JSONArray mentorTotal = UserController.totalMentoringInfo(UserController.ROLE_MENTOR);
-//		JSONArray menteeTotal = UserController.totalMentoringInfo(UserController.ROLE_MENTEE);
-//		
-//		assertEquals(ProjectsController.getProjectList().length(), mentorTotal.length());
-//		for (int i=0; i<mentorTotal.length(); i++) {
-//			assertThat(mentorTotal.getJSONObject(i).get("mentoringNum"), not(nullValue()));
-//			assertThat(mentorTotal.getJSONObject(i).get("mentoringSum"), not(nullValue()));
-//		}
-//		for (int i=0; i<menteeTotal.length(); i++) {
-//			assertThat(menteeTotal.getJSONObject(i).get("mentoringNum"), not(nullValue()));
-//			assertThat(menteeTotal.getJSONObject(i).get("mentoringSum"), not(nullValue()));
-//		}	
+	public void testTotalMentoringInfoByProject() {
+		StatisticsController st = new StatisticsController();
+		JSONArray mentorTotal = st.totalMentoringInfoByStage(UserController.ROLE_MENTOR, "6기 1단계 1차 프로젝트");
+		JSONArray menteeTotal = st.totalMentoringInfoByStage(UserController.ROLE_MENTEE, "6기 1단계 1차 프로젝트");
+		System.out.println(mentorTotal);
+	//	assertEquals(ProjectsController.getProjectList().length(), mentorTotal.length());
+		for (int i=0; i<mentorTotal.length(); i++) {
+			assertThat(mentorTotal.getJSONObject(i).get("mentoringNum"), not(nullValue()));
+			assertThat(mentorTotal.getJSONObject(i).get("mentoringSum"), not(nullValue()));
+		}
+		for (int i=0; i<menteeTotal.length(); i++) {
+			assertThat(menteeTotal.getJSONObject(i).get("mentoringNum"), not(nullValue()));
+			assertThat(menteeTotal.getJSONObject(i).get("mentoringSum"), not(nullValue()));
+		}	
 	}
 	
 	@Test
 	public void testGetUserByEmail() {
 		assertEquals(UserController.getUserByEmail("mentor0@gmail.com").getString("email"), "mentor0@gmail.com");
 		assertThat(UserController.getUserByEmail("dfdf"), nullValue());
+	}
+	
+	@Test
+	public void testGetUsersInYear() {
+		UserController user = new UserController();
+		assertTrue(user.getUsersInYear(2015).length() > 0);
+	}
+	
+	@Test
+	public void testTotalMentoringInfoByMonth() {
+		StatisticsController stC = new StatisticsController();
+		stC.totalMentoringInfoByMonth(2015, 8, UserController.ROLE_MENTOR);
 	}
 }
