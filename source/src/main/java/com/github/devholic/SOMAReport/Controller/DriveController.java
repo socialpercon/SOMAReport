@@ -97,38 +97,89 @@ public class DriveController {
 	 * @return String
 	 *****************************************/
 	public String uploadProfileImage(String id, java.io.File file) {
+		
 		Long now = System.currentTimeMillis();
+		
+		String fileTitle = "";
+		JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(id));
+		String profileFile = userDoc.getString("profileFile");
+		
+		Map<String, Object> r = null;
+		
+		JSONObject fileDoc = new JSONObject();
 		JSONObject imageData = new JSONObject();
-		imageData.put("type", "file");
-		imageData.put("name", file.getName());
-		imageData.put("storage", "0");
-		imageData.put("modified_at", now);
-		imageData.put("cached_at", 0);
-		Map<String, Object> r = db.createDoc(imageData);
+		
 		try {
-			// JSON 파일을 읽어서 credential을 가져온다
+			/* ************************************************
+			 * profile file이 있으면 기존에 있는 파일을 삭제하고
+			 * fileDoc의 정보를 update 한다.
+			 * ************************************************/
+			if (userDoc.has("profileFile")) { 
+				
+				if(deleteImage(profileFile)){
+					fileDoc = JSONFactory.inputStreamToJson(db.getDoc(profileFile));
+					fileDoc.put("name", file.getName());
+					fileDoc.put("storage", "0");
+					fileDoc.put("modified_at", now);
+					db.updateDoc(fileDoc);
+					
+					fileTitle = profileFile;
+				}else{
+					Log.debug("deleteImage Failed...");
+					return null;
+				}
+			/* ************************************************
+			 * profile file이 없으면 새로운 fileDoc을 생성하고,
+			 * userDoc에 profileFile 정보를 update한
+			 * ************************************************/
+			}else{
+
+				imageData.put("type", "file");
+				imageData.put("name", file.getName());
+				imageData.put("storage", "0");
+				imageData.put("modified_at", now);
+				imageData.put("cached_at", 0);
+				r = db.createDoc(imageData);
+				
+				userDoc.put("profileFile", r.get("_id").toString());
+				db.updateDoc(userDoc);
+				
+				fileTitle = r.get("_id").toString();
+			}
+			
+			/* ************************************************
+			 * JSON 파일을 읽어서 credential을 가져온다.
+			 * accessToken과 refreshToken을 가져온다.
+			 * ************************************************/
 			JSONParser parser = new JSONParser();
 			Object obj = parser.parse(new FileReader(credentialFileName));
 			org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject) obj;
+			
 			String access_token = (String) jsonObj.get("access_token");
 			String refresh_token = (String) jsonObj.get("refresh_token");
+			
 			Log.debug("get access_token =[" + access_token + "]");
 			Log.debug("get refresh_token =[" + refresh_token + "]");
+			
 			Credential c = getCredential(access_token, refresh_token);
 			com.google.api.services.drive.Drive drive = buildService(c);
-			// 용량체크 " 100메가 이하면 사용하지 못한다."
+			
+			/* ************************************************
+			 * 용량체크를 한다. " 100메가 이하면 사용하지 못한다."
+			 * ************************************************/
 			printAbout(drive);
 			long totalQuota = this.getTotalquota(drive);
 			long usedQuota = this.getUsedquota(drive);
-			Log.info("storage we can use =[ "
-					+ String.valueOf(totalQuota - usedQuota) + "]");
+			Log.info("storage we can use =[ " + String.valueOf(totalQuota - usedQuota) + "]");
+			
 			if (totalQuota - usedQuota < 104857600) {
 				File body = new File();
-				body.setTitle(r.get("_id").toString() + "-profileImage");
+				body.setTitle(fileTitle + "-profileImage");
 				FileContent data = new FileContent("", file);
 				drive.files().insert(body, data).execute();
 				return r.get("_id").toString();
 			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			Log.error(e.getMessage());
