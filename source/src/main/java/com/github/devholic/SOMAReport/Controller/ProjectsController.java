@@ -61,7 +61,7 @@ public class ProjectsController {
 		projectInfo.put("_id", projectId);
 		projectInfo.put("_rev", project.getString("_rev"));
 		projectInfo.put("title", project.getString("title"));
-		projectInfo.put("mentor", JSONFactory.inputStreamToJson(db.getDoc(project.getString("mentor"))));
+		projectInfo.put("mentor", UserController.getUserInfo(project.getString("mentor")));
 		JSONArray stage = project.getJSONArray("stage");
 		if (stage.length() == 2 || stage.getInt(2) == 0)
 			projectInfo.put("stage", stage.get(0) + "기 " + stage.get(1) + "단계 프로젝트");
@@ -74,7 +74,7 @@ public class ProjectsController {
 		JSONArray mentee = project.getJSONArray("mentee");
 		JSONArray menteeDetail = new JSONArray();
 		for (int i=0; i<mentee.length(); i++) {
-			menteeDetail.put(JSONFactory.inputStreamToJson(db.getDoc(mentee.getString(i))));
+			menteeDetail.put(UserController.getUserInfo(mentee.getString(i)));
 		}
 		projectInfo.put("mentee", menteeDetail);
 		ReportsController rCtrl = new ReportsController();

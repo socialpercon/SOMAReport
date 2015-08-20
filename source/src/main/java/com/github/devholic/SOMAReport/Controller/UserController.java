@@ -67,7 +67,7 @@ public class UserController {
 	}
 	
 	public static JSONObject getUserByEmail (String email) {
-		// 이메일으 통해 사용자 문서를 가져온다 
+		// 이메일을 통해 사용자 문서를 가져온다 
 		JSONArray results = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/user", "search_by_email", email, true, false, false)));
 		if (results.length() == 0) 
 			return null; 
@@ -134,5 +134,21 @@ public class UserController {
 			users.put(result.getJSONObject(i).get("value"));
 		}
 		return users;
+	}
+	
+	/**
+	 * 해당 유저의 기본 정보 (name, id, belong)를 가져온다.
+	 * 
+	 * 
+	 */
+	public static JSONObject getUserInfo(String userId) {
+		JSONObject userDoc = new JSONObject();
+		JSONObject user = JSONFactory.inputStreamToJson(db.getDoc(userId));
+		
+		userDoc.put("id", user.get("_id"));
+		userDoc.put("name", user.get("name"));
+		userDoc.put("belong", user.get("belong"));
+		
+		return userDoc;
 	}
 }
