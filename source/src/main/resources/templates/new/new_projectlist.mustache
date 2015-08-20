@@ -9,6 +9,7 @@
     <title>somareport</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme_new.css">
   </head>
   <body style="margin:0px;height:100%">
     <div style="height:80px;width:100%;background:#fff;position:absolute;z-index:1;">
@@ -29,7 +30,7 @@
     </div>
     <div style="height:100%;width:15%;float:left;background:#323845;">
     <div style="height:80px"></div>
-    <a href="">
+    <a class="menu" href="">
     <div style="height:60px;padding:0px 15px 0px 15px">
       <table>
         <tr>
@@ -43,7 +44,7 @@
       </table>
     </div>
     </a>
-    <a href="">
+    <a class="menu" href="/logout">
     <div style="height:60px;padding:0px 15px 0px 15px">
       <table>
         <tr>
@@ -65,10 +66,10 @@
         <div class="divider">
         </div>
         <div>
-          <table style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void border=1px rules=rows>
+          <table class="tablelist" style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void border=1px rules=rows>
             {{#project}}
             <tr>
-              <td style="width:100%;padding:10px">
+              <td onclick="window.location='/report/list/{{_id}}'" style="width:100%;padding:10px;">
                   <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{title}}</p>
                   <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">{{stage}}</p>
                   <div class="divider"></div>
@@ -76,9 +77,9 @@
                     {{#mentor}}
                       <img src="http://flamingonest.com/images/donatbalipapp_profile_circle.png" style="width:36px;height:36px">
                     {{/mentor}}
-                      <div style="height:36px;width:1px;background:rgba(0,0,0,0.05);margin-left:10px;display:inline-block"></div>
+                      <div style="height:36px;width:1px;background:rgba(0,0,0,0.05);margin-left:5px;display:inline-block"></div>
                     {{#mentee}}
-                      <img src="http://flamingonest.com/images/donatbalipapp_profile_circle.png" style="margin-left:10px;width:36px;height:36px">
+                      <img src="http://flamingonest.com/images/donatbalipapp_profile_circle.png" style="margin-left:5px;width:36px;height:36px">
                     {{/mentee}}
                   </div>
               </td>

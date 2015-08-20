@@ -9,6 +9,7 @@
     <title>somareport</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme_new.css">
   </head>
   <body style="margin:0px;height:100%">
     <div style="height:80px;width:100%;background:#fff;position:absolute;z-index:1;">
@@ -18,14 +19,16 @@
           </div>
       </div>
       <div style="height:80px;width:85%;float:right;background:#fff">
-        <a href="/project/list" style="text-decoration:none;color:#000;display: inline-block">
+        <a href="/project/list" style="text-decoration:none;color:#000;display:inline-block">
         <table style="height:80px">
         <tr>
           <td>
             <i style="padding-left:24px;padding-right:24px" class="material-icons">menu</i>
           </td>
           <td>
-            <span style="font-size:28px;">북경오리용 애플리케이션 개발</span>
+            {{#project}}
+            <span style="font-size:28px;">{{title}}</span>
+            {{/project}}
           </td>
         </tr>
         </table>
@@ -34,8 +37,8 @@
     </div>
     <div style="height:100%;width:15%;float:left;background:#323845;">
     <div style="height:80px"></div>
-    <a href="">
-    <div style="height:60px;padding:0px 15px 0px 15px">
+    <a href="" class="menu">
+    <div style="height:60px;padding:0px 15px 0px 15px;background-color: #1D1F29;">
       <table>
         <tr>
           <td>
@@ -48,7 +51,7 @@
       </table>
     </div>
     </a>
-    <a href="">
+    <a href="" class="menu">
     <div style="height:60px;padding:0px 15px 0px 15px">
       <table>
         <tr>
@@ -62,7 +65,7 @@
       </table>
     </div>
     </a>
-    <a href="">
+    <a href="" class="menu">
     <div style="height:60px;padding:0px 15px 0px 15px">
       <table>
         <tr>
@@ -104,6 +107,7 @@
         </div>
         <div>
           <table style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void border=1px rules=rows>
+            {{reports}}
             <tr>
               <td style="width:13%;padding:10px 0px 10px 0px">
                 <div style="background:#66C4DE;border-radius: 10px 0px 0px 10px;">
@@ -115,17 +119,7 @@
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">#150723</p>
               </td>
             </tr>
-            <tr>
-              <td style="width:13%;padding:10px 0px 10px 0px">
-                <div style="background:#FC6A6A;border-radius: 10px 0px 0px 10px;">
-                  <p style="color:#FFF;font-size:12px;padding:5px 20px 5px 10px">승인완료</p>
-                </div>
-              </td>
-              <td style="width:87%;padding-left:10px">
-                <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">북경오리 먹으러가양!</p>
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">#150723</p>
-              </td>
-            </tr>
+            {{/reports}}
           </table>
         </div>
         </div>
