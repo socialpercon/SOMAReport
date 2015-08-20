@@ -27,34 +27,34 @@ public class TestController {
 	// Log4j setting
 	private final Logger logger = Logger.getLogger(TestController.class);
 
-	@GET
-	@Path("/xmlpropertiesTest")
-	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public Response xmlpropertiesTest() {
-		logger.debug("xmlpropertiesTest invoked..");
-
-		try {
-
-			Properties prop = new Properties();
-			FileInputStream fis = new FileInputStream("config.xml");
-			prop.loadFromXML(fis);
-			logger.debug("\n URL: " + prop.getProperty("test"));
-
-			ReportsController rc = new ReportsController();
-			rc.renderDocx_mentoringReport();
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return Response
-				.status(200)
-				.type(MediaType.APPLICATION_JSON)
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods",
-						"GET, POST, DELETE, PUT").build();
-	}
+//	@GET
+//	@Path("/xmlpropertiesTest")
+//	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+//	public Response xmlpropertiesTest() {
+//		logger.debug("xmlpropertiesTest invoked..");
+//
+//		try {
+//
+//			Properties prop = new Properties();
+//			FileInputStream fis = new FileInputStream("config.xml");
+//			prop.loadFromXML(fis);
+//			logger.debug("\n URL: " + prop.getProperty("test"));
+//
+//			ReportsController rc = new ReportsController();
+//			rc.renderDocx_mentoringReport();
+//			
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		return Response
+//				.status(200)
+//				.type(MediaType.APPLICATION_JSON)
+//				.header("Access-Control-Allow-Origin", "*")
+//				.header("Access-Control-Allow-Methods",
+//						"GET, POST, DELETE, PUT").build();
+//	}
 
 	@GET
 	@Path("/elastic_search")

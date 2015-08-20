@@ -23,6 +23,7 @@ public class UserController {
 		// _design/user/auth
 		// Key : email
 		// Value : salt / value
+		System.out.println();
 		InputStream is = db.getByView("_design/user", "auth", email, false, false, false);
 		JSONArray result = JSONFactory.getData(new JSONObject(StringFactory.inputStreamToString(is)));
 		if (result.length() != 0) {

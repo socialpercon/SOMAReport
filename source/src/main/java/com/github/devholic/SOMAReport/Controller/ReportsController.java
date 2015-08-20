@@ -13,10 +13,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
-import org.docx4j.Docx4J;
-import org.docx4j.model.datastorage.migration.VariablePrepare;
-import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
-import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
+//import org.docx4j.Docx4J;
+//import org.docx4j.model.datastorage.migration.VariablePrepare;
+//import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
+//import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -254,61 +254,61 @@ public class ReportsController {
 	 * Word File 로 export하는 예
 	 * @throws Exception
 	 ***********************************************/
-	public void renderDocx_mentoringReport() throws Exception {
-		System.out.println("renderDocx_mentoringReport excuted....");
-		WordprocessingMLPackage wordPackage = WordprocessingMLPackage
-				.load(new java.io.File("mentoringReport.docx"));
-		VariablePrepare.prepare(wordPackage);
-		MainDocumentPart documentPart = wordPackage.getMainDocumentPart();
-		
-		
-		HashMap<String, String> mappings = new HashMap<String, String>();
-		
-		mappings.put("division1", "O");
-		mappings.put("division2", "");
-		mappings.put("division3", "");
-		mappings.put("division4", "");
-		
-		mappings.put("projectName","SOMAReport");
-		mappings.put("term","2015-07-01 ~ 2015.08-28");
-		mappings.put("main_mento","김태완");
-		mappings.put("sub_mento","");
-		mappings.put("section","웹");
-		mappings.put("class","6기");
-		mappings.put("stage","1단계 1차");
-		mappings.put("field","웹");
-		
-		mappings.put("mentee1","민종현");
-		mappings.put("mentee2","강성훈");
-		mappings.put("mentee3","이재연");
-		mappings.put("mentee4","");
-		
-		mappings.put("absent_reason1","집안일");
-		mappings.put("absent_reason2","");
-		mappings.put("absent_reason3","");
-		mappings.put("absent_reason4","");
-		
-		mappings.put("times","3");
-		mappings.put("date","2015-08-18");
-		mappings.put("location","아람 6-2");
-		mappings.put("start_time","19:00-22:00");
-		mappings.put("except_time","");
-		
-		mappings.put("topic","개발 스코프 정의");
-		mappings.put("purpose","개발 스코프를 정의한다");
-		mappings.put("propel","개발을 하는것");
-		mappings.put("solution","구글링을 해보기");
-		mappings.put("plan","다음주까지 개발 완성");
-		mappings.put("mento_opinion","잘하고 잇군요");
-		mappings.put("etc","안녕 이건 기타란이야");
-		mappings.put("content","안녕 이건 내용란이야 너는 무슨 내용이니");
-
-		documentPart.variableReplace(mappings);
-		wordPackage.save(new File("mentoringReport_filled.docx"));
-		
-		
-//		OutputStream os = new java.io.FileOutputStream(new File(
-//				"mentoringReport_filled.pdf"));
-//		Docx4J.toPDF(wordPackage, os);
-	}
+//	public void renderDocx_mentoringReport() throws Exception {
+//		System.out.println("renderDocx_mentoringReport excuted....");
+//		WordprocessingMLPackage wordPackage = WordprocessingMLPackage
+//				.load(new java.io.File("mentoringReport.docx"));
+//		VariablePrepare.prepare(wordPackage);
+//		MainDocumentPart documentPart = wordPackage.getMainDocumentPart();
+//		
+//		
+//		HashMap<String, String> mappings = new HashMap<String, String>();
+//		
+//		mappings.put("division1", "O");
+//		mappings.put("division2", "");
+//		mappings.put("division3", "");
+//		mappings.put("division4", "");
+//		
+//		mappings.put("projectName","SOMAReport");
+//		mappings.put("term","2015-07-01 ~ 2015.08-28");
+//		mappings.put("main_mento","김태완");
+//		mappings.put("sub_mento","");
+//		mappings.put("section","웹");
+//		mappings.put("class","6기");
+//		mappings.put("stage","1단계 1차");
+//		mappings.put("field","웹");
+//		
+//		mappings.put("mentee1","민종현");
+//		mappings.put("mentee2","강성훈");
+//		mappings.put("mentee3","이재연");
+//		mappings.put("mentee4","");
+//		
+//		mappings.put("absent_reason1","집안일");
+//		mappings.put("absent_reason2","");
+//		mappings.put("absent_reason3","");
+//		mappings.put("absent_reason4","");
+//		
+//		mappings.put("times","3");
+//		mappings.put("date","2015-08-18");
+//		mappings.put("location","아람 6-2");
+//		mappings.put("start_time","19:00-22:00");
+//		mappings.put("except_time","");
+//		
+//		mappings.put("topic","개발 스코프 정의");
+//		mappings.put("purpose","개발 스코프를 정의한다");
+//		mappings.put("propel","개발을 하는것");
+//		mappings.put("solution","구글링을 해보기");
+//		mappings.put("plan","다음주까지 개발 완성");
+//		mappings.put("mento_opinion","잘하고 잇군요");
+//		mappings.put("etc","안녕 이건 기타란이야");
+//		mappings.put("content","안녕 이건 내용란이야 너는 무슨 내용이니");
+//
+//		documentPart.variableReplace(mappings);
+//		wordPackage.save(new File("mentoringReport_filled.docx"));
+//		
+//		
+////		OutputStream os = new java.io.FileOutputStream(new File(
+////				"mentoringReport_filled.pdf"));
+////		Docx4J.toPDF(wordPackage, os);
+//	}
 }
