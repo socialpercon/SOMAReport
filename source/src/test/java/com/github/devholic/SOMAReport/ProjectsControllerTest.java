@@ -56,6 +56,11 @@ public class ProjectsControllerTest {
 	public void testGetStageInfo() {
 		ProjectsController project = new ProjectsController();
 		JSONObject jo = project.getStageInfo(new Object[]{6, 1, 3});
-		System.out.println(jo);
+	}
+	
+	@Test
+	public void testGetDetailByProjectId() {
+		ProjectsController project = new ProjectsController();
+		System.out.println(project.getDetailByProjectId("9d898f7d5bfbf361939e1fafd518a9a2"));
 	}
 }
