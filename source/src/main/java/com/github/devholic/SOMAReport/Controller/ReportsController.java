@@ -46,6 +46,7 @@ public class ReportsController {
 				JSONObject doc = a.getJSONObject(i).getJSONObject("doc");
 				JSONObject reportInfo = new JSONObject();
 				reportInfo.put("_id", doc.getString("_id"));
+				reportInfo.put("project", doc.get("project"));
 				reportInfo.put("date", doc.getJSONObject("report_info")
 						.getString("date"));
 				reportInfo.put("topic", doc.getJSONObject("report_details")
@@ -145,7 +146,7 @@ public class ReportsController {
 			reportDoc.put("report_info", reportInfo);
 			
 			reportDoc.put("attendee", document.get("attendee"));
-			reportDoc.put("absentee", document.get("absentee"));
+			if (document.has("absentee")) reportDoc.put("absentee", document.get("absentee"));
 			reportDoc.put("report_details", document.get("report_details"));
 			reportDoc.put("report_attachments", document.get("report_attachments"));
 			id = db.createDoc(reportDoc).get("_id").toString();

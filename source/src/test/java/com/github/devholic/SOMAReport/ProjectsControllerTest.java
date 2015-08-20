@@ -31,9 +31,7 @@ public class ProjectsControllerTest {
 	public void testGetProjectList() {
 		JSONArray res = ProjectsController.getProjectList();
 		for (int i=0; i<res.length(); i++) {
-			assertThat(res.getJSONObject(i).getJSONArray("value").get(0), not(nullValue()));
-			assertThat(res.getJSONObject(i).getJSONArray("value").get(1), not(nullValue()));
-			assertThat(res.getJSONObject(i).getJSONArray("value").get(2), not(nullValue()));
+			assertThat(res.getJSONObject(i).get("doc"), not(nullValue()));
 		}
 	}
 	
