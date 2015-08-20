@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" style="margin:0px;height:100%">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="No-Cache">
+    <title>somareport</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="theme.css">
+  </head>
+  <body style="margin:0px;height:100%">
+    <div style="height:80px;width:100%;background:#fff;position:absolute;z-index:1;">
+      <div class="block" style="height:80px;width:15%;float:left;background:#6289D9">
+          <div class="centered">
+            <img src="http://flamingonest.com/images/donatbalipapp_profile_circle.png" style="width:48px;height:48px;display:inline-block;">
+          </div>
+      </div>
+      <div style="height:80px;width:85%;float:right;background:#fff">
+        <table style="height:80px">
+        <tr>
+          <td>
+            <span style="padding-left:24px;font-size:28px;">SOMAREPORT</span>
+          </td>
+        </tr>
+        </table>
+      </div>
+    </div>
+    <div style="height:100%;width:15%;float:left;background:#323845;">
+    <div style="height:80px"></div>
+    <a href="">
+    <div style="height:60px;padding:0px 15px 0px 15px">
+      <table>
+        <tr>
+          <td>
+            <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">person</i>
+          </td>
+          <td>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">mypage</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </a>
+    <a href="">
+    <div style="height:60px;padding:0px 15px 0px 15px">
+      <table>
+        <tr>
+          <td>
+            <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">power_settings_new</i>
+          </td>
+          <td>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">logout</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </a>
+    </div>
+    <div style="height:100%;width:85%;float:right;background:#F5F5F5;">
+      <div style="height:100%;width:100%;background:#F5F5F5;">
+        <div style="max-height:calc(100% - 150px);width:calc(100% - 60px);float:left;margin-top:110px;margin-bottom:30px;margin-left:20px;margin-right:20px;background:#FFF;overflow-y:auto;padding:10px;box-shadow: rgba(0,0,0,0.12) 0px 0px 3px;">
+        <span style="font-size:16px;color:rgba(0, 0, 0, 0.54)">PROJECTS</span>
+        <div class="divider">
+        </div>
+        <div>
+          <table style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void border=1px rules=rows>
+            {{#project}}
+            <tr>
+              <td style="width:100%;padding:10px">
+                  <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{title}}</p>
+                  <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">{{stage}}</p>
+                  <div class="divider"></div>
+                  <div style="display:inline">
+                    {{#mentor}}
+                      <img src="http://flamingonest.com/images/donatbalipapp_profile_circle.png" style="width:36px;height:36px">
+                    {{/mentor}}
+                      <div style="height:36px;width:1px;background:rgba(0,0,0,0.05);margin-left:10px;display:inline-block"></div>
+                    {{#mentee}}
+                      <img src="http://flamingonest.com/images/donatbalipapp_profile_circle.png" style="margin-left:10px;width:36px;height:36px">
+                    {{/mentee}}
+                  </div>
+              </td>
+            </tr>
+            {{/project}}
+          </table>
+        </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  </body>
+</html>
