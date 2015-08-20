@@ -87,6 +87,6 @@ public class UserControllerTest {
 	@Test
 	public void testTotalMentoringInfoByMonth() {
 		StatisticsController stC = new StatisticsController();
-		stC.totalMentoringInfoByMonth(2015, 8, UserController.ROLE_MENTOR);
+		System.out.println(stC.totalMentoringInfoByMonth(2015, 8, UserController.ROLE_MENTOR));
 	}
 }
