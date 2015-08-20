@@ -107,7 +107,7 @@
         </div>
         <div>
           <table style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void border=1px rules=rows>
-            {{reports}}
+            {{#reports}}
             <tr>
               <td style="width:13%;padding:10px 0px 10px 0px">
                 <div style="background:#66C4DE;border-radius: 10px 0px 0px 10px;">
@@ -115,8 +115,8 @@
                 </div>
               </td>
               <td style="width:87%;padding-left:10px">
-                <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">북경오리 먹으러가양!</p>
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">#150723</p>
+                <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">#{{topic}}</p>
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">#{{date}}</p>
               </td>
             </tr>
             {{/reports}}
