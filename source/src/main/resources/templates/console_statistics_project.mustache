@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
-    <link rel="stylesheet" type="text/css" href="/semantic/dist/semantic.min.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Semantic-Org/UI-Dropdown/master/dropdown.css">
+    <link rel="stylesheet" href="https://rawgit.com/Semantic-Org/UI-Dropdown/master/dropdown.min.css">
   </head>
   <body>
     <div style="width:100%;height:100%;background-color:#F5F5F5;float:left;overflow:auto;padding-top:20px;position:relative;">
@@ -21,7 +22,7 @@
       <table>
         <tr>
           <td>
-            <select id="selected" class="dropdown" onchange="location=this.options[this.selectedIndex].value;">
+            <select id="selected" class="ui dropdown" onchange="location=this.options[this.selectedIndex].value;">
               <option>프로젝트별 통계</option>
               <optgroup label="">
                 <option value="/console/statistics/project">프로젝트별 통계</option>
@@ -110,5 +111,7 @@
           "paging":         false
       } );
 } );</script>
+    <script src="https://cdn.rawgit.com/Semantic-Org/UI-Dropdown/master/dropdown.js"></script>
+    <script src="https://cdn.rawgit.com/Semantic-Org/UI-Dropdown/master/dropdown.min.js"></script>
   </body>
 </html>

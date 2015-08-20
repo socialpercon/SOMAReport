@@ -13,15 +13,17 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Semantic-Org/UI-Dropdown/master/dropdown.css">
+    <link rel="stylesheet" href="https://rawgit.com/Semantic-Org/UI-Dropdown/master/dropdown.min.css">
 
   </head>
   <body>
-    <div style="width:100%;height:100%;background-color:#F5F5F5;float:left;overflow:auto;padding-top:20px;position:relative;">
-     <div id="statisticsHeader">
+    <div style="width:100%;height:100%;background-color:#F5F5F5;float:left;overflow:auto;padding-top:20px;padding-left:20px;position:relative;">
+     <form id="statisticsHeader" method="post" action="/console/statistics/perMonth" enctype="multipart/form-data">
       <table>
         <tr>
           <td>
-            <select class="dropdown" onchange="location=this.options[this.selectedIndex].value;">
+            <select class="ui dropdown" onchange="location=this.options[this.selectedIndex].value;">
               <option>월별 통계</option>
               <optgroup label="">
                 <option value="/console/statistics/project">프로젝트별 통계</option>
@@ -30,11 +32,25 @@
             </select>
           </td>
           <td>
-            <input type="month" name="date" max="2015-07" min="2015-08">
+            <select id="yearHo" class="ui dropdown" name="year" style="margin-left:10px;">
+              <option value="{{year}}">{{year}}{{^year}}Year{{/year}}</option>
+              <option value="2015">2015</option>
+              <option value="2014">2014</option>
+            </select>
+          </td>
+          <td>
+            <select id="monthHo" class="ui dropdown" name="month" style="margin-left:10px;">
+              <option value="{{month}}">{{month}}{{^month}}Month{{/month}}</option>
+              <option value="8">8</option>
+              <option value="7">7</option>
+            </select>
+          </td>
+          <td>
+            <button id="buttonHo" class="ui button" type="submit" style="margin-left:10px;">통계 보기</button>
           </td>
         </tr>
       </table>     
-     </div>
+     </form>
      <div name="mentorTable">
         <table id="mentor" class="display dataTable compact" cellspacing="0" width="100%" height="30%">
           <thead>
@@ -77,6 +93,7 @@
           </tbody>
         </table>
         </div>
+
       </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
@@ -84,22 +101,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
-    <script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
     <script>
     $(document).ready(function() {
-      $('#mentor').DataTable( {
-          "scrollY":        "200px",
-          "scrollCollapse": true,
-          "paging":         false
-      } );
-} );</script>
-    <script>
-    $(document).ready(function() {
-      $('#mentee').DataTable( {
-          "scrollY":        "200px",
-          "scrollCollapse": true,
-          "paging":         false
-      } );
-} );</script>
+        $('#mentor').DataTable( {
+            "scrollY":        "200px",
+            "scrollCollapse": true,
+            "paging":         false
+        });
+        $('#mentee').DataTable( {
+            "scrollY":        "200px",
+            "scrollCollapse": true,
+            "paging":         false
+        });
+        $('#buttonHo').click(function(){
+          var year = document.getElementById('yearHo');
+          var month = document.getElementById('monthHo');
+          var year_value = year.options[year.selectedIndex].value;
+          var month_value = month.options[month.selectedIndex].value;
+        
+          if(!year_value){
+            alert("year is null");
+            return false;
+          }
+          if(!month_value){
+            alert("month is null");
+            return false;
+          }
+
+      });
+    });
+
+    </script>
+    <script src="https://cdn.rawgit.com/Semantic-Org/UI-Dropdown/master/dropdown.js">
+    </script>
+    <script src="https://cdn.rawgit.com/Semantic-Org/UI-Dropdown/master/dropdown.min.js">
+    </script>
   </body>
 </html>

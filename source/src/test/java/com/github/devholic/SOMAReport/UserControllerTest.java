@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.junit.Test;
 
@@ -23,6 +24,9 @@ public class UserControllerTest {
 	// Detailed test @
 	// LoginAPITest.class
 	// LoginViewTest.class
+	// Log4j setting
+	private final Logger Log = Logger.getLogger(StatisticsController.class);
+	
 	@Test
 	public void Check_Login_Pass() {
 		assertThat(UserController.login(TestData.correctEmail,
@@ -58,7 +62,7 @@ public class UserControllerTest {
 		StatisticsController st = new StatisticsController();
 		JSONArray mentorTotal = st.totalMentoringInfoByStage(UserController.ROLE_MENTOR, "9d898f7d5bfbf361939e1fafd518ea39");
 		JSONArray menteeTotal = st.totalMentoringInfoByStage(UserController.ROLE_MENTEE, "9d898f7d5bfbf361939e1fafd518ea39");
-		System.out.println(mentorTotal);
+		Log.info(mentorTotal);
 	//	assertEquals(ProjectsController.getProjectList().length(), mentorTotal.length());
 		for (int i=0; i<mentorTotal.length(); i++) {
 			assertThat(mentorTotal.getJSONObject(i).get("mentoringNum"), not(nullValue()));
@@ -85,6 +89,6 @@ public class UserControllerTest {
 	@Test
 	public void testTotalMentoringInfoByMonth() {
 		StatisticsController stC = new StatisticsController();
-		System.out.println(stC.totalMentoringInfoByMonth(2015, 8, UserController.ROLE_MENTOR));
+		Log.info(stC.totalMentoringInfoByMonth(2015, 8, UserController.ROLE_MENTOR));
 	}
 }

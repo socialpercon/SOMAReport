@@ -19,6 +19,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.github.devholic.SOMAReport.Controller.DriveController;
+import com.github.devholic.SOMAReport.Utilities.FileFactory;
 import com.google.common.io.Files;
 
 @Path("/")
@@ -34,8 +35,14 @@ public class Drive {
 			@FormDataParam("file") FormDataContentDisposition formData) {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
-			DriveController drive = new DriveController();
-			// drive.uploadProfileImage(FileFactory.stream2file(is));
+			try {
+				DriveController drive = new DriveController();
+				drive.uploadProfileImage(session.getAttribute("user_id")
+						.toString(), FileFactory.stream2file(is));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 		}
 		return Response.status(200).build();
