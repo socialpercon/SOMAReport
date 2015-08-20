@@ -14,6 +14,14 @@ body, html {
     background-color: rgba(0, 0, 0, 0.12);
 }
 
+.menu:hover div {
+  background-color: #1D1F29;
+}
+
+.tablelist td:hover {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
 .block {
   text-align: center;
 
