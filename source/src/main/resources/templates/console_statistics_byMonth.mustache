@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
-    <link rel="stylesheet" type="text/css" href="/semantic/dist/semantic.min.css">
+
   </head>
   <body>
     <div style="width:100%;height:100%;background-color:#F5F5F5;float:left;overflow:auto;padding-top:20px;position:relative;">
@@ -22,28 +22,19 @@
         <tr>
           <td>
             <select class="dropdown" onchange="location=this.options[this.selectedIndex].value;">
-              <option>{{current}}</option>
-              <optgroup>
+              <option>월별 통계</option>
+              <optgroup label="">
                 <option value="/console/statistics/project">프로젝트별 통계</option>
-                <option value="/console/statistics/perMonth">월별 통계</option>
+                <option value="">월별 통계</option>
               </optgroup>
             </select>
           </td>
-          <td id="selectProject">
-            <select class="ui dropdown" onchange="location=this.options[this.selectedIndex].value;">
-              <option>{{selectedStage}}{{^selectedStage}}프로젝트를 선택하세요{{/selectedStage}}</option>
-              <optgroup label="프로젝트 목록">
-                {{#stages}}
-                <div class="divider"></div>
-                <option value="/console/statistics/project/{{infoId}}">{{stageString}}</option>
-                {{/stages}}
-              </optgroup>
-            </select>
+          <td>
+            <input type="month" name="date" max="2015-07" min="2015-08">
           </td>
         </tr>
       </table>     
      </div>
-
      <div name="mentorTable">
         <table id="mentor" class="display dataTable compact" cellspacing="0" width="100%" height="30%">
           <thead>
@@ -57,7 +48,7 @@
           <tbody>
           {{#mentors}}
             <tr>
-             <td>{{name}}</td>
+             <td>{{userName}}</td>
               <td>{{mentoringNum}}</td>
               <td>{{mentoringSum}}</td>
             </tr>
@@ -78,7 +69,7 @@
           <tbody>
           {{#mentees}}
             <tr>
-              <td>{{name}}</td>
+              <td>{{userName}}</td>
               <td>{{mentoringNum}}</td>
               <td>{{mentoringSum}}</td>
             </tr>
@@ -93,7 +84,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
-    <script src="semantic/dist/semantic.min.js"></script>
+    <script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
     <script>
     $(document).ready(function() {
       $('#mentor').DataTable( {

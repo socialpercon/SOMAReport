@@ -9,13 +9,12 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -72,4 +71,19 @@ public class DatabaseControllerTest {
 		assertEquals(id, jo.get("_id"));
 	}
 
+	@Test
+	public void UpdateWhatThe() {
+		DatabaseController db = new DatabaseController();
+		JSONArray oh = new JSONArray();
+		oh = JSONFactory.inputStreamToJson(db.getByView("_design/report", "delete_it", true, false, false)).getJSONArray("rows");
+		System.out.println(oh);
+		for (int i=0; i<oh.length(); i++) {
+			JSONObject ah = oh.getJSONObject(i).getJSONObject("doc");
+			JSONObject detail = ah.getJSONObject("report_details");
+			detail.put("content", "내용입니다");
+			ah.put("report_details", detail);
+			Map<String, Object> m = db.updateDoc(ah);
+			System.out.println(m.get("id"));
+		}
+	}
 }

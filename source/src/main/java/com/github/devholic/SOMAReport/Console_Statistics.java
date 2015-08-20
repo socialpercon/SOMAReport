@@ -28,10 +28,9 @@ public class Console_Statistics {
 	public Response Vies_Statistics () {
 		JSONObject jo = new JSONObject();
 		
-		jo.put("current", "");
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics.mustache", 
+				.entity(new Viewable("/console_statistics_project.mustache", 
 						MustacheHelper.toMap(jo))).build();
 	}
 	
@@ -43,10 +42,9 @@ public class Console_Statistics {
 		JSONArray stages = projectC.existingStage();
 		jo.put("stages", stages);
 		jo.put("selectedStage", "");
-		jo.put("current", "프로젝트별 통계");
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics.mustache",
+				.entity(new Viewable("/console_statistics_project.mustache",
 						MustacheHelper.toMap(jo))).build();
 	}
 	
@@ -63,11 +61,10 @@ public class Console_Statistics {
 		jo.put("mentors", mentors);
 		JSONArray mentees = statC.totalMentoringInfoByStage(UserController.ROLE_MENTEE, id);
 		jo.put("mentees", mentees);
-		jo.put("current", "프로젝트별 통계");
 		
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics.mustache", 
+				.entity(new Viewable("/console_statistics_project.mustache", 
 						MustacheHelper.toMap(jo))).build();
 	}
 	
@@ -76,11 +73,26 @@ public class Console_Statistics {
 	public Response Vies_Statistics_perMonth () {
 		JSONObject jo = new JSONObject();
 		
-		jo.put("current", "월별 통계");
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics.mustache", 
+				.entity(new Viewable("/console_statistics_byMonth.mustache", 
 						MustacheHelper.toMap(jo))).build();
 	}
-
+	
+	@GET
+	@Path("/console/statistics/perMonth/{year}/{month}")
+	public Response Vies_Statistics_perMonth_data (@PathParam("year") String year, @PathParam("month")String month) {
+		JSONObject jo = new JSONObject();
+		int years = Integer.parseUnsignedInt(year);
+		int months = Integer.parseUnsignedInt(month);
+		
+		JSONArray mentors = statC.totalMentoringInfoByMonth(years, months, UserController.ROLE_MENTOR);
+		jo.put("mentors", mentors);
+		JSONArray mentees = statC.totalMentoringInfoByMonth(years, months, UserController.ROLE_MENTEE);
+		jo.put("mentees", mentees);
+		return Response
+				.status(200)
+				.entity(new Viewable("/console_statistics_byMonth.mustache", 
+						MustacheHelper.toMap(jo))).build();
+	}
 }

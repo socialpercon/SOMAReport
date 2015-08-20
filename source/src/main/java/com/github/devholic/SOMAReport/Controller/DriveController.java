@@ -32,6 +32,7 @@ import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.drive.model.About;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 
@@ -109,11 +110,21 @@ public class DriveController {
 					access_token,
 					refresh_token);
 			com.google.api.services.drive.Drive drive = buildService(c);
-			File body = new File();
-			body.setTitle(r.get("_id").toString());
-			FileContent data = new FileContent("", file);
-			drive.files().insert(body, data).execute();
-			return r.get("_id").toString();
+			
+			//용량체크 " 100메가 이하면 사용하지 못한다."
+			printAbout(drive);
+			long totalQuota = this.getTotalquota(drive);
+			long usedQuota = this.getUsedquota(drive);
+			Log.info("storage we can use =[ "+String.valueOf(totalQuota - usedQuota)+"]");
+			
+			if(totalQuota - usedQuota < 104857600){
+				File body = new File();
+				body.setTitle(r.get("_id").toString());
+				FileContent data = new FileContent("", file);
+				drive.files().insert(body, data).execute();
+				return r.get("_id").toString();
+			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			Log.error(e.getMessage());
@@ -348,5 +359,57 @@ public class DriveController {
 		return new com.google.api.services.drive.Drive.Builder(HTTP_TRANSPORT,
 				JSON_FACTORY, credentials).setApplicationName(APPLICATION_NAME)
 				.build();
+	}
+	
+	
+	/***************************************************
+	 * Drive 정보에 대해서 프린트 한다
+	 * @param service
+	 **************************************************/
+	public void printAbout(com.google.api.services.drive.Drive service) {
+	    try {
+	      About about = service.about().get().execute();
+
+	      System.out.println("Current user name: " + about.getName());
+	      System.out.println("Root folder ID: " + about.getRootFolderId());
+	      System.out.println("Total quota (bytes): " + about.getQuotaBytesTotal());
+	      System.out.println("Used quota (bytes): " + about.getQuotaBytesUsed());
+	    } catch (IOException e) {
+	      System.out.println("An error occurred: " + e);
+	    }
+	  }
+	
+	/***************************************************
+	 * 전체 용량을 가져온다
+	 * @param service
+	 * @return long
+	 **************************************************/
+	public long getTotalquota(com.google.api.services.drive.Drive service){
+		long totalQuota = 0L;
+		try{
+			About about = service.about().get().execute();
+			
+			totalQuota =about.getQuotaBytesTotal(); 
+		}catch( IOException e){
+			Log.error("An error occurred: " + e);
+		}
+		return totalQuota;
+	}
+	
+	/**************************************************
+	 * 현재 사용중인 용량을 가져온다
+	 * @param service
+	 * @return long
+	 **************************************************/
+	public long getUsedquota(com.google.api.services.drive.Drive service){
+		long usedQuota = 0L;
+		try{
+			About about = service.about().get().execute();
+			
+			usedQuota =about.getQuotaBytesUsed(); 
+		}catch( IOException e){
+			Log.error("An error occurred: " + e);
+		}
+		return usedQuota;
 	}
 }
