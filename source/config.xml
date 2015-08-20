@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>This is config file!</comment>
-<entry key="elasticsearch_base">http://172.16.101.172:9200</entry>
+<entry key="elasticsearch_base">http://local.swmaestro.io:9200</entry>
 <entry key="couchdb_name">somareport</entry>
 <entry key="couchdb_url">http://172.16.100.57:5984</entry>
 <entry key="couchdb_id">somareport</entry>
