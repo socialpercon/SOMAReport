@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko" style="margin:0px;height:100%">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="No-Cache">
+    <title>somareport</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme_new.css">
+  </head>
+  <body style="margin:0px;height:100%">
+    <div style="height:80px;width:100%;background:#fff;position:absolute;z-index:1;">
+      <div class="block" style="height:80px;width:15%;float:left;background:#6289D9">
+          <div class="centered">
+            <img src="http://flamingonest.com/images/donatbalipapp_profile_circle.png" style="width:48px;height:48px;display:inline-block;">
+          </div>
+      </div>
+      <div style="height:80px;width:85%;float:right;background:#fff">
+        <a href="/project/list" style="text-decoration:none;color:#000;display:inline-block">
+        <table style="height:80px">
+        <tr>
+          <td>
+            <i style="padding-left:24px;padding-right:24px" class="material-icons">arrow_back</i>
+          </td>
+          <td>
+            {{#project}}
+            <span style="font-size:28px;">{{title}}</span>
+            {{/project}}
+          </td>
+        </tr>
+        </table>
+        </a>
+      </div>
+    </div>
+    <div style="height:100%;width:15%;float:left;background:#323845;">
+    <div style="height:80px"></div>
+    {{#project}}
+    <a href="/project/{{_id}}" class="menu">
+    <div style="height:60px;padding:0px 15px 0px 15px;">
+      <table>
+        <tr>
+          <td>
+            <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">visibility</i>
+          </td>
+          <td>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">home</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </a>
+    <a href="/report/list/{{_id}}" class="menu">
+    <div style="height:60px;padding:0px 15px 0px 15px;background-color:#1D1F29;">
+      <table>
+        <tr>
+          <td>
+            <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">description</i>
+          </td>
+          <td>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">reports</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </a>
+    <a href="/drive/folder/{{_id}}" class="menu">
+    <div style="height:60px;padding:0px 15px 0px 15px">
+      <table>
+        <tr>
+          <td>
+            <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">folder</i>
+          </td>
+          <td>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">drive</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </a>
+    {{/project}}
+    </div>
+    <div style="height:100%;width:85%;float:right;background:#F5F5F5;">
+      <div style="height:100%;width:30%;float:left;background:#F5F5F5;">
+        <div style="max-height:calc(100% - 160px);width:calc(100% - 60px);float:left;margin-top:110px;margin-bottom:30px;margin-left:20px;margin-right:20px;background:#FFF;overflow-y:auto;padding:10px;box-shadow: rgba(0,0,0,0.12) 0px 0px 3px;">
+        <span style="font-size:16px;color:rgba(0, 0, 0, 0.54)">REPORTS</span>
+        <div class="divider">
+        </div>
+        <div>
+          <table class="tablelist" style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void border=1px rules=rows>
+            {{#reports}}
+            <tr>
+              <td onclick="window.location='/report/{{_id}}'" style="padding:10px">
+                <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{topic}}</p>
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">#{{date}}</p>
+              </td>
+            </tr>
+            {{/reports}}
+          </table>
+        </div>
+        </div>
+      </div>
+      <div style="height:100%;width:70%;float:right;background:#F5F5F5;">
+        <div style="max-height:calc(100% - 160px);width:calc(100% - 60px);float:left;margin-top:110px;margin-bottom:30px;margin-left:20px;margin-right:20px;background:#FFF;overflow-y:auto;padding:10px;box-shadow: rgba(0,0,0,0.12) 0px 0px 3px;">
+        <span style="font-size:16px;color:rgba(0, 0, 0, 0.54)">DETAIL</span>
+        <div class="divider">
+        </div>
+        <div>
+          <table style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void border=1px rules=rows>
+            {{#detail}}
+              {{#report_info}}
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">멘토링 일시</p>
+                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{start_time}} ~ {{end_time}}</p>
+              </td>
+              </tr>
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">멘토링 장소</p>
+                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{place}}</p>
+              </td>
+              </tr>
+              {{/report_info}}
+              {{#report_details}}
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">주제</p>
+                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{topic}}</p>
+              </td>
+              </tr>
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">목표</p>
+                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{goal}}</p>
+              </td>
+              </tr>
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">추진내용</p>
+                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{issue}}</p>
+              </td>
+              </tr>
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">해결방안</p>
+                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{solution}}</p>
+              </td>
+              </tr>
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">향후계획</p>
+                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{plan}}</p>
+              </td>
+              </tr>
+              {{#opinion}}
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">멘토의견</p>
+                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{opinion}}</p>
+              </td>
+              </tr>
+              {{/opinion}}
+              {{#etc}}
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">기타</p>
+                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{etc}}</p>
+              </td>
+              </tr>
+              {{/etc}}
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">내용</p>
+                <pre style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{content}}</pre>
+              </td>
+              </tr>
+              {{/report_details}}
+            {{/detail}}
+          </table>
+        </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  </body>
+</html>

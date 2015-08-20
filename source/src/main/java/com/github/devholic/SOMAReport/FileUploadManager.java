@@ -1,8 +1,6 @@
 package com.github.devholic.SOMAReport;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import javax.ws.rs.GET;
@@ -12,12 +10,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.mvc.Viewable;
 
 import com.github.devholic.SOMAReport.Controller.DriveController;
+import com.github.devholic.SOMAReport.Utilities.FileFactory;
 
 @Path("/")
 public class FileUploadManager {
@@ -50,7 +48,7 @@ public class FileUploadManager {
 	public Response uploadMultiFile(@FormDataParam("file") InputStream is) {
 		Log.info("uploadMultiFile!!!!!!  is:" + is);
 		try {
-			File buffer_file = this.stream2file(is);
+			File buffer_file = FileFactory.stream2file(is);
 
 			DriveController dc = new DriveController();
 			dc.uploadFileToProject("9d898f7d5bfbf361939e1fafd518b7f0",
@@ -64,24 +62,5 @@ public class FileUploadManager {
 				.build();
 	}
 	
-	/*************************************************
-	 * InputStream을 File로 변환해주는 메소드
-	 * @param InputStream in
-	 * @return File file
-	 * @throws IOException
-	 *************************************************/
-	public File stream2file (InputStream in) throws IOException {
 
-		final File tempFile = File.createTempFile("stream2file", ".tmp");
-		tempFile.deleteOnExit();
-
-		try {
-			FileOutputStream fo = new FileOutputStream(tempFile);
-			IOUtils.copy(in, fo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return tempFile;
-	}
 }

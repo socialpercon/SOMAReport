@@ -18,7 +18,7 @@ body, html {
   background-color: #1D1F29;
 }
 
-.tablelist td:hover {
+.tablelist tr:hover {
   background-color: rgba(0, 0, 0, 0.12);
 }
 
@@ -57,3 +57,48 @@ body, html {
 // Rules for using icons as white on a dark background.
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+button {
+  border: none;
+  cursor: pointer;
+  background: #6289D9;
+  border-radius: 1px;
+  margin: 10px;
+  padding: 6px;
+  width: calc(100% - 20px);
+  color: white;
+}
+
+button:hover {
+  background: #396ACF;
+}
+
+input {
+  padding: 10px 0;
+  display: block;
+  border: none;
+  border-bottom: solid 2px #6289D9;
+  -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  color: #0e6252;
+}
+
+input:focus, input:valid {
+ box-shadow: none;
+ outline: none;
+ background-position: 0 0;
+}
+
+input::-webkit-input-placeholder {
+ font-family: 'roboto', sans-serif;
+ -webkit-transition: all 0.3s ease-in-out;
+ transition: all 0.3s ease-in-out;
+}
+
+input:focus::-webkit-input-placeholder, input:valid::-webkit-input-placeholder {
+ color: #6289D9;
+ font-size: 11px;
+ -webkit-transform: translateY(-20px);
+ transform: translateY(-20px);
+ visibility: visible !important;
+}
