@@ -58,8 +58,13 @@ public class DriveController {
 	private String credentialFileName = "0.json";
 	
 	
+	/******************************************
+	 * 구글 드라이브에 파일을 업로드한다 : 
+	 * @param projectId
+	 * @param file
+	 *****************************************/
 	public void uploadFileToProject(String projectId, java.io.File file) {
-		Log.info("uploadImageToProject called!!!!!!");
+
 		DatabaseController db = new DatabaseController();
 		JSONObject driveQuery = JSONFactory
 				.inputStreamToJson(db.getByView("_design/file", "projectdrive",
@@ -84,7 +89,67 @@ public class DriveController {
 		jo.getJSONArray("files").put(id);
 		db.updateDoc(jo);
 	}
+	
+	/*****************************************
+	 * 구글드라이브에 프로필 이미지를 업로드 한다 
+	 * @param file
+	 * @return String
+	 *****************************************/
+	public String uploadProfileImage(java.io.File file){
+		Long now = System.currentTimeMillis();
+		JSONObject imageData = new JSONObject();
+		imageData.put("type", "file");
+		imageData.put("name", file.getName());
+		imageData.put("storage", "0");
+		imageData.put("modified_at", now);
+		imageData.put("cached_at", 0);
+		Map<String, Object> r = db.createDoc(imageData);
+		
+		try {
+			//JSON 파일을 읽어서 credential을 가져온다
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse(new FileReader(credentialFileName));
+			org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject)obj;
+			
+			String access_token = (String)jsonObj.get("access_token");
+			String refresh_token = (String)jsonObj.get("refresh_token");
 
+			Log.debug("get access_token =["+access_token+"]");
+			Log.debug("get refresh_token =["+refresh_token+"]");
+					
+			Credential c = getCredential(
+					access_token,
+					refresh_token);
+			com.google.api.services.drive.Drive drive = buildService(c);
+			
+			//용량체크 " 100메가 이하면 사용하지 못한다."
+			printAbout(drive);
+			long totalQuota = this.getTotalquota(drive);
+			long usedQuota = this.getUsedquota(drive);
+			Log.info("storage we can use =[ "+String.valueOf(totalQuota - usedQuota)+"]");
+			
+			if(totalQuota - usedQuota < 104857600){
+				File body = new File();
+				body.setTitle(r.get("_id").toString()+"-profileImage");
+				FileContent data = new FileContent("", file);
+				drive.files().insert(body, data).execute();
+				return r.get("_id").toString();
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			Log.error(e.getMessage());
+		} catch (org.json.simple.parser.ParseException pe){
+			Log.error(pe.getMessage());
+		}
+		return null;
+	}
+
+	/*****************************************
+	 * 구글드라이브에 파일을 업로드 한다 
+	 * @param file
+	 * @return String
+	 *****************************************/
 	public String uploadFile(java.io.File file) {
 		Long now = System.currentTimeMillis();
 		JSONObject imageData = new JSONObject();

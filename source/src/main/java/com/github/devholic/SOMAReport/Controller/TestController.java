@@ -40,9 +40,8 @@ public class TestController {
 			prop.loadFromXML(fis);
 			logger.debug("\n URL: " + prop.getProperty("test"));
 
-			ReportsController rc = new ReportsController();
-			rc.renderDocx_mentoringReport();
-			
+//			ReportsController rc = new ReportsController();
+//			rc.renderDocx_mentoringReport();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
