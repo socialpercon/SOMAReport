@@ -37,7 +37,8 @@ public class Drive {
 		if (session.getAttribute("user_id") != null) {
 			try {
 				DriveController drive = new DriveController();
-				drive.uploadProfileImage(session.getAttribute("user_id").toString(), FileFactory.stream2file(is));
+				drive.uploadProfileImage(session.getAttribute("user_id")
+						.toString(), FileFactory.stream2file(is));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

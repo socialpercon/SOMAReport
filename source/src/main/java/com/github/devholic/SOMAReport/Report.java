@@ -115,16 +115,14 @@ public class Report {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
 			JSONObject data = new JSONObject();
-			ReportsController reports = new ReportsController();
-			JSONObject write = new JSONObject();
-			write.put("pid", id);
-			data.put("write", write);
-			data.put("report", reports.getReportByProjectId(id));
 			ProjectsController project = new ProjectsController();
 			data.put("project", project.getDetailByProjectId(id));
+			ReportsController reports = new ReportsController();
+			data.put("reports", reports.getReportByProjectId(id));
+			Log.info(data.toString());
 			return Response
 					.status(200)
-					.entity(new Viewable("/user_write.mustache", MustacheHelper
+					.entity(new Viewable("/new/new_report_write.mustache", MustacheHelper
 							.toMap(data))).build();
 		} else {
 			return Response.status(401).entity(new Viewable("/login.mustache"))

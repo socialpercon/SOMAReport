@@ -6,26 +6,23 @@ package com.github.devholic.SOMAReport.Utilities;
  */
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Writer;
-import java.io.StringWriter;
-
 import javax.inject.Singleton;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.ext.MessageBodyReader;
-import javax.ws.rs.ext.Provider;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
-
+import javax.ws.rs.ext.MessageBodyReader;
+import javax.ws.rs.ext.Provider;
 
 import com.google.gson.Gson;
 
