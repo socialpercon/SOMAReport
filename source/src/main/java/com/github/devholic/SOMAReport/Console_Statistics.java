@@ -24,12 +24,22 @@ public class Console_Statistics {
 	StatisticsController statC = new StatisticsController();
 	
 	@GET
+	@Path("/console/statistics")
+	public Response Vies_Statistics () {
+		
+		return Response
+				.status(200)
+				.build();
+	}
+	
+	@GET
 	@Path("/console/statistics/project")
 	public Response View_Statistics_Project () {
 		JSONObject jo = new JSONObject();
 		
 		JSONArray stages = projectC.existingStage();
 		jo.put("stages", stages);
+		jo.put("selectedStage", "");
 		return Response
 				.status(200)
 				.entity(new Viewable("/console_statistics.mustache",
@@ -38,7 +48,7 @@ public class Console_Statistics {
 	
 	@GET
 	@Path("/console/statistics/project/{id}")
-	public Response View_Statics_Project_Selected (@PathParam("id") String id) {
+	public Response View_Statistics_Project_Selected (@PathParam("id") String id) {
 		JSONObject jo = new JSONObject();
 		
 		JSONArray stages = projectC.existingStage();
@@ -55,4 +65,14 @@ public class Console_Statistics {
 				.entity(new Viewable("/console_statistics.mustache", 
 						MustacheHelper.toMap(jo))).build();
 	}
+	
+	@GET
+	@Path("/console/statistics/per_month")
+	public Response Vies_Statistics_perMonth () {
+		
+		return Response
+				.status(200)
+				.build();
+	}
+
 }
