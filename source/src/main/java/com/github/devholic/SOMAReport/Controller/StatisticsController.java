@@ -95,7 +95,7 @@ public class StatisticsController {
 						JSONObject mentorDoc = new JSONObject();
 						JSONArray mentorInfo = JSONFactory.getValue(mentor.getJSONObject(i));
 						mentorDoc.put("userId", mentor.getJSONObject(i).get("id"));
-						mentorDoc.put("name", mentorInfo.get(3));
+						mentorDoc.put("userName", mentorInfo.get(3));
 						String projectId = projects.getJSONObject(j).getString("_id");
 						mentorDoc.put("projectId", projectId);
 						mentorDoc.put("stage", projects.getJSONObject(j).get("stage"));
@@ -129,7 +129,7 @@ public class StatisticsController {
 				JSONArray menteeInfo = JSONFactory.getValue(mentee.getJSONObject(i));
 				String menteeId = mentee.getJSONObject(i).getString("id");
 				menteeDoc.put("userId", menteeId);
-				menteeDoc.put("name", menteeInfo.get(3));
+				menteeDoc.put("userName", menteeInfo.get(3));
 
 				JSONArray projects = ProjectsController.getMyProject(mentee.getJSONObject(i).getString("id"));
 				for (int j = 0; j < projects.length(); j++) {

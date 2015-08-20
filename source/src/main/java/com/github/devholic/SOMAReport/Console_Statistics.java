@@ -39,7 +39,7 @@ public class Console_Statistics {
 		
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics_project.mustache", 
+				.entity(new Viewable("/new/new_console_statistics.mustache", 
 						MustacheHelper.toMap(jo))).build();
 	}
 	
@@ -53,7 +53,7 @@ public class Console_Statistics {
 		jo.put("selectedStage", "");
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics_project.mustache",
+				.entity(new Viewable("/new/new_console_statistics_project.mustache",
 						MustacheHelper.toMap(jo))).build();
 	}
 	
@@ -73,7 +73,7 @@ public class Console_Statistics {
 		
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics_project.mustache", 
+				.entity(new Viewable("/new/new_console_statistics_project.mustache", 
 						MustacheHelper.toMap(jo))).build();
 	}
 	
@@ -84,7 +84,7 @@ public class Console_Statistics {
 		
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics_byMonth.mustache", 
+				.entity(new Viewable("/new/new_console_statistics_month.mustache", 
 						MustacheHelper.toMap(jo))).build();
 	}
 	
@@ -106,24 +106,8 @@ public class Console_Statistics {
 		Log.info(jo.toString());
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics_byMonth.mustache", 
+				.entity(new Viewable("/new/new_console_statistics_month.mustache", 
 						MustacheHelper.toMap(jo))).build();
 	}
 	
-	@GET
-	@Path("/console/statistics/perMonth/{year}/{month}")
-	public Response View_Statistics_perMonth_data (@PathParam("year") String year, @PathParam("month")String month) {
-		JSONObject jo = new JSONObject();
-		int years = Integer.parseUnsignedInt(year);
-		int months = Integer.parseUnsignedInt(month);
-		
-		JSONArray mentors = statC.totalMentoringInfoByMonth(years, months, UserController.ROLE_MENTOR);
-		jo.put("mentors", mentors);
-		JSONArray mentees = statC.totalMentoringInfoByMonth(years, months, UserController.ROLE_MENTEE);
-		jo.put("mentees", mentees);
-		return Response
-				.status(200)
-				.entity(new Viewable("/console_statistics_byMonth.mustache", 
-						MustacheHelper.toMap(jo))).build();
-	}
 }
