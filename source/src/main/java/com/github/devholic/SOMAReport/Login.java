@@ -113,7 +113,7 @@ public class Login {
 			CharConversionException {
 		if (email != null && password != null) { // 아이디, 비밀번호가 제대로 들어온 경우
 			UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
-			builder.path("project");
+			builder.path("project/list");
 			Session session = request.getSession();
 			if (session.getAttribute("user_id") != null) { // 세션에 user_id가 있는경우
 				return Response.seeOther(builder.build()).build();

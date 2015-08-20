@@ -23,6 +23,7 @@ form {
   padding-bottom: 40px;
   border-radius: 3px;
 }
+
 form h1 {
   box-sizing: border-box;
   padding: 20px;
@@ -44,11 +45,13 @@ input {
   background-repeat: no-repeat;
   color: #0e6252;
 }
+
 input:focus, input:valid {
   box-shadow: none;
   outline: none;
   background-position: 0 0;
 }
+
 input:focus::-webkit-input-placeholder, input:valid::-webkit-input-placeholder {
   color: #1abc9c;
   font-size: 11px;

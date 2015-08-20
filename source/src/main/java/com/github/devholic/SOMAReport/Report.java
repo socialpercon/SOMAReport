@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Controller.ReportsController;
+import com.github.devholic.SOMAReport.Controller.UserController;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 
 @Path("/")
@@ -44,12 +45,11 @@ public class Report {
 			ProjectsController project = new ProjectsController();
 			data.put("project", project.getDetailByProjectId(id));
 			ReportsController reports = new ReportsController();
-			JSONArray userReport = reports.getReportByProjectId(id);
-			data.put("report", userReport);
+			data.put("reports", reports.getReportByProjectId(id));
 			Log.info(data.toString());
 			return Response
 					.status(200)
-					.entity(new Viewable("/user_report.mustache",
+					.entity(new Viewable("/new/new_reports.mustache",
 							MustacheHelper.toMap(data))).build();
 		} else {
 			return Response.status(401).entity(new Viewable("/login.mustache"))
@@ -65,17 +65,43 @@ public class Report {
 		if (session.getAttribute("user_id") != null) {
 			JSONObject data = new JSONObject();
 			ReportsController reports = new ReportsController();
-			JSONObject detail = reports.getReportWithNames(id);
-			data.put("detail", detail);
-			String pid = detail.getString("project");
-			data.put("report", reports.getReportByProjectId(pid));
-			Log.info(data);
-			ProjectsController project = new ProjectsController();
-			data.put("project", project.getDetailByProjectId(pid));
-			return Response
-					.status(200)
-					.entity(new Viewable("/user_report.mustache",
-							MustacheHelper.toMap(data))).build();
+			UserController user = new UserController();
+			JSONObject detail = reports.getReportDetailByReportId(id);
+			if (detail != null) {
+				if (user.getRoleById(session.getAttribute("user_id").toString()) == UserController.ROLE_MENTOR) {
+					if (!detail.getJSONObject("report_details").has(
+							"opinion-public")) {
+						detail.getJSONObject("report_details").put(
+								"opinion-public", "true");
+					}
+				}
+				if (!detail.getJSONObject("report_details").has(
+						"opinion-public")) {
+					detail.getJSONObject("report_details").remove("opinion");
+				}
+				if (detail.getJSONObject("report_details").has("content")) {
+					detail.getJSONObject("report_details").put(
+							"content",
+							detail.getJSONObject("report_details")
+									.getString("content")
+									.replaceAll("\r\n", "\n"));
+				}
+				data.put("detail", detail);
+				Log.info(detail.toString());
+				data.put("reports", reports.getReportByProjectId(detail
+						.getString("project")));
+				ProjectsController project = new ProjectsController();
+				data.put("project", project.getDetailByProjectId(detail
+						.getString("project")));
+				return Response
+						.status(200)
+						.entity(new Viewable("/new/new_report_detail.mustache",
+								MustacheHelper.toMap(data))).build();
+			} else {
+				UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
+				builder.path("/project/list");
+				return Response.seeOther(builder.build()).build();
+			}
 		} else {
 			return Response.status(401).entity(new Viewable("/login.mustache"))
 					.build();
@@ -151,12 +177,13 @@ public class Report {
 		String[] endArr = end.split(":");
 		String startDay = startArr[0].toString();
 		info.put("date", startDay);
-		String start_time = startDay+startArr[1].split(":")[0].toString()+startArr[1].split(":")[1].toString();
+		String start_time = startDay + startArr[1].split(":")[0].toString()
+				+ startArr[1].split(":")[1].toString();
 		info.put("start_time", start_time);
-		info.put("end_time", startDay+endArr[0]+endArr[1]);
+		info.put("end_time", startDay + endArr[0] + endArr[1]);
 		info.put("except_time", 0);
 		jo.put("report_info", info);
-		Log.info("inserted-report_info: "+jo.toString());
+		Log.info("inserted-report_info: " + jo.toString());
 		JSONObject details = new JSONObject();
 		details.put("topic", topic);
 		details.put("goal", goal);
@@ -174,7 +201,7 @@ public class Report {
 		jo.put("report_details", details);
 		jo.put("report_attachments", new JSONObject());
 		String id = report.insertReport(jo);
-		Log.info("inserted: "+id);
+		Log.info("inserted: " + id);
 		UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
 		if (id != null) {
 			builder.path("report/" + id);

@@ -26,7 +26,7 @@ public class Project {
 
 	// View
 	@GET
-	@Path("/project")
+	@Path("/project/list")
 	public Response View_Project(@Context Request request) {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
@@ -53,10 +53,9 @@ public class Project {
 		if (session.getAttribute("user_id") != null) {
 			// #66C4DE : waiting
 			// #FC6A6A : finish
-			ProjectsController projects = new ProjectsController();
-			JSONObject userProject = projects.getDetailByProjectId(id);
 			JSONObject data = new JSONObject();
-			data.put("project", userProject);
+			ProjectsController projects = new ProjectsController();
+			data.put("project", projects.getDetailByProjectId(id));
 			ReportsController reports = new ReportsController();
 			data.put("reports", reports.getReportByProjectId(id));
 			Log.info(data.toString());
