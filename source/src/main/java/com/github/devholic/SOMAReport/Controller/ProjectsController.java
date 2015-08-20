@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.mortbay.log.Log;
 
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
@@ -180,7 +181,7 @@ public class ProjectsController {
 	/***
 	 * 현존하는 stage 정보
 	 * 
-	 * @return JSONArray [{infoId, stage, projectNum}]
+	 * @return JSONArray [{infoId, stage, stageString, projectNum}]
 	 */
 
 	public JSONArray existingStage() {
@@ -191,11 +192,10 @@ public class ProjectsController {
 			JSONObject stages = new JSONObject();
 			stages.put("stage", list.getJSONObject(i).get("key"));
 			stages.put("stageString", list.getJSONObject(i).getJSONObject("doc").get("stageString"));
-			stages.put("infoId", list.getJSONObject(0).get("value"));
+			stages.put("infoId", list.getJSONObject(i).get("value"));
 			stages.put("projectNum", list.getJSONObject(i).getJSONObject("doc").getJSONArray("projects").length());
 			stage.put(stages);
 		}
-		
 		return stage;
 	}
 	

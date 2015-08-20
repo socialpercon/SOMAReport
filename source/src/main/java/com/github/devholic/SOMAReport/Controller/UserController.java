@@ -90,6 +90,30 @@ public class UserController {
 		}
 	}
 
+	/***
+	 * 해당 user의 role 정보를 가져온다.
+	 * 
+	 * @param userId
+	 * @return int (ROLE_MENTOR / ROLE_MENTEE)
+	 */
+	public int getRoleById (String userId) {
+		JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(userId));
+		if (userDoc.has("role")) {
+			if (userDoc.getString("role").equals("mentor"))
+				return ROLE_MENTOR;
+			else if (userDoc.getString("role").equals("mentee"))
+				return ROLE_MENTEE;
+			else {
+				Log.error("Wrong role info");
+				return -1;
+			}
+		}
+		else {
+			Log.error("Wrong role info");
+			return -1;
+		}
+	}
+	
 	/**
 	 * _id에 맞는 이름을 가져온다.
 	 * 
@@ -101,4 +125,13 @@ public class UserController {
 		return userDoc.getString("name");
 	}
 	
+	public JSONArray getUsersInYear (int year) {
+		JSONObject raw = JSONFactory.inputStreamToJson(db.getByView("_design/user", "users_in_year", year, false, true, false));
+		JSONArray result = JSONFactory.getData(raw);	
+		JSONArray users = new JSONArray();
+		for (int i=0; i<result.length(); i++) {
+			users.put(result.getJSONObject(i).get("value"));
+		}
+		return users;
+	}
 }
