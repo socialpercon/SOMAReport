@@ -13,9 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.json.JSONArray;
 import org.junit.Test;
-import org.mortbay.log.Log;
 
-import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Controller.StatisticsController;
 import com.github.devholic.SOMAReport.Controller.UserController;
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;

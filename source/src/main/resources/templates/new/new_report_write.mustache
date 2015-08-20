@@ -122,81 +122,128 @@
       </div>
       <div style="height:100%;width:70%;float:right;background:#F5F5F5;">
         <div style="max-height:calc(100% - 160px);width:calc(100% - 60px);float:left;margin-top:110px;margin-bottom:30px;margin-left:20px;margin-right:20px;background:#FFF;overflow-y:auto;padding:10px;box-shadow: rgba(0,0,0,0.12) 0px 0px 3px;">
-        <span style="font-size:16px;color:rgba(0, 0, 0, 0.54)">DETAIL</span>
+        <span style="font-size:16px;color:rgba(0, 0, 0, 0.54)">WRITE</span>
         <div class="divider">
         </div>
         <div>
-          <table style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void border=1px rules=rows>
-            {{#detail}}
-              {{#report_info}}
+          <table style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void>
               <tr>
               <td style="width:100%;padding:10px">
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">멘토링 일시</p>
-                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{start_time}} ~ {{end_time}}</p>
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">참석자</p>
+              </td>
+              </tr>
+              {{#project}}
+              {{#attendee}}
+              <tr>
+                <td style="float:left;padding-left:10px">
+                  <input type="checkbox" class="checkbox" checked="">
+                </td>
+                <td style="float:left;padding-left:10px">
+                  {{name}}
+                </td>
+              </tr>
+              <tr>
+                <td style="float:left;padding-top:20px;padding-left:10px;padding-right:10px;width:100%">
+                  <input style="width:calc(100% - 20px)" type="text" placeholder="{{name}} 불참사유" required="" disabled="">
+                </td>
+              </tr>
+              {{/attendee}}
+              {{/project}}
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">시작시간 (*)</p>
+              </td>
+              </tr>
+              <tr style="height:24px">
+                <td valign="middle" style="float:left;padding-left:10px">
+                  <i class="material-icons" style="color:rgba(0, 0, 0, 0.54);">access_time</i>
+                </td>
+                <td valign="middle" style="float:left;padding-left:10px;padding-top:5px">
+                시계 아이콘을 선택해주세요.
+                </td>
+              </tr>
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">종료시간 (*)</p>
+              </td>
+              </tr>
+              <tr style="height:24px">
+                <td valign="middle" style="float:left;padding-left:10px">
+                  <i class="material-icons" style="color:rgba(0, 0, 0, 0.54);">access_time</i>
+                </td>
+                <td valign="middle" style="float:left;padding-left:10px;padding-top:5px">
+                시계 아이콘을 선택해주세요.
+                </td>
+              </tr>
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">장소 (*)</p>
+                <input style="width:100%" type="text" name="location">
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">멘토링 장소</p>
-                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{place}}</p>
-              </td>
-              </tr>
-              {{/report_info}}
-              {{#report_details}}
-              <tr>
-              <td style="width:100%;padding:10px">
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">주제</p>
-                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{topic}}</p>
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">주제 (*)</p>
+                <input style="width:100%" type="text" name="location">
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">목표</p>
-                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{goal}}</p>
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">목표 (*)</p>
+                <input style="width:100%" type="text" name="location">
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">추진내용</p>
-                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{issue}}</p>
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">추진내용 (*)</p>
+                <input style="width:100%" type="text" name="location">
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">해결방안</p>
-                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{solution}}</p>
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">해결방안 (*)</p>
+                <input style="width:100%" type="text" name="location">
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">향후계획</p>
-                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{plan}}</p>
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">향후계획 (*)</p>
+                <input style="width:100%" type="text" name="location">
               </td>
               </tr>
-              {{#opinion}}
               <tr>
               <td style="width:100%;padding:10px">
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">멘토의견</p>
-                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{opinion}}</p>
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">멘토의견 (*)</p>
+                <input style="width:100%" type="text" name="location">
               </td>
               </tr>
-              {{/opinion}}
-              {{#etc}}
+              <tr>
+                <td style="float:left;padding-left:10px">
+                  <input type="checkbox" class="checkbox">
+                </td>
+                <td style="float:left;padding-left:2px;padding-top:3px">
+                  멘토의견 공개
+                </td>
+              </tr>
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">기타</p>
-                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{etc}}</p>
+                <input style="width:100%" type="text" name="location">
               </td>
               </tr>
-              {{/etc}}
               <tr>
-              <td style="width:100%;padding:10px">
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">내용</p>
-                <pre style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{content}}</pre>
+              <td style="width:100%;padding:10px 10px 30px 10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">내용 (*)</p>
+                <textarea style="width:100%;margin-top:10px" type="text" name="location"></textarea>
               </td>
               </tr>
-              {{/report_details}}
-            {{/detail}}
+              <tr>
+                <td>
+                  <button style="width:120px" type="submit">
+                    <i class="material-icons" style="color: white;">done</i>
+                  </button>
+                </td>
+              </tr>
           </table>
         </div>
         </div>
