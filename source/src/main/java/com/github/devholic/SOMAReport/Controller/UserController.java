@@ -151,4 +151,37 @@ public class UserController {
 		
 		return userDoc;
 	}
+	
+	/***
+	 * 기존 비밀번호와 새로운 비밀번호를 입력받아 비밀번호를 수정한다. 
+	 * 
+	 * @param String userId, String oldPwd, String newPwd, String newPwd2
+	 * @return boolean
+	 */
+	
+	public boolean modifyPassword(String userId, String oldPwd, String newPwd, String newPwd2) {
+		
+		JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(userId));
+		if (userDoc == null) {
+			Log.error("wrong user id");
+			return false;
+		}
+		String salt = userDoc.getString("salt");
+		if (userDoc.getString("password").equals(StringFactory.encryptPassword(oldPwd, salt))) {
+			String password = StringFactory.encryptPassword(newPwd, salt);
+			if (password.equals(StringFactory.encryptPassword(newPwd2, salt))) {
+				userDoc.put("password", password);
+				db.updateDoc(userDoc);
+				return true;
+			}
+			else {
+				Log.debug("two new passwords are not same");
+				return false;
+			}
+		} else {
+			Log.debug("Wrong old password");
+			return false;
+		}
+		
+	}
 }

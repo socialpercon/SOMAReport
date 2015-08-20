@@ -4,7 +4,7 @@ public class TestData {
 
 	// UserAccount
 	public static final String correctEmail = "mentor0@gmail.com";
-	public static final String correctPassword = "password";
+	public static final String correctPassword = "admin";
 	public static final String wrongEmail = "wrong@test.com";
 	public static final String wrongPassword = "wrong";
 

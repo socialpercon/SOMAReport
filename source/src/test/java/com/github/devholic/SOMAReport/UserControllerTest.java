@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.junit.Test;
 
+import com.github.devholic.SOMAReport.Controller.DatabaseController;
 import com.github.devholic.SOMAReport.Controller.StatisticsController;
 import com.github.devholic.SOMAReport.Controller.UserController;
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
@@ -90,5 +91,15 @@ public class UserControllerTest {
 	public void testTotalMentoringInfoByMonth() {
 		StatisticsController stC = new StatisticsController();
 		Log.info(stC.totalMentoringInfoByMonth(2015, 8, UserController.ROLE_MENTOR));
+	}
+	
+	@Test
+	public void testModifyPassword() {
+		UserController userC = new UserController();
+		DatabaseController dbC = new DatabaseController();
+		String userId = "9d898f7d5bfbf361939e1fafd5104eb3";
+		Log.info(JSONFactory.inputStreamToJson(dbC.getDoc(userId)));
+		assertTrue(userC.modifyPassword(userId, "password", "ohoh", "ohoh"));
+		Log.info(JSONFactory.inputStreamToJson(dbC.getDoc(userId)));		
 	}
 }
