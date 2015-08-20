@@ -28,7 +28,6 @@ public class ReportsControllerTest {
 	public void testGetReportByProjectId() {
 		JSONArray reports = rCtrl.getReportByProjectId("9d898f7d5bfbf361939e1fafd518a9a2");
 		for (int i = 0; i < reports.length(); i++) {
-			Log.info(reports.getJSONObject(i));
 			assertEquals("9d898f7d5bfbf361939e1fafd518a9a2", reports.getJSONObject(i).get("project"));
 		}
 	}

@@ -24,12 +24,26 @@ public class Console_Statistics {
 	StatisticsController statC = new StatisticsController();
 	
 	@GET
+	@Path("/console/statistics")
+	public Response Vies_Statistics () {
+		JSONObject jo = new JSONObject();
+		
+		jo.put("current", "");
+		return Response
+				.status(200)
+				.entity(new Viewable("/console_statistics.mustache", 
+						MustacheHelper.toMap(jo))).build();
+	}
+	
+	@GET
 	@Path("/console/statistics/project")
 	public Response View_Statistics_Project () {
 		JSONObject jo = new JSONObject();
 		
 		JSONArray stages = projectC.existingStage();
 		jo.put("stages", stages);
+		jo.put("selectedStage", "");
+		jo.put("current", "프로젝트별 통계");
 		return Response
 				.status(200)
 				.entity(new Viewable("/console_statistics.mustache",
@@ -38,7 +52,7 @@ public class Console_Statistics {
 	
 	@GET
 	@Path("/console/statistics/project/{id}")
-	public Response View_Statics_Project_Selected (@PathParam("id") String id) {
+	public Response View_Statistics_Project_Selected (@PathParam("id") String id) {
 		JSONObject jo = new JSONObject();
 		
 		JSONArray stages = projectC.existingStage();
@@ -49,10 +63,24 @@ public class Console_Statistics {
 		jo.put("mentors", mentors);
 		JSONArray mentees = statC.totalMentoringInfoByStage(UserController.ROLE_MENTEE, id);
 		jo.put("mentees", mentees);
+		jo.put("current", "프로젝트별 통계");
 		
 		return Response
 				.status(200)
 				.entity(new Viewable("/console_statistics.mustache", 
 						MustacheHelper.toMap(jo))).build();
 	}
+	
+	@GET
+	@Path("/console/statistics/perMonth")
+	public Response Vies_Statistics_perMonth () {
+		JSONObject jo = new JSONObject();
+		
+		jo.put("current", "월별 통계");
+		return Response
+				.status(200)
+				.entity(new Viewable("/console_statistics.mustache", 
+						MustacheHelper.toMap(jo))).build();
+	}
+
 }

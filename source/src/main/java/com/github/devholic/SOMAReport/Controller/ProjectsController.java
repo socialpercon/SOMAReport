@@ -8,7 +8,6 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.mortbay.log.Log;
 
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
@@ -52,12 +51,36 @@ public class ProjectsController {
 	 * 프로젝트 아이디로 프로젝트 상세정보 가져오기
 	 * 
 	 * @param projectId
-	 * @return JSONObject
+	 * @return JSONObject {[project_type, mentoring_num, mentor, stage, field, section, title, mentee[]]}
 	 *************************************************************************/
 	public JSONObject getDetailByProjectId(String projectId) {
+		JSONObject projectInfo = new JSONObject();
+		JSONObject project = JSONFactory.inputStreamToJson(db.getDoc(projectId));
+		if (project == null) return null;
+		projectInfo.put("project_type", project.getString("project_type"));
+		projectInfo.put("_id", projectId);
+		projectInfo.put("_rev", project.getString("_rev"));
+		projectInfo.put("title", project.getString("title"));
+		projectInfo.put("mentor", JSONFactory.inputStreamToJson(db.getDoc(project.getString("mentor"))));
+		JSONArray stage = project.getJSONArray("stage");
+		if (stage.length() == 2 || stage.getInt(2) == 0)
+			projectInfo.put("stage", stage.get(0) + "기 " + stage.get(1) + "단계 프로젝트");
+		else
+			projectInfo.put("stage", stage.get(0) + "기 " + stage.get(1) + "단계 " + stage.get(2) + "차 프로젝트");
 
-		JSONObject detail = JSONFactory.inputStreamToJson(db.getDoc(projectId));
-		return detail;
+		JSONObject mentor = JSONFactory.inputStreamToJson(db.getDoc(project.getString("mentor")));
+		projectInfo.put("section", mentor.getString("section"));
+		projectInfo.put("field", project.getString("field"));
+		JSONArray mentee = project.getJSONArray("mentee");
+		JSONArray menteeDetail = new JSONArray();
+		for (int i=0; i<mentee.length(); i++) {
+			menteeDetail.put(JSONFactory.inputStreamToJson(db.getDoc(mentee.getString(i))));
+		}
+		projectInfo.put("mentee", menteeDetail);
+		ReportsController rCtrl = new ReportsController();
+		projectInfo.put("mentoring_num", rCtrl.getReportByProjectId(projectId).length());
+		
+		return projectInfo;
 	}
 
 	/**************************************************************************
@@ -71,38 +94,6 @@ public class ProjectsController {
 				JSONFactory.inputStreamToJson(db.getByView("_design/project", "all_project", true, true, false)));
 
 		return projectList;
-	}
-
-	/*********************************************************************
-	 * 프로젝트 아이디로 프로젝트의 기본 정보를 가져온다
-	 * 
-	 * @param projectId
-	 * @return {[project_type, mentoring_num, mentor, stage, field, section, title, mentee[]]}
-	 ********************************************************************/
-	public JSONObject getProjectInfo(String projectId) {
-
-		JSONObject projectInfo = new JSONObject();
-		JSONObject project = JSONFactory.inputStreamToJson(db.getDoc(projectId));
-		if (project == null) return null;
-		projectInfo.put("project_type", project.getString("project_type"));
-		projectInfo.put("projectId", projectId);
-		projectInfo.put("_rev", project.getString("_rev"));
-		projectInfo.put("title", project.getString("title"));
-		projectInfo.put("mentor", project.getString("mentor"));
-		JSONArray stage = project.getJSONArray("stage");
-		if (stage.length() == 2 || stage.getInt(2) == 0)
-			projectInfo.put("stage", stage.get(0) + "기 " + stage.get(1) + "단계 프로젝트");
-		else
-			projectInfo.put("stage", stage.get(0) + "기 " + stage.get(1) + "단계 " + stage.get(2) + "차 프로젝트");
-
-		JSONObject mentor = JSONFactory.inputStreamToJson(db.getDoc(project.getString("mentor")));
-		projectInfo.put("section", mentor.getString("section"));
-		projectInfo.put("field", project.getString("field"));
-		projectInfo.put("mentee", project.get("mentee"));
-		ReportsController rCtrl = new ReportsController();
-		projectInfo.put("mentoring_num", rCtrl.getReportByProjectId(projectId).length());
-		
-		return projectInfo;
 	}
 
 	/*************************************************************************
@@ -172,7 +163,7 @@ public class ProjectsController {
 		
 		for(int i=0; i<arr.length(); i++) {
 			String idd = arr.getString(i);
-			projectList.put(getProjectInfo(idd));
+			projectList.put(getDetailByProjectId(idd));
 		} 
 		
 		return projectList;

@@ -31,9 +31,7 @@ public class ProjectsControllerTest {
 	public void testGetProjectList() {
 		JSONArray res = ProjectsController.getProjectList();
 		for (int i=0; i<res.length(); i++) {
-			assertThat(res.getJSONObject(i).getJSONArray("value").get(0), not(nullValue()));
-			assertThat(res.getJSONObject(i).getJSONArray("value").get(1), not(nullValue()));
-			assertThat(res.getJSONObject(i).getJSONArray("value").get(2), not(nullValue()));
+			assertThat(res.getJSONObject(i).get("doc"), not(nullValue()));
 		}
 	}
 	
@@ -58,6 +56,11 @@ public class ProjectsControllerTest {
 	public void testGetStageInfo() {
 		ProjectsController project = new ProjectsController();
 		JSONObject jo = project.getStageInfo(new Object[]{6, 1, 3});
-		System.out.println(jo);
+	}
+	
+	@Test
+	public void testGetDetailByProjectId() {
+		ProjectsController project = new ProjectsController();
+		System.out.println(project.getDetailByProjectId("9d898f7d5bfbf361939e1fafd518a9a2"));
 	}
 }
