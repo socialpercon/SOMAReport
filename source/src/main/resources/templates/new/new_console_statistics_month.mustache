@@ -97,38 +97,46 @@
         <span style="font-size:16px;color:rgba(0, 0, 0, 0.54)">STATISTICS</span>
         <div class="divider">
         </div>
-        <form id="statisticsHeader" method="post" action="/console/statistics/perMonth" enctype="multipart/form-data">
-      <table>
-        <tr>
-          <td>
-            <select class="ui dropdown" onchange="location=this.options[this.selectedIndex].value;">
-              <option>월별 통계</option>
-              <optgroup label="">
-                <option value="/console/statistics/project">프로젝트별 통계</option>
-                <option value="">월별 통계</option>
-              </optgroup>
-            </select>
-          </td>
-          <td>
-            <select id="yearHo" class="ui dropdown" name="year" style="margin-left:10px;">
-              <option value="{{year}}">{{year}}{{^year}}Year{{/year}}</option>
-              <option value="2015">2015</option>
-              <option value="2014">2014</option>
-            </select>
-          </td>
-          <td>
-            <select id="monthHo" class="ui dropdown" name="month" style="margin-left:10px;">
-              <option value="{{month}}">{{month}}{{^month}}Month{{/month}}</option>
-              <option value="8">8</option>
-              <option value="7">7</option>
-            </select>
-          </td>
-          <td>
-            <button id="buttonHo" class="ui button" type="submit" style="margin-left:10px;">통계 보기</button>
-          </td>
-        </tr>
-      </table>
-     </form>
+        <table style="width:100%">
+          <tr>
+            <td style="width:20%">
+              <dl class="dropy">
+                <dt class="dropy__title"><span style="font-size:14px">월별 통계</span></dt>
+                <dd class="dropy__content">
+                <ul>
+                  <li><a class="dropy__header" style="font-size:14px">월별 통계</a></li>
+                  <li><a href="/console/statistics/project" style="font-size:14px">프로젝트별 통계</a></li>
+                </ul>
+                </dd>
+              </dl>
+            </td>
+            <td style="width:35%">
+              <dl class="dropy">
+                <dt class="dropy__title"><span style="font-size:14px">{{year}}{{^year}}2015{{/year}}</span></dt>
+                <dd class="dropy__content">
+                <ul>
+                  <li><a href="#" onclick="changeYear(2015); return false;" style="font-size:14px">2015</a></li>
+                  <li><a href="#" onclick="changeYear(2014); return false;" style="font-size:14px">2014</a></li>
+                </ul>
+                </dd>
+              </dl>
+            </td>
+            <td style="width:35%">
+              <dl class="dropy">
+                <dt class="dropy__title"><span style="font-size:14px">{{month}}{{^month}}08{{/month}}</span></dt>
+                <dd class="dropy__content">
+                <ul>
+                  <li><a href="#" onclick="changeMonth(8); return false;" style="font-size:14px">08</a></li>
+                  <li><a href="#" onclick="changeMonth(7); return false;" style="font-size:14px">07</a></li>
+                </ul>
+                </dd>
+              </dl>
+            </td>
+            <td style="width:10%">
+              <button id="buttonHo" class="ui button" style="margin-top:0px;margin-left:10px;valign:center"><i style="padding-left:24px;padding-right:24px" class="material-icons">done</i></button>
+            </td>
+          </tr>
+        </table>
      <div name="mentorTable">
         <table id="mentor" class="display dataTable compact" cellspacing="0" width="100%" height="30%">
           <thead>
@@ -179,6 +187,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
     <script>
+    var gYear = {{year}}{{^year}}2015{{/year}};
+    var gMonth = {{month}}{{^month}}8{{/month}};
+
+    function changeYear(y){
+      gYear = y;
+    }
+    function changeMonth(m){
+      gMonth = m;
+    }
     $(document).ready(function() {
         $('#mentor').DataTable( {
             "scrollY":        "200px",
@@ -191,21 +208,70 @@
             "paging":         false
         });
         $('#buttonHo').click(function(){
-          var year = document.getElementById('yearHo');
-          var month = document.getElementById('monthHo');
-          var year_value = year.options[year.selectedIndex].value;
-          var month_value = month.options[month.selectedIndex].value;
-          if(!year_value){
-            alert("year is null");
-            return false;
-          }
-          if(!month_value){
-            alert("month is null");
-            return false;
-          }
-
+          console.log(gYear);
+          console.log(gMonth);
+          $(location).attr('href', '/console/statistics/perMonth?year='+gYear+'&month='+gMonth);
       });
     });
+    var dropy = {
+  $dropys: null,
+  openClass: 'open',
+  selectClass: 'selected',
+  init: function(){
+    var self = this;
+
+    self.$dropys = $('.dropy');
+    self.eventHandler();
+  },
+  eventHandler: function(){
+    var self = this;
+
+    // Opening a dropy
+    self.$dropys.find('.dropy__title').click(function(){
+      self.$dropys.removeClass(self.openClass);
+      $(this).parents('.dropy').addClass(self.openClass);
+    });
+
+    // Click on a dropy list
+    self.$dropys.find('.dropy__content ul li a').click(function(){
+      var $that = $(this);
+      var $dropy = $that.parents('.dropy');
+      var $input = $dropy.find('input');
+      var $title = $(this).parents('.dropy').find('.dropy__title span');
+
+      // Remove selected class
+      $dropy.find('.dropy__content a').each(function(){
+        $(this).removeClass(self.selectClass);
+      });
+
+      // Update selected value
+      $title.html($that.html());
+      $input.val($that.attr('data-value')).trigger('change');
+
+      // If back to default, remove selected class else addclass on right element
+      if($that.hasClass('dropy__header')){
+        $title.removeClass(self.selectClass);
+        $title.html($title.attr('data-title'));
+      }
+      else{
+        $title.addClass(self.selectClass);
+        $that.addClass(self.selectClass);
+      }
+
+      // Close dropdown
+      $dropy.removeClass(self.openClass);
+    });
+
+    // Close all dropdown onclick on another element
+    $(document).bind('click', function(e){
+      if (! $(e.target).parents().hasClass('dropy')){ self.$dropys.removeClass(self.openClass); }
+    });
+  }
+};
+
+$(function(){
+  dropy.init();
+});
     </script>
   </body>
 </html>
