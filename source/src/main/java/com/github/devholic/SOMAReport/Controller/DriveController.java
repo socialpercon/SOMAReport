@@ -531,6 +531,7 @@ public class DriveController {
 		JSONObject result = new JSONObject();
 		result.put("projectId", projectId);
 		
+		UserController userC = new UserController();
 		JSONObject driveinfo = JSONFactory.inputStreamToJson(db.getByView("_design/file", "projectdrivePlus", projectId, true, false, false));
 		JSONArray rows = JSONFactory.getData(driveinfo);
 		JSONArray files = new JSONArray();
@@ -542,7 +543,7 @@ public class DriveController {
 			file.put("storage", fileDoc.get("storage"));
 			if (fileDoc.has("user")) {
 				file.put("userId", fileDoc.getString("user"));
-				file.put("userName", UserController.getUserName(fileDoc.getString("user")));
+				file.put("userName", userC.getUserName(fileDoc.getString("user")));
 			}
 			files.put(file);
 		}
