@@ -23,7 +23,7 @@ public class DriveControllerTest {
 	@Test
 	public void A_Drive_UploadImage_Pass() throws IOException {
 		DriveController d = new DriveController();
-		id = d.uploadFile(new File("test.jpg"));
+		id = d.uploadFile(new File("9d898f7d5bfbf361939e1fafd50f0188.jpg"));
 		assertThat(id, is(notNullValue()));
 	}
 
@@ -49,5 +49,14 @@ public class DriveControllerTest {
 	public void testGetProjectDriveFileInfo() {
 		DriveController d = new DriveController();
 		System.out.println(d.getProjectDriveFileInfo("9d898f7d5bfbf361939e1fafd5").toString());
+	}
+	
+	@Test
+	public void testUploadProfile() throws IOException {
+		DriveController d = new DriveController();
+		assertThat(d.uploadProfileImage("9d898f7d5bfbf361939e1fafd5104eb3", new File("9d898f7d5bfbf361939e1fafd5104eb3.jpg")), is(notNullValue()));
+		assertThat(d.uploadProfileImage("9d898f7d5bfbf361939e1fafd50e8eeb", new File("9d898f7d5bfbf361939e1fafd50e8eeb.jpg")), is(notNullValue()));
+		assertThat(d.uploadProfileImage("9d898f7d5bfbf361939e1fafd50ec62b", new File("9d898f7d5bfbf361939e1fafd50ec62b.jpg")), is(notNullValue()));
+		assertThat(d.uploadProfileImage("9d898f7d5bfbf361939e1fafd50f0188", new File("9d898f7d5bfbf361939e1fafd50f0188.jpg")), is(notNullValue()));
 	}
 }

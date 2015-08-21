@@ -97,7 +97,7 @@ public class Login {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
 			UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
-			builder.path("project");
+			builder.path("project/list");
 			return Response.seeOther(builder.build()).build();
 		} else {
 			return Response.status(400).entity(new Viewable("/login.mustache"))
@@ -119,6 +119,7 @@ public class Login {
 			} else {
 				String result = UserController.login(email, password); // 로그인
 				if (result != null) { // 결과값이 null이 아닌경우
+
 					String role = UserController.getRoleById(result);
 					if (role.equals("admin")) {
 						builder.path("console/stage");

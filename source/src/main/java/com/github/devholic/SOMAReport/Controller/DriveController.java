@@ -102,7 +102,13 @@ public class DriveController {
 		
 		String fileTitle = "";
 		JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(id));
-		String profileFile = userDoc.getString("profileFile");
+		
+		String profileFile;
+		if (userDoc.has("profileFile")) {
+			profileFile = userDoc.getString("profileFile");
+		} else {
+			profileFile="";
+		}
 		
 		Map<String, Object> r = null;
 		
@@ -123,7 +129,7 @@ public class DriveController {
 					fileDoc.put("modified_at", now);
 					db.updateDoc(fileDoc);
 					
-					fileTitle = profileFile;
+					fileTitle = id;
 				}else{
 					Log.debug("deleteImage Failed...");
 					return null;
@@ -135,7 +141,7 @@ public class DriveController {
 			}else{
 
 				imageData.put("type", "file");
-				imageData.put("name", file.getName());
+				imageData.put("name", file.getName()+"-profileImage");
 				imageData.put("storage", "0");
 				imageData.put("modified_at", now);
 				imageData.put("cached_at", 0);
@@ -144,7 +150,7 @@ public class DriveController {
 				userDoc.put("profileFile", r.get("_id").toString());
 				db.updateDoc(userDoc);
 				
-				fileTitle = r.get("_id").toString();
+				fileTitle = id;
 			}
 			
 			/* ************************************************
@@ -310,33 +316,34 @@ public class DriveController {
 		}
 		InputStream is = db.getByView("_design/file", "info", id, true, false,
 				false);
-		JSONArray result = JSONFactory.getData(new JSONObject(StringFactory
-				.inputStreamToString(is)));
-		if (db.deleteDoc(result.getJSONObject(0).getJSONObject("doc")
-				.getString("_id"), result.getJSONObject(0).getJSONObject("doc")
-				.getString("_rev"))) {
-			try {
-				JSONParser parser = new JSONParser();
-				Object obj = parser.parse(new FileReader(credentialFileName));
-				org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject) obj;
+		JSONArray result = JSONFactory.getData(JSONFactory.inputStreamToJson(is));
+		if(result.length() != 0){
+			if (db.deleteDoc(result.getJSONObject(0).getJSONObject("doc")
+					.getString("_id"), result.getJSONObject(0).getJSONObject("doc")
+					.getString("_rev"))) {
+				try {
+					JSONParser parser = new JSONParser();
+					Object obj = parser.parse(new FileReader(credentialFileName));
+					org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject) obj;
 
-				String access_token = (String) jsonObj.get("access_token");
-				String refresh_token = (String) jsonObj.get("refresh_token");
+					String access_token = (String) jsonObj.get("access_token");
+					String refresh_token = (String) jsonObj.get("refresh_token");
 
-				Log.debug("get access_token =[" + access_token + "]");
-				Log.debug("get refresh_token =[" + refresh_token + "]");
+					Log.debug("get access_token =[" + access_token + "]");
+					Log.debug("get refresh_token =[" + refresh_token + "]");
 
-				Credential c = getCredential(access_token, refresh_token);
-				com.google.api.services.drive.Drive drive = buildService(c);
-				FileList fl = drive.files().list().setQ("title = '" + id + "'")
-						.execute();
-				File file = fl.getItems().get(0);
-				drive.files().delete(file.getId()).execute();
-				return true;
-			} catch (IOException e) {
-				Log.error(e.getMessage());
-			} catch (org.json.simple.parser.ParseException pe) {
-				Log.error(pe.getMessage());
+					Credential c = getCredential(access_token, refresh_token);
+					com.google.api.services.drive.Drive drive = buildService(c);
+					FileList fl = drive.files().list().setQ("title = '" + id + "'")
+							.execute();
+					File file = fl.getItems().get(0);
+					drive.files().delete(file.getId()).execute();
+					return true;
+				} catch (IOException e) {
+					Log.error(e.getMessage());
+				} catch (org.json.simple.parser.ParseException pe) {
+					Log.error(pe.getMessage());
+				}
 			}
 		}
 		return false;
