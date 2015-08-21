@@ -40,8 +40,8 @@ public class StringFactory {
 		final Random r = new SecureRandom();
 		byte[] salt = new byte[32];
 		r.nextBytes(salt);
-//		return Base64.encodeBase64String(salt);
-		return String.valueOf(Base64.encodeBase64(salt));
+		return Base64.encodeBase64String(salt);
+//		return String.valueOf(Base64.encodeBase64(salt));
 	}
 
 	public static String inputStreamToString(InputStream is) {

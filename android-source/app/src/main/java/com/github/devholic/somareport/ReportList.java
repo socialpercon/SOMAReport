@@ -137,14 +137,14 @@ public class ReportList extends AppCompatActivity {
 //                ImageLoaderOld imageLoader;
                 ProfileImageLoader profileImageLoader;
                 JSONArray attendee = new JSONArray(report.get("attendee").toString());
-                for (int i=0; i<attendee.length(); i++) {
+ //               for (int i=0; i<attendee.length(); i++) {
                     CircleImageView circleImageView = new CircleImageView(holder.attendee.getContext());
 //                    imageLoader = new ImageLoaderOld(circleImageView);
 //                    imageLoader.execute(attendee.get(i).toString());
-//                    profileImageLoader = new ProfileImageLoader(attendee.getString(i), circleImageView);
+//                    profileImageLoader = new ProfileImageLoader(R.drawable.user_k, circleImageView);
 //                    profileImageLoader.getProfile();
-                    holder.attendee.addView(circleImageView);
-                }
+//                    holder.attendee.addView(circleImageView);
+ //               }
             } catch (JSONException e) {
                 Log.e(TAG, "onBindViewHolder "+ e.getLocalizedMessage());
             }

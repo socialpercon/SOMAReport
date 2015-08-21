@@ -131,15 +131,15 @@ public class ReportDetails extends AppCompatActivity {
 
             title.setText("#"+reportInfo.get("date"));
 
-            for(int i=0; i<reportAttendee.length(); i++) {
+ //           for(int i=0; i<reportAttendee.length(); i++) {
                 CircleImageView attend = new CircleImageView(this);
-                JSONObject att = new JSONObject(reportAttendee.get(i).toString());
+  //              JSONObject att = new JSONObject(reportAttendee.get(i).toString());
 //                ImageLoaderOld imageLoader = new ImageLoaderOld(attend);
 //                imageLoader.execute(att.get("id").toString());
-//                profileImageLoader = new ProfileImageLoader(att.getString("id"), attend);
+//                profileImageLoader = new ProfileImageLoader(R.drawable.user_k, attend);
 //                profileImageLoader.getProfile();
-                attendee.addView(attend);
-            }
+//                attendee.addView(attend);
+   //         }
 
             if (reportAbsentee.length() > 0) {
                 for (int i=0; i<reportAbsentee.length(); i++) {
