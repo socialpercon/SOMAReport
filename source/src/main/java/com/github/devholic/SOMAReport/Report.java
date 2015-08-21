@@ -46,6 +46,12 @@ public class Report {
 			data.put("project", project.getDetailByProjectId(id));
 			ReportsController reports = new ReportsController();
 			data.put("reports", reports.getReportByProjectId(id));
+			UserController user = new UserController();
+			data.put("name", user.getUserName(session.getAttribute("user_id")
+					.toString()));
+			data.put("role", user.getRoleById(session.getAttribute("user_id")
+					.toString()));
+			data.put("user_id", session.getAttribute("user_id").toString());
 			Log.info(data.toString());
 			return Response
 					.status(200)
@@ -66,6 +72,11 @@ public class Report {
 			JSONObject data = new JSONObject();
 			ReportsController reports = new ReportsController();
 			UserController user = new UserController();
+			data.put("name", user.getUserName(session.getAttribute("user_id")
+					.toString()));
+			data.put("role", user.getRoleById(session.getAttribute("user_id")
+					.toString()));
+			data.put("user_id", session.getAttribute("user_id").toString());
 			JSONObject detail = reports.getReportDetailByReportId(id);
 			if (detail != null) {
 				if (user.getRoleById(session.getAttribute("user_id").toString()).equals("mentor")) {
@@ -119,6 +130,12 @@ public class Report {
 			data.put("project", project.getDetailByProjectId(id));
 			ReportsController reports = new ReportsController();
 			data.put("reports", reports.getReportByProjectId(id));
+			UserController user = new UserController();
+			data.put("name", user.getUserName(session.getAttribute("user_id")
+					.toString()));
+			data.put("role", user.getRoleById(session.getAttribute("user_id")
+					.toString()));
+			data.put("user_id", session.getAttribute("user_id").toString());
 			Log.info(data.toString());
 			return Response
 					.status(200)

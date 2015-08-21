@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Controller.ReportsController;
+import com.github.devholic.SOMAReport.Controller.UserController;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 
 @Path("/")
@@ -34,6 +35,12 @@ public class Project {
 					.getAttribute("user_id").toString());
 			JSONObject data = new JSONObject();
 			data.put("project", userProject);
+			UserController user = new UserController();
+			data.put("name", user.getUserName(session.getAttribute("user_id")
+					.toString()));
+			data.put("role", user.getRoleById(session.getAttribute("user_id")
+					.toString()));
+			data.put("user_id", session.getAttribute("user_id").toString());
 			Log.info(data.toString());
 			return Response
 					.status(200)
@@ -58,6 +65,12 @@ public class Project {
 			data.put("project", projects.getDetailByProjectId(id));
 			ReportsController reports = new ReportsController();
 			data.put("reports", reports.getReportByProjectId(id));
+			UserController user = new UserController();
+			data.put("name", user.getUserName(session.getAttribute("user_id")
+					.toString()));
+			data.put("role", user.getRoleById(session.getAttribute("user_id")
+					.toString()));
+			data.put("user_id", session.getAttribute("user_id").toString());
 			Log.info(data.toString());
 			return Response
 					.status(200)

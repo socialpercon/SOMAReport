@@ -243,13 +243,13 @@ public class ReportsController {
 	public JSONObject getReportWithNames(String reportId) {
 		JSONObject reportDoc = JSONFactory.inputStreamToJson(db
 				.getDoc(reportId));
-
+		UserController user = new UserController();
 		JSONArray attendee = reportDoc.getJSONArray("attendee");
 		for (int i = 0; i < attendee.length(); i++) {
-			attendee.getJSONObject(i).put(
-					"name",
-					UserController.getUserName(attendee.getJSONObject(i)
-							.getString("id")));
+			attendee.getJSONObject(i)
+					.put("name",
+							user.getUserName(attendee.getJSONObject(i)
+									.getString("id")));
 		}
 		reportDoc.put("attendee", attendee);
 
@@ -258,8 +258,8 @@ public class ReportsController {
 			for (int i = 0; i < absentee.length(); i++) {
 				absentee.getJSONObject(i).put(
 						"name",
-						UserController.getUserName(attendee.getJSONObject(i)
-								.getString("id")));
+						user.getUserName(attendee.getJSONObject(i).getString(
+								"id")));
 			}
 			reportDoc.put("absentee", absentee);
 		}

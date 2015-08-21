@@ -14,7 +14,7 @@
   <body style="margin:0px;height:100%">
     <div style="height:80px;width:100%;background:#fff;position:absolute;z-index:1;">
       <div style="height:80px;width:15%;float:left;background:#6289D9">
-        <table style="height:80px;margin-left:15px">
+          <table style="height:80px;margin-left:15px">
           <center>
           <tr>
             <td style="align:center">
@@ -50,10 +50,10 @@
           <table style="background:#323845;padding:5px;border-radius:3px;">
             <tr>
             <td>
-              <i style="padding-left:6px;padding-right:6px;color:#FFF" class="material-icons">add_circle_outline</i>
+              <i style="padding-left:6px;padding-top:4px;padding-right:6px;color:#FFF" class="material-icons">add_circle_outline</i>
             </td>
             <td>
-            <span style="font-size:14px;padding-right:6px;color:#FFF">ADD REPORTS</span>
+            <span style="font-size:14px;padding-right:6px;color:#FFF">UPLOAD FILE</span>
             </td>
             </tr>
           </table>
@@ -81,7 +81,7 @@
     </div>
     </a>
     <a href="/report/list/{{_id}}" class="menu">
-    <div style="height:60px;padding:0px 15px 0px 15px;background-color:#1D1F29;">
+    <div style="height:60px;padding:0px 15px 0px 15px">
       <table>
         <tr>
           <td>
@@ -95,7 +95,7 @@
     </div>
     </a>
     <a href="/drive/folder/{{_id}}" class="menu">
-    <div style="height:60px;padding:0px 15px 0px 15px">
+    <div style="height:60px;padding:0px 15px 0px 15px;background-color:#1D1F29">
       <table>
         <tr>
           <td>
@@ -111,26 +111,26 @@
     {{/project}}
     </div>
     <div style="height:100%;width:85%;float:right;background:#F5F5F5;">
-      <div style="height:100%;width:30%;float:left;background:#F5F5F5;">
+      <div style="height:100%;width:100%;float:left;background:#F5F5F5;">
         <div style="max-height:calc(100% - 160px);width:calc(100% - 60px);float:left;margin-top:110px;margin-bottom:30px;margin-left:20px;margin-right:20px;background:#FFF;overflow-y:auto;padding:10px;box-shadow: rgba(0,0,0,0.12) 0px 0px 3px;">
-        <span style="font-size:16px;color:rgba(0, 0, 0, 0.54)">REPORTS</span>
+        <span style="font-size:16px;color:rgba(0, 0, 0, 0.54)">FILES</span>
         <div class="divider">
         </div>
         <div>
           <table class="tablelist" style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void border=1px rules=rows>
-            {{#reports}}
+            {{#files}}
             <tr>
               <td onclick="window.location='/report/{{_id}}'" style="padding:10px">
-                <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{topic}}</p>
+                <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{name}}</p>
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">#{{date}}</p>
               </td>
             </tr>
-            {{/reports}}
+            {{/files}}
           </table>
         </div>
         </div>
       </div>
-    </div>
+      </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   </body>
