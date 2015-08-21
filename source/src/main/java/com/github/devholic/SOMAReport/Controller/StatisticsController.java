@@ -81,12 +81,12 @@ public class StatisticsController {
 	 * @return JSONArray [ {userId, name, projectId, stage, mentoringSum,
 	 *         mentoringNum} ] )
 	 **/
-	public JSONArray totalMentoringInfoByStage(int role, String stageInfoId) {
+	public JSONArray totalMentoringInfoByStage(String role, String stageInfoId) {
 		JSONArray sumList = new JSONArray();
 		JSONObject stageInfo = JSONFactory.inputStreamToJson(db.getDoc(stageInfoId));
 		String stageString = stageInfo.getString("stageString");
 		
-		if (role == UserController.ROLE_MENTOR) {
+		if (role.equals("mentor")) {
 			JSONArray mentor = UserController.getMentorList();
 			for (int i = 0; i < mentor.length(); i++) {
 				JSONArray projects = ProjectsController.getMyProject(mentor.getJSONObject(i).getString("id"));
@@ -122,7 +122,7 @@ public class StatisticsController {
 			}
 		}
 
-		else if (role == UserController.ROLE_MENTEE) {
+		else if (role.equals("mentee")) {
 			JSONArray mentee = UserController.getMenteeList();
 			for (int i = 0; i < mentee.length(); i++) {
 				JSONObject menteeDoc = new JSONObject();
@@ -176,7 +176,7 @@ public class StatisticsController {
 	 *            month, id
 	 * @return [ {userName, userId, mentoringSum, mentoringNum} ]
 	 */
-	public JSONArray totalMentoringInfoByMonth(int year, int month, int role) {
+	public JSONArray totalMentoringInfoByMonth(int year, int month, String role) {
 
 		UserController userC = new UserController();
 
@@ -197,12 +197,12 @@ public class StatisticsController {
 		for (int i = 0; i < users.length(); i++) {
 			String userId = users.getString(i);
 
-			if (userC.getRoleById(userId) == role) {
+			if (userC.getRoleById(userId).equals(role)) {
 				// userId로 소속 프로젝트 리스트 가져오기
 				JSONArray projects = ProjectsController.getMyProject(userId);
 
 				// for문: 지정된 기간(월)에 해당되는 프로젝트의 총합 시간/횟수 검색
-				if (role == UserController.ROLE_MENTOR) {
+				if (role.equals("mentor")) {
 					for (int j = 0; j < projects.length(); j++) {
 						String projectId = projects.getJSONObject(j).getString("_id");
 
@@ -229,7 +229,7 @@ public class StatisticsController {
 							break;
 						}
 					}
-				} else if (role == UserController.ROLE_MENTEE) {
+				} else if (role.equals("mentee")) {
 					for (int j = 0; j < projects.length(); j++) {
 						String projectId = projects.getJSONObject(j).getString("_id");
 

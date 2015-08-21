@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" style="margin:0px;height:100%">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,19 +7,87 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="No-Cache">
     <title>somareport</title>
-    <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme_new.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/Semantic-Org/UI-Dropdown/master/dropdown.css">
-    <link rel="stylesheet" href="https://rawgit.com/Semantic-Org/UI-Dropdown/master/dropdown.min.css">
-
   </head>
-  <body>
-    <div style="width:100%;height:100%;background-color:#F5F5F5;float:left;overflow:auto;padding-top:20px;padding-left:20px;position:relative;">
-     <form id="statisticsHeader" method="post" action="/console/statistics/perMonth" enctype="multipart/form-data">
+  <body style="margin:0px;height:100%">
+    <div style="height:80px;width:100%;background:#fff;position:absolute;z-index:1;">
+      <div class="block" style="height:80px;width:15%;float:left;background:#6289D9">
+          <div class="centered">
+            <img src="http://flamingonest.com/images/donatbalipapp_profile_circle.png" style="width:48px;height:48px;display:inline-block;">
+          </div>
+      </div>
+      <div style="height:80px;width:85%;float:right;background:#fff">
+        <a href="/project/list" style="text-decoration:none;color:#000;display:inline-block">
+        <table style="height:80px">
+        <tr>
+          <td>
+            <i style="padding-left:24px;padding-right:24px" class="material-icons">arrow_back</i>
+          </td>
+          <td>
+            <span style="font-size:28px;">통계</span>
+          </td>
+        </tr>
+        </table>
+        </a>
+      </div>
+    </div>
+    <div style="height:100%;width:15%;float:left;background:#323845;">
+    <div style="height:80px"></div>
+    {{#project}}
+    <a href="/project/{{_id}}" class="menu">
+    <div style="height:60px;padding:0px 15px 0px 15px;background-color:#1D1F29;">
+      <table>
+        <tr>
+          <td>
+            <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">visibility</i>
+          </td>
+          <td>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">home</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </a>
+    <a href="/report/list/{{_id}}" class="menu">
+    <div style="height:60px;padding:0px 15px 0px 15px">
+      <table>
+        <tr>
+          <td>
+            <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">description</i>
+          </td>
+          <td>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">reports</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </a>
+    <a href="/drive/folder/{{_id}}" class="menu">
+    <div style="height:60px;padding:0px 15px 0px 15px">
+      <table>
+        <tr>
+          <td>
+            <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">folder</i>
+          </td>
+          <td>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">drive</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </a>
+    {{/project}}
+    </div>
+    <div style="height:100%;width:85%;float:right;background:#F5F5F5;">
+      <div style="height:100%;width:100%;background:#F5F5F5;">
+        <div style="max-height:calc(100% - 160px);width:calc(100% - 60px);float:left;margin-top:110px;margin-bottom:30px;margin-left:20px;margin-right:20px;background:#FFF;overflow-y:auto;padding:10px;box-shadow: rgba(0,0,0,0.12) 0px 0px 3px;">
+        <span style="font-size:16px;color:rgba(0, 0, 0, 0.54)">STATISTICS</span>
+        <div class="divider">
+        </div>
+        <form id="statisticsHeader" method="post" action="/console/statistics/perMonth" enctype="multipart/form-data">
       <table>
         <tr>
           <td>
@@ -93,13 +161,12 @@
           </tbody>
         </table>
         </div>
-
+        <!-- -->
+        </div>
       </div>
+    </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
     <script>
     $(document).ready(function() {
@@ -129,11 +196,6 @@
 
       });
     });
-
-    </script>
-    <script src="https://cdn.rawgit.com/Semantic-Org/UI-Dropdown/master/dropdown.js">
-    </script>
-    <script src="https://cdn.rawgit.com/Semantic-Org/UI-Dropdown/master/dropdown.min.js">
     </script>
   </body>
 </html>

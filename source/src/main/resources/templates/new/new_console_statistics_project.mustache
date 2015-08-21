@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko" style="margin:0px;height:100%">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="No-Cache">
+    <title>somareport</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme_new.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.8/css/jquery.dataTables.min.css">
+  </head>
+  <body style="margin:0px;height:100%">
+    <div style="height:80px;width:100%;background:#fff;position:absolute;z-index:1;">
+      <div class="block" style="height:80px;width:15%;float:left;background:#6289D9">
+          <div class="centered">
+            <img src="http://flamingonest.com/images/donatbalipapp_profile_circle.png" style="width:48px;height:48px;display:inline-block;">
+          </div>
+      </div>
+      <div style="height:80px;width:85%;float:right;background:#fff">
+        <a href="/project/list" style="text-decoration:none;color:#000;display:inline-block">
+        <table style="height:80px">
+        <tr>
+          <td>
+            <i style="padding-left:24px;padding-right:24px" class="material-icons">arrow_back</i>
+          </td>
+          <td>
+            <span style="font-size:28px;">통계</span>
+          </td>
+        </tr>
+        </table>
+        </a>
+      </div>
+    </div>
+    <div style="height:100%;width:15%;float:left;background:#323845;">
+    <div style="height:80px"></div>
+    {{#project}}
+    <a href="/project/{{_id}}" class="menu">
+    <div style="height:60px;padding:0px 15px 0px 15px;background-color:#1D1F29;">
+      <table>
+        <tr>
+          <td>
+            <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">visibility</i>
+          </td>
+          <td>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">home</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </a>
+    <a href="/report/list/{{_id}}" class="menu">
+    <div style="height:60px;padding:0px 15px 0px 15px">
+      <table>
+        <tr>
+          <td>
+            <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">description</i>
+          </td>
+          <td>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">reports</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </a>
+    <a href="/drive/folder/{{_id}}" class="menu">
+    <div style="height:60px;padding:0px 15px 0px 15px">
+      <table>
+        <tr>
+          <td>
+            <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">folder</i>
+          </td>
+          <td>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">drive</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </a>
+    {{/project}}
+    </div>
+    <div style="height:100%;width:85%;float:right;background:#F5F5F5;">
+      <div style="height:100%;width:100%;background:#F5F5F5;">
+        <div style="max-height:calc(100% - 160px);width:calc(100% - 60px);float:left;margin-top:110px;margin-bottom:30px;margin-left:20px;margin-right:20px;background:#FFF;overflow-y:auto;padding:10px;box-shadow: rgba(0,0,0,0.12) 0px 0px 3px;">
+        <span style="font-size:16px;color:rgba(0, 0, 0, 0.54)">STATISTICS</span>
+        <div class="divider">
+        </div>
+        <table style="width:100%">
+          <tr>
+            <td style="width:20%">
+              <dl class="dropy">
+                <dt class="dropy__title"><span style="font-size:14px">프로젝트별 통계</span></dt>
+                <dd class="dropy__content">
+                <ul>
+                  <li><a class="dropy__header" style="font-size:14px">프로젝트별 통계</a></li>
+                  <li><a href="/console/statistics/perMonth" style="font-size:14px">월별 통계</a></li>
+                </ul>
+                </dd>
+              </dl>
+            </td>
+            <td style="width:80%">
+              <dl class="dropy">
+                <dt class="dropy__title"><span style="font-size:14px">{{selectedStage}}{{^selectedStage}}프로젝트 목록{{/selectedStage}}</span></dt>
+                <dd class="dropy__content">
+                <ul>
+                  {{#stages}}
+                  <li><a href="/console/statistics/project/{{infoId}}" style="font-size:14px">{{stageString}}</a></li>
+                  {{/stages}}
+                </ul>
+                </dd>
+              </dl>
+            </td>
+          </tr>
+        </table>
+    <div name="mentorTable">
+        <table id="mentor" class="display dataTable compact" cellspacing="0" width="100%" height="30%">
+          <thead>
+            <tr><td><label>멘토</label></td></tr>
+            <tr>
+              <th class="sorting">이름</th>
+              <th class="sorting">멘토링 횟수</th>
+              <th class="sorting">멘토링 시간</th>
+            </tr>
+           </thead>
+          <tbody>
+          {{#mentors}}
+            <tr>
+             <td>{{userName}}</td>
+              <td>{{mentoringNum}}</td>
+              <td>{{mentoringSum}}</td>
+            </tr>
+          {{/mentors}}
+          </tbody>
+        </table>
+      </div>
+      <div name="menteeTable">
+        <table id="mentee" class="display dataTable compact" cellspacing="0" width="100%" height="30%`">
+          <thead>
+            <tr><td><label>멘티</label></td></tr>
+            <tr>
+              <th class="sorting">이름</th>
+              <th class="sorting">멘토링 횟수</th>
+              <th class="sorting">멘토링 시간</th>
+            </tr>
+          </thead>
+          <tbody>
+          {{#mentees}}
+            <tr>
+              <td>{{userName}}</td>
+              <td>{{mentoringNum}}</td>
+              <td>{{mentoringSum}}</td>
+            </tr>
+          {{/mentees}}
+          </tbody>
+        </table>
+        </div>
+        <!-- -->
+        </div>
+      </div>
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#mentor').DataTable( {
+          "scrollY":        "200px",
+          "scrollCollapse": true,
+          "paging":         false
+        });
+        $('#mentee').DataTable( {
+          "scrollY":        "200px",
+          "scrollCollapse": true,
+          "paging":         false
+        });
+        $('#buttonHo').click(function(){
+          var year = document.getElementById('yearHo');
+          var month = document.getElementById('monthHo');
+          var year_value = year.options[year.selectedIndex].value;
+          var month_value = month.options[month.selectedIndex].value;
+          if(!year_value){
+            alert("year is null");
+            return false;
+          }
+          if(!month_value){
+            alert("month is null");
+            return false;
+          }
+
+        });
+      });
+    /** Dropy */
+ var dropy = {
+  $dropys: null,
+  openClass: 'open',
+  selectClass: 'selected',
+  init: function(){
+    var self = this;
+
+    self.$dropys = $('.dropy');
+    self.eventHandler();
+  },
+  eventHandler: function(){
+    var self = this;
+
+    // Opening a dropy
+    self.$dropys.find('.dropy__title').click(function(){
+      self.$dropys.removeClass(self.openClass);
+      $(this).parents('.dropy').addClass(self.openClass);
+    });
+
+    // Click on a dropy list
+    self.$dropys.find('.dropy__content ul li a').click(function(){
+      var $that = $(this);
+      var $dropy = $that.parents('.dropy');
+      var $input = $dropy.find('input');
+      var $title = $(this).parents('.dropy').find('.dropy__title span');
+
+      // Remove selected class
+      $dropy.find('.dropy__content a').each(function(){
+        $(this).removeClass(self.selectClass);
+      });
+
+      // Update selected value
+      $title.html($that.html());
+      $input.val($that.attr('data-value')).trigger('change');
+
+      // If back to default, remove selected class else addclass on right element
+      if($that.hasClass('dropy__header')){
+        $title.removeClass(self.selectClass);
+        $title.html($title.attr('data-title'));
+      }
+      else{
+        $title.addClass(self.selectClass);
+        $that.addClass(self.selectClass);
+      }
+
+      // Close dropdown
+      $dropy.removeClass(self.openClass);
+    });
+
+    // Close all dropdown onclick on another element
+    $(document).bind('click', function(e){
+      if (! $(e.target).parents().hasClass('dropy')){ self.$dropys.removeClass(self.openClass); }
+    });
+  }
+};
+
+$(function(){
+  dropy.init();
+});
+    </script>
+  </body>
+</html>

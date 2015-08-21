@@ -18,7 +18,6 @@ import org.mortbay.log.Log;
 import com.github.devholic.SOMAReport.Controller.DatabaseController;
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Controller.StatisticsController;
-import com.github.devholic.SOMAReport.Controller.UserController;
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 
@@ -39,7 +38,7 @@ public class Console_Statistics {
 		
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics_project.mustache", 
+				.entity(new Viewable("/new/new_console_statistics.mustache", 
 						MustacheHelper.toMap(jo))).build();
 	}
 	
@@ -53,7 +52,7 @@ public class Console_Statistics {
 		jo.put("selectedStage", "");
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics_project.mustache",
+				.entity(new Viewable("/new/new_console_statistics_project.mustache",
 						MustacheHelper.toMap(jo))).build();
 	}
 	
@@ -66,14 +65,14 @@ public class Console_Statistics {
 		jo.put("stages", stages);
 		String stageString = JSONFactory.inputStreamToJson(db.getDoc(id)).getString("stageString");
 		jo.put("selectedStage", stageString);
-		JSONArray mentors = statC.totalMentoringInfoByStage(UserController.ROLE_MENTOR, id);
+		JSONArray mentors = statC.totalMentoringInfoByStage("mentor", id);
 		jo.put("mentors", mentors);
-		JSONArray mentees = statC.totalMentoringInfoByStage(UserController.ROLE_MENTEE, id);
+		JSONArray mentees = statC.totalMentoringInfoByStage("mentee", id);
 		jo.put("mentees", mentees);
 		
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics_project.mustache", 
+				.entity(new Viewable("/new/new_console_statistics_project.mustache", 
 						MustacheHelper.toMap(jo))).build();
 	}
 	
@@ -84,7 +83,7 @@ public class Console_Statistics {
 		
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics_byMonth.mustache", 
+				.entity(new Viewable("/new/new_console_statistics_month.mustache", 
 						MustacheHelper.toMap(jo))).build();
 	}
 	
@@ -99,31 +98,15 @@ public class Console_Statistics {
 		jo.put("year", year);
 		jo.put("month", month);
 		Log.info(years+" "+months);
-		JSONArray mentors = statC.totalMentoringInfoByMonth(years, months, UserController.ROLE_MENTOR);
+		JSONArray mentors = statC.totalMentoringInfoByMonth(years, months, "mentor");
 		jo.put("mentors", mentors);
-		JSONArray mentees = statC.totalMentoringInfoByMonth(years, months, UserController.ROLE_MENTEE);
+		JSONArray mentees = statC.totalMentoringInfoByMonth(years, months, "mentee");
 		jo.put("mentees", mentees);
 		Log.info(jo.toString());
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_statistics_byMonth.mustache", 
+				.entity(new Viewable("/new/new_console_statistics_month.mustache", 
 						MustacheHelper.toMap(jo))).build();
 	}
 	
-	@GET
-	@Path("/console/statistics/perMonth/{year}/{month}")
-	public Response View_Statistics_perMonth_data (@PathParam("year") String year, @PathParam("month")String month) {
-		JSONObject jo = new JSONObject();
-		int years = Integer.parseUnsignedInt(year);
-		int months = Integer.parseUnsignedInt(month);
-		
-		JSONArray mentors = statC.totalMentoringInfoByMonth(years, months, UserController.ROLE_MENTOR);
-		jo.put("mentors", mentors);
-		JSONArray mentees = statC.totalMentoringInfoByMonth(years, months, UserController.ROLE_MENTEE);
-		jo.put("mentees", mentees);
-		return Response
-				.status(200)
-				.entity(new Viewable("/console_statistics_byMonth.mustache", 
-						MustacheHelper.toMap(jo))).build();
-	}
 }

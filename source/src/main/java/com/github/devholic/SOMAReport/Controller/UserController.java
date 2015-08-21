@@ -12,9 +12,6 @@ import com.github.devholic.SOMAReport.Utilities.StringFactory;
 
 public class UserController {
 
-	public final static int ROLE_MENTOR = 0;
-	public final static int ROLE_MENTEE = 1;
-
 	private final static Logger Log = Logger.getLogger(UserController.class);
 
 	static DatabaseController db = new DatabaseController();
@@ -97,21 +94,15 @@ public class UserController {
 	 * @param userId
 	 * @return int (ROLE_MENTOR / ROLE_MENTEE)
 	 */
-	public int getRoleById (String userId) {
+	public String getRoleById (String userId) {
 		JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(userId));
 		if (userDoc.has("role")) {
-			if (userDoc.getString("role").equals("mentor"))
-				return ROLE_MENTOR;
-			else if (userDoc.getString("role").equals("mentee"))
-				return ROLE_MENTEE;
-			else {
-				Log.error("Wrong role info");
-				return -1;
-			}
+			String userRole = userDoc.getString("role"); 
+			return userRole;
 		}
 		else {
-			Log.error("Wrong role info");
-			return -1;
+			Log.error("Role info does not exists");
+			return null;
 		}
 	}
 	
@@ -126,6 +117,12 @@ public class UserController {
 		return userDoc.getString("name");
 	}
 	
+	/***
+	 * 해당 년도에 속한 유저 리스트를 가져온다
+	 * 
+	 * @param year
+	 * @return
+	 */
 	public JSONArray getUsersInYear (int year) {
 		JSONObject raw = JSONFactory.inputStreamToJson(db.getByView("_design/user", "users_in_year", year, false, true, false));
 		JSONArray result = JSONFactory.getData(raw);	
@@ -139,7 +136,8 @@ public class UserController {
 	/**
 	 * 해당 유저의 기본 정보 (name, id, belong)를 가져온다.
 	 * 
-	 * 
+	 * @param String userId
+	 * @return JSONObject
 	 */
 	public static JSONObject getUserInfo(String userId) {
 		JSONObject userDoc = new JSONObject();
@@ -158,7 +156,6 @@ public class UserController {
 	 * @param String userId, String oldPwd, String newPwd, String newPwd2
 	 * @return boolean
 	 */
-	
 	public boolean modifyPassword(String userId, String oldPwd, String newPwd, String newPwd2) {
 		
 		JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(userId));
@@ -183,5 +180,17 @@ public class UserController {
 			return false;
 		}
 		
+	}
+	
+	/***
+	 * 이름의 중복여부를 확인한다. (중복시 true)
+	 * 
+	 * @param name
+	 * @return T - input name already exists/F - not exists
+	 */
+	public boolean nameDuplicationCheck (String name) {
+		JSONArray result = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/user", "search_by_name", name, false, false, false)));
+		if (result.length() > 0) return true;
+		return false;
 	}
 }
