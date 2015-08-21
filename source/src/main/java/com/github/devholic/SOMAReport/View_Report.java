@@ -29,7 +29,6 @@ import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import com.github.devholic.SOMAReport.Controller.ReportsController;
-import com.github.devholic.SOMAReport.Utilities.DocumentUtil;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -46,24 +45,24 @@ public class View_Report {
 		JSONArray ja = r.getReportByProjectId(id);
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
-			DocumentUtil dutil = new DocumentUtil("somarecord");
-			JsonObject project = dutil.getDoc(id).getAsJsonObject();
-			boolean checked = false;
-			if (project.get("mentor").getAsString()
-					.equals(session.getAttribute("user_id"))) {
-				checked = true;
-			} else {
-				for (int i = 0; i < project.get("mentee").getAsJsonArray()
-						.size(); i++) {
-					if (project.get("mentee").getAsJsonArray().get(i)
-							.getAsString()
-							.equals(session.getAttribute("user_id"))) {
-						checked = true;
-						break;
-					}
-				}
-			}
-			if (checked) {
+//			DocumentUtil dutil = new DocumentUtil("somarecord");
+//			JsonObject project = dutil.getDoc(id).getAsJsonObject();
+//			boolean checked = false;
+//			if (project.get("mentor").getAsString()
+//					.equals(session.getAttribute("user_id"))) {
+//				checked = true;
+//			} else {
+//				for (int i = 0; i < project.get("mentee").getAsJsonArray()
+//						.size(); i++) {
+//					if (project.get("mentee").getAsJsonArray().get(i)
+//							.getAsString()
+//							.equals(session.getAttribute("user_id"))) {
+//						checked = true;
+//						break;
+//					}
+//				}
+//			}
+//			if (checked) {
 				JSONObject jo = new JSONObject();
 				jo.put("reportList", ja);
 				for (int i = 0; i < ja.length(); i++) {
@@ -77,8 +76,8 @@ public class View_Report {
 					ja.getJSONObject(i).put("attendee", attendee);
 				}
 				jo.put("pid", id);
-				jo.put("pname", dutil.getDoc(id).getAsJsonObject().get("title")
-						.getAsString());
+//				jo.put("pname", dutil.getDoc(id).getAsJsonObject().get("title")
+//						.getAsString());
 				return Response.ok(
 						new Viewable("/reportlist.mustache", MustacheHelper
 								.toMap(jo))).build();
@@ -86,10 +85,10 @@ public class View_Report {
 				return Response.seeOther(
 						new URI("http://localhost:8080/project/list")).build();
 			}
-		} else {
-			return Response.seeOther(new URI("http://localhost:8080/login"))
-					.build();
-		}
+//		} else {
+//			return Response.seeOther(new URI("http://localhost:8080/login"))
+//					.build();
+//		}
 	}
 
 
@@ -101,13 +100,13 @@ public class View_Report {
 			@PathParam("id") String id) throws URISyntaxException {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
-			DocumentUtil dutil = new DocumentUtil("somarecord");
-			JSONObject project = new JSONObject(dutil.getDoc(id)
-					.getAsJsonObject().toString());
+//			DocumentUtil dutil = new DocumentUtil("somarecord");
+//			JSONObject project = new JSONObject(dutil.getDoc(id)
+//					.getAsJsonObject().toString());
 			JSONObject jo = new JSONObject();
 			jo.put("pid", id);
-			jo.put("pname", project.get("title").toString());
-			jo.put("mentee", project.get("mentee"));
+//			jo.put("pname", project.get("title").toString());
+//			jo.put("mentee", project.get("mentee"));
 			return Response.ok(
 					new Viewable("/reportwrite.mustache", MustacheHelper
 							.toMap(jo))).build();
@@ -218,20 +217,20 @@ public class View_Report {
 	@Path("/update/{id}")
 	@Produces("text/html")
 	public Response updateReport(@PathParam("id") String id) {
-		DocumentUtil dutil = new DocumentUtil("somarecord");
-		JSONObject report = new JSONObject(dutil.getDoc(id).getAsJsonObject()
-				.toString());
+		//DocumentUtil dutil = new DocumentUtil("somarecord");
+//		JSONObject report = new JSONObject(dutil.getDoc(id).getAsJsonObject()
+//				.toString());
 		JSONObject jo = new JSONObject();
-		jo.put("pid", id);
-		jo.put("rid", report.get("project"));
-		jo.put("date", report.getJSONObject("report_info").get("date"));
-		jo.put("topic", report.getJSONObject("report_details").get("topic"));
-		jo.put("goal", report.getJSONObject("report_details").get("goal"));
-		jo.put("issue", report.getJSONObject("report_details").get("issue"));
-		jo.put("solution",
-				report.getJSONObject("report_details").get("solution"));
-		jo.put("plan", report.getJSONObject("report_details").get("plan"));
-		jo.put("opinion", report.getJSONObject("report_details").get("opinion"));
+//		jo.put("pid", id);
+//		jo.put("rid", report.get("project"));
+//		jo.put("date", report.getJSONObject("report_info").get("date"));
+//		jo.put("topic", report.getJSONObject("report_details").get("topic"));
+//		jo.put("goal", report.getJSONObject("report_details").get("goal"));
+//		jo.put("issue", report.getJSONObject("report_details").get("issue"));
+//		jo.put("solution",
+//				report.getJSONObject("report_details").get("solution"));
+//		jo.put("plan", report.getJSONObject("report_details").get("plan"));
+//		jo.put("opinion", report.getJSONObject("report_details").get("opinion"));
 		return Response
 				.ok(new Viewable("/reportupdate.mustache", MustacheHelper
 						.toMap(jo))).build();
@@ -247,9 +246,9 @@ public class View_Report {
 			@FormDataParam("date") String solution,
 			@FormDataParam("date") String plan,
 			@FormDataParam("date") String opinion) throws URISyntaxException {
-		DocumentUtil dutil = new DocumentUtil("somarecord");
-		JSONObject report = new JSONObject(dutil.getDoc(id).getAsJsonObject()
-				.toString());
+//		DocumentUtil dutil = new DocumentUtil("somarecord");
+//		JSONObject report = new JSONObject(dutil.getDoc(id).getAsJsonObject()
+//				.toString());
 		return Response.seeOther(new URI("http://localhost:8080/project/list"))
 				.build();
 	}
@@ -261,9 +260,9 @@ public class View_Report {
 			@PathParam("id") String id) throws URISyntaxException {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
-			DocumentUtil dutil = new DocumentUtil("somarecord");
-			JSONObject project = new JSONObject(dutil.getDoc(id)
-					.getAsJsonObject().toString());
+//			DocumentUtil dutil = new DocumentUtil("somarecord");
+//			JSONObject project = new JSONObject(dutil.getDoc(id)
+//					.getAsJsonObject().toString());
 			JSONObject jo = new JSONObject();
 			jo.put("isDone", true);
 			return Response.ok(

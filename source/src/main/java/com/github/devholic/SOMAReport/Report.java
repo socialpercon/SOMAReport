@@ -79,7 +79,7 @@ public class Report {
 			data.put("user_id", session.getAttribute("user_id").toString());
 			JSONObject detail = reports.getReportDetailByReportId(id);
 			if (detail != null) {
-				if (user.getRoleById(session.getAttribute("user_id").toString()) == UserController.ROLE_MENTOR) {
+				if (user.getRoleById(session.getAttribute("user_id").toString()).equals("mentor")) {
 					if (!detail.getJSONObject("report_details").has(
 							"opinion-public")) {
 						detail.getJSONObject("report_details").put(

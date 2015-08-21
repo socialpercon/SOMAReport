@@ -11,6 +11,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
+import org.mortbay.log.Log;
 
 import com.github.devholic.SOMAReport.Utilities.StringFactory;
 
@@ -28,6 +29,8 @@ public class StringFactoryTest {
 		String salt = StringFactory.createSalt();
 		String encrypted = StringFactory.encryptPassword(
 				TestData.correctPassword, salt);
+		System.out.println(salt);
+		System.out.println(encrypted);
 		assertNotEquals(TestData.correctPassword, encrypted);
 		String reencrypted = StringFactory.encryptPassword(
 				TestData.correctPassword, salt);

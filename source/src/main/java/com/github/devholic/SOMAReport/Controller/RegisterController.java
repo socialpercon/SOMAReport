@@ -134,7 +134,7 @@ public class RegisterController {
 
 				String salt = StringFactory.createSalt();
 				registerDoc.put("salt", salt);
-				String password = StringFactory.encryptPassword("password", salt);
+				String password = StringFactory.encryptPassword("admin", salt);
 				registerDoc.put("password", password);
 
 				cell = row.getCell(0);

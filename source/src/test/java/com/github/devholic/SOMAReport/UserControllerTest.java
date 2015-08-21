@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.junit.Test;
 
+import com.github.devholic.SOMAReport.Controller.DatabaseController;
 import com.github.devholic.SOMAReport.Controller.StatisticsController;
 import com.github.devholic.SOMAReport.Controller.UserController;
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
@@ -60,8 +61,8 @@ public class UserControllerTest {
 	@Test
 	public void testTotalMentoringInfoByProject() {
 		StatisticsController st = new StatisticsController();
-		JSONArray mentorTotal = st.totalMentoringInfoByStage(UserController.ROLE_MENTOR, "9d898f7d5bfbf361939e1fafd518ea39");
-		JSONArray menteeTotal = st.totalMentoringInfoByStage(UserController.ROLE_MENTEE, "9d898f7d5bfbf361939e1fafd518ea39");
+		JSONArray mentorTotal = st.totalMentoringInfoByStage("mentor", "9d898f7d5bfbf361939e1fafd518ea39");
+		JSONArray menteeTotal = st.totalMentoringInfoByStage("mentee", "9d898f7d5bfbf361939e1fafd518ea39");
 		Log.info(mentorTotal);
 	//	assertEquals(ProjectsController.getProjectList().length(), mentorTotal.length());
 		for (int i=0; i<mentorTotal.length(); i++) {
@@ -89,6 +90,23 @@ public class UserControllerTest {
 	@Test
 	public void testTotalMentoringInfoByMonth() {
 		StatisticsController stC = new StatisticsController();
-		Log.info(stC.totalMentoringInfoByMonth(2015, 8, UserController.ROLE_MENTOR));
+		Log.info(stC.totalMentoringInfoByMonth(2015, 8, "mentor"));
+	}
+	
+	@Test
+	public void testModifyPassword() {
+		UserController userC = new UserController();
+		DatabaseController dbC = new DatabaseController();
+		String userId = "9d898f7d5bfbf361939e1fafd5104eb3";
+		Log.info(JSONFactory.inputStreamToJson(dbC.getDoc(userId)));
+		assertTrue(userC.modifyPassword(userId, "password", "ohoh", "ohoh"));
+		Log.info(JSONFactory.inputStreamToJson(dbC.getDoc(userId)));		
+	}
+	
+	@Test
+	public void testNameDuplication() {
+		UserController userC = new UserController();
+		assertTrue(userC.nameDuplicationCheck("김멘토"));
+		assertTrue(!userC.nameDuplicationCheck("뿅뿅이"));
 	}
 }
