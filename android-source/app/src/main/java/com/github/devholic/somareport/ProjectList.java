@@ -168,19 +168,27 @@ public class ProjectList extends AppCompatActivity {
                 holder.stage.setText(project.get("stage").toString());
                 holder.title.setText(project.get("title").toString());
 
-//                ProfileImageLoader profileImageLoader = new ProfileImageLoader(project.get("mentor").toString(), holder.mentor);
+//                ProfileImageLoader profileImageLoader = new ProfileImageLoader(R.drawable.user_a, holder.mentor);
 //                profileImageLoader.getProfile();
 //                ImageLoaderOld imageLoader = new ImageLoaderOld(holder.mentor);
-//                imageLoader.execute(project.get("mentor").toString());
+//                imageLoader.execute(Integer.toString(R.drawable.user_a));
 
                 JSONArray mentee = new JSONArray(project.get("mentee").toString());
                 for (int i=0; i<mentee.length(); i++) {
                     CircleImageView menteeImage = new CircleImageView(holder.mentee.getContext());
-//                    profileImageLoader = new ProfileImageLoader(mentee.get(i).toString(), menteeImage);
+//                    profileImageLoader = new ProfileImageLoader(R.drawable.user_k, menteeImage);
 //                    profileImageLoader.getProfile();
 //                    imageLoader = new ImageLoaderOld(menteeImage);
-//                    imageLoader.execute(mentee.get(i).toString());
-                    holder.mentee.addView(menteeImage);
+//                    imageLoader.execute(Integer.toString(R.drawable.user_k));
+//                    holder.mentee.addView(menteeImage);
+//                menteeImage = new CircleImageView(holder.mentee.getContext());
+//                profileImageLoader = new ProfileImageLoader(R.drawable.user_l, menteeImage);
+//                profileImageLoader.getProfile();
+//                holder.mentee.addView(menteeImage);
+//                menteeImage = new CircleImageView(holder.mentee.getContext());
+//                profileImageLoader = new ProfileImageLoader(R.drawable.user_a, menteeImage);
+//                profileImageLoader.getProfile();
+//                holder.mentee.addView(menteeImage);
                 }
             } catch (JSONException e) {
                 Log.e(TAG, "onBindViewHolder "+ e.getLocalizedMessage());

@@ -76,9 +76,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 String pwd = password.getText().toString();
                 Log.d(TAG, "email: " + email + " password: " + pwd + " login btn clicked");
 
-            //    LoginTask loginTask = new LoginTask();
-            //    loginTask.execute(email, pwd);
-                logInAccess(email, pwd);
+                LoginTask loginTask = new LoginTask();
+                loginTask.execute(email, pwd);
+             //   logInAccess(email, pwd);
                 break;
         }
     }
@@ -116,33 +116,33 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         protected Boolean doInBackground(String... params) {
             try {
                 String url = "http://10.0.3.2:8080/api/login";
-                HttpClient httpClient= new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(url);
-                List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
-                nameValuePair.add(new BasicNameValuePair("email", params[0]));
-                nameValuePair.add(new BasicNameValuePair("password", params[1]));
-                Log.i(TAG, nameValuePair.toString());
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
-
-                HttpResponse httpResponse = httpClient.execute(httpPost);
-                Header[] headers = httpResponse.getAllHeaders();
-                for(Header h : headers) {
-                    System.out.println("Key : " + h.getName()
-                            + " ,Value : " + h.getValue());
-                    if (h.getName().equals("Set-Cookie"))
-                        cookie = h.getValue();
-                }
+//                HttpClient httpClient= new DefaultHttpClient();
+//                HttpPost httpPost = new HttpPost(url);
+//                List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
+//                nameValuePair.add(new BasicNameValuePair("email", params[0]));
+//                nameValuePair.add(new BasicNameValuePair("password", params[1]));
+//                Log.i(TAG, nameValuePair.toString());
+//                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
+//
+//                HttpResponse httpResponse = httpClient.execute(httpPost);
+//                Header[] headers = httpResponse.getAllHeaders();
+//                for(Header h : headers) {
+//                    System.out.println("Key : " + h.getName()
+//                            + " ,Value : " + h.getValue());
+//                    if (h.getName().equals("Set-Cookie"))
+//                        cookie = h.getValue();
+//                }
 
                 return true;
             }
-            catch (MalformedURLException e) {
-                Log.e(TAG, e.getLocalizedMessage());
-                e.printStackTrace();
-            }
-            catch (IOException e) {
-                Log.e(TAG, e.getLocalizedMessage());
-                e.printStackTrace();
-            }
+//            catch (MalformedURLException e) {
+//                Log.e(TAG, e.getLocalizedMessage());
+//                e.printStackTrace();
+//            }
+//            catch (IOException e) {
+//                Log.e(TAG, e.getLocalizedMessage());
+//                e.printStackTrace();
+//            }
             catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage());
                 e.printStackTrace();

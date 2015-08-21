@@ -523,6 +523,7 @@ public class DriveController {
 	}
 	
 	/***
+	 * 프로젝트 드라이브와 그에 속한 파일들의 정보를 가져온다
 	 * 
 	 * @param projectId
 	 * @return JSONObject {projectId, fileNum, files[ {fileName, storage, fileId, userId, userName} ] }

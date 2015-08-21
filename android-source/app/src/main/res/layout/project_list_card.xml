@@ -54,24 +54,45 @@
                 android:id="@+id/project_card_mentor"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginRight="8dp"/>
+                android:layout_marginRight="8dp"
+                android:src="@drawable/user_a"/>
+
+
 
             <RelativeLayout
                 android:id="@+id/mentor_divider"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="8dp"
-                android:background="@color/colorDivider" />
+                android:background="@color/colorDivider" >
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/project_card_mentee"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
 
-            </LinearLayout>
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/user_m"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/user_k"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/user_l"/>
+            </LinearLayout>
 
         </LinearLayout>
     </RelativeLayout>

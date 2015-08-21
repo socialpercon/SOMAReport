@@ -119,8 +119,7 @@ public class Login {
 			} else {
 				String result = UserController.login(email, password); // 로그인
 				if (result != null) { // 결과값이 null이 아닌경우
-					UserController user = new UserController();
-					String role = user.getRoleById(result);
+					String role = UserController.getRoleById(result);
 					if (role.equals("admin")) {
 						builder.path("console/stage");
 					} else {
