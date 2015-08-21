@@ -30,7 +30,7 @@
         </table>
       </div>
       <div style="height:80px;width:85%;float:right;background:#fff">
-        <a href="/project/list" style="text-decoration:none;color:#000;display:inline-block">
+        <a href="/console/stage" style="text-decoration:none;color:#000;display:inline-block">
         <table style="height:80px">
         <tr>
           <td>
@@ -46,30 +46,29 @@
     </div>
     <div style="height:100%;width:15%;float:left;background:#323845;">
     <div style="height:80px"></div>
-    {{#project}}
-    <a href="/project/{{_id}}" class="menu">
-    <div style="height:60px;padding:0px 15px 0px 15px;background-color:#1D1F29;">
+    <a href="/console/stage" class="menu">
+    <div style="height:60px;padding:0px 15px 0px 15px;">
       <table>
         <tr>
           <td>
             <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">visibility</i>
           </td>
           <td>
-            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">home</p>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">projects</p>
           </td>
         </tr>
       </table>
     </div>
     </a>
-    <a href="/report/list/{{_id}}" class="menu">
-    <div style="height:60px;padding:0px 15px 0px 15px">
+    <a href="/console/statistics/project" class="menu">
+    <div style="height:60px;padding:0px 15px 0px 15px;background-color:#1D1F29;">
       <table>
         <tr>
           <td>
             <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">description</i>
           </td>
           <td>
-            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">reports</p>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">statistics</p>
           </td>
         </tr>
       </table>
@@ -83,13 +82,26 @@
             <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">folder</i>
           </td>
           <td>
-            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">drive</p>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">projects</p>
           </td>
         </tr>
       </table>
     </div>
     </a>
-    {{/project}}
+    <a href="/drive/folder/{{_id}}" class="menu">
+    <div style="height:60px;padding:0px 15px 0px 15px">
+      <table>
+        <tr>
+          <td>
+            <i class="material-icons" style="color:rgba(255, 255, 255, 0.3);">folder</i>
+          </td>
+          <td>
+            <p style="padding-left:5px;color:rgba(255, 255, 255, 0.7)">users</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    </a>
     </div>
     <div style="height:100%;width:85%;float:right;background:#F5F5F5;">
       <div style="height:100%;width:100%;background:#F5F5F5;">

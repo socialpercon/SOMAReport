@@ -18,9 +18,11 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.json.JSONObject;
 
+import com.github.devholic.SOMAReport.Controller.DatabaseController;
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Controller.RegisterController;
 import com.github.devholic.SOMAReport.Controller.UserController;
+import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 
 @Path("/")
@@ -43,8 +45,8 @@ public class Console_Project {
 			UserController user = new UserController();
 			data.put("name", user.getUserName(session.getAttribute("user_id")
 					.toString()));
-			data.put("role", user.getRoleById(session.getAttribute("user_id")
-					.toString()));
+			data.put("role", UserController.getRoleById(session.getAttribute(
+					"user_id").toString()));
 			data.put("user_id", session.getAttribute("user_id").toString());
 			return Response
 					.status(200)
@@ -60,12 +62,15 @@ public class Console_Project {
 	@Path("/console/project/list/{id}")
 	public Response consoleProjectDetail(@PathParam("id") String id) {
 		ProjectsController projects = new ProjectsController();
+		DatabaseController db = new DatabaseController();
 		JSONObject jo = new JSONObject();
+		jo.put("stage",
+				(JSONFactory.inputStreamToJson(db.getDoc(id)).toString()));
 		jo.put("projects", projects.projectsInStageInfo(id));
 		Log.info(jo.toString());
 		return Response
 				.status(200)
-				.entity(new Viewable("/console_project.mustache",
+				.entity(new Viewable("/new/new_console_projectlist.mustache",
 						MustacheHelper.toMap(jo))).build();
 	}
 

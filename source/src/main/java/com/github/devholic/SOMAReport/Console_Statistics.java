@@ -37,7 +37,6 @@ public class Console_Statistics {
 	@Path("/console/statistics")
 	public Response View_Statistics() {
 		JSONObject jo = new JSONObject();
-
 		return Response
 				.status(200)
 				.entity(new Viewable("/new/new_console_statistics.mustache",
@@ -48,7 +47,6 @@ public class Console_Statistics {
 	@Path("/console/statistics/project")
 	public Response View_Statistics_Project() {
 		JSONObject jo = new JSONObject();
-
 		JSONArray stages = projectC.existingStage();
 		jo.put("stages", stages);
 		jo.put("selectedStage", "");
