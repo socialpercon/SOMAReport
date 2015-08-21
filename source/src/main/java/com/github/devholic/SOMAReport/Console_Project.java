@@ -12,12 +12,15 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.log4j.Logger;
+import org.glassfish.grizzly.http.server.Request;
+import org.glassfish.grizzly.http.server.Session;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Controller.RegisterController;
+import com.github.devholic.SOMAReport.Controller.UserController;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 
 @Path("/")
@@ -29,26 +32,37 @@ public class Console_Project {
 	UriInfo uri;
 
 	@GET
-	@Path("/console/project")
-	public Response consoleProject() {
-		// getConsoleProject를 한 다음에 MustacheHelper.toMap으로 데이터를 넘겨주면 끗!
-		ProjectsController projects = new ProjectsController();
-		JSONObject jo = new JSONObject();
-		jo.put("stageInfo", projects.existingStage());
-		return Response
-				.status(200)
-				.entity(new Viewable("/console_project.mustache",
-						MustacheHelper.toMap(jo))).build();
+	@Path("/console/stage")
+	public Response consoleProject(@Context Request request) {
+		Session session = request.getSession();
+		if (session.getAttribute("user_id") != null) {
+			ProjectsController projects = new ProjectsController();
+			JSONObject data = new JSONObject();
+			data.put("stages", projects.existingStage());
+			Log.info(data);
+			UserController user = new UserController();
+			data.put("name", user.getUserName(session.getAttribute("user_id")
+					.toString()));
+			data.put("role", user.getRoleById(session.getAttribute("user_id")
+					.toString()));
+			data.put("user_id", session.getAttribute("user_id").toString());
+			return Response
+					.status(200)
+					.entity(new Viewable("/new/new_console_stagelist.mustache",
+							MustacheHelper.toMap(data))).build();
+		} else {
+			return Response.status(401).entity(new Viewable("/login.mustache"))
+					.build();
+		}
 	}
 
 	@GET
-	@Path("/console/project/{id}")
+	@Path("/console/project/list/{id}")
 	public Response consoleProjectDetail(@PathParam("id") String id) {
-		// getConsoleProject를 한 다음에 MustacheHelper.toMap으로 데이터를 넘겨주면 끗!
 		ProjectsController projects = new ProjectsController();
 		JSONObject jo = new JSONObject();
-		jo.put("stageInfo", projects.existingStage());
 		jo.put("projects", projects.projectsInStageInfo(id));
+		Log.info(jo.toString());
 		return Response
 				.status(200)
 				.entity(new Viewable("/console_project.mustache",

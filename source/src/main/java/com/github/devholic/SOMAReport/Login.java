@@ -113,13 +113,20 @@ public class Login {
 			CharConversionException {
 		if (email != null && password != null) { // 아이디, 비밀번호가 제대로 들어온 경우
 			UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
-			builder.path("project/list");
 			Session session = request.getSession();
 			if (session.getAttribute("user_id") != null) { // 세션에 user_id가 있는경우
 				return Response.seeOther(builder.build()).build();
 			} else {
 				String result = UserController.login(email, password); // 로그인
 				if (result != null) { // 결과값이 null이 아닌경우
+					UserController user = new UserController();
+					String role = user.getRoleById(result);
+					if (role.equals("admin")) {
+						builder.path("console/stage");
+					} else {
+						builder.path("project/list");
+					}
+					session.setAttribute("role", role);
 					session.setAttribute("user_id", result); // 세션에 user_id를 설정
 					return Response.seeOther(builder.build()).build();
 				} else {
