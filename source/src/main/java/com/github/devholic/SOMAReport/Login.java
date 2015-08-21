@@ -120,7 +120,6 @@ public class Login {
 			} else {
 				String result = UserController.login(email, password); // 로그인
 				if (result != null) { // 결과값이 null이 아닌경우
-					System.out.println(result);
 					if (UserController.getRoleById(result).equals("admin")) { // 사무국 계정일 경우
 						builder.path("console/project");
 					}
