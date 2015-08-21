@@ -11,6 +11,7 @@ import java.io.IOException;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.mortbay.log.Log;
 
 import com.github.devholic.SOMAReport.Controller.DriveController;
 
@@ -42,5 +43,11 @@ public class DriveControllerTest {
 	public void D_Drive_Delete_Pass() throws IOException {
 		DriveController d = new DriveController();
 		assertTrue(d.deleteImage(id));
+	}
+	
+	@Test
+	public void testGetProjectDriveFileInfo() {
+		DriveController d = new DriveController();
+		System.out.println(d.getProjectDriveFileInfo("9d898f7d5bfbf361939e1fafd5").toString());
 	}
 }

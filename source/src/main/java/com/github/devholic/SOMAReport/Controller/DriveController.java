@@ -521,4 +521,33 @@ public class DriveController {
 		}
 		return usedQuota;
 	}
+	
+	/***
+	 * 
+	 * @param projectId
+	 * @return JSONObject {projectId, fileNum, files[ {fileName, storage, fileId, userId, userName} ] }
+	 */
+	public JSONObject getProjectDriveFileInfo (String projectId) {
+		JSONObject result = new JSONObject();
+		result.put("projectId", projectId);
+		
+		JSONObject driveinfo = JSONFactory.inputStreamToJson(db.getByView("_design/file", "projectdrivePlus", projectId, true, false, false));
+		JSONArray rows = JSONFactory.getData(driveinfo);
+		JSONArray files = new JSONArray();
+		for (int i=0; i<rows.length(); i++) {
+			JSONObject fileDoc = rows.getJSONObject(i).getJSONObject("doc");
+			JSONObject file = new JSONObject();
+			file.put("fileId", fileDoc.get("_id"));
+			if (fileDoc.has("name")) file.put("fileName", fileDoc.get("name"));
+			file.put("storage", fileDoc.get("storage"));
+			if (fileDoc.has("user")) {
+				file.put("userId", fileDoc.getString("user"));
+				file.put("userName", UserController.getUserName(fileDoc.getString("user")));
+			}
+			files.put(file);
+		}
+		result.put("files", files);
+		result.put("fileNum", files.length());
+		return result;
+	}
 }
