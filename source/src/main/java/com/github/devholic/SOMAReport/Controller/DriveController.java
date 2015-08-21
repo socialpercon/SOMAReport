@@ -167,12 +167,12 @@ public class DriveController {
 			/* ************************************************
 			 * 용량체크를 한다. " 100메가 이하면 사용하지 못한다."
 			 * ************************************************/
-			printAbout(drive);
+//			printAbout(drive);
 			long totalQuota = this.getTotalquota(drive);
 			long usedQuota = this.getUsedquota(drive);
 			Log.info("storage we can use =[ " + String.valueOf(totalQuota - usedQuota) + "]");
 			
-			if (totalQuota - usedQuota < 104857600) {
+			if (totalQuota - usedQuota > 104857600) {
 				File body = new File();
 				body.setTitle(fileTitle + "-profileImage");
 				FileContent data = new FileContent("", file);
@@ -220,13 +220,13 @@ public class DriveController {
 			com.google.api.services.drive.Drive drive = buildService(c);
 
 			// 용량체크 " 100메가 이하면 사용하지 못한다."
-			printAbout(drive);
+//			printAbout(drive);
 			long totalQuota = this.getTotalquota(drive);
 			long usedQuota = this.getUsedquota(drive);
 			Log.info("storage we can use =[ "
 					+ String.valueOf(totalQuota - usedQuota) + "]");
 
-			if (totalQuota - usedQuota < 104857600) {
+			if (totalQuota - usedQuota > 104857600) {
 				File body = new File();
 				body.setTitle(r.get("_id").toString());
 				FileContent data = new FileContent("", file);
@@ -520,5 +520,35 @@ public class DriveController {
 			Log.error("An error occurred: " + e);
 		}
 		return usedQuota;
+	}
+	
+	/***
+	 * 
+	 * @param projectId
+	 * @return JSONObject {projectId, fileNum, files[ {fileName, storage, fileId, userId, userName} ] }
+	 */
+	public JSONObject getProjectDriveFileInfo (String projectId) {
+		JSONObject result = new JSONObject();
+		result.put("projectId", projectId);
+		
+		UserController userC = new UserController();
+		JSONObject driveinfo = JSONFactory.inputStreamToJson(db.getByView("_design/file", "projectdrivePlus", projectId, true, false, false));
+		JSONArray rows = JSONFactory.getData(driveinfo);
+		JSONArray files = new JSONArray();
+		for (int i=0; i<rows.length(); i++) {
+			JSONObject fileDoc = rows.getJSONObject(i).getJSONObject("doc");
+			JSONObject file = new JSONObject();
+			file.put("fileId", fileDoc.get("_id"));
+			if (fileDoc.has("name")) file.put("fileName", fileDoc.get("name"));
+			file.put("storage", fileDoc.get("storage"));
+			if (fileDoc.has("user")) {
+				file.put("userId", fileDoc.getString("user"));
+				file.put("userName", userC.getUserName(fileDoc.getString("user")));
+			}
+			files.put(file);
+		}
+		result.put("files", files);
+		result.put("fileNum", files.length());
+		return result;
 	}
 }
