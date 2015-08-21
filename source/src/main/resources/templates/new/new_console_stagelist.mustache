@@ -79,9 +79,9 @@
           <table class="tablelist" style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void border=1px rules=rows>
             {{#stages}}
             <tr>
-              <td onclick="window.location='/console/project/list/{{_id}}'" style="width:100%;padding:10px;">
-                  <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{title}}</p>
-                  <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">{{stage}}</p>
+              <td onclick="window.location='/console/project/list/{{infoId}}'" style="width:100%;padding:10px;">
+                  <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{stageString}}</p>
+                  <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">{{projectNum}}개의 프로젝트</p>
               </td>
             </tr>
             {{/stages}}

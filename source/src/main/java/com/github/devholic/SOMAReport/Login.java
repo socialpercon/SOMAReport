@@ -97,7 +97,7 @@ public class Login {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
 			UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
-			builder.path("project");
+			builder.path("project/list");
 			return Response.seeOther(builder.build()).build();
 		} else {
 			return Response.status(400).entity(new Viewable("/login.mustache"))
@@ -113,16 +113,20 @@ public class Login {
 			CharConversionException {
 		if (email != null && password != null) { // 아이디, 비밀번호가 제대로 들어온 경우
 			UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
-			builder.path("project/list");
 			Session session = request.getSession();
 			if (session.getAttribute("user_id") != null) { // 세션에 user_id가 있는경우
 				return Response.seeOther(builder.build()).build();
 			} else {
 				String result = UserController.login(email, password); // 로그인
 				if (result != null) { // 결과값이 null이 아닌경우
-					if (UserController.getRoleById(result).equals("admin")) { // 사무국 계정일 경우
-						builder.path("console/project");
+
+					String role = UserController.getRoleById(result);
+					if (role.equals("admin")) {
+						builder.path("console/stage");
+					} else {
+						builder.path("project/list");
 					}
+					session.setAttribute("role", role);
 					session.setAttribute("user_id", result); // 세션에 user_id를 설정
 					return Response.seeOther(builder.build()).build();
 				} else {
