@@ -109,7 +109,7 @@ public class UserController {
 	 * @return int (ROLE_MENTOR / ROLE_MENTEE)
 	 */
 
-	public String getRoleById(String userId) {
+	public static String getRoleById(String userId) {
 		JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(userId));
 		if (userDoc.has("role")) {
 			String userRole = userDoc.getString("role");
