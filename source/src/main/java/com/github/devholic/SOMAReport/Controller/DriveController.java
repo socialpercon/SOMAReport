@@ -167,12 +167,12 @@ public class DriveController {
 			/* ************************************************
 			 * 용량체크를 한다. " 100메가 이하면 사용하지 못한다."
 			 * ************************************************/
-			printAbout(drive);
+//			printAbout(drive);
 			long totalQuota = this.getTotalquota(drive);
 			long usedQuota = this.getUsedquota(drive);
 			Log.info("storage we can use =[ " + String.valueOf(totalQuota - usedQuota) + "]");
 			
-			if (totalQuota - usedQuota < 104857600) {
+			if (totalQuota - usedQuota > 104857600) {
 				File body = new File();
 				body.setTitle(fileTitle + "-profileImage");
 				FileContent data = new FileContent("", file);
@@ -220,13 +220,13 @@ public class DriveController {
 			com.google.api.services.drive.Drive drive = buildService(c);
 
 			// 용량체크 " 100메가 이하면 사용하지 못한다."
-			printAbout(drive);
+//			printAbout(drive);
 			long totalQuota = this.getTotalquota(drive);
 			long usedQuota = this.getUsedquota(drive);
 			Log.info("storage we can use =[ "
 					+ String.valueOf(totalQuota - usedQuota) + "]");
 
-			if (totalQuota - usedQuota < 104857600) {
+			if (totalQuota - usedQuota > 104857600) {
 				File body = new File();
 				body.setTitle(r.get("_id").toString());
 				FileContent data = new FileContent("", file);

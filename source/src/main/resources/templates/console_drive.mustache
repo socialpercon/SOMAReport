@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="No-Cache">
+    <title>somareport-drive</title>
+  </head>
+  <body>
+    <table>
+      {{#projectImageList}}
+        <tr>
+          {{projectImageListString}}
+        </tr>
+      {{/projectImageList}}
+    </table>
+    <div style="width:70%;height:100%;float:right;background:#fff;overflow:auto">
+        <input type="file" name="file" multiple id="upMultiFile" style="visibility: hidden;">
+        <a id="fileUpload" class="btn-floating btn-large waves-effect waves-light indigo lighten-1" style="position:fixed;right:56px;bottom:56px;" onclick="javascript:uploadFile()"><i class="material-icons">add</i></a>
+        <center>
+          <div class="progress" style="width:50%;position:fixed;bottom:64px;right:170px">
+            <div id="progressBar" class="determinate" style="width: 0%">
+            </div>
+          </div>
+        </center>
+    </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <script src="https://rawgit.com/blueimp/jQuery-File-Upload/master/js/jquery.fileupload.js" type="text/javascript"></script>
+  <script>
+      
+      function uploadFile(){
+        document.getElementById('upMultiFile').click();
+      }
+
+     $(document).ready(function() {
+          $('#upMultiFile').fileupload({
+              url : 'http://localhost:8080/uploadMultiFile',
+              dataType: 'json',
+              //replaceFileInput: false,
+              add: function(e, data){
+                  console.log(data);
+                  var uploadFile = data.files[0];
+                  var isValid = true;
+
+                  if (uploadFile.size > 5000000) {
+                      alert('파일 용량은 5메가를 초과할 수 없습니다.');
+                      isValid = false;
+                  }
+                  if (isValid) {
+                      data.submit();
+                  }
+              }, progressall: function(e,data) {
+                  var progress = parseInt(data.loaded / data.total * 100, 10);
+                  $('#progressBar').css(
+                      'width',
+                      progress + '%'
+                  );
+              }, done: function (e, data) {
+                  var code = data.result.code;
+                  var msg = data.result.msg;
+                  console.log(code)
+                  if(code == '1') {
+                      window.location.reload(true);
+                  } else {
+                      alert(code + ' : ' + msg);
+                  }
+              }, fail: function(e, data){
+                  console.log(data)
+                  alert('서버와 통신 중 문제가 발생했습니다');
+                  foo = data;
+              }
+          });
+      });
+    </script>
+  </body>
+</html>

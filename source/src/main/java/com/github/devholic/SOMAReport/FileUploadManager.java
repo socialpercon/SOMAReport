@@ -13,9 +13,12 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.mvc.Viewable;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Controller.DriveController;
 import com.github.devholic.SOMAReport.Utilities.FileFactory;
+import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 
 @Path("/")
 public class FileUploadManager {
@@ -32,9 +35,8 @@ public class FileUploadManager {
 	@GET
 	@Path("/fileupload")
 	public Response consoleProject() {
-
 		return Response.status(200)
-				.entity(new Viewable("/fileupload_manage.mustache")).build();
+				.entity(new Viewable("/console_drive.mustache")).build();
 	}
 	
 	
@@ -47,18 +49,23 @@ public class FileUploadManager {
 	@Path("/uploadMultiFile")
 	public Response uploadMultiFile(@FormDataParam("file") InputStream is) {
 		Log.info("uploadMultiFile!!!!!!  is:" + is);
+		JSONObject jo = new JSONObject();
 		try {
 			File buffer_file = FileFactory.stream2file(is);
 
 			DriveController dc = new DriveController();
-			dc.uploadFileToProject("9d898f7d5bfbf361939e1fafd518b7f0",
-					buffer_file);
+			dc.uploadFileToProject("9d898f7d5bfbf361939e1fafd518b7f0",buffer_file);
+			JSONArray projectImageList = dc.getProjectImageList("9d898f7d5bfbf361939e1fafd518b7f0");
+			jo.put("projectImageList", projectImageList);
+			
+			System.out.println(projectImageList.length());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return Response.status(200)
 				.entity("{\"code\":\"1\", \"msg\":\"file upload success.\"}")
+//				.entity(new Viewable("/console_drive.mustache", MustacheHelper.toMap(jo)))
 				.build();
 	}
 	
