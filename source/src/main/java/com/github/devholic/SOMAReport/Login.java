@@ -97,10 +97,14 @@ public class Login {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
 			UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
-			builder.path("project/list");
+			if (session.getAttribute("role").equals("admin")) {
+				builder.path("console/stage");
+			} else {
+				builder.path("project/list");
+			}
 			return Response.seeOther(builder.build()).build();
 		} else {
-			return Response.status(400).entity(new Viewable("/login.mustache"))
+			return Response.status(400).entity(new Viewable("/new/new_login.mustache"))
 					.build();
 		}
 	}
@@ -132,12 +136,12 @@ public class Login {
 				} else {
 					// 로그인에 실패한 경우 400 리턴
 					return Response.status(400)
-							.entity(new Viewable("/login.mustache")).build();
+							.entity(new Viewable("/new/new_login.mustache")).build();
 				}
 			}
 		} else {
 			// 잘못된 요청이므로 400 리턴
-			return Response.status(400).entity(new Viewable("/login.mustache"))
+			return Response.status(400).entity(new Viewable("/new/new_login.mustache"))
 					.build();
 		}
 	}

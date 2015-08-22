@@ -53,7 +53,7 @@ public class Console_Project {
 					.entity(new Viewable("/new/new_console_stagelist.mustache",
 							MustacheHelper.toMap(data))).build();
 		} else {
-			return Response.status(401).entity(new Viewable("/login.mustache"))
+			return Response.status(401).entity(new Viewable("/new/new_login.mustache"))
 					.build();
 		}
 	}

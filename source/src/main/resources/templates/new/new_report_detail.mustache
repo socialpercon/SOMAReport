@@ -18,7 +18,7 @@
           <center>
           <tr>
             <td style="align:center">
-              <img src="http://flamingonest.com/images/donatbalipapp_profile_circle.png" style="width:48px;height:48px;display:inline-block;">
+              <img src="/drive/user/image?id={{user_id}}-profileImage" style="border-radius:50%;width:48px;height:48px;display:inline-block;">
             </td>
             <td style="align:center;padding-left:5px">
             <p style="margin:0;font-size:18px;color:rgba(255, 255, 255, 1);">{{name}}</p>
@@ -43,7 +43,7 @@
         </tr>
         </table>
         </a>
-        {{#project}}
+        {{#writeauth}}
         <a href="/report/write/{{_id}}" style="text-decoration:none;">
         <div class="block" style="height:80px;padding-right:20px;float:right;display:inline-block;">
           <div class="centered">
@@ -60,7 +60,7 @@
           </div>
         </div>
         </a>
-        {{/project}}
+        {{/writeauth}}
       </div>
     </div>
     <div style="height:100%;width:15%;float:left;background:#323845;">
@@ -142,7 +142,7 @@
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">멘토링 일시</p>
-                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{start_time}} ~ {{end_time}}</p>
+                <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{datetime}}</p>
               </td>
               </tr>
               <tr>

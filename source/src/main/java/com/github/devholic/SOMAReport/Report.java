@@ -42,6 +42,9 @@ public class Report {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
 			JSONObject data = new JSONObject();
+			if (session.getAttribute("role").equals("mentor")) {
+				data.put("writeauth", true);
+			}
 			ProjectsController project = new ProjectsController();
 			data.put("project", project.getDetailByProjectId(id));
 			ReportsController reports = new ReportsController();
@@ -49,8 +52,8 @@ public class Report {
 			UserController user = new UserController();
 			data.put("name", user.getUserName(session.getAttribute("user_id")
 					.toString()));
-			data.put("role", user.getRoleById(session.getAttribute("user_id")
-					.toString()));
+			data.put("role", UserController.getRoleById(session.getAttribute(
+					"user_id").toString()));
 			data.put("user_id", session.getAttribute("user_id").toString());
 			Log.info(data.toString());
 			return Response
@@ -58,8 +61,8 @@ public class Report {
 					.entity(new Viewable("/new/new_reports.mustache",
 							MustacheHelper.toMap(data))).build();
 		} else {
-			return Response.status(401).entity(new Viewable("/login.mustache"))
-					.build();
+			return Response.status(401)
+					.entity(new Viewable("/new/new_login.mustache")).build();
 		}
 	}
 
@@ -70,16 +73,21 @@ public class Report {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
 			JSONObject data = new JSONObject();
+			if (session.getAttribute("role").equals("mentor")) {
+				data.put("writeauth", true);
+			}
 			ReportsController reports = new ReportsController();
 			UserController user = new UserController();
 			data.put("name", user.getUserName(session.getAttribute("user_id")
 					.toString()));
-			data.put("role", user.getRoleById(session.getAttribute("user_id")
-					.toString()));
+			data.put("role", UserController.getRoleById(session.getAttribute(
+					"user_id").toString()));
 			data.put("user_id", session.getAttribute("user_id").toString());
 			JSONObject detail = reports.getReportDetailByReportId(id);
 			if (detail != null) {
-				if (user.getRoleById(session.getAttribute("user_id").toString()).equals("mentor")) {
+				if (UserController.getRoleById(
+						session.getAttribute("user_id").toString()).equals(
+						"mentor")) {
 					if (!detail.getJSONObject("report_details").has(
 							"opinion-public")) {
 						detail.getJSONObject("report_details").put(
@@ -97,6 +105,23 @@ public class Report {
 									.getString("content")
 									.replaceAll("\r\n", "\n"));
 				}
+				String start = detail.getJSONObject("report_info").getString(
+						"start_time");
+				String end = detail.getJSONObject("report_info").getString(
+						"end_time");
+				String except = Integer.toString(detail.getJSONObject(
+						"report_info").getInt("except_time"));
+				String y = start.substring(0, 4);
+				String m = start.substring(4, 6);
+				String d = start.substring(6, 8);
+				String sh = start.substring(8, 10);
+				String sm = start.substring(10, 12);
+				String eh = end.substring(8, 10);
+				String em = end.substring(10, 12);
+				detail.getJSONObject("report_info").put(
+						"datetime",
+						y + "년 " + m + "월 " + d + "일 " + sh + ":" + sm + " ~ "
+								+ eh + ":" + em + " | 제외시간 " + except + "시간");
 				data.put("detail", detail);
 				Log.info(detail.toString());
 				data.put("reports", reports.getReportByProjectId(detail
@@ -114,8 +139,8 @@ public class Report {
 				return Response.seeOther(builder.build()).build();
 			}
 		} else {
-			return Response.status(401).entity(new Viewable("/login.mustache"))
-					.build();
+			return Response.status(401)
+					.entity(new Viewable("/new/new_login.mustache")).build();
 		}
 	}
 
@@ -126,6 +151,11 @@ public class Report {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
 			JSONObject data = new JSONObject();
+			if (!session.getAttribute("role").equals("mentor")) {
+				UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
+				builder.path("project/list");
+				return Response.seeOther(builder.build()).build();
+			}
 			ProjectsController project = new ProjectsController();
 			data.put("project", project.getDetailByProjectId(id));
 			ReportsController reports = new ReportsController();
@@ -133,17 +163,17 @@ public class Report {
 			UserController user = new UserController();
 			data.put("name", user.getUserName(session.getAttribute("user_id")
 					.toString()));
-			data.put("role", user.getRoleById(session.getAttribute("user_id")
-					.toString()));
+			data.put("role", UserController.getRoleById(session.getAttribute(
+					"user_id").toString()));
 			data.put("user_id", session.getAttribute("user_id").toString());
 			Log.info(data.toString());
 			return Response
 					.status(200)
-					.entity(new Viewable("/new/new_report_write.mustache", MustacheHelper
-							.toMap(data))).build();
+					.entity(new Viewable("/new/new_report_write.mustache",
+							MustacheHelper.toMap(data))).build();
 		} else {
-			return Response.status(401).entity(new Viewable("/login.mustache"))
-					.build();
+			return Response.status(401)
+					.entity(new Viewable("/new/new_login.mustache")).build();
 		}
 	}
 
@@ -166,7 +196,6 @@ public class Report {
 			@FormDataParam("opinion-public") String opinion_public,
 			@FormDataParam("etc") String etc,
 			@FormDataParam("content") String content) {
-		Log.info("reportWrite start!#");
 		ReportsController report = new ReportsController();
 		JSONArray attendeeArray = new JSONArray();
 		JSONArray absenteeArray = new JSONArray();

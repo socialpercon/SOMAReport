@@ -38,8 +38,8 @@ public class Project {
 			UserController user = new UserController();
 			data.put("name", user.getUserName(session.getAttribute("user_id")
 					.toString()));
-			data.put("role", user.getRoleById(session.getAttribute("user_id")
-					.toString()));
+			data.put("role", UserController.getRoleById(session.getAttribute(
+					"user_id").toString()));
 			data.put("user_id", session.getAttribute("user_id").toString());
 			Log.info(data.toString());
 			return Response
@@ -47,7 +47,7 @@ public class Project {
 					.entity(new Viewable("/new/new_projectlist.mustache",
 							MustacheHelper.toMap(data))).build();
 		} else {
-			return Response.status(401).entity(new Viewable("/login.mustache"))
+			return Response.status(401).entity(new Viewable("/new/new_login.mustache"))
 					.build();
 		}
 	}
@@ -68,8 +68,8 @@ public class Project {
 			UserController user = new UserController();
 			data.put("name", user.getUserName(session.getAttribute("user_id")
 					.toString()));
-			data.put("role", user.getRoleById(session.getAttribute("user_id")
-					.toString()));
+			data.put("role", UserController.getRoleById(session.getAttribute(
+					"user_id").toString()));
 			data.put("user_id", session.getAttribute("user_id").toString());
 			Log.info(data.toString());
 			return Response
@@ -77,7 +77,7 @@ public class Project {
 					.entity(new Viewable("/new/new_project.mustache",
 							MustacheHelper.toMap(data))).build();
 		} else {
-			return Response.status(401).entity(new Viewable("/login.mustache"))
+			return Response.status(401).entity(new Viewable("/new/new_login.mustache"))
 					.build();
 		}
 	}
