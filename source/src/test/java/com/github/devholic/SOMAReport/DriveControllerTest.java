@@ -11,7 +11,6 @@ import java.io.IOException;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.mortbay.log.Log;
 
 import com.github.devholic.SOMAReport.Controller.DriveController;
 
@@ -54,9 +53,6 @@ public class DriveControllerTest {
 	@Test
 	public void testUploadProfile() throws IOException {
 		DriveController d = new DriveController();
-		assertThat(d.uploadProfileImage("9d898f7d5bfbf361939e1fafd5104eb3", new File("9d898f7d5bfbf361939e1fafd5104eb3.jpg")), is(notNullValue()));
-		assertThat(d.uploadProfileImage("9d898f7d5bfbf361939e1fafd50e8eeb", new File("9d898f7d5bfbf361939e1fafd50e8eeb.jpg")), is(notNullValue()));
-		assertThat(d.uploadProfileImage("9d898f7d5bfbf361939e1fafd50ec62b", new File("9d898f7d5bfbf361939e1fafd50ec62b.jpg")), is(notNullValue()));
-		assertThat(d.uploadProfileImage("9d898f7d5bfbf361939e1fafd50f0188", new File("9d898f7d5bfbf361939e1fafd50f0188.jpg")), is(notNullValue()));
+		assertThat(d.uploadProfileImage("9d898f7d5bfbf361939e1fafd51055c8", new File("9d898f7d5bfbf361939e1fafd51055c8.png")), is(notNullValue()));
 	}
 }

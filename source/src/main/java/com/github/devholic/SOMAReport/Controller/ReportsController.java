@@ -330,19 +330,19 @@ public class ReportsController {
 	
 	/***
 	 * 레포트의 확정여부를 가져온다.
-	 * 확정이 된 상태일경우 true, 아닐 경우 false
+	 * 확정이 된 상태일경우 "true", 아닐 경우 "false"
 	 * 
 	 * @param reportId
-	 * @return is confirmed or not
+	 * @return String
 	 */
-	public boolean isReportConfirmed (String reportId) {
+	public String isReportConfirmed (String reportId) {
 		JSONObject doc = JSONFactory.inputStreamToJson(db.getDoc(reportId));
-		if (doc.has("confirmed")) 
-			return doc.getBoolean("confirmed");
-		else {
-			doc.put("confirmed", false);
+//		if (doc.has("confirmed")) 
+//			return doc.getString("confirmed");
+//		else {
+			doc.put("confirmed", "false");
 			db.updateDoc(doc);
-			return false;
-		}
+			return doc.getString("confirmed");
+		//}
 	}
 }

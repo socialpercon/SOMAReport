@@ -2,6 +2,9 @@ package com.github.devholic.SOMAReport;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -73,7 +76,7 @@ public class ReportsControllerTest {
 	public void testReportState() {
 		JSONArray reports = rCtrl.getReportList();
 		for (int i=0; i<reports.length(); i++) {
-			assertTrue(!rCtrl.isReportConfirmed(reports.getJSONObject(i).getString("_id")));
+			assertThat(rCtrl.isReportConfirmed(reports.getJSONObject(i).getString("_id")), is(notNullValue()));
 		}
 	}
 }
