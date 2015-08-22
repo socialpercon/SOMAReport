@@ -69,4 +69,11 @@ public class ReportsControllerTest {
 			assertEquals(list.getJSONObject(i).get("type"), "report");
 	}
 	
+	@Test
+	public void testReportState() {
+		JSONArray reports = rCtrl.getReportList();
+		for (int i=0; i<reports.length(); i++) {
+			assertTrue(!rCtrl.isReportConfirmed(reports.getJSONObject(i).getString("_id")));
+		}
+	}
 }

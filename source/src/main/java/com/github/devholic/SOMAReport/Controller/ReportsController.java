@@ -327,4 +327,22 @@ public class ReportsController {
 		// "mentoringReport_filled.pdf"));
 		// Docx4J.toPDF(wordPackage, os);
 	}
+	
+	/***
+	 * 레포트의 확정여부를 가져온다.
+	 * 확정이 된 상태일경우 true, 아닐 경우 false
+	 * 
+	 * @param reportId
+	 * @return is confirmed or not
+	 */
+	public boolean isReportConfirmed (String reportId) {
+		JSONObject doc = JSONFactory.inputStreamToJson(db.getDoc(reportId));
+		if (doc.has("confirmed")) 
+			return doc.getBoolean("confirmed");
+		else {
+			doc.put("confirmed", false);
+			db.updateDoc(doc);
+			return false;
+		}
+	}
 }

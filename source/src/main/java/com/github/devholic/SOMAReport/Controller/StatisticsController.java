@@ -245,7 +245,7 @@ public class StatisticsController {
 		for (int i = 0; i < users.length(); i++) {
 			String userId = users.getString(i);
 
-			if (userC.getRoleById(userId).equals(role)) {
+			if (UserController.getRoleById(userId).equals(role)) {
 				// userId로 소속 프로젝트 리스트 가져오기
 				JSONArray projects = ProjectsController.getMyProject(userId);
 
