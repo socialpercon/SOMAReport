@@ -8,6 +8,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
+import org.mortbay.log.Log;
 
 import com.github.devholic.SOMAReport.Controller.UserController;
 

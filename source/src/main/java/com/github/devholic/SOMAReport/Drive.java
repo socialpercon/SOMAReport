@@ -98,6 +98,8 @@ public class Drive {
 			@PathParam("id") String id) {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
+			Log.debug(id);
+			Log.debug(request.getRequestURI());
 			JSONObject data = new JSONObject();
 			UserController user = new UserController();
 			data.put("name", user.getUserName(session.getAttribute("user_id")
@@ -111,12 +113,11 @@ public class Drive {
 			JSONArray drivedocs = JSONFactory.getData(JSONFactory
 					.inputStreamToJson(db.getByView("_design/file",
 							"projectdrivePlus", id, true, false, false)));
+			Log.info(id);
 			JSONArray drive = new JSONArray();
 			for (int i = 0; i < drivedocs.length(); i++) {
 				drive.put(drivedocs.getJSONObject(i).get("doc"));
 			}
-			Log.info("ProjectDrivePlus");
-			Log.info(drive.length());
 			if (drive.length() != 0) {
 				data.put("driveFilesPlus", drive);
 			}
