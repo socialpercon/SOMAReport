@@ -153,6 +153,7 @@ public class Login {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
 			session.removeAttribute("user_id");
+			session.removeAttribute("role");
 		}
 		UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
 		return Response.seeOther(builder.build()).build();
