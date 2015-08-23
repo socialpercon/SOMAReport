@@ -54,10 +54,7 @@
                 android:id="@+id/project_card_mentor"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginRight="8dp"
-                android:src="@drawable/user_a"/>
-
-
+                android:layout_marginRight="8dp"/>
 
             <RelativeLayout
                 android:id="@+id/mentor_divider"
@@ -73,25 +70,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginRight="8dp"
-                    android:src="@drawable/user_m"/>
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginRight="8dp"
-                    android:src="@drawable/user_k"/>
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginRight="8dp"
-                    android:src="@drawable/user_l"/>
             </LinearLayout>
 
         </LinearLayout>

@@ -24,78 +24,6 @@ public class StatisticsController {
 	private final Logger Log = Logger.getLogger(StatisticsController.class);
 	DatabaseController db = new DatabaseController();
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public Response getUserList() {
-
-		JSONObject jo1 = new JSONObject();
-
-		try {
-			// logger.info("info level");
-			// logger.warn("warn level");
-			// logger.debug("debug level");
-			// logger.fatal("fatal level");
-			//
-			// jo1.put("name", "name");
-			// jo1.put("age", "age");
-			// jo1.put("sex", "sex");
-			// jo1.put("email", "email");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return Response
-				.status(200)
-				.type(MediaType.APPLICATION_JSON)
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods",
-						"GET, POST, DELETE, PUT").entity(jo1).build();
-	}
-
-	@PUT
-	public Response updateStatistics() {
-		try {
-			return Response
-					.status(200)
-					.type(MediaType.APPLICATION_JSON)
-					.header("Access-Control-Allow-Origin", "*")
-					.header("Access-Control-Allow-Methods",
-							"GET, POST, DELETE, PUT").entity("put : 200")
-					.build();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return Response
-				.status(500)
-				.type(MediaType.APPLICATION_JSON)
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods",
-						"GET, POST, DELETE, PUT").entity("put : 500").build();
-	}
-
-	@DELETE
-	public Response deleteStatistics() {
-		try {
-			return Response
-					.status(200)
-					.type(MediaType.APPLICATION_JSON)
-					.header("Access-Control-Allow-Origin", "*")
-					.header("Access-Control-Allow-Methods",
-							"GET, POST, DELETE, PUT").entity("delete : 200")
-					.build();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return Response
-				.status(500)
-				.type(MediaType.APPLICATION_JSON)
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods",
-						"GET, POST, DELETE, PUT").entity("delete : 500")
-				.build();
-	}
-
 	/**
 	 * 모든 멘토/멘티의 "프로젝트별" 멘토링 시간 총합 및 시행 횟수를 리턴
 	 * 
@@ -245,7 +173,7 @@ public class StatisticsController {
 		for (int i = 0; i < users.length(); i++) {
 			String userId = users.getString(i);
 
-			if (userC.getRoleById(userId).equals(role)) {
+			if (UserController.getRoleById(userId).equals(role)) {
 				// userId로 소속 프로젝트 리스트 가져오기
 				JSONArray projects = ProjectsController.getMyProject(userId);
 
@@ -283,6 +211,14 @@ public class StatisticsController {
 							info.put("mentoringNum", mentoringNum);
 							infos.put(info);
 							break;
+						} else {
+							UserController user = new UserController();
+							JSONObject info = new JSONObject();
+							info.put("userId", userId);
+							info.put("userName", user.getUserName(userId));
+							info.put("mentoringSum", 0);
+							info.put("mentoringNum", 0);
+							infos.put(info);
 						}
 					}
 				} else if (role.equals("mentee")) {
@@ -320,6 +256,14 @@ public class StatisticsController {
 							info.put("mentoringNum", mentoringNum);
 							infos.put(info);
 							break;
+						}  else {
+							UserController user = new UserController();
+							JSONObject info = new JSONObject();
+							info.put("userId", userId);
+							info.put("userName", user.getUserName(userId));
+							info.put("mentoringSum", 0);
+							info.put("mentoringNum", 0);
+							infos.put(info);
 						}
 					}
 				} else {

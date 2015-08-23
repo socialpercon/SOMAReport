@@ -327,4 +327,41 @@ public class ReportsController {
 		// "mentoringReport_filled.pdf"));
 		// Docx4J.toPDF(wordPackage, os);
 	}
+	
+	/***
+	 * 레포트의 확정여부를 가져온다.
+	 * 확정이 된 상태일경우 "true", 아닐 경우 "false"
+	 * 
+	 * @param reportId
+	 * @return String
+	 */
+	public String isReportConfirmed (String reportId) {
+		JSONObject doc = JSONFactory.inputStreamToJson(db.getDoc(reportId));
+//		if (doc.has("confirmed")) 
+//			return doc.getString("confirmed");
+//		else {
+			doc.put("confirmed", "false");
+			db.updateDoc(doc);
+			return doc.getString("confirmed");
+		//}
+	}
+	
+	/***
+	 * 해당 stage(기수, 단계, 차수)에 속하는 레포트를 전부 가져온다.
+	 * 
+	 * @param stageId
+	 * @return
+	 */
+	public JSONArray getReportByStage (String stageId) {
+		JSONArray allReports = new JSONArray();
+		ProjectsController projectC = new ProjectsController();
+		JSONArray projects = projectC.projectsInStageInfo(stageId);
+		for (int i=0; i<projects.length(); i++) {
+			JSONArray reports = getReportByProjectId(projects.getJSONObject(i).getString("_id"));
+			for (int j=0; j<reports.length(); j++) {
+				allReports.put(reports.getJSONObject(j));
+			}
+		}
+		return allReports;
+	}
 }

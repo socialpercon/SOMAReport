@@ -1,6 +1,9 @@
 package com.github.devholic.SOMAReport;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -14,6 +17,7 @@ import org.json.JSONTokener;
 import org.junit.Test;
 
 import com.github.devholic.SOMAReport.Controller.DatabaseController;
+import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Controller.ReportsController;
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
@@ -23,6 +27,7 @@ public class ReportsControllerTest {
 
 	ReportsController rCtrl = new ReportsController();
 	DatabaseController dCtrl = new DatabaseController();
+	ProjectsController pCtrl = new ProjectsController();
 
 	@Test
 	public void testGetReportByProjectId() {
@@ -69,4 +74,27 @@ public class ReportsControllerTest {
 			assertEquals(list.getJSONObject(i).get("type"), "report");
 	}
 	
+	@Test
+	public void testReportState() {
+		JSONArray reports = rCtrl.getReportList();
+		for (int i=0; i<reports.length(); i++) {
+			assertThat(rCtrl.isReportConfirmed(reports.getJSONObject(i).getString("_id")), is(notNullValue()));
+		}
+	}
+	
+	@Test
+	public void testGetReportByStage() {
+		JSONArray reports = rCtrl.getReportByStage("9d898f7d5bfbf361939e1fafd5193109");
+		JSONArray projects = pCtrl.projectsInStageInfo("9d898f7d5bfbf361939e1fafd5193109");
+		boolean isinstage = false;
+		
+		Log.info("there are "+reports.length()+" reports in this stage");
+		for(int i=0; i<reports.length(); i++) {
+			String project = reports.getJSONObject(i).getString("project");
+			for (int j=0; j<projects.length(); j++) {
+				if (project.equals(projects.getJSONObject(j).getString("_id"))) isinstage = true;
+			}
+			assertTrue(isinstage);
+		}
+	}
 }

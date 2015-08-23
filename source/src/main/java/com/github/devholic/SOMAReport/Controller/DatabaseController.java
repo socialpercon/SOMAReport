@@ -2,6 +2,7 @@ package com.github.devholic.SOMAReport.Controller;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -15,8 +16,10 @@ import org.ektorp.http.HttpClient;
 import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbConnector;
 import org.ektorp.impl.StdCouchDbInstance;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 
 public class DatabaseController {
@@ -168,4 +171,14 @@ public class DatabaseController {
 		}
 	}
 
+	public JSONArray getAllDocs() {
+		List<String> allIds = db.getAllDocIds();
+		JSONArray docs = new JSONArray();
+		for(String id : allIds) {
+			JSONObject doc = JSONFactory.inputStreamToJson(getDoc(id));
+			docs.put(doc);
+		}
+		return docs;
+	}
+	
 }

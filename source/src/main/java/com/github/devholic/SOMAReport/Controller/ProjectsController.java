@@ -51,7 +51,7 @@ public class ProjectsController {
 	 * 프로젝트 아이디로 프로젝트 상세정보 가져오기
 	 * 
 	 * @param projectId
-	 * @return JSONObject {[project_type, mentoring_num, mentor, stage, field, section, title, mentee[]]}
+	 * @return JSONObject { project_type, _id, _rev, mentoring_num, mentor, stage, field, section, title, mentee[] }
 	 *************************************************************************/
 	public JSONObject getDetailByProjectId(String projectId) {
 		JSONObject projectInfo = new JSONObject();
@@ -151,8 +151,7 @@ public class ProjectsController {
 	 * 입력된 기수문서 id에 해당하는 프로젝트 목록을 불러온다.
 	 * 
 	 * @param stageInfo id
-	 * @return JSONArray [{ "doc":{project_type, mentor, stage, field, _rev,
-	 *         _id, title, mentee[]} }]
+	 * @return JSONArray [ {project_type, _id, _rev, mentoring_num, mentor, stage, field, section, title, mentee[]} ]
 	 */
 	public JSONArray projectsInStageInfo(String id) {
 		JSONArray projectList = new JSONArray();
