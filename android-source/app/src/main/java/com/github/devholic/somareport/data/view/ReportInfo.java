@@ -5,6 +5,6 @@ package com.github.devholic.somareport.data.view;
  */
 public class ReportInfo {
 
-    public static final int UNCONFIRMED = 0;
-    public static final int BYPROJECT = 1;
+    public static final int UNCONFIRMED = 1;
+    public static final int BYPROJECT = 2;
 }

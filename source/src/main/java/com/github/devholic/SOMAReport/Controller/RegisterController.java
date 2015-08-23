@@ -135,17 +135,20 @@ public class RegisterController {
 				registerDoc.put("role", "mentee");
 				registerDoc.put("year", year);
 
-				String salt = StringFactory.createSalt();
-				registerDoc.put("salt", salt);
-				String password = StringFactory.encryptPassword("admin", salt);
-				registerDoc.put("password", password);
-
 				cell = row.getCell(0);
 				registerDoc.put("name", cell.getStringCellValue());
 				cell = row.getCell(1);
 				registerDoc.put("email", cell.getStringCellValue());
+
 				cell = row.getCell(2);
-				registerDoc.put("phone_num", cell.getStringCellValue());
+				String phoneNum = cell.getStringCellValue();
+				registerDoc.put("phone_num", phoneNum);
+				String salt = StringFactory.createSalt();
+				registerDoc.put("salt", salt);
+				String[] phone = phoneNum.split("-");
+				String password = StringFactory.encryptPassword(phone[2], salt);
+				registerDoc.put("password", password);
+				
 				cell = row.getCell(3);
 				registerDoc.put("belong", cell.getStringCellValue());
 				Map<String, Object> m = db.createDoc(registerDoc);

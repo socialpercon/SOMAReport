@@ -2,11 +2,14 @@ package com.github.devholic.SOMAReport;
 
 import java.util.List;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
@@ -32,7 +35,25 @@ public class Report {
 	@Context
 	UriInfo uri;
 
-	// API
+	// APIs
+	@POST
+	@Path("/api/report/unconfirmed")
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	public Response Api_Report_Unconfirmed(@Context Request request,
+			@FormParam("userId") String userId) {
+		
+		ReportsController rCtrl = new ReportsController();
+		JSONArray unconfirmed = rCtrl.getUnconfirmedReports(userId);
+		
+		return Response
+				.status(200)
+				.type(MediaType.APPLICATION_JSON)
+				.entity(unconfirmed)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods",
+						"GET, POST, DELETE, PUT")
+				.build();
+	}
 
 	// View
 	@GET

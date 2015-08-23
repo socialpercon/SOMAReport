@@ -99,4 +99,10 @@ public class ReportsControllerTest {
 			assertTrue(isinstage);
 		}
 	}
+	
+	@Test
+	public void testGetUnconfirmedReport() {
+		JSONArray result = rCtrl.getUnconfirmedReports("9d898f7d5bfbf361939e1fafd50e8eeb");
+		Log.info(result.toString());
+	}
 }

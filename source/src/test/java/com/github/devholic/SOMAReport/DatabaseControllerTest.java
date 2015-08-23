@@ -78,15 +78,17 @@ public class DatabaseControllerTest {
 		for (int i = 0; i < res.length(); i++) {
 			JSONObject doc = res.getJSONObject(i);
 			String fileName = doc.getString("_id");
-			if (doc.getString("_id").contains("_design")) 
-				fileName = fileName.substring(8, fileName.length());
-			try {
-				FileWriter fw = new FileWriter(doc.getString("_id").substring(8, doc.getString("_id").length()));
-				fw.write(doc.toString());
-				fw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (!doc.getString("_id").contains("_design")) {
+				//fileName = fileName.substring(8, fileName.length());
+				db.deleteDoc(doc.getString("_id"), doc.getString("_rev"));
 			}
+//			try {
+//				FileWriter fw = new FileWriter(doc.getString("_id").substring(8, doc.getString("_id").length()));
+//				fw.write(doc.toString());
+//				fw.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
 
 		}
 	}
