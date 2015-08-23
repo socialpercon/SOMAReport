@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="180dp"
-    android:background="@color/colorAccent"
-    android:orientation="vertical">
+    android:background="@color/colorAccent">
 
-</LinearLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/drawer_profile"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/user_a"
+        android:layout_marginLeft="24dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="김멘토"
+        android:textSize="@dimen/textTitle"
+        android:textStyle="bold"
+        android:id="@+id/drawer_name"
+        android:layout_toRightOf="@+id/drawer_profile"
+        android:layout_alignBottom="@+id/drawer_profile"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/drawer_role"
+        android:text="SW Maestro 멘토"
+        android:layout_below="@+id/drawer_name"
+        android:layout_alignLeft="@+id/drawer_name"/>
+</RelativeLayout>

@@ -345,4 +345,23 @@ public class ReportsController {
 			return doc.getString("confirmed");
 		//}
 	}
+	
+	/***
+	 * 해당 stage(기수, 단계, 차수)에 속하는 레포트를 전부 가져온다.
+	 * 
+	 * @param stageId
+	 * @return
+	 */
+	public JSONArray getReportByStage (String stageId) {
+		JSONArray allReports = new JSONArray();
+		ProjectsController projectC = new ProjectsController();
+		JSONArray projects = projectC.projectsInStageInfo(stageId);
+		for (int i=0; i<projects.length(); i++) {
+			JSONArray reports = getReportByProjectId(projects.getJSONObject(i).getString("_id"));
+			for (int j=0; j<reports.length(); j++) {
+				allReports.put(reports.getJSONObject(j));
+			}
+		}
+		return allReports;
+	}
 }

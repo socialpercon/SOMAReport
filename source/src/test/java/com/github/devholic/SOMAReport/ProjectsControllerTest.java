@@ -41,7 +41,6 @@ public class ProjectsControllerTest {
 		JSONArray res = p.projectsInStageInfo("9d898f7d5bfbf361939e1fafd5193109");		
 		for (int i=0; i<res.length(); i++) {
 			assertThat(res.get(i), not(nullValue()));
-			
 		}
 	}
 

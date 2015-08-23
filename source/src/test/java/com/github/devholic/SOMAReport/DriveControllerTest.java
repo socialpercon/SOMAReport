@@ -53,6 +53,6 @@ public class DriveControllerTest {
 	@Test
 	public void testUploadProfile() throws IOException {
 		DriveController d = new DriveController();
-		assertThat(d.uploadProfileImage("9d898f7d5bfbf361939e1fafd51055c8", new File("9d898f7d5bfbf361939e1fafd51055c8.png")), is(notNullValue()));
+		assertThat(d.uploadProfileImage("9d898f7d5bfbf361939e1fafd52fb095", new File("9d898f7d5bfbf361939e1fafd52fb095.jpg")), is(notNullValue()));
 	}
 }

@@ -211,6 +211,14 @@ public class StatisticsController {
 							info.put("mentoringNum", mentoringNum);
 							infos.put(info);
 							break;
+						} else {
+							UserController user = new UserController();
+							JSONObject info = new JSONObject();
+							info.put("userId", userId);
+							info.put("userName", user.getUserName(userId));
+							info.put("mentoringSum", 0);
+							info.put("mentoringNum", 0);
+							infos.put(info);
 						}
 					}
 				} else if (role.equals("mentee")) {
@@ -248,6 +256,14 @@ public class StatisticsController {
 							info.put("mentoringNum", mentoringNum);
 							infos.put(info);
 							break;
+						}  else {
+							UserController user = new UserController();
+							JSONObject info = new JSONObject();
+							info.put("userId", userId);
+							info.put("userName", user.getUserName(userId));
+							info.put("mentoringSum", 0);
+							info.put("mentoringNum", 0);
+							infos.put(info);
 						}
 					}
 				} else {
