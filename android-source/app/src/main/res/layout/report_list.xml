@@ -18,7 +18,7 @@
             android:minHeight="?attr/actionBarSize"
             android:background="@color/colorAccent"/>
 
-        <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/backgroundLight">
@@ -27,7 +27,36 @@
                 android:id="@+id/report_list_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:visibility="invisible"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="30dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:background="@color/background"
+                android:elevation="2dp">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginBottom="30dp"
+                    android:text="작성중인\n멘토링 보고서가\n없습니다"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="30dp"/>
+                
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text=" >_go to My Projects "
+                    android:textSize="20dp"/>
+
+            </LinearLayout>
 
             <!--<android.support.design.widget.FloatingActionButton-->
                 <!--android:id="@+id/report_add_fabtn"-->
@@ -43,11 +72,11 @@
                 <!--app:elevation="6dp"-->
                 <!--app:pressedTranslationZ="12dp"-->
                 <!--app:rippleColor="@android:color/white" />-->
-        </RelativeLayout>
+        </FrameLayout>
 
     </LinearLayout>
 
-    <android.support.design.widget.NavigationView
+    d<android.support.design.widget.NavigationView
         android:id="@+id/drawer_view"
         android:layout_width="320dp"
         android:layout_height="match_parent"

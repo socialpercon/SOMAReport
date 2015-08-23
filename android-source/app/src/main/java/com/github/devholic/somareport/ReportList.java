@@ -2,6 +2,7 @@ package com.github.devholic.somareport;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -19,11 +20,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.devholic.somareport.data.view.ReportInfo;
+import com.github.devholic.somareport.data.view.User;
+import com.github.devholic.somareport.utils.HttpClientFactory;
+import com.github.devholic.somareport.utils.ProfileImageLoader;
 
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -43,14 +53,25 @@ public class ReportList extends AppCompatActivity {
     @Bind(R.id.report_list_recycler)
     RecyclerView recyclerView;
 
+    // Drawer
     @Bind(R.id.drawerLayout)
     DrawerLayout drawerLayout;
 
     @Bind(R.id.drawer_view)
     NavigationView navigationView;
 
+    @Bind(R.id.drawer_profile)
+    CircleImageView drawerProfile;
+
+    @Bind(R.id.drawer_name)
+    TextView drawerName;
+
+    @Bind(R.id.drawer_role)
+    TextView drawerRole;
+
 
     private DetailRecyclerViewAdapter adapter;
+    private User userInfo;
     public int type;
 
     @Override
@@ -65,6 +86,16 @@ public class ReportList extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        setDrawers();
+
+        type = getIntent().getIntExtra("reportInfoType", 0);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        setData(type);
+    }
+
+    private void setDrawers() {
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(drawerToggle);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -76,7 +107,7 @@ public class ReportList extends AppCompatActivity {
                 drawerLayout.closeDrawers();
 
                 Intent intent;
-                switch(menuItem.getItemId()) {
+                switch (menuItem.getItemId()) {
                     case R.id.drawer_Unconfirmed:
                         return true;
                     case R.id.drawer_myProject:
@@ -93,20 +124,21 @@ public class ReportList extends AppCompatActivity {
             }
         });
 
-        type = getIntent().getIntExtra("reportInfoType", 0);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        setData(type);
+        UserInfoTask reportTask = new UserInfoTask();
+        reportTask.execute();
     }
 
     private void setData(int type) {
+
+        ReportInfoTask reportInfoTask = new ReportInfoTask();
+
         if (type == ReportInfo.UNCONFIRMED) {
+            getSupportActionBar().setSubtitle("작성중인 멘토링 보고서");
 
         }
 
         else if (type == ReportInfo.BYPROJECT) {
-
+            getSupportActionBar().setSubtitle("멘토링 보고서 리스트");
         }
 
         else {
@@ -115,17 +147,12 @@ public class ReportList extends AppCompatActivity {
 
         JSONArray list = new JSONArray();
         try {
-//            JSONObject data = new JSONObject(getIntent().getStringExtra("projectdata"));
-//            getSupportActionBar().setTitle(data.get("title").toString());
-            getSupportActionBar().setSubtitle("멘토링 보고서 리스트");
-//            String pid =  data.get("id").toString();
 
             JSONObject data = new JSONObject();
             /*
             * localhost:8080/report/list/{pid}를 통해 JSONObject로 data에 가져온다
             * {프로젝트id, title, reportList[report id, title, topic, attendee]}
             * */
-            data = new JSONObject("{\"pname\":\"SOMAProject 2nd phase\",\"reportList\":[{\"attendee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150809\",\"id\":\"955f8962d6fc4f6586893cbad1048880\",\"reportTopic\":\"핳 멘토링 횟수 추가 확인\"},{\"attendee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150809\",\"id\":\"e96aa842886c44d38654b9f1eb33355e\",\"reportTopic\":\"오늘 저녁을 어떤걸 먹을지\"},{\"attendee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150809\",\"id\":\"d5af456c1b2f4bffbd9845a13928b60a\",\"reportTopic\":\"오늘 저녁을 어떤걸 먹을지\"},{\"attendee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150809\",\"id\":\"bc51338214f44822b7a60cda4beda99c\",\"reportTopic\":\"오늘 저녁을 어떤걸 먹을지\"},{\"attendee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150809\",\"id\":\"b13695dd5c064a3f8f38e79719f2e0b4\",\"reportTopic\":\"오늘 저녁을 어떤걸 먹을지\"},{\"attendee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150809\",\"id\":\"7f1ae3dbc2994ff593b12e11ba0085a6\",\"reportTopic\":\"오늘 저녁을 어떤걸 먹을지\"},{\"attendee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150809\",\"id\":\"2b77c7d091f748259e6d9c4ca7b29e81\",\"reportTopic\":\"오늘 저녁을 어떤걸 먹을지\"},{\"attendee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150809\",\"id\":\"27173e3d84244954b3b95c3c9e8d5b11\",\"reportTopic\":\"오늘 저녁을 어떤걸 먹을지\"},{\"attendee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150809\",\"id\":\"0bc712895165413c9d8b7738e0a7f706\",\"reportTopic\":\"오늘 저녁을 어떤걸 먹을지\"},{\"attendee\":[\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150809\",\"id\":\"c42c56b44acf4b44855f74e1ba216540\",\"reportTopic\":\"멘토링 횟수 제대로 되는지 확인\"},{\"attendee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150809\",\"id\":\"3fbb0f800fe543d0aebdbe6fc48d1ddd\",\"reportTopic\":\"Test\"},{\"attendee\":[\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150807\",\"id\":\"e5508fae8ecc4729b2605496a278a884\",\"reportTopic\":\"북경오리\"},{\"attendee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150728\",\"id\":\"5863b289b98447dc93c7152caa060a15\",\"reportTopic\":\"주제입니다만\"},{\"attendee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150727\",\"id\":\"5560a997fcae4c61b567175ae7f5bef2\",\"reportTopic\":\"주제입니다만\"},{\"attendee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"],\"reportTitle\":\"20150726\",\"id\":\"9b0facb842b2478c9c460423293a3a96\",\"reportTopic\":\"주제입니다만\"}],\"pid\":\"58387a05c00dcded6f7936c1173e3f5a\"}");
 
             list = new JSONArray(data.get("reportList").toString());
             ArrayList<String> reportList = new ArrayList<String>();
@@ -203,8 +230,8 @@ public class ReportList extends AppCompatActivity {
                 JSONArray attendee = new JSONArray(report.get("attendee").toString());
                 for (int i=0; i<attendee.length(); i++) {
                     CircleImageView circleImageView = new CircleImageView(holder.attendee.getContext());
-                    profileImageLoader = new ProfileImageLoader(R.drawable.user_k, circleImageView);
-                    profileImageLoader.getProfile();
+//                    profileImageLoader = new ProfileImageLoader(R.drawable.user_k, circleImageView);
+//                    profileImageLoader.getProfile();
         //            holder.attendee.addView(circleImageView);
                 }
             } catch (JSONException e) {
@@ -227,6 +254,88 @@ public class ReportList extends AppCompatActivity {
                 title = (TextView) v.findViewById(R.id.report_card_title);
                 topic = (TextView) v.findViewById(R.id.report_card_topic);
                 attendee = (LinearLayout) v.findViewById(R.id.report_card_attendee);
+            }
+        }
+    }
+
+    private class UserInfoTask extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
+                HttpGet httpGet = new HttpGet(getString(R.string.api_url) + params[0]);
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                int status = httpResponse.getStatusLine().getStatusCode();
+                Log.d(TAG, "Response Status:"+status);
+                Header[] h = httpResponse.getAllHeaders();
+                for (Header hd : h) {
+                    Log.i(TAG, hd.toString());
+                }
+                if (status == 200)
+                    return HttpClientFactory.getEntityFromResponse(httpResponse);
+            } catch (IOException e) {
+                Log.e(TAG, e.getLocalizedMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String info) {
+            Log.i(TAG, info);
+            if (info != null) {
+                JSONObject doc = null;
+                try {
+                    doc = new JSONObject(info);
+                    userInfo = new User(doc);
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getLocalizedMessage());
+                }
+                if (doc != null) {
+                    Log.d(TAG, "drawer handling");
+                    drawerName.setText(userInfo.getName());
+                    if (userInfo.getRole().equalsIgnoreCase("mentor"))
+                        drawerRole.setText("SW Maestro 멘토");
+                    else if (userInfo.getRole().equalsIgnoreCase("mentee"))
+                        drawerRole.setText("SW Maestro 멘티");
+                    else
+                        drawerRole.setText("SW Maestro 사무국");
+                    ProfileImageLoader profileImageLoader = new ProfileImageLoader(userInfo.getId(), drawerProfile);
+                    profileImageLoader.getProfile();
+                }
+            }
+        }
+    }
+
+    private class ReportInfoTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
+                HttpGet httpGet = new HttpGet("http://10.0.3.2:8080/api/");
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                int status = httpResponse.getStatusLine().getStatusCode();
+                Log.d(TAG, "Response Status:"+status);
+                Header[] h = httpResponse.getAllHeaders();
+                for (Header hd : h) {
+                    Log.i(TAG, hd.toString());
+                }
+                if (status == 200)
+                    return HttpClientFactory.getEntityFromResponse(httpResponse);
+            } catch (IOException e) {
+                Log.e(TAG, e.getLocalizedMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s != null) {
+                try {
+                    JSONArray reports = new JSONArray(s);
+
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getLocalizedMessage());
+                }
             }
         }
     }

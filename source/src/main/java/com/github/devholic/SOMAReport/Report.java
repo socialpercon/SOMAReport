@@ -37,21 +37,23 @@ public class Report {
 
 	// APIs
 	@GET
-	@Path("/api/report/unconfirmed/{id}")
+	@Path("/api/report/unconfirmed")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public Response Api_Report_Unconfirmed(@PathParam("id") String userId) {
+	public Response Api_Report_Unconfirmed(@Context Request request) {
 		
+		Session session = request.getSession();
+		String userId = session.getAttribute("user_id").toString();
 		ReportsController rCtrl = new ReportsController();
 		JSONArray unconfirmed = rCtrl.getUnconfirmedReports(userId);
-		
-		return Response
+		Log.info(unconfirmed);
+		if (unconfirmed.length() > 0)
+			return Response
 				.status(200)
 				.type(MediaType.APPLICATION_JSON)
-				.entity(unconfirmed)
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods",
-						"GET, POST, DELETE, PUT")
+				.entity(unconfirmed.toString())
 				.build();
+		else // unconfirmed reports does not exists
+			return Response.status(412).build();
 	}
 
 	// View
