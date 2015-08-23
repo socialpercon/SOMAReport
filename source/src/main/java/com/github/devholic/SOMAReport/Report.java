@@ -36,11 +36,10 @@ public class Report {
 	UriInfo uri;
 
 	// APIs
-	@POST
-	@Path("/api/report/unconfirmed")
+	@GET
+	@Path("/api/report/unconfirmed/{id}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public Response Api_Report_Unconfirmed(@Context Request request,
-			@FormParam("userId") String userId) {
+	public Response Api_Report_Unconfirmed(@PathParam("id") String userId) {
 		
 		ReportsController rCtrl = new ReportsController();
 		JSONArray unconfirmed = rCtrl.getUnconfirmedReports(userId);

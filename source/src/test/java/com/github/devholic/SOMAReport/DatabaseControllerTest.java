@@ -96,12 +96,12 @@ public class DatabaseControllerTest {
 	@Test
 	public void formatCheck() {
 		DatabaseController db = new DatabaseController();
-		JSONObject doc = JSONFactory.inputStreamToJson(db.getDoc("9d898f7d5bfbf361939e1fafd5109dc2"));
+		JSONObject doc = JSONFactory.inputStreamToJson(db.getDoc("32b4dfe862d90710dfcd02bdca0146db"));
 		Log.info("getDoc: "+doc.toString());
 		doc = JSONFactory.inputStreamToJson(db.getByView("_design/user", "role", false,
 				false, false));
 		Log.info("getByView-No key"+doc.toString());
-		doc = JSONFactory.inputStreamToJson(db.getByView("_design/user", "role", "mentee", false,
+		doc = JSONFactory.inputStreamToJson(db.getByView("_design/user", "role", "mentee", true,
 				false, false));
 		Log.info("getByView-with key"+doc.toString());
 		doc = JSONFactory.inputStreamToJson(db.getByView("_design/report", "all_by_project",

@@ -108,9 +108,13 @@ public class Drive {
 			ProjectsController project = new ProjectsController();
 			data.put("project", project.getDetailByProjectId(id));
 			DatabaseController db = new DatabaseController();
-			JSONArray drive = JSONFactory.getData(JSONFactory
+			JSONArray drivedocs = JSONFactory.getData(JSONFactory
 					.inputStreamToJson(db.getByView("_design/file",
 							"projectdrivePlus", id, true, false, false)));
+			JSONArray drive = new JSONArray();
+			for (int i=0; i<drivedocs.length(); i++) {
+				drive.put(drivedocs.getJSONObject(i).get("doc"));
+			}
 			Log.info("ProjectDrivePlus");
 			Log.info(drive.toString());
 			if (drive.length() != 0) {

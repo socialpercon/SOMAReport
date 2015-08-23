@@ -172,6 +172,7 @@ public class UserController {
 		userDoc.put("id", user.get("_id"));
 		userDoc.put("name", user.get("name"));
 		userDoc.put("belong", user.get("belong"));
+		userDoc.put("years", user.get("years"));
 
 		return userDoc;
 	}
