@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -200,8 +201,6 @@ public class ReportDetails extends AppCompatActivity {
         }
     }
 
-
-
     protected Dialog onCreatedDialog (int id) {
         final CharSequence[] items = {"촬영하기", "라이브러리에서 가져오기"};
 
@@ -323,6 +322,17 @@ public class ReportDetails extends AppCompatActivity {
             * */
 
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

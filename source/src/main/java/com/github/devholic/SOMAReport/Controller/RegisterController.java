@@ -71,23 +71,26 @@ public class RegisterController {
 					registerDoc.put("years", years);
 					insertNum++;
 				} else {
-					// 신규 멘토 등
+					// 신규 멘토 등록
 					registerDoc = new JSONObject();
 					registerDoc.put("type", "account");
 					registerDoc.put("role", "mentor");
 					registerDoc.put("years", new int[] { year });
 
-					String salt = StringFactory.createSalt();
-					registerDoc.put("salt", salt);
-					String password = StringFactory.encryptPassword("password", salt);
-					registerDoc.put("password", password);
-
 					cell = row.getCell(0);
 					registerDoc.put("name", cell.getStringCellValue());
 					cell = row.getCell(1);
 					registerDoc.put("email", cell.getStringCellValue());
+					
 					cell = row.getCell(2);
-					registerDoc.put("phone_num", cell.getStringCellValue());
+					String phoneNum = cell.getStringCellValue();
+					registerDoc.put("phone_num", phoneNum);
+					String salt = StringFactory.createSalt();
+					registerDoc.put("salt", salt);
+					String[] phone = phoneNum.split("-");
+					String password = StringFactory.encryptPassword(phone[2], salt);
+					registerDoc.put("password", password);
+					
 					cell = row.getCell(3);
 					registerDoc.put("belong", cell.getStringCellValue());
 					cell = row.getCell(4);

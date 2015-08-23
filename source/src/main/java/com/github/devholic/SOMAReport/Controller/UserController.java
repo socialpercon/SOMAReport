@@ -59,6 +59,15 @@ public class UserController {
 				.inputStreamToString(is)));
 		return result;
 	}
+	
+	public static JSONArray getAllUsers() {
+		JSONArray result = new JSONArray();
+		JSONArray arr = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/user", "role", true, false, false)));
+		for (int i=0; i<arr.length(); i++) {
+			result.put(arr.getJSONObject(i).get("doc"));
+		}
+		return result;
+	}
 
 	public static boolean isAlreadyRegistered(String email) {
 		// 이메일을 통해 이미 등록된 사용자인지를 확인한다

@@ -1,7 +1,11 @@
 package com.github.devholic.somareport;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.github.devholic.somareport.data.view.ReportInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,13 +37,22 @@ public class ReportList extends AppCompatActivity {
     // Toolbar
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    ActionBarDrawerToggle drawerToggle;
 
     // Content
     @Bind(R.id.report_list_recycler)
     RecyclerView recyclerView;
 
+    @Bind(R.id.drawerLayout)
+    DrawerLayout drawerLayout;
+
+    @Bind(R.id.drawer_view)
+    NavigationView navigationView;
+
+
     private DetailRecyclerViewAdapter adapter;
     private MenuItem item;
+    public int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +65,35 @@ public class ReportList extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
+        drawerLayout.setDrawerListener(drawerToggle);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                if (menuItem.isChecked()) menuItem.setChecked(false);
+                else menuItem.setChecked(true);
+
+                drawerLayout.closeDrawers();
+
+                Intent intent;
+                switch(menuItem.getItemId()) {
+                    case R.id.drawer_Unconfirmed:
+                        return true;
+                    case R.id.drawer_myProject:
+                        intent = new Intent(ReportList.this, ProjectList.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.drawer_logout:
+                        intent = new Intent(ReportList.this, Login.class);
+                        startActivity(intent);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -59,12 +103,12 @@ public class ReportList extends AppCompatActivity {
     private void setData() {
         JSONArray list = new JSONArray();
         try {
-            JSONObject data = new JSONObject(getIntent().getStringExtra("projectdata"));
-            getSupportActionBar().setTitle(data.get("title").toString());
+//            JSONObject data = new JSONObject(getIntent().getStringExtra("projectdata"));
+//            getSupportActionBar().setTitle(data.get("title").toString());
             getSupportActionBar().setSubtitle("멘토링 보고서 리스트");
-            String pid =  data.get("id").toString();
+//            String pid =  data.get("id").toString();
 
-            data = new JSONObject();
+            JSONObject data = new JSONObject();
             /*
             * localhost:8080/report/list/{pid}를 통해 JSONObject로 data에 가져온다
             * {프로젝트id, title, reportList[report id, title, topic, attendee]}
@@ -83,15 +127,24 @@ public class ReportList extends AppCompatActivity {
         }
 
     }
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -134,17 +187,14 @@ public class ReportList extends AppCompatActivity {
                 holder.title.setText(report.get("reportTitle").toString());
                 holder.topic.setText(report.get("reportTopic").toString());
 
-//                ImageLoaderOld imageLoader;
                 ProfileImageLoader profileImageLoader;
                 JSONArray attendee = new JSONArray(report.get("attendee").toString());
- //               for (int i=0; i<attendee.length(); i++) {
+                for (int i=0; i<attendee.length(); i++) {
                     CircleImageView circleImageView = new CircleImageView(holder.attendee.getContext());
-//                    imageLoader = new ImageLoaderOld(circleImageView);
-//                    imageLoader.execute(attendee.get(i).toString());
-//                    profileImageLoader = new ProfileImageLoader(R.drawable.user_k, circleImageView);
-//                    profileImageLoader.getProfile();
-//                    holder.attendee.addView(circleImageView);
- //               }
+                    profileImageLoader = new ProfileImageLoader(R.drawable.user_k, circleImageView);
+                    profileImageLoader.getProfile();
+        //            holder.attendee.addView(circleImageView);
+                }
             } catch (JSONException e) {
                 Log.e(TAG, "onBindViewHolder "+ e.getLocalizedMessage());
             }
