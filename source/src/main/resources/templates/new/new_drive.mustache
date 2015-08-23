@@ -18,7 +18,7 @@
           <center>
           <tr>
             <td style="align:center">
-              <img src="http://flamingonest.com/images/donatbalipapp_profile_circle.png" style="width:48px;height:48px;display:inline-block;">
+              <img src="/drive/user/image?id={{user_id}}-profileImage" style="border-radius:50%;width:48px;height:48px;display:inline-block;">
             </td>
             <td style="align:center;padding-left:5px">
             <p style="margin:0;font-size:18px;color:rgba(255, 255, 255, 1);">{{name}}</p>
@@ -120,7 +120,10 @@
           <table class="tablelist" style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void border=1px rules=rows>
             {{#files}}
             <tr>
-              <td onclick="window.location='/report/{{_id}}'" style="padding:10px">
+              <td>
+                <i class="material-icons">insert_drive_file</i>
+              </td>
+              <td onclick="window.location='/drive/raw/{{_id}}'" style="padding:10px">
                 <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{name}}</p>
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">#{{date}}</p>
               </td>
