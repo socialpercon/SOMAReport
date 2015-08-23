@@ -92,12 +92,16 @@
               </label>
               <input id="fileupload" type="file" name="file" style="display: none;"/>
           </div>
+          <p style="font-size:14px;color:rgba(0, 0, 0, 0.54);">사진을 클릭해서 프로필 사진 변경</p>
       </div>
       <div id="progress" style="margin:10px;"></div>
       <span style="font-size:16px;color:rgba(0, 0, 0, 0.54);margin: 10px 10px 10px 10px;">PASSWORD CHANGE</span>
       <div class="divider" style="margin:10px;width:calc(100% - 20px)">
       </div>
       <form action="/mypage/password" method="post">
+      {{#check}}
+      <center><p style="font-size:14px;color:#E82C0C;">{{.}}</p></center>
+      {{/check}}
       <input style="width:calc(100% - 20px);margin: 20px 10px 10px 10px;" placeholder="NEW PASSWORD" type="password" name="new" required="">
       <input style="width:calc(100% - 20px);margin: 20px 10px 10px 10px;" placeholder="OLD PASSWORD" type="password" name="old" required="">
       <button type="submit">

@@ -59,11 +59,12 @@ public class UserController {
 				.inputStreamToString(is)));
 		return result;
 	}
-	
+
 	public static JSONArray getAllUsers() {
 		JSONArray result = new JSONArray();
-		JSONArray arr = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/user", "role", true, false, false)));
-		for (int i=0; i<arr.length(); i++) {
+		JSONArray arr = JSONFactory.getData(JSONFactory.inputStreamToJson(db
+				.getByView("_design/user", "role", true, false, false)));
+		for (int i = 0; i < arr.length(); i++) {
 			result.put(arr.getJSONObject(i).get("doc"));
 		}
 		return result;
@@ -182,8 +183,7 @@ public class UserController {
 	 *            userId, String oldPwd, String newPwd, String newPwd2
 	 * @return boolean
 	 */
-	public boolean modifyPassword(String userId, String oldPwd, String newPwd,
-			String newPwd2) {
+	public boolean modifyPassword(String userId, String oldPwd, String newPwd) {
 
 		JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(userId));
 		if (userDoc == null) {
@@ -194,19 +194,13 @@ public class UserController {
 		if (userDoc.getString("password").equals(
 				StringFactory.encryptPassword(oldPwd, salt))) {
 			String password = StringFactory.encryptPassword(newPwd, salt);
-			if (password.equals(StringFactory.encryptPassword(newPwd2, salt))) {
-				userDoc.put("password", password);
-				db.updateDoc(userDoc);
-				return true;
-			} else {
-				Log.debug("two new passwords are not same");
-				return false;
-			}
+			userDoc.put("password", password);
+			db.updateDoc(userDoc);
+			return true;
 		} else {
 			Log.debug("Wrong old password");
 			return false;
 		}
-
 	}
 
 	/***

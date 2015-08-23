@@ -103,7 +103,7 @@ public class UserControllerTest {
 		DatabaseController dbC = new DatabaseController();
 		String userId = "9d898f7d5bfbf361939e1fafd5104eb3";
 		Log.info(JSONFactory.inputStreamToJson(dbC.getDoc(userId)));
-		assertTrue(userC.modifyPassword(userId, "password", "ohoh", "ohoh"));
+		assertTrue(userC.modifyPassword(userId, "password", "ohoh"));
 		Log.info(JSONFactory.inputStreamToJson(dbC.getDoc(userId)));		
 	}
 	
