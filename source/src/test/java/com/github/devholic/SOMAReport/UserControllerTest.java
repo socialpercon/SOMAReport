@@ -11,8 +11,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.Test;
 
 import com.github.devholic.SOMAReport.Controller.DatabaseController;
@@ -27,6 +30,7 @@ public class UserControllerTest {
 	// LoginViewTest.class
 	// Log4j setting
 	private final Logger Log = Logger.getLogger(StatisticsController.class);
+	UserController userC = new UserController();
 	
 	@Test
 	public void Check_Login_Pass() {
@@ -108,5 +112,19 @@ public class UserControllerTest {
 		UserController userC = new UserController();
 		assertTrue(userC.nameDuplicationCheck("김멘토"));
 		assertTrue(!userC.nameDuplicationCheck("뿅뿅이"));
+	}
+	
+	@Test
+	public void testUserUpdate() {
+		JSONArray list =UserController.getAllUsers();
+		DatabaseController dbC = new DatabaseController();
+		for (int i=0; i<list.length(); i++) {
+			JSONObject doc = list.getJSONObject(i);
+			if (doc.has("profileFile")) {
+				doc.remove("profileFile");
+				Map<String, Object> m = dbC.updateDoc(doc);
+				Log.info(m.toString());
+			}
+		}
 	}
 }

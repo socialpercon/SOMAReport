@@ -14,26 +14,28 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:minHeight="?attr/actionBarSize" />
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/colorAccent"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/project_list_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar"
+            android:background="@color/backgroundLight"
             android:scrollbars="vertical" />
     </RelativeLayout>
 
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/main_drawer_view"
+        android:id="@+id/drawer_view"
         android:layout_width="320dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/background"
-        app:headerLayout="@layout/drawer_header">
-
+        android:background="#323845"
+        app:headerLayout="@layout/drawer_header"
+        app:menu="@menu/drawer_menu"
+        app:itemTextColor="@drawable/select_color">
 
     </android.support.design.widget.NavigationView>
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.github.devholic.somareport.data.view.ReportInfo;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -55,6 +58,9 @@ public class ProjectList extends AppCompatActivity {
     RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
 
+    @Bind(R.id.drawer_view)
+    NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,20 +74,47 @@ public class ProjectList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("SOMAREPORT");
         getSupportActionBar().setSubtitle("프로젝트 리스트");
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(drawerToggle);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                if (menuItem.isChecked()) menuItem.setChecked(false);
+                else menuItem.setChecked(true);
+
+                drawerLayout.closeDrawers();
+
+                Intent intent;
+                switch (menuItem.getItemId()) {
+                    case R.id.drawer_Unconfirmed:
+                        intent = new Intent(ProjectList.this, ReportList.class);
+                        intent.putExtra("reportInfoType", ReportInfo.UNCONFIRMED);
+                        startActivity(intent);
+                        return true;
+                    case R.id.drawer_myProject:
+                        return true;
+                    case R.id.drawer_logout:
+                        intent = new Intent(ProjectList.this, Login.class);
+                        startActivity(intent);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        String id = getIntent().getStringExtra("userId");
-        cookie = getIntent().getStringExtra("cookie");
+      //  String id = getIntent().getStringExtra("userId");
+    //    cookie = getIntent().getStringExtra("cookie");
          /*
         * /project/list에서 프로젝트 정보를 JSONArray로 받아온다.
         * [{project title, stage, id, mentor, mentee[]}]
         * */
-        ProjectTask projectTask = new ProjectTask();
-        projectTask.execute();
+//        ProjectTask projectTask = new ProjectTask();
+//        projectTask.execute();
 
         try {
             String json = "[{\"mentor\":\"3f4ce9856efb3e2f5d86eeb4d5b28f22\",\"stage\":\"6기 2단계 프로젝트\",\"id\":\"58387a05c00dcded6f7936c1173e3f5a\",\"title\":\"SOMAProject 2nd phase\",\"mentee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"]}," +

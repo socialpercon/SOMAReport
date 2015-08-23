@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single"/>
+
+    <item
+        android:id="@+id/drawer_Unconfirmed"
+        android:checked="false"
+        android:title="Reports unconfirmed"
+        />
+
+    <item
+        android:id="@+id/drawer_myProject"
+        android:checked="false"
+        android:title="My Project" />
+    <item
+        android:id="@+id/drawer_logout"
+        android:checked="false"
+        android:title="Log out" />
+</menu>
