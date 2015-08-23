@@ -310,6 +310,7 @@ public class DriveController {
 		JSONObject fileInfo = JSONFactory.inputStreamToJson(db.getByView(
 				"_design/file", "info", id + "-profileImage", false, false,
 				false));
+		Log.info(id);
 		Log.info("info : " + fileInfo.toString());
 		java.io.File f = new java.io.File("cache/" + id);
 		if (f.isFile()) {
