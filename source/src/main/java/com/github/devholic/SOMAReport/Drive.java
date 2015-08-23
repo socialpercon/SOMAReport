@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
@@ -17,6 +18,7 @@ import org.glassfish.grizzly.http.server.Request;
 import org.glassfish.grizzly.http.server.Session;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Controller.DriveController;
 import com.github.devholic.SOMAReport.Utilities.FileFactory;
@@ -46,6 +48,32 @@ public class Drive {
 		} else {
 		}
 		return Response.status(200).build();
+	}
+
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/drive/profile/image/upload")
+	public Response uploadProfileImage(@Context Request request,
+			@FormDataParam("file") InputStream is,
+			@FormDataParam("file") FormDataContentDisposition formData) {
+		Session session = request.getSession();
+		if (session.getAttribute("user_id") != null) {
+			try {
+				DriveController drive = new DriveController();
+				drive.uploadProfileImage(session.getAttribute("user_id")
+						.toString(), FileFactory.stream2file(is));
+				JSONObject data = new JSONObject();
+				data.put("code", 1);
+				data.put("msg", "success");
+				return Response.status(200).entity(data.toString()).build();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				Log.error(e.getMessage());
+				return Response.status(401).build();
+			}
+		} else {
+			return Response.status(401).build();
+		}
 	}
 
 	// View

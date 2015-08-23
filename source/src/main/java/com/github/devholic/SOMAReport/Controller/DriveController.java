@@ -124,7 +124,7 @@ public class DriveController {
 				
 				if(deleteImage(profileFile)){
 					fileDoc = JSONFactory.inputStreamToJson(db.getDoc(profileFile));
-					fileDoc.put("name", file.getName());
+					fileDoc.put("name", id+"-profileImage");
 					fileDoc.put("storage", "0");
 					fileDoc.put("modified_at", now);
 					db.updateDoc(fileDoc);
@@ -141,7 +141,7 @@ public class DriveController {
 			}else{
 
 				imageData.put("type", "file");
-				imageData.put("name", file.getName()+"-profileImage");
+				imageData.put("name", id+"-profileImage");
 				imageData.put("storage", "0");
 				imageData.put("modified_at", now);
 				imageData.put("cached_at", 0);
