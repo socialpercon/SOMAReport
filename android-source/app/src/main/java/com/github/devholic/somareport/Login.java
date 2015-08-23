@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.github.devholic.somareport.restapi.SOMAReportAPI;
+
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -25,6 +27,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.RestAdapter;
 
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
@@ -68,6 +71,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 String pwd = password.getText().toString();
                 Log.d(TAG, "email: " + email + " password: " + pwd + " login btn clicked");
 
+                loginAct(email, pwd);
                 LoginTask loginTask = new LoginTask();
                 loginTask.execute(email, pwd);
                 break;
@@ -78,6 +82,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_right);
+    }
+
+    private void loginAct(String email, String password) {
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://10.0.3.2:8080/api/login").build();
+        SOMAReportAPI reportAPI = restAdapter.create(SOMAReportAPI.class);
+        System.out.println(reportAPI.login().toString());
     }
 
     private class LoginTask extends AsyncTask<String, Void, Boolean> {

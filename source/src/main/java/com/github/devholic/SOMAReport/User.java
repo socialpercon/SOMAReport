@@ -4,6 +4,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -25,16 +26,10 @@ public class User {
 	
 	@GET
 	@Path("/api/user/{id}")
-	public Response APIgetUserInfo(@PathParam("id") String userId) {
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	public String APIgetUserInfo(@PathParam("id") String userId) {
 		JSONObject userInfo = UserController.getUserInfo(userId);
 		
-		return Response
-				.status(200)
-				.type(MediaType.APPLICATION_JSON)
-				.entity(userInfo)
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods",
-						"GET, POST, DELETE, PUT")
-				.build();
+		return userInfo.toString();
 	}
 }
