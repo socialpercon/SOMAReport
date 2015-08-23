@@ -96,96 +96,100 @@ public class DriveController {
 	 * @param file
 	 * @return String
 	 *****************************************/
-	public String uploadProfileImage(String id, java.io.File file) {
-		
+	public String uploadProfileImage(String id, java.io.File file, String originalName) {
+
 		Long now = System.currentTimeMillis();
-		
+
 		String fileTitle = "";
 		JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(id));
-		
+
 		String profileFile;
 		if (userDoc.has("profileFile")) {
 			profileFile = userDoc.getString("profileFile");
 		} else {
-			profileFile="";
+			profileFile = "";
 		}
-		
 		Map<String, Object> r = null;
-		
 		JSONObject fileDoc = new JSONObject();
 		JSONObject imageData = new JSONObject();
-		
+
 		try {
 			/* ************************************************
-			 * profile file이 있으면 기존에 있는 파일을 삭제하고
-			 * fileDoc의 정보를 update 한다.
-			 * ************************************************/
-			if (userDoc.has("profileFile")) { 
-				
-				if(deleteImage(profileFile)){
-					fileDoc = JSONFactory.inputStreamToJson(db.getDoc(profileFile));
-					fileDoc.put("name", file.getName());
+			 * profile file이 있으면 기존에 있는 파일을 삭제하고 fileDoc의 정보를 update 한다.
+			 * ***********************************************
+			 */
+			if (userDoc.has("profileFile")) {
+
+				if (deleteImage(profileFile)) {
+
+//					fileDoc = JSONFactory.inputStreamToJson(db.getDoc(profileFile));
+					fileDoc.put("_id", id + "-profileImage");
+					fileDoc.put("type", "file");
+					fileDoc.put("name", originalName);
 					fileDoc.put("storage", "0");
 					fileDoc.put("modified_at", now);
-					db.updateDoc(fileDoc);
-					
+					fileDoc.put("cached_at", 0);
+					db.createDoc(fileDoc);
+
 					fileTitle = id;
-				}else{
+				} else {
 					Log.debug("deleteImage Failed...");
 					return null;
 				}
-			/* ************************************************
-			 * profile file이 없으면 새로운 fileDoc을 생성하고,
-			 * userDoc에 profileFile 정보를 update한
-			 * ************************************************/
-			}else{
-
+				/* ************************************************
+				 * profile file이 없으면 새로운 fileDoc을 생성하고, userDoc에 profileFile 정보를
+				 * update한 ***********************************************
+				 */
+			} else {
+				imageData.put("_id", id + "-profileImage");
 				imageData.put("type", "file");
-				imageData.put("name", file.getName()+"-profileImage");
+				imageData.put("name", originalName);
 				imageData.put("storage", "0");
 				imageData.put("modified_at", now);
 				imageData.put("cached_at", 0);
 				r = db.createDoc(imageData);
-				
-				userDoc.put("profileFile", r.get("_id").toString());
+
+				userDoc.put("profileFile", id + "-profileImage");
 				db.updateDoc(userDoc);
-				
+
 				fileTitle = id;
 			}
-			
+
 			/* ************************************************
-			 * JSON 파일을 읽어서 credential을 가져온다.
-			 * accessToken과 refreshToken을 가져온다.
-			 * ************************************************/
+			 * JSON 파일을 읽어서 credential을 가져온다. accessToken과 refreshToken을 가져온다.
+			 * ***********************************************
+			 */
 			JSONParser parser = new JSONParser();
 			Object obj = parser.parse(new FileReader(credentialFileName));
 			org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject) obj;
-			
+
 			String access_token = (String) jsonObj.get("access_token");
 			String refresh_token = (String) jsonObj.get("refresh_token");
-			
-			Log.debug("get access_token =[" + access_token + "]");
-			Log.debug("get refresh_token =[" + refresh_token + "]");
-			
+
+//			Log.debug("get access_token =[" + access_token + "]");
+//			Log.debug("get refresh_token =[" + refresh_token + "]");
+
 			Credential c = getCredential(access_token, refresh_token);
 			com.google.api.services.drive.Drive drive = buildService(c);
-			
+
 			/* ************************************************
 			 * 용량체크를 한다. " 100메가 이하면 사용하지 못한다."
-			 * ************************************************/
-//			printAbout(drive);
+			 * ***********************************************
+			 */
+			// printAbout(drive);
 			long totalQuota = this.getTotalquota(drive);
 			long usedQuota = this.getUsedquota(drive);
-			Log.info("storage we can use =[ " + String.valueOf(totalQuota - usedQuota) + "]");
-			
+			Log.info("storage we can use =[ "
+					+ String.valueOf(totalQuota - usedQuota) + "]");
+
 			if (totalQuota - usedQuota > 104857600) {
 				File body = new File();
 				body.setTitle(fileTitle + "-profileImage");
 				FileContent data = new FileContent("", file);
 				drive.files().insert(body, data).execute();
-				return r.get("_id").toString();
+				return fileTitle+"-profileImage";
 			}
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			Log.error(e.getMessage());
@@ -226,7 +230,7 @@ public class DriveController {
 			com.google.api.services.drive.Drive drive = buildService(c);
 
 			// 용량체크 " 100메가 이하면 사용하지 못한다."
-//			printAbout(drive);
+			// printAbout(drive);
 			long totalQuota = this.getTotalquota(drive);
 			long usedQuota = this.getUsedquota(drive);
 			Log.info("storage we can use =[ "
@@ -300,6 +304,10 @@ public class DriveController {
 	}
 
 	public java.io.File getUserImage(String id) {
+		DatabaseController db = new DatabaseController();
+		JSONObject fileInfo = JSONFactory.inputStreamToJson(db.getByView(
+				"_design/file", "info", id+"-profileImage", false, false, false));
+		Log.info("info : " + fileInfo.toString());
 		java.io.File f = new java.io.File("cache/" + id);
 		if (f.isFile()) {
 			return f;
@@ -309,6 +317,7 @@ public class DriveController {
 	}
 
 	public boolean deleteImage(String id) {
+		Log.info("Delete File id = " + id);
 		// delete cache
 		java.io.File f = new java.io.File("cache/" + id);
 		if (f.exists()) {
@@ -316,26 +325,31 @@ public class DriveController {
 		}
 		InputStream is = db.getByView("_design/file", "info", id, true, false,
 				false);
-		JSONArray result = JSONFactory.getData(JSONFactory.inputStreamToJson(is));
-		if(result.length() != 0){
-			if (db.deleteDoc(result.getJSONObject(0).getJSONObject("doc")
-					.getString("_id"), result.getJSONObject(0).getJSONObject("doc")
-					.getString("_rev"))) {
+		JSONArray result = JSONFactory.getData(JSONFactory
+				.inputStreamToJson(is));
+		if (result.length() != 0) {
+			if (db.deleteDoc(
+					result.getJSONObject(0).getJSONObject("doc")
+							.getString("_id"),
+					result.getJSONObject(0).getJSONObject("doc")
+							.getString("_rev"))) {
 				try {
 					JSONParser parser = new JSONParser();
-					Object obj = parser.parse(new FileReader(credentialFileName));
+					Object obj = parser
+							.parse(new FileReader(credentialFileName));
 					org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject) obj;
 
 					String access_token = (String) jsonObj.get("access_token");
-					String refresh_token = (String) jsonObj.get("refresh_token");
+					String refresh_token = (String) jsonObj
+							.get("refresh_token");
 
 					Log.debug("get access_token =[" + access_token + "]");
 					Log.debug("get refresh_token =[" + refresh_token + "]");
 
 					Credential c = getCredential(access_token, refresh_token);
 					com.google.api.services.drive.Drive drive = buildService(c);
-					FileList fl = drive.files().list().setQ("title = '" + id + "'")
-							.execute();
+					FileList fl = drive.files().list()
+							.setQ("title = '" + id + "'").execute();
 					File file = fl.getItems().get(0);
 					drive.files().delete(file.getId()).execute();
 					return true;
@@ -528,30 +542,35 @@ public class DriveController {
 		}
 		return usedQuota;
 	}
-	
+
 	/***
 	 * 프로젝트 드라이브와 그에 속한 파일들의 정보를 가져온다
 	 * 
 	 * @param projectId
-	 * @return JSONObject {projectId, fileNum, files[ {fileName, storage, fileId, userId, userName} ] }
+	 * @return JSONObject {projectId, fileNum, files[ {fileName, storage,
+	 *         fileId, userId, userName} ] }
 	 */
-	public JSONObject getProjectDriveFileInfo (String projectId) {
+	public JSONObject getProjectDriveFileInfo(String projectId) {
 		JSONObject result = new JSONObject();
 		result.put("projectId", projectId);
-		
+
 		UserController userC = new UserController();
-		JSONObject driveinfo = JSONFactory.inputStreamToJson(db.getByView("_design/file", "projectdrivePlus", projectId, true, false, false));
+		JSONObject driveinfo = JSONFactory.inputStreamToJson(db.getByView(
+				"_design/file", "projectdrivePlus", projectId, true, false,
+				false));
 		JSONArray rows = JSONFactory.getData(driveinfo);
 		JSONArray files = new JSONArray();
-		for (int i=0; i<rows.length(); i++) {
+		for (int i = 0; i < rows.length(); i++) {
 			JSONObject fileDoc = rows.getJSONObject(i).getJSONObject("doc");
 			JSONObject file = new JSONObject();
 			file.put("fileId", fileDoc.get("_id"));
-			if (fileDoc.has("name")) file.put("fileName", fileDoc.get("name"));
+			if (fileDoc.has("name"))
+				file.put("fileName", fileDoc.get("name"));
 			file.put("storage", fileDoc.get("storage"));
 			if (fileDoc.has("user")) {
 				file.put("userId", fileDoc.getString("user"));
-				file.put("userName", userC.getUserName(fileDoc.getString("user")));
+				file.put("userName",
+						userC.getUserName(fileDoc.getString("user")));
 			}
 			files.put(file);
 		}

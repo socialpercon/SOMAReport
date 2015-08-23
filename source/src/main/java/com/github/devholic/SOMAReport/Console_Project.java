@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import com.github.devholic.SOMAReport.Controller.DatabaseController;
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Controller.RegisterController;
+import com.github.devholic.SOMAReport.Controller.ReportsController;
 import com.github.devholic.SOMAReport.Controller.UserController;
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
@@ -71,6 +72,8 @@ public class Console_Project {
 			data.put("stage",
 					(JSONFactory.inputStreamToJson(db.getDoc(id)).toString()));
 			data.put("projects", projects.projectsInStageInfo(id));
+			ReportsController reports = new ReportsController();
+			data.put("reports", reports.getReportByStage(id));
 			UserController user = new UserController();
 			data.put("name", user.getUserName(session.getAttribute("user_id")
 					.toString()));
