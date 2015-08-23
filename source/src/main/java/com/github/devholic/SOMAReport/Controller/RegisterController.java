@@ -224,6 +224,7 @@ public class RegisterController {
 						menteeList.put(UserController.getIdbyName(name));
 					}
 					registerDoc.put("mentee", menteeList);
+					Log.info(registerDoc);
 					Map<String, Object> m = db.createDoc(registerDoc);
 					registerDoc.put("_id", m.get("_id"));
 					registerDoc.put("_rev", m.get("_rev"));
