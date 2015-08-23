@@ -47,7 +47,8 @@ public class Drive {
 			try {
 				DriveController drive = new DriveController();
 				drive.uploadProfileImage(session.getAttribute("user_id")
-						.toString(), FileFactory.stream2file(is));
+						.toString(), FileFactory.stream2file(is), formData
+						.getFileName());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -68,7 +69,8 @@ public class Drive {
 			try {
 				DriveController drive = new DriveController();
 				drive.uploadProfileImage(session.getAttribute("user_id")
-						.toString(), FileFactory.stream2file(is));
+						.toString(), FileFactory.stream2file(is), formData
+						.getFileName());
 				JSONObject data = new JSONObject();
 				data.put("code", 1);
 				data.put("msg", "success");
