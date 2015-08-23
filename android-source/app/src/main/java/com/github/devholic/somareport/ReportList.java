@@ -51,7 +51,6 @@ public class ReportList extends AppCompatActivity {
 
 
     private DetailRecyclerViewAdapter adapter;
-    private MenuItem item;
     public int type;
 
     @Override
@@ -65,7 +64,6 @@ public class ReportList extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(drawerToggle);
@@ -94,13 +92,27 @@ public class ReportList extends AppCompatActivity {
                 }
             }
         });
+
+        type = getIntent().getIntExtra("reportInfoType", 0);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        setData();
+        setData(type);
     }
 
-    private void setData() {
+    private void setData(int type) {
+        if (type == ReportInfo.UNCONFIRMED) {
+
+        }
+
+        else if (type == ReportInfo.BYPROJECT) {
+
+        }
+
+        else {
+            Log.e("TAG", "wrong report info type");
+        }
+
         JSONArray list = new JSONArray();
         try {
 //            JSONObject data = new JSONObject(getIntent().getStringExtra("projectdata"));

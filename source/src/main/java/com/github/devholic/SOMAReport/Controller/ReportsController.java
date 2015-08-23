@@ -339,13 +339,13 @@ public class ReportsController {
 	 */
 	public String isReportConfirmed (String reportId) {
 		JSONObject doc = JSONFactory.inputStreamToJson(db.getDoc(reportId));
-//		if (doc.has("confirmed")) 
-//			return doc.getString("confirmed");
-//		else {
+		if (doc.has("confirmed")) 
+			return doc.getString("confirmed");
+		else {
 			doc.put("confirmed", "false");
 			db.updateDoc(doc);
 			return doc.getString("confirmed");
-		//}
+		}
 	}
 	
 	/***
@@ -365,5 +365,24 @@ public class ReportsController {
 			}
 		}
 		return allReports;
+	}
+	
+	/***
+	 * 해당 사용자가 속한 레포트 문서 중 현재 작성중인 (확정되지 않은) 레포트의 정보를 가져온다.
+	 * 
+	 * @param userId
+	 * @return JSONArray [{reportId, reportTitle, reportTopic, attendee[]} ]
+	 */
+	public JSONArray getUnconfirmedReports(String userId) {
+		JSONArray unConfirmed = new JSONArray();
+		JSONArray allList = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/report", "report_by_user", new Object[]{userId+" ", ""}, new Object[]{userId, ""}, true, true, false)));
+		for (int i=0; i<allList.length(); i++) {
+			JSONObject doc = allList.getJSONObject(i).getJSONObject("doc");
+			if (doc.has("confirmed")) {
+				if (doc.getString("confirmed").equals("false"))
+					unConfirmed.put(doc);
+			}
+		}
+		return unConfirmed;
 	}
 }
