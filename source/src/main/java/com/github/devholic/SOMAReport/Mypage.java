@@ -10,6 +10,10 @@ import javax.ws.rs.core.UriInfo;
 import org.glassfish.grizzly.http.server.Request;
 import org.glassfish.grizzly.http.server.Session;
 import org.glassfish.jersey.server.mvc.Viewable;
+import org.json.JSONObject;
+
+import com.github.devholic.SOMAReport.Controller.UserController;
+import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 
 @Path("/")
 public class Mypage {
@@ -23,12 +27,23 @@ public class Mypage {
 		Session session = request.getSession();
 		UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
 		if (session.getAttribute("user_id") != null) {
-			return Response.status(200)
-					.entity(new Viewable("/new/new_mypage.mustache")).build();
+			JSONObject data = new JSONObject();
+			if (session.getAttribute("role").equals("admin")) {
+				data.put("admin", true);
+			}
+			UserController user = new UserController();
+			data.put("name", user.getUserName(session.getAttribute("user_id")
+					.toString()));
+			data.put("role", UserController.getRoleById(session.getAttribute(
+					"user_id").toString()));
+			data.put("user_id", session.getAttribute("user_id").toString());
+			return Response
+					.status(200)
+					.entity(new Viewable("/new/new_mypage.mustache",
+							MustacheHelper.toMap(data))).build();
 		} else {
 			builder.path("login");
 			return Response.seeOther(builder.build()).build();
 		}
 	}
-
 }

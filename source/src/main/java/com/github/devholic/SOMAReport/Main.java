@@ -24,7 +24,11 @@ public class Main {
 		Session session = request.getSession();
 		UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
 		if (session.getAttribute("user_id") != null) {
-			builder.path("project/list");
+			if (session.getAttribute("role").equals("admin")) {
+				builder.path("console/stage");
+			} else {
+				builder.path("project/list");
+			}
 			return Response.seeOther(builder.build()).build();
 		} else {
 			builder.path("login");
