@@ -32,6 +32,7 @@ public class ReportsControllerTest {
 	@Test
 	public void testGetReportByProjectId() {
 		JSONArray reports = rCtrl.getReportByProjectId("9d898f7d5bfbf361939e1fafd518a9a2");
+		Log.info(reports.toString());
 		for (int i = 0; i < reports.length(); i++) {
 			assertEquals("9d898f7d5bfbf361939e1fafd518a9a2", reports.getJSONObject(i).get("project"));
 		}
@@ -89,6 +90,7 @@ public class ReportsControllerTest {
 		boolean isinstage = false;
 		
 		Log.info("there are "+reports.length()+" reports in this stage");
+		Log.info(reports);
 		for(int i=0; i<reports.length(); i++) {
 			String project = reports.getJSONObject(i).getString("project");
 			for (int j=0; j<projects.length(); j++) {

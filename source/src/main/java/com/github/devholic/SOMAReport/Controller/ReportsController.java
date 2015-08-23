@@ -30,7 +30,7 @@ public class ReportsController {
 	 * 프로젝트 아이디로 레포트 가져오기
 	 * 
 	 * @param projectId
-	 * @return JSONArray
+	 * @return JSONArray [{_id, project, projectTitle, date, topic, attendee, absentee}]
 	 *************************************************************************/
 	public JSONArray getReportByProjectId(String projectId) {
 		JSONArray list = new JSONArray();
@@ -45,6 +45,8 @@ public class ReportsController {
 				JSONObject reportInfo = new JSONObject();
 				reportInfo.put("_id", doc.getString("_id"));
 				reportInfo.put("project", doc.get("project"));
+				String projectTitle = JSONFactory.inputStreamToJson(db.getDoc(projectId)).getString("title");
+				reportInfo.put("projectTitle", projectTitle);
 				reportInfo.put("date", doc.getJSONObject("report_info")
 						.getString("date"));
 				reportInfo.put("topic", doc.getJSONObject("report_details")
@@ -350,7 +352,7 @@ public class ReportsController {
 	 * 해당 stage(기수, 단계, 차수)에 속하는 레포트를 전부 가져온다.
 	 * 
 	 * @param stageId
-	 * @return
+	 * @return JSONArray [{_id, project, projectTitle, date, topic, attendee, absentee}]
 	 */
 	public JSONArray getReportByStage (String stageId) {
 		JSONArray allReports = new JSONArray();

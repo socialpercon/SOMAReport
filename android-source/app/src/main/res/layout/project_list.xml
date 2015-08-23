@@ -31,9 +31,10 @@
         android:layout_width="320dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/background"
-        app:headerLayout="@layout/drawer_header">
-
+        android:background="#323845"
+        app:headerLayout="@layout/drawer_header"
+        app:menu="@menu/drawer_menu"
+        app:itemTextColor="@drawable/select_color">
 
     </android.support.design.widget.NavigationView>
 
