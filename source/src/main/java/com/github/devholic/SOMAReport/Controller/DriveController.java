@@ -122,12 +122,14 @@ public class DriveController {
 
 				if (deleteImage(profileFile)) {
 
-					fileDoc = JSONFactory.inputStreamToJson(db
-							.getDoc(profileFile));
-					fileDoc.put("name", id + "-profileImage");
+//					fileDoc = JSONFactory.inputStreamToJson(db.getDoc(profileFile));
+					fileDoc.put("_id", id + "-profileImage");
+					fileDoc.put("type", "file");
+					fileDoc.put("name", file.getName());
 					fileDoc.put("storage", "0");
 					fileDoc.put("modified_at", now);
-					db.updateDoc(fileDoc);
+					fileDoc.put("cached_at", 0);
+					db.createDoc(fileDoc);
 
 					fileTitle = id;
 				} else {
@@ -141,7 +143,7 @@ public class DriveController {
 			} else {
 				imageData.put("_id", id + "-profileImage");
 				imageData.put("type", "file");
-				imageData.put("name", id + "-profileImage");
+				imageData.put("name", file.getName());
 				imageData.put("storage", "0");
 				imageData.put("modified_at", now);
 				imageData.put("cached_at", 0);
@@ -164,8 +166,8 @@ public class DriveController {
 			String access_token = (String) jsonObj.get("access_token");
 			String refresh_token = (String) jsonObj.get("refresh_token");
 
-			Log.debug("get access_token =[" + access_token + "]");
-			Log.debug("get refresh_token =[" + refresh_token + "]");
+//			Log.debug("get access_token =[" + access_token + "]");
+//			Log.debug("get refresh_token =[" + refresh_token + "]");
 
 			Credential c = getCredential(access_token, refresh_token);
 			com.google.api.services.drive.Drive drive = buildService(c);
@@ -185,7 +187,7 @@ public class DriveController {
 				body.setTitle(fileTitle + "-profileImage");
 				FileContent data = new FileContent("", file);
 				drive.files().insert(body, data).execute();
-				return r.get("_id").toString();
+				return fileTitle+"-profileImage";
 			}
 
 		} catch (IOException e) {
