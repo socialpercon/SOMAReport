@@ -63,8 +63,8 @@ public class DriveController {
 	 * @param projectId
 	 * @param file
 	 *****************************************/
-	public void uploadFileToProject(String projectId, java.io.File file) {
-
+	public void uploadFileToProject(String projectId, java.io.File file,
+			String originalName) {
 		DatabaseController db = new DatabaseController();
 		JSONObject driveQuery = JSONFactory
 				.inputStreamToJson(db.getByView("_design/file", "projectdrive",
@@ -85,7 +85,7 @@ public class DriveController {
 		JSONObject jo = JSONFactory.inputStreamToJson(db.getDoc(JSONFactory
 				.getData(driveQuery).getJSONObject(0).getString("id")));
 		Log.info(jo.toString());
-		String id = uploadFile(file);
+		String id = uploadFile(file, originalName);
 		jo.getJSONArray("files").put(id);
 		db.updateDoc(jo);
 	}
@@ -96,7 +96,8 @@ public class DriveController {
 	 * @param file
 	 * @return String
 	 *****************************************/
-	public String uploadProfileImage(String id, java.io.File file, String originalName) {
+	public String uploadProfileImage(String id, java.io.File file,
+			String originalName) {
 
 		Long now = System.currentTimeMillis();
 
@@ -122,7 +123,8 @@ public class DriveController {
 
 				if (deleteImage(profileFile)) {
 
-//					fileDoc = JSONFactory.inputStreamToJson(db.getDoc(profileFile));
+					// fileDoc =
+					// JSONFactory.inputStreamToJson(db.getDoc(profileFile));
 					fileDoc.put("_id", id + "-profileImage");
 					fileDoc.put("type", "file");
 					fileDoc.put("name", originalName);
@@ -166,8 +168,8 @@ public class DriveController {
 			String access_token = (String) jsonObj.get("access_token");
 			String refresh_token = (String) jsonObj.get("refresh_token");
 
-//			Log.debug("get access_token =[" + access_token + "]");
-//			Log.debug("get refresh_token =[" + refresh_token + "]");
+			// Log.debug("get access_token =[" + access_token + "]");
+			// Log.debug("get refresh_token =[" + refresh_token + "]");
 
 			Credential c = getCredential(access_token, refresh_token);
 			com.google.api.services.drive.Drive drive = buildService(c);
@@ -187,7 +189,7 @@ public class DriveController {
 				body.setTitle(fileTitle + "-profileImage");
 				FileContent data = new FileContent("", file);
 				drive.files().insert(body, data).execute();
-				return fileTitle+"-profileImage";
+				return fileTitle + "-profileImage";
 			}
 
 		} catch (IOException e) {
@@ -205,11 +207,11 @@ public class DriveController {
 	 * @param file
 	 * @return String
 	 *****************************************/
-	public String uploadFile(java.io.File file) {
+	public String uploadFile(java.io.File file, String originalName) {
 		Long now = System.currentTimeMillis();
 		JSONObject imageData = new JSONObject();
 		imageData.put("type", "file");
-		imageData.put("name", file.getName());
+		imageData.put("name", originalName);
 		imageData.put("storage", "0");
 		imageData.put("modified_at", now);
 		imageData.put("cached_at", 0);
@@ -306,12 +308,14 @@ public class DriveController {
 	public java.io.File getUserImage(String id) {
 		DatabaseController db = new DatabaseController();
 		JSONObject fileInfo = JSONFactory.inputStreamToJson(db.getByView(
-				"_design/file", "info", id+"-profileImage", false, false, false));
+				"_design/file", "info", id + "-profileImage", false, false,
+				false));
 		Log.info("info : " + fileInfo.toString());
 		java.io.File f = new java.io.File("cache/" + id);
 		if (f.isFile()) {
 			return f;
 		} else {
+
 			return createCache(id, "0");
 		}
 	}

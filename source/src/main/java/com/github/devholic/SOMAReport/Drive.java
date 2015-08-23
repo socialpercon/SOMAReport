@@ -20,6 +20,7 @@ import org.glassfish.grizzly.http.server.Session;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.mvc.Viewable;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Controller.DatabaseController;
@@ -38,24 +39,29 @@ public class Drive {
 
 	// API
 	@POST
-	@Path("/drive/profile/upload")
-	public Response uploadImage(@Context Request request,
-			@FormDataParam("file") InputStream is,
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/drive/file/upload/{id}")
+	public Response uploadFiles(@Context Request request,
+			@PathParam("id") String id, @FormDataParam("file") InputStream is,
 			@FormDataParam("file") FormDataContentDisposition formData) {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
 			try {
 				DriveController drive = new DriveController();
-				drive.uploadProfileImage(session.getAttribute("user_id")
-						.toString(), FileFactory.stream2file(is), formData
-						.getFileName());
+				drive.uploadFileToProject(id, FileFactory.stream2file(is),
+						formData.getFileName());
+				JSONObject data = new JSONObject();
+				data.put("code", 1);
+				data.put("msg", "success");
+				return Response.status(200).entity(data.toString()).build();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.error(e.getMessage());
+				return Response.status(401).build();
 			}
 		} else {
+			return Response.status(401).build();
 		}
-		return Response.status(200).build();
 	}
 
 	@POST
@@ -102,10 +108,14 @@ public class Drive {
 			ProjectsController project = new ProjectsController();
 			data.put("project", project.getDetailByProjectId(id));
 			DatabaseController db = new DatabaseController();
-			Log.info("PROJECT DRIVE + "
-					+ JSONFactory.inputStreamToJson(
-							db.getByView("/_design/file", "projectdrivePlus",
-									true, false, false)).toString());
+			JSONArray drive = JSONFactory.getData(JSONFactory
+					.inputStreamToJson(db.getByView("_design/file",
+							"projectdrivePlus", id, true, false, false)));
+			Log.info("ProjectDrivePlus");
+			Log.info(drive.toString());
+			if (drive.length() != 0) {
+				data.put("driveFilesPlus", drive);
+			}
 			Log.info(data.toString());
 			return Response
 					.status(200)

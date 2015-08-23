@@ -31,6 +31,9 @@
       <div class="divider" style="margin:10px;width:calc(100% - 20px)">
       </div>
       <form action="/login" method="post">
+      {{#check}}
+      <center><p style="font-size:14px;color:#E82C0C;">{{.}}</p></center>
+      {{/check}}
       <input style="width:calc(100% - 20px);margin: 20px 10px 10px 10px;" placeholder="EMAIL" type="text" name="email" required="">
       <input style="width:calc(100% - 20px);margin: 20px 10px 10px 10px;" placeholder="PASSWORD" type="password" name="password" required="">
       <button type="submit">

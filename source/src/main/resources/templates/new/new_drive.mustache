@@ -43,8 +43,7 @@
         </tr>
         </table>
         </a>
-        {{#project}}
-        <a href="/report/write/{{_id}}" style="text-decoration:none;">
+        <label for="fileupload">
         <div class="block" style="height:80px;padding-right:20px;float:right;display:inline-block;">
           <div class="centered">
           <table style="background:#323845;padding:5px;border-radius:3px;">
@@ -59,8 +58,8 @@
           </table>
           </div>
         </div>
-        </a>
-        {{/project}}
+        </label>
+        <input id="fileupload" type="file" name="file" style="display: none;"/>
       </div>
     </div>
     <div style="height:100%;width:15%;float:left;background:#323845;">
@@ -118,17 +117,17 @@
         </div>
         <div>
           <table class="tablelist" style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void border=1px rules=rows>
-            {{#files}}
+            {{#driveFiles}}
             <tr>
               <td>
                 <i class="material-icons">insert_drive_file</i>
               </td>
               <td onclick="window.location='/drive/raw/{{_id}}'" style="padding:10px">
-                <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{name}}</p>
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">#{{date}}</p>
+                <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{fileName}}</p>
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">#{{uploadDate}}</p>
               </td>
             </tr>
-            {{/files}}
+            {{/driveFiles}}
           </table>
         </div>
         </div>
@@ -136,5 +135,41 @@
       </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://cdn.rawgit.com/lightningtgc/MProgress.js/master/mprogress.min.js"></script>
+    <script src="https://rawgit.com/blueimp/jQuery-File-Upload/master/js/jquery.fileupload.js" type="text/javascript"></script>
+    <script>
+      $(document).ready(function() {
+      $('#fileupload').fileupload({
+        {{#project}}
+        url : '/drive/file/upload/{{_id}}',
+        {{/project}}
+        dataType: 'json',
+        //replaceFileInput: false,
+        add: function(e, data){
+            var uploadFile = data.files[0];
+              data.submit();
+        }, progressall: function(e,data) {
+
+        }, done: function (e, data) {
+            console.log(data);
+            var code = data.result.code;
+            var msg = data.result.msg;
+            if(code == '1') {
+                location.reload();
+            } else {
+                alert(code + ' : ' + msg);
+            }
+        }, fail: function(e, data){
+            console.log(data);
+            console.log(data.errorThrown);
+            console.log(data.textStatus);
+            console.log(data.jqXHR);
+            alert('서버와 통신 중 문제가 발생했습니다');
+            foo = data;
+        }
+    });
+});
+    </script>
   </body>
 </html>

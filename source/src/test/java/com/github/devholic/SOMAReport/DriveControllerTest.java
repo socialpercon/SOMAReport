@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.junit.FixMethodOrder;
@@ -22,7 +21,6 @@ public class DriveControllerTest {
 	@Test
 	public void A_Drive_UploadImage_Pass() throws IOException {
 		DriveController d = new DriveController();
-		id = d.uploadFile(new File("9d898f7d5bfbf361939e1fafd50f0188.jpg"));
 		assertThat(id, is(notNullValue()));
 	}
 
@@ -43,16 +41,19 @@ public class DriveControllerTest {
 		DriveController d = new DriveController();
 		assertTrue(d.deleteImage(id));
 	}
-	
+
 	@Test
 	public void testGetProjectDriveFileInfo() {
 		DriveController d = new DriveController();
-		System.out.println(d.getProjectDriveFileInfo("9d898f7d5bfbf361939e1fafd5").toString());
+		System.out.println(d.getProjectDriveFileInfo(
+				"9d898f7d5bfbf361939e1fafd5").toString());
 	}
-	
+
 	@Test
 	public void testUploadProfile() throws IOException {
 		DriveController d = new DriveController();
-//		assertThat(d.uploadProfileImage("9d898f7d5bfbf361939e1fafd52fb095", new File("9d898f7d5bfbf361939e1fafd52fb095.jpg")), is(notNullValue()),);
+		// assertThat(d.uploadProfileImage("9d898f7d5bfbf361939e1fafd52fb095",
+		// new File("9d898f7d5bfbf361939e1fafd52fb095.jpg")),
+		// is(notNullValue()),);
 	}
 }
