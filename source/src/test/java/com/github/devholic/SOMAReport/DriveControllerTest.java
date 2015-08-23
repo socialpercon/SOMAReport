@@ -27,13 +27,13 @@ public class DriveControllerTest {
 	@Test
 	public void B_Drive_GetImage_Pass() throws IOException {
 		DriveController d = new DriveController();
-		assertThat(d.getImage(id), is(notNullValue()));
+		assertThat(d.getFile(id), is(notNullValue()));
 	}
 
 	@Test
 	public void C_Drive_Cache_Pass() throws IOException {
 		DriveController d = new DriveController();
-		assertThat(d.getImage(id), is(notNullValue()));
+		assertThat(d.getFile(id), is(notNullValue()));
 	}
 
 	@Test
