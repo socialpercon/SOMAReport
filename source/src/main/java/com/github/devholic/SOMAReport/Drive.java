@@ -112,15 +112,14 @@ public class Drive {
 					.inputStreamToJson(db.getByView("_design/file",
 							"projectdrivePlus", id, true, false, false)));
 			JSONArray drive = new JSONArray();
-			for (int i=0; i<drivedocs.length(); i++) {
+			for (int i = 0; i < drivedocs.length(); i++) {
 				drive.put(drivedocs.getJSONObject(i).get("doc"));
 			}
 			Log.info("ProjectDrivePlus");
-			Log.info(drive.toString());
+			Log.info(drive.length());
 			if (drive.length() != 0) {
 				data.put("driveFilesPlus", drive);
 			}
-			Log.info(data.toString());
 			return Response
 					.status(200)
 					.entity(new Viewable("/new/new_drive.mustache",
