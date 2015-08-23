@@ -96,7 +96,7 @@ public class DriveController {
 	 * @param file
 	 * @return String
 	 *****************************************/
-	public String uploadProfileImage(String id, java.io.File file) {
+	public String uploadProfileImage(String id, java.io.File file, String originalName) {
 
 		Long now = System.currentTimeMillis();
 
@@ -125,7 +125,7 @@ public class DriveController {
 //					fileDoc = JSONFactory.inputStreamToJson(db.getDoc(profileFile));
 					fileDoc.put("_id", id + "-profileImage");
 					fileDoc.put("type", "file");
-					fileDoc.put("name", file.getName());
+					fileDoc.put("name", originalName);
 					fileDoc.put("storage", "0");
 					fileDoc.put("modified_at", now);
 					fileDoc.put("cached_at", 0);
@@ -143,7 +143,7 @@ public class DriveController {
 			} else {
 				imageData.put("_id", id + "-profileImage");
 				imageData.put("type", "file");
-				imageData.put("name", file.getName());
+				imageData.put("name", originalName);
 				imageData.put("storage", "0");
 				imageData.put("modified_at", now);
 				imageData.put("cached_at", 0);
