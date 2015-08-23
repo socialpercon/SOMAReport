@@ -113,16 +113,15 @@ public class Drive {
 			JSONArray drivedocs = JSONFactory.getData(JSONFactory
 					.inputStreamToJson(db.getByView("_design/file",
 							"projectdrivePlus", id, true, false, false)));
-			Log.info(id);
 			JSONArray drive = new JSONArray();
-			for (int i=0; i<drivedocs.length(); i++) {
+			for (int i = 0; i < drivedocs.length(); i++) {
 				drive.put(drivedocs.getJSONObject(i).get("doc"));
 			}
-			Log.info(drive.toString());
+			Log.info(drive.length());
 			if (drive.length() != 0) {
+				Log.info(drive.toString());
 				data.put("driveFilesPlus", drive);
 			}
-			Log.info(data.toString());
 			return Response
 					.status(200)
 					.entity(new Viewable("/new/new_drive.mustache",
@@ -134,11 +133,37 @@ public class Drive {
 	}
 
 	@GET
+	@Path("/drive/raw")
+	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	public Response getDriveFile(@QueryParam("id") String id) {
+		DatabaseController db = new DatabaseController();
+		JSONObject fileData = JSONFactory.inputStreamToJson(db.getDoc(id));
+		DriveController drive = new DriveController();
+		File raw = drive.getFile(id);
+		if (raw != null) {
+			try {
+				return Response
+						.status(200)
+						.header("Content-Disposition",
+								"attachment; filename=\""
+										+ fileData.getString("name") + "\"")
+						.entity(Files.toByteArray(raw)).build();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				Log.error(e.getMessage());
+				return Response.noContent().build();
+			}
+		} else {
+			return Response.noContent().build();
+		}
+	}
+
+	@GET
 	@Path("/drive/image")
 	@Produces("image/jpeg")
 	public Response getDriveImage(@QueryParam("id") String id) {
 		DriveController drive = new DriveController();
-		File image = drive.getImage(id);
+		File image = drive.getFile(id);
 		if (image != null) {
 			try {
 				return Response.status(200).entity(Files.toByteArray(image))
@@ -156,7 +181,8 @@ public class Drive {
 	@GET
 	@Path("/drive/user/image")
 	@Produces("image/jpeg")
-	public Response getUserImage(@QueryParam("id") String id) {
+	public Response getUserImage(@QueryParam("id") String id)
+			throws IOException {
 		DriveController drive = new DriveController();
 		File image = drive.getUserImage(id);
 		if (image != null) {
@@ -164,12 +190,16 @@ public class Drive {
 				return Response.status(200).entity(Files.toByteArray(image))
 						.build();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				Log.error(e.getMessage());
-				return Response.noContent().build();
+				return Response
+						.status(200)
+						.entity(Files.toByteArray(new File(
+								"profile_default.jpg"))).build();
 			}
 		} else {
-			return Response.noContent().build();
+			return Response.status(200)
+					.entity(Files.toByteArray(new File("profile_default.jpg")))
+					.build();
 		}
 	}
 

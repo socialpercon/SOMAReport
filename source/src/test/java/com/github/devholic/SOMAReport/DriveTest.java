@@ -1,6 +1,5 @@
 package com.github.devholic.SOMAReport;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;

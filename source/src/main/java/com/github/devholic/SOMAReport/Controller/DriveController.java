@@ -255,7 +255,7 @@ public class DriveController {
 		return null;
 	}
 
-	public java.io.File getImage(String id) {
+	public java.io.File getFile(String id) {
 		java.io.File f = new java.io.File("cache/" + id);
 		InputStream is = db.getByView("_design/file", "info", id, false, false,
 				false);
@@ -316,7 +316,6 @@ public class DriveController {
 		if (f.isFile()) {
 			return f;
 		} else {
-
 			return createCache(id, "0");
 		}
 	}

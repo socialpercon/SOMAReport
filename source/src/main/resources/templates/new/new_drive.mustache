@@ -116,17 +116,17 @@
         </div>
         <div>
           <table class="tablelist" style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void border=1px rules=rows>
-            {{#driveFiles}}
+            {{#driveFilesPlus}}
             <tr>
               <td>
                 <i class="material-icons">insert_drive_file</i>
               </td>
-              <td onclick="window.location='/drive/raw/{{_id}}'" style="padding:10px">
-                <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{fileName}}</p>
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">#{{uploadDate}}</p>
+              <td onclick="window.location='/drive/raw?id={{_id}}'" style="padding:10px">
+                <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{name}}</p>
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">#{{modified_at}}</p>
               </td>
             </tr>
-            {{/driveFiles}}
+            {{/driveFilesPlus}}
           </table>
         </div>
         </div>
