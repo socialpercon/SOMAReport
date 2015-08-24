@@ -31,6 +31,7 @@
                 android:visibility="invisible"/>
 
             <LinearLayout
+                android:id="@+id/noReports_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -41,6 +42,7 @@
                 android:elevation="2dp">
 
                 <TextView
+                    android:id="@+id/noReports_text"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -50,6 +52,7 @@
                     android:textSize="30dp"/>
                 
                 <Button
+                    android:id="@+id/noReports_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

@@ -2,7 +2,6 @@ package com.github.devholic.SOMAReport;
 
 import java.util.List;
 
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -39,13 +38,13 @@ public class Report {
 	@GET
 	@Path("/api/report/unconfirmed")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public Response Api_Report_Unconfirmed(@Context Request request) {
-		
+	public Response API_Report_Unconfirmed(@Context Request request) {
 		Session session = request.getSession();
 		String userId = session.getAttribute("user_id").toString();
 		ReportsController rCtrl = new ReportsController();
 		JSONArray unconfirmed = rCtrl.getUnconfirmedReports(userId);
 		Log.info(unconfirmed);
+		
 		if (unconfirmed.length() > 0)
 			return Response
 				.status(200)
@@ -53,6 +52,20 @@ public class Report {
 				.entity(unconfirmed.toString())
 				.build();
 		else // unconfirmed reports does not exists
+			return Response.status(412).build();
+	}
+	
+	@GET
+	@Path("/api/report/list/{id}")
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	public Response API_Report_List(@PathParam("id") String projectId) {
+		ReportsController rCtrl = new ReportsController();
+		JSONArray list = rCtrl.getReportByProjectId(projectId);
+		
+		if (list.length()>0)
+			return Response.status(200).type(MediaType.APPLICATION_JSON)
+					.entity(list.toString()).build();
+		else
 			return Response.status(412).build();
 	}
 

@@ -37,6 +37,6 @@ public class User {
 		Log.info(userId);
 		
 		return Response.status(200).entity(userInfo.toString())
-				.build();
+				.type(MediaType.APPLICATION_JSON).build();
 	}
 }

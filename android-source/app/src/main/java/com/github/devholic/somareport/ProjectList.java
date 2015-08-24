@@ -12,14 +12,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.devholic.somareport.data.view.Project;
 import com.github.devholic.somareport.data.view.ReportInfo;
+import com.github.devholic.somareport.data.view.User;
+import com.github.devholic.somareport.utils.HttpClientFactory;
+import com.github.devholic.somareport.utils.ProfileImageLoader;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -42,24 +48,34 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProjectList extends AppCompatActivity {
 
     final String TAG = "Activity_ProjectList";
-    String cookie;
+    ArrayList<Project> projects;
+    private User userInfo;
 
     // Toolbar
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     ActionBarDrawerToggle drawerToggle;
 
-    // DrawerLayout
-    @Bind(R.id.drawerLayout)
-    DrawerLayout drawerLayout;
-
     // Content
     @Bind(R.id.project_list_recycler)
     RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
 
+    // Drawer
+    @Bind(R.id.drawerLayout)
+    DrawerLayout drawerLayout;
+
     @Bind(R.id.drawer_view)
     NavigationView navigationView;
+
+    @Bind(R.id.drawer_profile)
+    CircleImageView drawerProfile;
+
+    @Bind(R.id.drawer_name)
+    TextView drawerName;
+
+    @Bind(R.id.drawer_role)
+    TextView drawerRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,38 +122,12 @@ public class ProjectList extends AppCompatActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-
-      //  String id = getIntent().getStringExtra("userId");
-    //    cookie = getIntent().getStringExtra("cookie");
-         /*
-        * /project/list에서 프로젝트 정보를 JSONArray로 받아온다.
-        * [{project title, stage, id, mentor, mentee[]}]
-        * */
-//        ProjectTask projectTask = new ProjectTask();
-//        projectTask.execute();
-
-        try {
-            String json = "[{\"mentor\":\"3f4ce9856efb3e2f5d86eeb4d5b28f22\",\"stage\":\"6기 2단계 프로젝트\",\"id\":\"58387a05c00dcded6f7936c1173e3f5a\",\"title\":\"SOMAProject 2nd phase\",\"mentee\":[\"4c44d639b77c290955371694d3310194\",\"36be054d83f701154adfdd0cf1019d20\",\"36be054d83f701154adfdd0cf1100e37\"]}," +
-                    "{\"mentor\":\"3f4ce9856efb3e2f5d86eeb4d5b28f22\",\"stage\":\"6기 1단계 2차 프로젝트\",\"id\":\"36be054d83f701154adfdd0cf174e3cc\",\"title\":\"SOMAProject3-2\",\"mentee\":[\"4c44d639b77c290955371694d3310194\",\"a35fa2f4fd6d544d11fae6acf7ba6e01\",\"3f4ce9856efb3e2f5d86eeb4d5d16b01\"]}," +
-                    "{\"mentor\":\"3f4ce9856efb3e2f5d86eeb4d5abb8c6\",\"stage\":\"6기 1단계 1차 프로젝트\",\"id\":\"4c44d639b77c290955371694d33e4fe9\",\"title\":\"SOMAProject1\",\"mentee\":[\"4c44d639b77c290955371694d3310194\",\"3f4ce9856efb3e2f5d86eeb4d5b99c53\",\"3f4ce9856efb3e2f5d86eeb4d5bad432\"]}]";
-            JSONArray array = new JSONArray(json);
-            setData(array);
-        } catch(JSONException e) {
-            Log.e(TAG, e.getLocalizedMessage());
-        }
+        setData();
     }
 
-    private void setData(JSONArray array) {
-        ArrayList<JSONObject> projectList = new ArrayList<JSONObject>();
-        try {
-            for(int i=0; i<array.length(); i++) {
-               projectList.add(i, array.getJSONObject(i));
-            }
-        } catch(JSONException e) {
-            Log.e(TAG, e.getLocalizedMessage());
-        }
-        adapter = new RecyclerViewAdapter(projectList);
-        recyclerView.setAdapter(adapter);
+    private void setData() {
+        ProjectTask projectTask = new ProjectTask();
+        projectTask.execute();
     }
 
     @Override
@@ -184,9 +174,7 @@ public class ProjectList extends AppCompatActivity {
                 public void onClick(View v) {
                     int itemPosition = recyclerView.getChildPosition(v);
                     Intent intent = new Intent(ProjectList.this, ReportList.class);
-                    JSONObject data = (JSONObject) items.get(itemPosition);
-                    Log.d(TAG, "projectdata: " + data.toString());
-                    intent.putExtra("projectdata", data.toString());
+                    intent.putExtra("project", (Project)items.get(itemPosition));
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_right, R.anim.slide_left);
                 }
@@ -196,36 +184,29 @@ public class ProjectList extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(ItemViewHolder holder, int position) {
-            try {
-                JSONObject project = new JSONObject(items.get(position).toString());
-                holder.stage.setText(project.get("stage").toString());
-                holder.title.setText(project.get("title").toString());
 
-//                ProfileImageLoader profileImageLoader = new ProfileImageLoader(R.drawable.user_a, holder.mentor);
-//                profileImageLoader.getProfile();
-//                ImageLoaderOld imageLoader = new ImageLoaderOld(holder.mentor);
-//                imageLoader.execute(Integer.toString(R.drawable.user_a));
+            Project project = (Project) items.get(position);
+            holder.stage.setText(project.getStage());
+            holder.title.setText(project.getTitle());
 
-                JSONArray mentee = new JSONArray(project.get("mentee").toString());
-                for (int i=0; i<mentee.length(); i++) {
-                    CircleImageView menteeImage = new CircleImageView(holder.mentee.getContext());
-//                    profileImageLoader = new ProfileImageLoader(R.drawable.user_k, menteeImage);
-//                    profileImageLoader.getProfile();
-//                    imageLoader = new ImageLoaderOld(menteeImage);
-//                    imageLoader.execute(Integer.toString(R.drawable.user_k));
-//                    holder.mentee.addView(menteeImage);
-//                menteeImage = new CircleImageView(holder.mentee.getContext());
-//                profileImageLoader = new ProfileImageLoader(R.drawable.user_l, menteeImage);
-//                profileImageLoader.getProfile();
-//                holder.mentee.addView(menteeImage);
-//                menteeImage = new CircleImageView(holder.mentee.getContext());
-//                profileImageLoader = new ProfileImageLoader(R.drawable.user_a, menteeImage);
-//                profileImageLoader.getProfile();
-//                holder.mentee.addView(menteeImage);
-                }
-            } catch (JSONException e) {
-                Log.e(TAG, "onBindViewHolder "+ e.getLocalizedMessage());
+            ProfileImageLoader profileImageLoader = new ProfileImageLoader(project.getMentor(), holder.mentor);
+            profileImageLoader.getProfile();
+
+            String[] mentee = project.getMentee();
+            for (int i=0; i<mentee.length; i++) {
+                CircleImageView menteeImage = new CircleImageView(holder.mentee.getContext());
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                int length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, menteeImage.getResources().getDisplayMetrics());
+                params.width = length;
+                params.height = length;
+                length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, menteeImage.getResources().getDisplayMetrics());
+                params.rightMargin = length;
+                menteeImage.setLayoutParams(params);
+                profileImageLoader = new ProfileImageLoader(mentee[i], menteeImage);
+                profileImageLoader.getProfile();
+                holder.mentee.addView(menteeImage);
             }
+
         }
 
         @Override
@@ -254,39 +235,96 @@ public class ProjectList extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_right);
     }
 
-    private class ProjectTask extends AsyncTask<Void, Void, Void> {
+    private class UserInfoTask extends AsyncTask<Void, Void, String> {
         @Override
-        protected Void doInBackground(Void... params) {
-            String url = "http://10.0.3.2:8080/project";
+        protected String doInBackground(Void... params) {
             try {
-                HttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet(url);
-                httpGet.setHeader("Set-Cookie", cookie);
-                Header[] hs = httpGet.getAllHeaders();
-                for (Header h : hs) {
-                    System.out.println("Key : " + h.getName()
-                            + " ,Value : " + h.getValue());
-                }
-
+                HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
+                HttpGet httpGet = new HttpGet(getString(R.string.api_url) + "/user");
                 HttpResponse httpResponse = httpClient.execute(httpGet);
-                Header[] headers = httpResponse.getAllHeaders();
-                for (Header h : headers) {
-                    System.out.println("Key : " + h.getName()
-                            + " ,Value : " + h.getValue());
+                int status = httpResponse.getStatusLine().getStatusCode();
+                Log.d(TAG, "Response Status:"+status);
+                Header[] h = httpResponse.getAllHeaders();
+                for (Header hd : h) {
+                    Log.i(TAG, hd.toString());
                 }
-                InputStream is = httpResponse.getEntity().getContent();
-                StringBuilder stringBuilder = new StringBuilder();
-                byte[] b = new byte[4096];
-                for (int n; (n = is.read(b)) != -1;) {
-                    stringBuilder.append(new String(b, 0, n));
-                }
-                System.out.println(stringBuilder.toString());
-            } catch (ClientProtocolException e) {
-                Log.e(TAG, e.getLocalizedMessage());
+                if (status == 200)
+                    return HttpClientFactory.getEntityFromResponse(httpResponse);
             } catch (IOException e) {
                 Log.e(TAG, e.getLocalizedMessage());
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String info) {
+            Log.i(TAG, info);
+            if (info != null) {
+                JSONObject doc = null;
+                try {
+                    doc = new JSONObject(info);
+                    userInfo = new User(doc);
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getLocalizedMessage());
+                }
+                if (doc != null) {
+                    Log.d(TAG, "drawer handling");
+                    drawerName.setText(userInfo.getName());
+                    if (userInfo.getRole().equalsIgnoreCase("mentor"))
+                        drawerRole.setText("SW Maestro 멘토");
+                    else if (userInfo.getRole().equalsIgnoreCase("mentee"))
+                        drawerRole.setText("SW Maestro 멘티");
+                    else
+                        drawerRole.setText("SW Maestro 사무국");
+
+                    ProfileImageLoader profileImageLoader = new ProfileImageLoader(userInfo.getId(), drawerProfile);
+                    profileImageLoader.getProfile();
+                }
+            }
+        }
+    }
+
+    private class ProjectTask extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+            try{
+                HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
+                HttpGet httpGet = new HttpGet(getString(R.string.api_url) + "/project/list");
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                int status = httpResponse.getStatusLine().getStatusCode();
+                Log.d(TAG, "Response Status:"+status);
+                Header[] h = httpResponse.getAllHeaders();
+                for (Header hd : h) {
+                    Log.i(TAG, hd.toString());
+                }
+                if (status == 200)
+                    return HttpClientFactory.getEntityFromResponse(httpResponse);
+
+            } catch (IOException e) {
+                Log.e(TAG, e.getLocalizedMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s != null) {
+                try {
+                    projects = new ArrayList<Project>();
+                    JSONArray result = new JSONArray(s);
+                    Log.i(TAG, result.toString());
+                    for (int i=0; i<result.length(); i++) {
+                        Project p = new Project(result.getJSONObject(i));
+                        projects.add(i, p);
+                    }
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getLocalizedMessage());
+                }
+                adapter = new RecyclerViewAdapter(projects);
+                recyclerView.setAdapter(adapter);
+            }
+            else
+                projects = null;
         }
     }
 }

@@ -2,43 +2,57 @@ package com.github.devholic.somareport.data.view;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by devholic on 15. 7. 23..
  */
 public class Project implements Parcelable {
-    private String date, title;
-    private int period, stage, project; // 기수 단계 1차/2차
-    private String area, department, location; // 분야 분과 장소
-
-    public Project(String date, String title, int period, int stage, int project, String area, String department, String location) {
-        this.date = date;
-        this.title = title;
-        this.period = period;
-        this.stage = stage;
-        this.project = project;
-        this.area = area;
-        this.department = department;
-        this.location = location;
-    }
+    private String id, mentor, title, stage;
+    private String[] mentee;
 
     public Project(Parcel in) {
-        this.date = in.readString();
+        this.id = in.readString();
+        this.mentor = in.readString();
         this.title = in.readString();
-        this.period = in.readInt();
-        this.stage = in.readInt();
-        this.project = in.readInt();
-        this.area = in.readString();
-        this.department = in.readString();
-        this.location = in.readString();
+        this.stage = in.readString();
+        this.mentee = in.createStringArray();
     }
 
-    public String getDate() {
-        return date;
+    public Project (JSONObject doc) {
+        try {
+            this.id = doc.getString("_id");
+            this.mentor = doc.getString("mentor");
+            this.title = doc.getString("title");
+            this.stage = doc.getString("stage");
+            JSONArray mentees = doc.getJSONArray("mentee");
+            this.mentee = new String[mentees.length()];
+            for (int i=0; i<mentees.length(); i++) {
+                mentee[i] = mentees.getString(i);
+            }
+        } catch (JSONException e) {
+            Log.e("Project", e.getLocalizedMessage());
+        }
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getMentor() {
+        return mentor;
+    }
+
+    public void setMentor(String mentor) {
+        this.mentor = mentor;
+    }
+
+    public String getStage() {
+        return stage;
+    }
+
+    public void setStage(String stage) {
+        this.stage = stage;
     }
 
     public String getTitle() {
@@ -49,52 +63,20 @@ public class Project implements Parcelable {
         this.title = title;
     }
 
-    public int getPeriod() {
-        return period;
+    public String getId() {
+        return id;
     }
 
-    public void setPeriod(int period) {
-        this.period = period;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public int getStage() {
-        return stage;
+    public String[] getMentee() {
+        return mentee;
     }
 
-    public void setStage(int stage) {
-        this.stage = stage;
-    }
-
-    public int getProject() {
-        return project;
-    }
-
-    public void setProject(int project) {
-        this.project = project;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
+    public void setMentee(String[] mentee) {
+        this.mentee = mentee;
     }
 
     @Override
@@ -104,14 +86,11 @@ public class Project implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.date);
+        dest.writeString(this.id);
+        dest.writeString(this.mentor);
         dest.writeString(this.title);
-        dest.writeInt(this.period);
-        dest.writeInt(this.stage);
-        dest.writeInt(this.project);
-        dest.writeString(this.area);
-        dest.writeString(this.department);
-        dest.writeString(this.location);
+        dest.writeString(this.stage);
+        dest.writeStringArray(this.mentee);
     }
 
     public static final Parcelable.Creator<Project> CREATOR = new Parcelable.Creator<Project>() {
@@ -123,4 +102,8 @@ public class Project implements Parcelable {
             return new Project[size];
         }
     };
+
+    public String toString() {
+        return "id="+id+" mentor="+mentor+" title="+title+" stage="+stage+" mentee"+mentee.toString();
+    }
 }

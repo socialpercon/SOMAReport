@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,7 +34,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -43,6 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ReportList extends AppCompatActivity {
 
     final String TAG = "Activity_ReportList";
+    private ArrayList<ReportInfo> reports;
 
     // Toolbar
     @Bind(R.id.toolbar)
@@ -52,6 +53,15 @@ public class ReportList extends AppCompatActivity {
     // Content
     @Bind(R.id.report_list_recycler)
     RecyclerView recyclerView;
+
+    @Bind(R.id.noReports_layout)
+    LinearLayout noReportsLayout;
+
+    @Bind(R.id.noReports_text)
+    TextView noReportsTextView;
+
+    @Bind(R.id.noReports_btn)
+    Button noReportsButton;
 
     // Drawer
     @Bind(R.id.drawerLayout)
@@ -134,38 +144,39 @@ public class ReportList extends AppCompatActivity {
 
         if (type == ReportInfo.UNCONFIRMED) {
             getSupportActionBar().setSubtitle("작성중인 멘토링 보고서");
-
+            noReportsTextView.setText("작성중인\\n멘토링 보고서가\\n없습니다");
+            reportInfoTask.execute("/report/unconfirmed");
         }
 
         else if (type == ReportInfo.BYPROJECT) {
             getSupportActionBar().setSubtitle("멘토링 보고서 리스트");
+            noReportsTextView.setText("이 프로젝트에서 작성된\\n멘토링 보고서가\\n없습니다");
+            reportInfoTask.execute("/report/list");
         }
 
         else {
             Log.e("TAG", "wrong report info type");
         }
 
-        JSONArray list = new JSONArray();
-        try {
-
-            JSONObject data = new JSONObject();
-            /*
-            * localhost:8080/report/list/{pid}를 통해 JSONObject로 data에 가져온다
-            * {프로젝트id, title, reportList[report id, title, topic, attendee]}
-            * */
-
-            list = new JSONArray(data.get("reportList").toString());
-            ArrayList<String> reportList = new ArrayList<String>();
-            for (int i=0; i<list.length(); i++) {
-                reportList.add(i, list.get(i).toString());
-            }
-            adapter = new DetailRecyclerViewAdapter(reportList);
-            recyclerView.setAdapter(adapter);
-        } catch (JSONException e) {
-            Log.e(TAG, e.getLocalizedMessage());
+        if (reports == null) {
+            recyclerView.setVisibility(View.INVISIBLE);
+            noReportsLayout.setVisibility(View.VISIBLE);
+            noReportsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ReportList.this, ProjectList.class);
+                    startActivity(intent);
+                }
+            });
         }
-
+        else {
+            recyclerView.setVisibility(View.VISIBLE);
+            noReportsLayout.setVisibility(View.INVISIBLE);
+            adapter = new DetailRecyclerViewAdapter(reports);
+            recyclerView.setAdapter(adapter);
+        }
     }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -210,7 +221,6 @@ public class ReportList extends AppCompatActivity {
                     public void onClick(View v) {
                         int itemPosition = recyclerView.getChildPosition(v);
                         Intent intent = new Intent(ReportList.this, ReportDetails.class);
-                        intent.putExtra("reportdata", items.get(itemPosition).toString());
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_right, R.anim.slide_left);
                     }
@@ -221,22 +231,18 @@ public class ReportList extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(DetailItemViewHolder holder, int position) {
-            try {
-                JSONObject report = new JSONObject(items.get(position).toString());
-                holder.title.setText(report.get("reportTitle").toString());
-                holder.topic.setText(report.get("reportTopic").toString());
+                ReportInfo report = (ReportInfo)items.get(position);
+                holder.title.setText(report.getTitle());
+                holder.topic.setText(report.getTopic());
 
                 ProfileImageLoader profileImageLoader;
-                JSONArray attendee = new JSONArray(report.get("attendee").toString());
-                for (int i=0; i<attendee.length(); i++) {
+                String[] attendee = report.getAttendee();
+                for (int i=0; i<attendee.length; i++) {
                     CircleImageView circleImageView = new CircleImageView(holder.attendee.getContext());
-//                    profileImageLoader = new ProfileImageLoader(R.drawable.user_k, circleImageView);
-//                    profileImageLoader.getProfile();
-        //            holder.attendee.addView(circleImageView);
+                    profileImageLoader = new ProfileImageLoader(attendee[i], circleImageView);
+                    profileImageLoader.getProfile();
+                    holder.attendee.addView(circleImageView);
                 }
-            } catch (JSONException e) {
-                Log.e(TAG, "onBindViewHolder "+ e.getLocalizedMessage());
-            }
 
         }
 
@@ -263,7 +269,7 @@ public class ReportList extends AppCompatActivity {
         protected String doInBackground(Void... params) {
             try {
                 HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
-                HttpGet httpGet = new HttpGet(getString(R.string.api_url) + params[0]);
+                HttpGet httpGet = new HttpGet(getString(R.string.api_url) + "/user");
                 HttpResponse httpResponse = httpClient.execute(httpGet);
                 int status = httpResponse.getStatusLine().getStatusCode();
                 Log.d(TAG, "Response Status:"+status);
@@ -299,6 +305,7 @@ public class ReportList extends AppCompatActivity {
                         drawerRole.setText("SW Maestro 멘티");
                     else
                         drawerRole.setText("SW Maestro 사무국");
+
                     ProfileImageLoader profileImageLoader = new ProfileImageLoader(userInfo.getId(), drawerProfile);
                     profileImageLoader.getProfile();
                 }
@@ -311,7 +318,7 @@ public class ReportList extends AppCompatActivity {
         protected String doInBackground(String... params) {
             try {
                 HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
-                HttpGet httpGet = new HttpGet("http://10.0.3.2:8080/api/");
+                HttpGet httpGet = new HttpGet(getString(R.string.api_url) + params[0]);
                 HttpResponse httpResponse = httpClient.execute(httpGet);
                 int status = httpResponse.getStatusLine().getStatusCode();
                 Log.d(TAG, "Response Status:"+status);
@@ -321,6 +328,9 @@ public class ReportList extends AppCompatActivity {
                 }
                 if (status == 200)
                     return HttpClientFactory.getEntityFromResponse(httpResponse);
+                else if (status == 412) {
+                    return null;
+                }
             } catch (IOException e) {
                 Log.e(TAG, e.getLocalizedMessage());
             }
@@ -331,12 +341,16 @@ public class ReportList extends AppCompatActivity {
         protected void onPostExecute(String s) {
             if (s != null) {
                 try {
-                    JSONArray reports = new JSONArray(s);
-
+                    JSONArray data = new JSONArray(s);
+                    for (int i=0; i<data.length(); i++) {
+                        reports.add(i, new ReportInfo(data.getJSONObject(i)));
+                    }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getLocalizedMessage());
                 }
             }
+            else
+                reports = null;
         }
     }
 

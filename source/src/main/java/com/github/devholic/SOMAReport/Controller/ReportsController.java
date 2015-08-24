@@ -379,8 +379,14 @@ public class ReportsController {
 		for (int i=0; i<allList.length(); i++) {
 			JSONObject doc = allList.getJSONObject(i).getJSONObject("doc");
 			if (doc.has("confirmed")) {
-				if (doc.getString("confirmed").equals("false"))
+				if (doc.getString("confirmed").equals("false")) {
+					JSONObject docu = new JSONObject();
+					docu.put("reportId", doc.get("_id"));
+					docu.put("reportTitle", doc.getJSONObject("report_info").get("title"));
+					docu.put("reportTopic", doc.getJSONObject("report_details").get("topic"));
+					docu.put("attendee", doc.get("attendee"));
 					unConfirmed.put(doc);
+				}
 			}
 		}
 		return unConfirmed;

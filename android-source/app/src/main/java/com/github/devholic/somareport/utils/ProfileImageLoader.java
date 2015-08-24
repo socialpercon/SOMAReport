@@ -2,6 +2,10 @@ package com.github.devholic.somareport.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.TypedValue;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.github.devholic.somareport.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

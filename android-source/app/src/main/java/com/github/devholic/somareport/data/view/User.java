@@ -19,6 +19,28 @@ public class User implements Parcelable{
     private String belong;
     private int[] year;
 
+    public User(Parcel par) {
+        this.id = par.readString();
+        this.name = par.readString();
+        this.email = par.readString();
+        this.role = par.readString();
+        this.belong = par.readString();
+        this.year = par.createIntArray();
+    }
+
+    public User(JSONObject doc) {
+        try {
+            this.id = doc.getString("id");
+            this.name = doc.getString("name");
+            this.email = doc.getString("email");
+            this.role = doc.getString("role");
+            this.belong = doc.getString("belong");
+
+        } catch (JSONException e) {
+            Log.e("User Constructor", e.getLocalizedMessage());
+        }
+    }
+
     public String getBelong() {
         return belong;
     }
@@ -68,27 +90,6 @@ public class User implements Parcelable{
         this.year = year;
     }
 
-    public User(Parcel par) {
-        this.id = par.readString();
-        this.name = par.readString();
-        this.email = par.readString();
-        this.role = par.readString();
-        this.belong = par.readString();
-        this.year = par.createIntArray();
-    }
-
-    public User(JSONObject doc) {
-        try {
-            this.id = doc.getString("id");
-            this.name = doc.getString("name");
-            this.email = doc.getString("email");
-            this.role = doc.getString("role");
-            this.belong = doc.getString("belong");
-
-        } catch (JSONException e) {
-            Log.e("User Constructor", e.getLocalizedMessage());
-        }
-    }
 
     @Override
     public int describeContents() {
