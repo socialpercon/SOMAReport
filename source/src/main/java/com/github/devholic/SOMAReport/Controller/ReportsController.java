@@ -40,6 +40,7 @@ public class ReportsController {
 							projectId, " " }, true, true, false);
 			JSONArray a = JSONFactory
 					.getData(JSONFactory.inputStreamToJson(is));
+			Log.debug("ohohohohoh"+a.toString());
 			for (int i = 0; i < a.length(); i++) {
 				JSONObject doc = a.getJSONObject(i).getJSONObject("doc");
 				JSONObject reportInfo = new JSONObject();

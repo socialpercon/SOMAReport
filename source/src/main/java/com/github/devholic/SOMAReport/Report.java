@@ -214,7 +214,7 @@ public class Report {
 				Log.info(drive.toString());
 				data.put("driveFiles", drive);
 			}
-			Log.info(data.toString());
+			Log.info("lalalallalaal"+data.toString());
 			return Response
 					.status(200)
 					.entity(new Viewable("/new/new_report_write.mustache",

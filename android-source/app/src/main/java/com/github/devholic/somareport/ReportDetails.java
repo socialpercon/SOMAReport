@@ -170,20 +170,20 @@ public class ReportDetails extends AppCompatActivity {
         protected void onPostExecute(String string) {
             if (string != null) {
                 try {
-                        ProfileImageLoader profileImageLoader;
+                    ProfileImageLoader profileImageLoader;
 
-                        getSupportActionBar().setTitle("#"+data.get("title").toString());
-                        getSupportActionBar().setSubtitle(data.get("pname").toString());
+                    getSupportActionBar().setTitle("#"+data.get("title").toString());
+                    getSupportActionBar().setSubtitle(data.get("pname").toString());
 
-                        JSONObject reportData = new JSONObject(data.get("report").toString());
-                        JSONObject reportInfo = new JSONObject(reportData.get("report_info").toString());
-                        JSONObject reportDetails = new JSONObject(reportData.get("report_details").toString());
-                        JSONArray reportAttendee = new JSONArray(reportData.get("attendee").toString());
-                        JSONArray reportAbsentee = new JSONArray(reportData.get("absentee").toString());
+                    JSONObject reportData = new JSONObject(data.get("report").toString());
+                    JSONObject reportInfo = new JSONObject(reportData.get("report_info").toString());
+                    JSONObject reportDetails = new JSONObject(reportData.get("report_details").toString());
+                    JSONArray reportAttendee = new JSONArray(reportData.get("attendee").toString());
+                    JSONArray reportAbsentee = new JSONArray(reportData.get("absentee").toString());
 
-                        title.setText("#"+reportInfo.get("date"));
+                    title.setText("#"+reportInfo.get("date"));
 
-                        //           for(int i=0; i<reportAttendee.length(); i++) {
+                    for(int i=0; i<reportAttendee.length(); i++) {
                         CircleImageView attend = new CircleImageView(this);
                         //              JSONObject att = new JSONObject(reportAttendee.get(i).toString());
 //                ImageLoaderOld imageLoader = new ImageLoaderOld(attend);
@@ -191,7 +191,7 @@ public class ReportDetails extends AppCompatActivity {
 //                profileImageLoader = new ProfileImageLoader(R.drawable.user_k, attend);
 //                profileImageLoader.getProfile();
 //                attendee.addView(attend);
-                        //         }
+                    }
 
                         if (reportAbsentee.length() > 0) {
                             for (int i=0; i<reportAbsentee.length(); i++) {
