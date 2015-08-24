@@ -8,9 +8,12 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,8 +25,14 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.devholic.somareport.data.view.User;
+import com.github.devholic.somareport.utils.HttpClientFactory;
 import com.github.devholic.somareport.utils.ProfileImageLoader;
 
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,11 +55,29 @@ public class ReportDetails extends AppCompatActivity {
     Uri galleryPictureUri = null;
     Uri cameraPictureUri = null;
 
-    String reportId;
+    private String reportId;
+    private JSONObject reportDoc;
 
     @Bind(R.id.report_details_toolbar)
     Toolbar toolbar;
 
+    // Drawer
+    @Bind(R.id.drawerLayout)
+    DrawerLayout drawerLayout;
+
+    @Bind(R.id.drawer_view)
+    NavigationView navigationView;
+
+    @Bind(R.id.drawer_profile)
+    CircleImageView drawerProfile;
+
+    @Bind(R.id.drawer_name)
+    TextView drawerName;
+
+    @Bind(R.id.drawer_role)
+    TextView drawerRole;
+
+    // Report Details
     @Bind(R.id.report_details_title)
     TextView title;
 
@@ -110,95 +137,117 @@ public class ReportDetails extends AppCompatActivity {
     }
 
     private void setData() {
-        try {
-            JSONObject report = new JSONObject(getIntent().getStringExtra("reportdata"));
-            reportId = report.get("id").toString();
-            ProfileImageLoader profileImageLoader;
-            /*
-            * reportId를 통해 report 문서를 JSONObject로 가져온다.
-            * {project name, project id, }
-            * */
-            JSONObject data = new JSONObject("{\"pname\":\"SOMAProject3-2\",\"report\":{\"report_info\":{\"date\":\"20150807\",\"start_time\":[2015,8,7,19,0],\"except_time\":0,\"end_time\":[2015,8,7,23,5],\"place\":\"아람7-6\",\"whole_time\":4,\"total_time\":4,\"mentoring_time\":8}," +
-                    "\"report_details\":{\"goal\":\"1차 기간동안 만들 범위를 정한다.\",\"issue\":\"다음주까지 개발 내용을 정해 Trello로 공유한다. - 이슈1: 코드가 Testable하지 않음\",\"solution\":\"단위 테스트 코드 강화. Code Coverage: >60%\",\"etc\":\"필수 항목에 대한 표시가 명확했으면 합니다. 구분이 없음\",\"topic\":\"1차 Scope 정하기\",\"plan\":\"2015.08.11 예정\",\"opinion\":\"먹으로 갈거임......\"}, " +
-                    "\"report_attachments\":{ \"photo\":false, \"report_attachments\":[] }, \"mentor\":\"고갹갹\",\"attendee\":[{\"name\":\"a35fa2f4fd6d544d11fae6acf7ba6e01\",\"id\":\"a35fa2f4fd6d544d11fae6acf7ba6e01\"},{\"name\":\"3f4ce9856efb3e2f5d86eeb4d5d16b01\",\"id\":\"3f4ce9856efb3e2f5d86eeb4d5d16b01\"}],\"_rev\":\"1-5661dca3d324e2c2f08a88e7f7e45e3d\",\"project\":\"36be054d83f701154adfdd0cf174e3cc\",\"_id\":\"8c904069f7154e099fb7e7bff70ca3c3\",\"type\":\"report\",\"absentee\":[{\"reason\":\"가족사정으로 인하여 불참\",\"name\":\"이뿅뿅\",\"id\":\"4c44d639b77c290955371694d3310194\"}]},\"pid\":\"36be054d83f701154adfdd0cf174e3cc\",\"rid\":\"8c904069f7154e099fb7e7bff70ca3c3\",\"title\":\"20150807\"}");
+        reportId = getIntent().getStringExtra("reportId");
 
-            getSupportActionBar().setTitle("#"+data.get("title").toString());
-            getSupportActionBar().setSubtitle(data.get("pname").toString());
 
-            JSONObject reportData = new JSONObject(data.get("report").toString());
-            JSONObject reportInfo = new JSONObject(reportData.get("report_info").toString());
-            JSONObject reportDetails = new JSONObject(reportData.get("report_details").toString());
-            JSONArray reportAttendee = new JSONArray(reportData.get("attendee").toString());
-            JSONArray reportAbsentee = new JSONArray(reportData.get("absentee").toString());
 
-            title.setText("#"+reportInfo.get("date"));
+    }
 
- //           for(int i=0; i<reportAttendee.length(); i++) {
-                CircleImageView attend = new CircleImageView(this);
-  //              JSONObject att = new JSONObject(reportAttendee.get(i).toString());
+    private class ReportDetailTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
+                HttpGet httpGet = new HttpGet(getString(R.string.api_url) + params[0]);
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                int status = httpResponse.getStatusLine().getStatusCode();
+                Log.d(TAG, "Response Status:"+status);
+                Header[] h = httpResponse.getAllHeaders();
+                for (Header hd : h) {
+                    Log.i(TAG, hd.toString());
+                }
+                if (status == 200)
+                    return HttpClientFactory.getEntityFromResponse(httpResponse);
+            } catch (IOException e) {
+                Log.e(TAG, e.getLocalizedMessage());
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String string) {
+            if (string != null) {
+                try {
+                        ProfileImageLoader profileImageLoader;
+
+                        getSupportActionBar().setTitle("#"+data.get("title").toString());
+                        getSupportActionBar().setSubtitle(data.get("pname").toString());
+
+                        JSONObject reportData = new JSONObject(data.get("report").toString());
+                        JSONObject reportInfo = new JSONObject(reportData.get("report_info").toString());
+                        JSONObject reportDetails = new JSONObject(reportData.get("report_details").toString());
+                        JSONArray reportAttendee = new JSONArray(reportData.get("attendee").toString());
+                        JSONArray reportAbsentee = new JSONArray(reportData.get("absentee").toString());
+
+                        title.setText("#"+reportInfo.get("date"));
+
+                        //           for(int i=0; i<reportAttendee.length(); i++) {
+                        CircleImageView attend = new CircleImageView(this);
+                        //              JSONObject att = new JSONObject(reportAttendee.get(i).toString());
 //                ImageLoaderOld imageLoader = new ImageLoaderOld(attend);
 //                imageLoader.execute(att.get("id").toString());
 //                profileImageLoader = new ProfileImageLoader(R.drawable.user_k, attend);
 //                profileImageLoader.getProfile();
 //                attendee.addView(attend);
-   //         }
+                        //         }
 
-            if (reportAbsentee.length() > 0) {
-                for (int i=0; i<reportAbsentee.length(); i++) {
-                    CircleImageView absente = new CircleImageView(this);
-                    JSONObject abs = new JSONObject(reportAbsentee.get(i).toString());
+                        if (reportAbsentee.length() > 0) {
+                            for (int i=0; i<reportAbsentee.length(); i++) {
+                                CircleImageView absente = new CircleImageView(this);
+                                JSONObject abs = new JSONObject(reportAbsentee.get(i).toString());
 //                    ImageLoaderOld imageLoader = new ImageLoaderOld(attend);
 //                    imageLoader.execute(att.get("id").toString());
 
-                    absentee.addView(absente);
+                                absentee.addView(absente);
 
-                    //RelativeLayout divider = (RelativeLayout) this.findViewById(R.id.divider);
-                    //absentee.addView(divider);
+                                //RelativeLayout divider = (RelativeLayout) this.findViewById(R.id.divider);
+                                //absentee.addView(divider);
 
-                    TextView reason = new TextView(this);
-                    String absent = abs.get("name").toString() + " : " + abs.get("reason").toString();
-                    Log.i(TAG, absent);
-                    reason.setText(absent);
-                    reason.setTextColor(getResources().getColor(R.color.textColorSecondary));
-                    absentee.addView(reason);
+                                TextView reason = new TextView(this);
+                                String absent = abs.get("name").toString() + " : " + abs.get("reason").toString();
+                                Log.i(TAG, absent);
+                                reason.setText(absent);
+                                reason.setTextColor(getResources().getColor(R.color.textColorSecondary));
+                                absentee.addView(reason);
+                            }
+                        }
+
+                        number.setText(reportInfo.get("mentoring_time").toString()+" 회");
+                        place.setText(reportInfo.get("place").toString());
+                        time.setText(reportInfo.get("total_time")+"(제외시간 "+reportInfo.get("except_time")+")");
+
+                        topic.setText(reportDetails.get("topic").toString());
+                        goal.setText(reportDetails.get("goal").toString());
+                        issue.setText(reportDetails.get("issue").toString());
+                        solution.setText(reportDetails.get("solution").toString());
+                        plan.setText(reportDetails.get("plan").toString());
+                        opinion.setText(reportDetails.get("opinion").toString());
+
+                        if (reportData.getJSONObject("report_attachments").getBoolean("photo")) {
+                            Log.i(TAG, reportData.getJSONObject("report_attachments").getBoolean("photo") + "");
+                            photo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    onCreatedDialog(0).show();
+                                }
+                            });
+                        }
+                        else {
+                            photo.setImageResource(R.drawable.default_profile);
+                            photo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    onCreatedDialog(1).show();
+                                }
+                            });
+                        }
+
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getLocalizedMessage());
                 }
             }
-
-            number.setText(reportInfo.get("mentoring_time").toString()+" 회");
-            place.setText(reportInfo.get("place").toString());
-            time.setText(reportInfo.get("total_time")+"(제외시간 "+reportInfo.get("except_time")+")");
-
-            topic.setText(reportDetails.get("topic").toString());
-            goal.setText(reportDetails.get("goal").toString());
-            issue.setText(reportDetails.get("issue").toString());
-            solution.setText(reportDetails.get("solution").toString());
-            plan.setText(reportDetails.get("plan").toString());
-            opinion.setText(reportDetails.get("opinion").toString());
-
-            if (reportData.getJSONObject("report_attachments").getBoolean("photo")) {
-//            ImageLoaderOld imageLoader = new ImageLoaderOld(photo);
-//            imageLoader.execute(reportData.get("_id").toString());
-                Log.i(TAG, reportData.getJSONObject("report_attachments").getBoolean("photo") + "");
-                photo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onCreatedDialog(0).show();
-                    }
-                });
-            }
-            else {
-                photo.setImageResource(R.drawable.default_profile);
-                photo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onCreatedDialog(1).show();
-                    }
-                });
-            }
-
-
-        } catch (JSONException e) {
-            Log.e(TAG, e.getLocalizedMessage());
         }
     }
 
@@ -341,4 +390,6 @@ public class ReportDetails extends AppCompatActivity {
         super.finish();
         overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_right);
     }
+
+
 }

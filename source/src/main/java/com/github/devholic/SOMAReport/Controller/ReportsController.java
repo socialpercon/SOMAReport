@@ -52,6 +52,7 @@ public class ReportsController {
 				reportInfo.put("topic", doc.getJSONObject("report_details")
 						.getString("topic"));
 				reportInfo.put("attendee", doc.getJSONArray("attendee"));
+				if (doc.has("confirmed")) reportInfo.put("confirmed", doc.get("confirmed"));
 				if (doc.has("absentee"))
 					reportInfo.put("absentee", doc.getJSONArray("absentee"));
 				list.put(reportInfo);

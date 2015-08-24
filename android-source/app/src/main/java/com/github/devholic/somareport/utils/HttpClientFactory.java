@@ -31,6 +31,10 @@ public class HttpClientFactory {
         }
     }
 
+    public synchronized static void closeClient() {
+
+    }
+
     public static String getEntityFromResponse(HttpResponse httpResponse) throws IOException{
         InputStream is = httpResponse.getEntity().getContent();
         StringBuilder stringBuilder = new StringBuilder();

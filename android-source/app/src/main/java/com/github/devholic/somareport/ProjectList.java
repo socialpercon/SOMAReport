@@ -90,6 +90,16 @@ public class ProjectList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("SOMAREPORT");
         getSupportActionBar().setSubtitle("프로젝트 리스트");
+
+        setDrawers();
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        setData();
+    }
+
+    private void setDrawers() {
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.setDrawerListener(drawerToggle);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -118,11 +128,8 @@ public class ProjectList extends AppCompatActivity {
                 }
             }
         });
-
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        setData();
+        UserInfoTask userInfoTask = new UserInfoTask();
+        userInfoTask.execute();
     }
 
     private void setData() {
@@ -174,6 +181,7 @@ public class ProjectList extends AppCompatActivity {
                 public void onClick(View v) {
                     int itemPosition = recyclerView.getChildPosition(v);
                     Intent intent = new Intent(ProjectList.this, ReportList.class);
+                    intent.putExtra("reportListType", ReportInfo.BYPROJECT);
                     intent.putExtra("project", (Project)items.get(itemPosition));
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_right, R.anim.slide_left);

@@ -46,7 +46,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginBottom="30dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginBottom="50dp"
                     android:text="작성중인\n멘토링 보고서가\n없습니다"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="30dp"/>
@@ -56,6 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:background="@color/textColorTitle"
                     android:text=" >_go to My Projects "
                     android:textSize="20dp"/>
 
