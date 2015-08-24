@@ -16,10 +16,8 @@ import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.Request;
 import org.glassfish.grizzly.http.server.Session;
 import org.glassfish.jersey.server.mvc.Viewable;
-import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Controller.UserController;
-import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 
 @Path("/")
 public class Login {
@@ -106,8 +104,8 @@ public class Login {
 			}
 			return Response.seeOther(builder.build()).build();
 		} else {
-			return Response.status(400)
-					.entity(new Viewable("/new/new_login.mustache")).build();
+			return Response.status(400).entity(new Viewable("/new/new_login.mustache"))
+					.build();
 		}
 	}
 
@@ -137,18 +135,14 @@ public class Login {
 					return Response.seeOther(builder.build()).build();
 				} else {
 					// 로그인에 실패한 경우 400 리턴
-					JSONObject jo = new JSONObject();
-					jo.put("check", "아이디 또는 비밀번호가 잘못되었습니다.");
-					return Response
-							.status(400)
-							.entity(new Viewable("/new/new_login.mustache",
-									MustacheHelper.toMap(jo))).build();
+					return Response.status(400)
+							.entity(new Viewable("/new/new_login.mustache")).build();
 				}
 			}
 		} else {
 			// 잘못된 요청이므로 400 리턴
-			return Response.status(400)
-					.entity(new Viewable("/new/new_login.mustache")).build();
+			return Response.status(400).entity(new Viewable("/new/new_login.mustache"))
+					.build();
 		}
 	}
 

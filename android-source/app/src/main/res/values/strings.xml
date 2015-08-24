@@ -4,4 +4,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_project_list">ProjectList</string>
+    <string name="api_url">http://10.0.3.2:8080/api</string>
 </resources>

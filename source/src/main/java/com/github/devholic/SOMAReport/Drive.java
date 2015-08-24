@@ -3,6 +3,8 @@ package com.github.devholic.SOMAReport;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -115,7 +117,16 @@ public class Drive {
 							"projectdrivePlus", id, true, false, false)));
 			JSONArray drive = new JSONArray();
 			for (int i = 0; i < drivedocs.length(); i++) {
-				drive.put(drivedocs.getJSONObject(i).get("doc"));
+				JSONObject doc = drivedocs.getJSONObject(i).getJSONObject("doc");
+				
+				long modified = doc.getLong("modified_at");
+				SimpleDateFormat datefm = new SimpleDateFormat("yyyyMMdd hh:mm");
+				Date date = new Date();
+				date.setTime(modified);
+				String str = datefm.format(date);
+				doc.put("modified_at", str);
+				
+				drive.put(doc);
 			}
 			Log.info(drive.length());
 			if (drive.length() != 0) {

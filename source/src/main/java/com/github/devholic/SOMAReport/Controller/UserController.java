@@ -171,7 +171,9 @@ public class UserController {
 
 		userDoc.put("id", user.get("_id"));
 		userDoc.put("name", user.get("name"));
+		userDoc.put("role", user.get("role"));
 		userDoc.put("belong", user.get("belong"));
+		userDoc.put("email", user.get("email"));
 		if (user.has("years")) userDoc.put("years", user.get("years"));
 		else if (user.has("year")) userDoc.put("years", user.get("year"));
 		else userDoc.put("years", new Object[]{});

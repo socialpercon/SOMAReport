@@ -38,20 +38,35 @@ public class Report {
 
 	// APIs
 	@GET
-	@Path("/api/report/unconfirmed/{id}")
+	@Path("/api/report/unconfirmed")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-	public Response Api_Report_Unconfirmed(@PathParam("id") String userId) {
-
+	public Response API_Report_Unconfirmed(@Context Request request) {
+		Session session = request.getSession();
+		String userId = session.getAttribute("user_id").toString();
 		ReportsController rCtrl = new ReportsController();
 		JSONArray unconfirmed = rCtrl.getUnconfirmedReports(userId);
+		Log.info(unconfirmed);
 
-		return Response
-				.status(200)
-				.type(MediaType.APPLICATION_JSON)
-				.entity(unconfirmed)
-				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods",
-						"GET, POST, DELETE, PUT").build();
+		if (unconfirmed.length() > 0)
+			return Response.status(200).type(MediaType.APPLICATION_JSON)
+					.entity(unconfirmed.toString()).build();
+		else
+			// unconfirmed reports does not exists
+			return Response.status(412).build();
+	}
+
+	@GET
+	@Path("/api/report/list/{id}")
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	public Response API_Report_List(@PathParam("id") String projectId) {
+		ReportsController rCtrl = new ReportsController();
+		JSONArray list = rCtrl.getReportByProjectId(projectId);
+
+		if (list.length() > 0)
+			return Response.status(200).type(MediaType.APPLICATION_JSON)
+					.entity(list.toString()).build();
+		else
+			return Response.status(412).build();
 	}
 
 	// View

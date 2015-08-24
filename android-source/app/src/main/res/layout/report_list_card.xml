@@ -52,5 +52,16 @@
             android:orientation="horizontal">
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="작성중"
+            android:textColor="@color/textColorPrimaryLight"
+            android:id="@+id/textView"
+            android:background="#66C4DE"
+            android:layout_above="@+id/report_card_topic"
+            android:layout_alignEnd="@+id/divider" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>
