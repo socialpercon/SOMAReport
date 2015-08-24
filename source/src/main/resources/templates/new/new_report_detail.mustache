@@ -237,11 +237,12 @@
               {{/photo}}
               {{/report_details}}
             {{/detail}}
+            {{#writeauth}}
             {{#detail}}
             {{^confirmed}}
               <tr>
                 <td style="float:left">
-                  <button style="width:120px" type="submit">
+                  <button style="width:120px" onclick="location.href='/report/confirm/{{reportid}}'">
                     <i class="material-icons" style="color: white;">done</i>
                   </button>
                 </td>
@@ -253,6 +254,7 @@
               </tr>
             {{/confirmed}}
             {{/detail}}
+            {{/writeauth}}
           </table>
         </div>
         </div>
