@@ -110,6 +110,7 @@ public class DriveController {
 		} else {
 			profileFile = "";
 		}
+		@SuppressWarnings("unused")
 		Map<String, Object> r = null;
 		JSONObject fileDoc = new JSONObject();
 		JSONObject imageData = new JSONObject();

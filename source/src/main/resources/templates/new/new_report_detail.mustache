@@ -44,7 +44,9 @@
         </table>
         </a>
         {{#writeauth}}
+        {{#project}}
         <a href="/report/write/{{_id}}" style="text-decoration:none;">
+        {{/project}}
         <div class="block" style="height:80px;padding-right:20px;float:right;display:inline-block;">
           <div class="centered">
           <table style="background:#323845;padding:5px;border-radius:3px;">
@@ -205,7 +207,31 @@
                 <pre style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{content}}</pre>
               </td>
               </tr>
+              {{#photo}}
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">사진</p>
+                <img src="/drive/image?id={{.}}" style="padding-top:10px;width:100%">
+              </td>
+              </tr>
+              {{/photo}}
               {{/report_details}}
+            {{/detail}}
+            {{#detail}}
+            {{^confirmed}}
+              <tr>
+                <td style="float:left">
+                  <button style="width:120px" type="submit">
+                    <i class="material-icons" style="color: white;">done</i>
+                  </button>
+                </td>
+                <td style="float:left">
+                  <button style="width:120px" type="submit">
+                    <i class="material-icons" style="color: white;">mode_edit</i>
+                  </button>
+                </td>
+              </tr>
+            {{/confirmed}}
             {{/detail}}
           </table>
         </div>

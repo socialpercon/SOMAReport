@@ -2,7 +2,6 @@ package com.github.devholic.SOMAReport;
 
 import java.util.List;
 
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -22,9 +21,11 @@ import org.glassfish.jersey.server.mvc.Viewable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.github.devholic.SOMAReport.Controller.DatabaseController;
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Controller.ReportsController;
 import com.github.devholic.SOMAReport.Controller.UserController;
+import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
 
 @Path("/")
@@ -40,18 +41,17 @@ public class Report {
 	@Path("/api/report/unconfirmed/{id}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response Api_Report_Unconfirmed(@PathParam("id") String userId) {
-		
+
 		ReportsController rCtrl = new ReportsController();
 		JSONArray unconfirmed = rCtrl.getUnconfirmedReports(userId);
-		
+
 		return Response
 				.status(200)
 				.type(MediaType.APPLICATION_JSON)
 				.entity(unconfirmed)
 				.header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Allow-Methods",
-						"GET, POST, DELETE, PUT")
-				.build();
+						"GET, POST, DELETE, PUT").build();
 	}
 
 	// View
@@ -141,7 +141,7 @@ public class Report {
 				detail.getJSONObject("report_info").put(
 						"datetime",
 						y + "년 " + m + "월 " + d + "일 " + sh + ":" + sm + " ~ "
-								+ eh + ":" + em + " | 제외시간 " + except + "시간");
+								+ eh + ":" + em + " | 제외시간 " + except + "분");
 				data.put("detail", detail);
 				Log.info(detail.toString());
 				data.put("reports", reports.getReportByProjectId(detail
@@ -186,6 +186,19 @@ public class Report {
 			data.put("role", UserController.getRoleById(session.getAttribute(
 					"user_id").toString()));
 			data.put("user_id", session.getAttribute("user_id").toString());
+			DatabaseController db = new DatabaseController();
+			JSONArray drivedocs = JSONFactory.getData(JSONFactory
+					.inputStreamToJson(db.getByView("_design/file",
+							"projectdrivePlus", id, true, false, false)));
+			JSONArray drive = new JSONArray();
+			for (int i = 0; i < drivedocs.length(); i++) {
+				drive.put(drivedocs.getJSONObject(i).get("doc"));
+			}
+			Log.info(drive.length());
+			if (drive.length() != 0) {
+				Log.info(drive.toString());
+				data.put("driveFiles", drive);
+			}
 			Log.info(data.toString());
 			return Response
 					.status(200)
@@ -215,7 +228,9 @@ public class Report {
 			@FormDataParam("opinion") String opinion,
 			@FormDataParam("opinion-public") String opinion_public,
 			@FormDataParam("etc") String etc,
-			@FormDataParam("content") String content) {
+			@FormDataParam("content") String content,
+			@FormDataParam("photo") String photo,
+			@FormDataParam("reportFiles") List<String> reportFiles) {
 		ReportsController report = new ReportsController();
 		JSONArray attendeeArray = new JSONArray();
 		JSONArray absenteeArray = new JSONArray();
@@ -231,21 +246,29 @@ public class Report {
 				absenteeArray.put(abs);
 			}
 		}
+		JSONArray reportFileArray = new JSONArray();
+		for (int a = 0; a < reportFiles.size(); a++) {
+			reportFileArray.put(reportFiles.get(a));
+		}
 		JSONObject jo = new JSONObject();
 		jo.put("project", pid);
 		jo.put("attendee", attendeeArray);
 		jo.put("absentee", absenteeArray);
+		jo.put("reportFile", reportFileArray);
 		JSONObject info = new JSONObject();
 		info.put("place", place);
 		String[] startArr = start.split(" ");
-		String[] endArr = end.split(":");
+		String[] endArr = end.split(" ");
 		String startDay = startArr[0].toString();
+		startDay = startDay.replaceAll("-", "");
 		info.put("date", startDay);
 		String start_time = startDay + startArr[1].split(":")[0].toString()
 				+ startArr[1].split(":")[1].toString();
 		info.put("start_time", start_time);
-		info.put("end_time", startDay + endArr[0] + endArr[1]);
-		info.put("except_time", 0);
+		String endParsed = endArr[1].split(":")[0].toString()
+				+ endArr[1].split(":")[1].toString();
+		info.put("end_time", startDay + endParsed);
+		info.put("except_time", except);
 		jo.put("report_info", info);
 		Log.info("inserted-report_info: " + jo.toString());
 		JSONObject details = new JSONObject();
@@ -255,6 +278,7 @@ public class Report {
 		details.put("solution", solution);
 		details.put("plan", plan);
 		details.put("opinion", opinion);
+		details.put("photo", photo);
 		if (opinion_public != null) {
 			details.put("opinion-public", "true");
 		}
@@ -264,9 +288,9 @@ public class Report {
 		details.put("content", content);
 		jo.put("report_details", details);
 		jo.put("report_attachments", new JSONObject());
+		UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
 		String id = report.insertReport(jo);
 		Log.info("inserted: " + id);
-		UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
 		if (id != null) {
 			builder.path("report/" + id);
 		} else {
