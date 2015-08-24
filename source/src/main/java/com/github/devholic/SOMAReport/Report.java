@@ -102,12 +102,32 @@ public class Report {
 	}
 
 	@GET
+	@Path("/report/confirm/{id}")
+	public Response View_ReportConfirm(@Context Request request,
+			@PathParam("id") String id) {
+		Session session = request.getSession();
+		if (session.getAttribute("user_id") != null) {
+			DatabaseController db = new DatabaseController();
+			JSONObject jo = JSONFactory.inputStreamToJson(db.getDoc(id));
+			jo.put("confirmed", true);
+			db.updateDoc(jo);
+			UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
+			builder.path("/report/" + id);
+			return Response.seeOther(builder.build()).build();
+		} else {
+			return Response.status(401)
+					.entity(new Viewable("/new/new_login.mustache")).build();
+		}
+	}
+
+	@GET
 	@Path("/report/{id}")
 	public Response View_ReportDetail(@Context Request request,
 			@PathParam("id") String id) {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
 			JSONObject data = new JSONObject();
+			data.put("reportid", id);
 			if (session.getAttribute("role").equals("mentor")) {
 				data.put("writeauth", true);
 			}
@@ -269,7 +289,6 @@ public class Report {
 		jo.put("project", pid);
 		jo.put("attendee", attendeeArray);
 		jo.put("absentee", absenteeArray);
-		jo.put("reportFile", reportFileArray);
 		JSONObject info = new JSONObject();
 		info.put("place", place);
 		String[] startArr = start.split(" ");
@@ -302,7 +321,7 @@ public class Report {
 		}
 		details.put("content", content);
 		jo.put("report_details", details);
-		jo.put("report_attachments", new JSONObject());
+		jo.put("report_attachments", reportFileArray);
 		UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
 		String id = report.insertReport(jo);
 		Log.info("inserted: " + id);

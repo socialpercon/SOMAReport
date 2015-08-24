@@ -157,6 +157,26 @@
               {{#report_details}}
               <tr>
               <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">참석자</p>
+                <div style="display:inline">
+                {{#attendee}}
+                  <img src="/drive/user/image?id={{id}}-profileImage" style="border-radius:50%;margin-right:5px;width:36px;height:36px">
+                {{/attendee}}
+                </div>
+              </td>
+              </tr>
+              <tr>
+              <td style="width:100%;padding:10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">불참석자</p>
+                <div style="display:inline">
+                {{#absentee}}
+                  <img src="/drive/user/image?id={{id}}-profileImage" style="border-radius:50%;margin-right:5px;width:36px;height:36px">
+                {{/absentee}}
+                </div>
+              </td>
+              </tr>
+              <tr>
+              <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">주제</p>
                 <p style="padding-top:10px;margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{topic}}</p>
               </td>
@@ -217,11 +237,12 @@
               {{/photo}}
               {{/report_details}}
             {{/detail}}
+            {{#writeauth}}
             {{#detail}}
             {{^confirmed}}
               <tr>
                 <td style="float:left">
-                  <button style="width:120px" type="submit">
+                  <button style="width:120px" onclick="location.href='/report/confirm/{{reportid}}'">
                     <i class="material-icons" style="color: white;">done</i>
                   </button>
                 </td>
@@ -233,6 +254,7 @@
               </tr>
             {{/confirmed}}
             {{/detail}}
+            {{/writeauth}}
           </table>
         </div>
         </div>
