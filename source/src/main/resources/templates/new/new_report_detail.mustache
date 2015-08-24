@@ -29,7 +29,12 @@
         </table>
       </div>
       <div style="height:80px;width:85%;float:right;background:#fff">
+        {{#admin}}
+        <a href="/console/stage" style="text-decoration:none;color:#000;display:inline-block">
+        {{/admin}}
+        {{^admin}}
         <a href="/project/list" style="text-decoration:none;color:#000;display:inline-block">
+        {{/admin}}
         <table style="height:80px">
         <tr>
           <td>

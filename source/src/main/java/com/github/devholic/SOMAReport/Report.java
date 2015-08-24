@@ -80,6 +80,9 @@ public class Report {
 			if (session.getAttribute("role").equals("mentor")) {
 				data.put("writeauth", true);
 			}
+			if (session.getAttribute("role").equals("admin")) {
+				data.put("admin", true);
+			}
 			ProjectsController project = new ProjectsController();
 			data.put("project", project.getDetailByProjectId(id));
 			ReportsController reports = new ReportsController();
@@ -130,6 +133,9 @@ public class Report {
 			data.put("reportid", id);
 			if (session.getAttribute("role").equals("mentor")) {
 				data.put("writeauth", true);
+			}
+			if (session.getAttribute("role").equals("admin")) {
+				data.put("admin", true);
 			}
 			ReportsController reports = new ReportsController();
 			UserController user = new UserController();

@@ -38,9 +38,13 @@ public class Console_Project {
 	@Path("/console/stage")
 	public Response consoleProject(@Context Request request) {
 		Session session = request.getSession();
-		if (session.getAttribute("user_id") != null) {
+		if (session.getAttribute("user_id") != null
+				&& session.getAttribute("role").equals("admin")) {
 			ProjectsController projects = new ProjectsController();
 			JSONObject data = new JSONObject();
+			if (session.getAttribute("role").equals("admin")) {
+				data.put("admin", true);
+			}
 			data.put("stages", projects.existingStage());
 			Log.info(data);
 			UserController user = new UserController();
@@ -69,8 +73,10 @@ public class Console_Project {
 			ProjectsController projects = new ProjectsController();
 			DatabaseController db = new DatabaseController();
 			JSONObject data = new JSONObject();
-			data.put("stage",
-					(JSONFactory.inputStreamToJson(db.getDoc(id)).toString()));
+			if (session.getAttribute("role").equals("admin")) {
+				data.put("admin", true);
+			}
+			data.put("stage", JSONFactory.inputStreamToJson(db.getDoc(id)));
 			data.put("projects", projects.projectsInStageInfo(id));
 			ReportsController reports = new ReportsController();
 			data.put("reports", reports.getReportByStage(id));

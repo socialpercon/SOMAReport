@@ -30,7 +30,8 @@ public class ReportsController {
 	 * 프로젝트 아이디로 레포트 가져오기
 	 * 
 	 * @param projectId
-	 * @return JSONArray [{_id, project, projectTitle, date, topic, attendee, absentee}]
+	 * @return JSONArray [{_id, project, projectTitle, date, topic, attendee,
+	 *         absentee}]
 	 *************************************************************************/
 	public JSONArray getReportByProjectId(String projectId) {
 		JSONArray list = new JSONArray();
@@ -45,14 +46,16 @@ public class ReportsController {
 				JSONObject reportInfo = new JSONObject();
 				reportInfo.put("_id", doc.getString("_id"));
 				reportInfo.put("project", doc.get("project"));
-				String projectTitle = JSONFactory.inputStreamToJson(db.getDoc(projectId)).getString("title");
+				String projectTitle = JSONFactory.inputStreamToJson(
+						db.getDoc(projectId)).getString("title");
 				reportInfo.put("projectTitle", projectTitle);
 				reportInfo.put("date", doc.getJSONObject("report_info")
 						.getString("date"));
 				reportInfo.put("topic", doc.getJSONObject("report_details")
 						.getString("topic"));
 				reportInfo.put("attendee", doc.getJSONArray("attendee"));
-				if (doc.has("confirmed")) reportInfo.put("confirmed", doc.get("confirmed"));
+				if (doc.has("confirmed"))
+					reportInfo.put("confirmed", doc.get("confirmed"));
 				if (doc.has("absentee"))
 					reportInfo.put("absentee", doc.getJSONArray("absentee"));
 				list.put(reportInfo);
@@ -275,15 +278,14 @@ public class ReportsController {
 	 * @throws Exception
 	 ***********************************************/
 
-	public void renderDocx_mentoringReport() throws Exception {
+	public void renderDocx_mentoringReport(String reportId) throws Exception {
 		System.out.println("renderDocx_mentoringReport excuted....");
 		WordprocessingMLPackage wordPackage = WordprocessingMLPackage
 				.load(new java.io.File("mentoringReport.docx"));
 		VariablePrepare.prepare(wordPackage);
 		MainDocumentPart documentPart = wordPackage.getMainDocumentPart();
-
+		DatabaseControllre 
 		HashMap<String, String> mappings = new HashMap<String, String>();
-
 		mappings.put("division1", "O");
 		mappings.put("division2", "");
 		mappings.put("division3", "");
@@ -324,23 +326,18 @@ public class ReportsController {
 		mappings.put("content", "안녕 이건 내용란이야 너는 무슨 내용이니");
 
 		documentPart.variableReplace(mappings);
-		wordPackage.save(new File("mentoringReport_filled.docx"));
-
-		// OutputStream os = new java.io.FileOutputStream(new File(
-		// "mentoringReport_filled.pdf"));
-		// Docx4J.toPDF(wordPackage, os);
+		wordPackage.save(new File(reportId+".docx"));
 	}
-	
+
 	/***
-	 * 레포트의 확정여부를 가져온다.
-	 * 확정이 된 상태일경우 "true", 아닐 경우 "false"
+	 * 레포트의 확정여부를 가져온다. 확정이 된 상태일경우 "true", 아닐 경우 "false"
 	 * 
 	 * @param reportId
 	 * @return String
 	 */
-	public String isReportConfirmed (String reportId) {
+	public String isReportConfirmed(String reportId) {
 		JSONObject doc = JSONFactory.inputStreamToJson(db.getDoc(reportId));
-		if (doc.has("confirmed")) 
+		if (doc.has("confirmed"))
 			return doc.getString("confirmed");
 		else {
 			doc.put("confirmed", "false");
@@ -348,26 +345,28 @@ public class ReportsController {
 			return doc.getString("confirmed");
 		}
 	}
-	
+
 	/***
 	 * 해당 stage(기수, 단계, 차수)에 속하는 레포트를 전부 가져온다.
 	 * 
 	 * @param stageId
-	 * @return JSONArray [{_id, project, projectTitle, date, topic, attendee, absentee}]
+	 * @return JSONArray [{_id, project, projectTitle, date, topic, attendee,
+	 *         absentee}]
 	 */
-	public JSONArray getReportByStage (String stageId) {
+	public JSONArray getReportByStage(String stageId) {
 		JSONArray allReports = new JSONArray();
 		ProjectsController projectC = new ProjectsController();
 		JSONArray projects = projectC.projectsInStageInfo(stageId);
-		for (int i=0; i<projects.length(); i++) {
-			JSONArray reports = getReportByProjectId(projects.getJSONObject(i).getString("_id"));
-			for (int j=0; j<reports.length(); j++) {
+		for (int i = 0; i < projects.length(); i++) {
+			JSONArray reports = getReportByProjectId(projects.getJSONObject(i)
+					.getString("_id"));
+			for (int j = 0; j < reports.length(); j++) {
 				allReports.put(reports.getJSONObject(j));
 			}
 		}
 		return allReports;
 	}
-	
+
 	/***
 	 * 해당 사용자가 속한 레포트 문서 중 현재 작성중인 (확정되지 않은) 레포트의 정보를 가져온다.
 	 * 
@@ -376,15 +375,20 @@ public class ReportsController {
 	 */
 	public JSONArray getUnconfirmedReports(String userId) {
 		JSONArray unConfirmed = new JSONArray();
-		JSONArray allList = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/report", "report_by_user", new Object[]{userId+" ", ""}, new Object[]{userId, ""}, true, true, false)));
-		for (int i=0; i<allList.length(); i++) {
+		JSONArray allList = JSONFactory.getData(JSONFactory
+				.inputStreamToJson(db.getByView("_design/report",
+						"report_by_user", new Object[] { userId + " ", "" },
+						new Object[] { userId, "" }, true, true, false)));
+		for (int i = 0; i < allList.length(); i++) {
 			JSONObject doc = allList.getJSONObject(i).getJSONObject("doc");
 			if (doc.has("confirmed")) {
 				if (doc.getString("confirmed").equals("false")) {
 					JSONObject docu = new JSONObject();
 					docu.put("reportId", doc.get("_id"));
-					docu.put("reportTitle", doc.getJSONObject("report_info").get("title"));
-					docu.put("reportTopic", doc.getJSONObject("report_details").get("topic"));
+					docu.put("reportTitle", doc.getJSONObject("report_info")
+							.get("title"));
+					docu.put("reportTopic", doc.getJSONObject("report_details")
+							.get("topic"));
 					docu.put("attendee", doc.get("attendee"));
 					unConfirmed.put(doc);
 				}

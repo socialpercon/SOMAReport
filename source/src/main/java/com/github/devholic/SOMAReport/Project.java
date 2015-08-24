@@ -31,13 +31,12 @@ public class Project {
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response API_Project(@Context Request request) {
 		Session session = request.getSession();
-		JSONArray userProject = ProjectsController.getMyProject(session.getAttribute("user_id").toString());
-		
+		JSONArray userProject = ProjectsController.getMyProject(session
+				.getAttribute("user_id").toString());
+
 		return Response.status(200).entity(userProject.toString()).build();
 	}
-	
-	
-	
+
 	// View
 	@GET
 	@Path("/project/list")
@@ -47,6 +46,9 @@ public class Project {
 			JSONArray userProject = ProjectsController.getMyProject(session
 					.getAttribute("user_id").toString());
 			JSONObject data = new JSONObject();
+			if (session.getAttribute("role").equals("admin")) {
+				data.put("admin", true);
+			}
 			data.put("project", userProject);
 			UserController user = new UserController();
 			data.put("name", user.getUserName(session.getAttribute("user_id")
@@ -60,8 +62,8 @@ public class Project {
 					.entity(new Viewable("/new/new_projectlist.mustache",
 							MustacheHelper.toMap(data))).build();
 		} else {
-			return Response.status(401).entity(new Viewable("/new/new_login.mustache"))
-					.build();
+			return Response.status(401)
+					.entity(new Viewable("/new/new_login.mustache")).build();
 		}
 	}
 
@@ -71,9 +73,10 @@ public class Project {
 			@PathParam("id") String id) {
 		Session session = request.getSession();
 		if (session.getAttribute("user_id") != null) {
-			// #66C4DE : waiting
-			// #FC6A6A : finish
 			JSONObject data = new JSONObject();
+			if (session.getAttribute("role").equals("admin")) {
+				data.put("admin", true);
+			}
 			ProjectsController projects = new ProjectsController();
 			data.put("project", projects.getDetailByProjectId(id));
 			ReportsController reports = new ReportsController();
@@ -90,8 +93,8 @@ public class Project {
 					.entity(new Viewable("/new/new_project.mustache",
 							MustacheHelper.toMap(data))).build();
 		} else {
-			return Response.status(401).entity(new Viewable("/new/new_login.mustache"))
-					.build();
+			return Response.status(401)
+					.entity(new Viewable("/new/new_login.mustache")).build();
 		}
 	}
 }

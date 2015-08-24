@@ -120,11 +120,11 @@
                   <div class="divider"></div>
                   <div style="display:inline">
                     {{#mentor}}
-                      <img src="http://flamingonest.com/images/donatbalipapp_profile_circle.png" style="width:36px;height:36px">
+                      <img src="/drive/user/image?id={{id}}-profileImage" style="border-radius:50%;width:36px;height:36px">
                     {{/mentor}}
                       <div style="height:36px;width:1px;background:rgba(0,0,0,0.05);margin-left:5px;display:inline-block"></div>
                     {{#mentee}}
-                      <img src="http://flamingonest.com/images/donatbalipapp_profile_circle.png" style="margin-left:5px;width:36px;height:36px">
+                      <img src="/drive/user/image?id={{id}}-profileImage" style="border-radius:50%;margin-left:5px;width:36px;height:36px">
                     {{/mentee}}
                   </div>
               </td>
@@ -144,9 +144,16 @@
             {{#reports}}
             <tr onclick="window.location='/report/{{_id}}'">
               <td style="width:13%;padding:10px 0px 10px 0px">
+                {{#confirmed}}
                 <div style="background:#66C4DE;border-radius: 10px 0px 0px 10px;">
+                  <p style="color:#FFF;font-size:12px;padding:5px 20px 5px 10px">작성완료</p>
+                </div>
+                {{/confirmed}}
+                {{^confirmed}}
+                <div style="background:#FC6A6A;border-radius: 10px 0px 0px 10px;">
                   <p style="color:#FFF;font-size:12px;padding:5px 20px 5px 10px">작성중</p>
                 </div>
+                {{/confirmed}}
               </td>
               <td style="width:87%;padding-left:10px">
                 <p style="margin:0;font-size:18px;color:rgba(0, 0, 0, 0.87);">{{topic}}</p>
