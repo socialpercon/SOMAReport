@@ -83,6 +83,7 @@ public class ReportList extends AppCompatActivity {
     private DetailRecyclerViewAdapter adapter;
     private User userInfo;
     public int type;
+    private Project project;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +142,8 @@ public class ReportList extends AppCompatActivity {
     private void setData() {
 
         ReportInfoTask reportInfoTask = new ReportInfoTask();
+        Bundle bundle = getIntent().getExtras();
+        project = bundle.getParcelable("project");
 
         if (type == ReportInfo.UNCONFIRMED) {
             getSupportActionBar().setSubtitle("작성중인 멘토링 보고서");
@@ -149,8 +152,6 @@ public class ReportList extends AppCompatActivity {
         }
 
         else if (type == ReportInfo.BYPROJECT) {
-            Bundle bundle = getIntent().getExtras();
-            Project project = bundle.getParcelable("project");
 
             getSupportActionBar().setSubtitle("멘토링 보고서 리스트");
             noReportsTextView.setText("이 프로젝트에서 작성된\n멘토링 보고서가\n없습니다");
@@ -206,8 +207,9 @@ public class ReportList extends AppCompatActivity {
                     public void onClick(View v) {
                         int itemPosition = recyclerView.getChildPosition(v);
                         Intent intent = new Intent(ReportList.this, ReportDetails.class);
-                        Project p = (Project) items.get(itemPosition);
-                        intent.putExtra("reportId", p.getId());
+                        ReportInfo r = (ReportInfo) items.get(itemPosition);
+                        intent.putExtra("reportId", r.getReportId());
+                        intent.putExtra("pname", project.getTitle());
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_right, R.anim.slide_left);
                     }
@@ -329,8 +331,10 @@ public class ReportList extends AppCompatActivity {
             if (s != null) {
                 try {
                     JSONArray data = new JSONArray(s);
+                    Log.i(TAG, data.toString());
                     for (int i=0; i<data.length(); i++) {
-                        reports.add(i, new ReportInfo(data.getJSONObject(i)));
+                        ReportInfo r = new ReportInfo(data.getJSONObject(i));
+                        reports.add(i, r);
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getLocalizedMessage());

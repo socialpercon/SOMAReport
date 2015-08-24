@@ -54,10 +54,11 @@ public class ReportInfo {
     public ReportInfo(JSONObject doc) {
         try {
             this.reportId = doc.getString("reportId");
-            this.title = doc.getString("title");
-            this.topic = doc.getString("topic");
+            this.title = doc.getString("reportTitle");
+            this.topic = doc.getString("reportTopic");
             JSONArray att = doc.getJSONArray("attendee");
             this.attendee = new String[att.length()];
+
             for (int i=0; i<att.length(); i++) {
                 this.attendee[i] = att.getJSONObject(i).getString("id");
             }

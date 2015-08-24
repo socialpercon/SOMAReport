@@ -170,79 +170,68 @@ public class ReportDetails extends AppCompatActivity {
         protected void onPostExecute(String string) {
             if (string != null) {
                 try {
-                        ProfileImageLoader profileImageLoader;
+                    JSONObject data = new JSONObject(string);
+                    ProfileImageLoader profileImageLoader;
+                    String ptitle = getIntent().getStringExtra("pname");
 
-                        getSupportActionBar().setTitle("#"+data.get("title").toString());
-                        getSupportActionBar().setSubtitle(data.get("pname").toString());
+                    JSONObject reportInfo = data.getJSONObject("report_info");
+                    JSONObject reportDetails = data.getJSONObject("report_details");
+                    JSONArray reportAttendee = data.getJSONArray("attendee");
+                    JSONArray reportAbsentee = data.getJSONArray("absentee");
 
-                        JSONObject reportData = new JSONObject(data.get("report").toString());
-                        JSONObject reportInfo = new JSONObject(reportData.get("report_info").toString());
-                        JSONObject reportDetails = new JSONObject(reportData.get("report_details").toString());
-                        JSONArray reportAttendee = new JSONArray(reportData.get("attendee").toString());
-                        JSONArray reportAbsentee = new JSONArray(reportData.get("absentee").toString());
+                    title.setText("#"+reportInfo.get("date"));
+                    getSupportActionBar().setTitle("#"+reportInfo.get("date"));
+                    getSupportActionBar().setSubtitle(ptitle);
 
-                        title.setText("#"+reportInfo.get("date"));
+                    for(int i=0; i<reportAttendee.length(); i++) {
+                        CircleImageView attend = new CircleImageView(attendee.getContext());
+                        profileImageLoader = new ProfileImageLoader(reportAttendee.getJSONObject(i).getString("id"), attend);
+                        profileImageLoader.getProfile();
+                        attendee.addView(attend);
+                    }
+                    if (reportAbsentee.length() > 0) {
+                        for (int i=0; i<reportAbsentee.length(); i++) {
+                            CircleImageView absente = new CircleImageView(absentee.getContext());
+                            JSONObject abs = new JSONObject(reportAbsentee.get(i).toString());
+                            absentee.addView(absente);
 
-                        //           for(int i=0; i<reportAttendee.length(); i++) {
-                        CircleImageView attend = new CircleImageView(this);
-                        //              JSONObject att = new JSONObject(reportAttendee.get(i).toString());
-//                ImageLoaderOld imageLoader = new ImageLoaderOld(attend);
-//                imageLoader.execute(att.get("id").toString());
-//                profileImageLoader = new ProfileImageLoader(R.drawable.user_k, attend);
-//                profileImageLoader.getProfile();
-//                attendee.addView(attend);
-                        //         }
+                            TextView reason = new TextView(absentee.getContext());
+                            String absent = abs.get("name").toString() + " : " + abs.get("reason").toString();
+                            Log.i(TAG, absent);
+                            reason.setText(absent);
+                            reason.setTextColor(getResources().getColor(R.color.textColorSecondary));
+                            absentee.addView(reason);
+                        }
+                    }
 
-                        if (reportAbsentee.length() > 0) {
-                            for (int i=0; i<reportAbsentee.length(); i++) {
-                                CircleImageView absente = new CircleImageView(this);
-                                JSONObject abs = new JSONObject(reportAbsentee.get(i).toString());
-//                    ImageLoaderOld imageLoader = new ImageLoaderOld(attend);
-//                    imageLoader.execute(att.get("id").toString());
+                    number.setText(reportInfo.get("mentoring_time").toString()+" 회");
+                    place.setText(reportInfo.get("place").toString());
+                    time.setText(reportInfo.get("total_time")+"(제외시간 "+reportInfo.get("except_time")+")");
 
-                                absentee.addView(absente);
+                    topic.setText(reportDetails.get("topic").toString());
+                    goal.setText(reportDetails.get("goal").toString());
+                    issue.setText(reportDetails.get("issue").toString());
+                    solution.setText(reportDetails.get("solution").toString());
+                    plan.setText(reportDetails.get("plan").toString());
+                    opinion.setText(reportDetails.get("opinion").toString());
 
-                                //RelativeLayout divider = (RelativeLayout) this.findViewById(R.id.divider);
-                                //absentee.addView(divider);
-
-                                TextView reason = new TextView(this);
-                                String absent = abs.get("name").toString() + " : " + abs.get("reason").toString();
-                                Log.i(TAG, absent);
-                                reason.setText(absent);
-                                reason.setTextColor(getResources().getColor(R.color.textColorSecondary));
-                                absentee.addView(reason);
+                    if (data.has("photo")) {
+                        photo.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                onCreatedDialog(0).show();
                             }
-                        }
-
-                        number.setText(reportInfo.get("mentoring_time").toString()+" 회");
-                        place.setText(reportInfo.get("place").toString());
-                        time.setText(reportInfo.get("total_time")+"(제외시간 "+reportInfo.get("except_time")+")");
-
-                        topic.setText(reportDetails.get("topic").toString());
-                        goal.setText(reportDetails.get("goal").toString());
-                        issue.setText(reportDetails.get("issue").toString());
-                        solution.setText(reportDetails.get("solution").toString());
-                        plan.setText(reportDetails.get("plan").toString());
-                        opinion.setText(reportDetails.get("opinion").toString());
-
-                        if (reportData.getJSONObject("report_attachments").getBoolean("photo")) {
-                            Log.i(TAG, reportData.getJSONObject("report_attachments").getBoolean("photo") + "");
-                            photo.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    onCreatedDialog(0).show();
-                                }
-                            });
-                        }
-                        else {
-                            photo.setImageResource(R.drawable.default_profile);
-                            photo.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    onCreatedDialog(1).show();
-                                }
-                            });
-                        }
+                        });
+                    }
+                    else {
+                        photo.setImageURI(Uri.parse("http://10.0.3.2:8080/drive/user/image?id="+data.getString("photo")));
+                        photo.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                onCreatedDialog(1).show();
+                            }
+                        });
+                    }
 
                 } catch (JSONException e) {
                     Log.e(TAG, e.getLocalizedMessage());

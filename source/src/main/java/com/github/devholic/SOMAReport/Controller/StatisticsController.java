@@ -254,6 +254,7 @@ public class StatisticsController {
 							info.put("userName", user.getUserName(userId));
 							info.put("mentoringSum", mentoringSum);
 							info.put("mentoringNum", mentoringNum);
+							System.out.println(info);
 							infos.put(info);
 							break;
 						}  else {
@@ -263,7 +264,9 @@ public class StatisticsController {
 							info.put("userName", user.getUserName(userId));
 							info.put("mentoringSum", 0);
 							info.put("mentoringNum", 0);
+							System.out.println(info);
 							infos.put(info);
+							break;
 						}
 					}
 				} else {

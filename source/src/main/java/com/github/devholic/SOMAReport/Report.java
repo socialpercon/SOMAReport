@@ -68,6 +68,16 @@ public class Report {
 		else
 			return Response.status(412).build();
 	}
+	
+	@GET
+	@Path("/api/report/{id}")
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+	public Response API_Report_Detail(@PathParam("id") String reportId) {
+		ReportsController rCtrl = new ReportsController();
+		JSONObject report = rCtrl.getReportWithNames(reportId);
+		return Response.status(200).type("application/json")
+					.entity(report.toString()).build();
+	}
 
 	// View
 	@GET
@@ -240,7 +250,7 @@ public class Report {
 				Log.info(drive.toString());
 				data.put("driveFiles", drive);
 			}
-			Log.info(data.toString());
+			Log.info("lalalallalaal"+data.toString());
 			return Response
 					.status(200)
 					.entity(new Viewable("/new/new_report_write.mustache",

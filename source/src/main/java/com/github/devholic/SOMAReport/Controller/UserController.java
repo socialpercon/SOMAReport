@@ -198,7 +198,9 @@ public class UserController {
 		String salt = userDoc.getString("salt");
 		if (userDoc.getString("password").equals(
 				StringFactory.encryptPassword(oldPwd, salt))) {
-			String password = StringFactory.encryptPassword(newPwd, salt);
+			String newSalt = StringFactory.createSalt();
+			userDoc.put("salt", newSalt);
+			String password = StringFactory.encryptPassword(newPwd, newSalt);
 			userDoc.put("password", password);
 			db.updateDoc(userDoc);
 			return true;

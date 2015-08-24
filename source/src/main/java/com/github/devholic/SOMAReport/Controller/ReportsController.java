@@ -41,6 +41,7 @@ public class ReportsController {
 							projectId, " " }, true, true, false);
 			JSONArray a = JSONFactory
 					.getData(JSONFactory.inputStreamToJson(is));
+			Log.debug("ohohohohoh" + a.toString());
 			for (int i = 0; i < a.length(); i++) {
 				JSONObject doc = a.getJSONObject(i).getJSONObject("doc");
 				JSONObject reportInfo = new JSONObject();
@@ -149,7 +150,7 @@ public class ReportsController {
 					numOfReports(document.getString("project")) + 1);
 			int whole = calWholeTime(reportInfo);
 			reportInfo.put("whole_time", whole);
-			int total = whole - reportInfo.getInt("except_time");
+			int total = (whole - reportInfo.getInt("except_time"));
 			reportInfo.put("total_time", total);
 			reportDoc.put("report_info", reportInfo);
 
@@ -232,7 +233,7 @@ public class ReportsController {
 		try {
 			Date start = format.parse(startTime);
 			Date end = format.parse(endTime);
-			return (int) ((end.getTime() - start.getTime()) / (1000 * 60 * 60));
+			return (int) ((end.getTime() - start.getTime()) / (1000 * 60));
 		} catch (ParseException e) {
 			Log.error(e.getLocalizedMessage());
 			return 0;
@@ -284,7 +285,6 @@ public class ReportsController {
 				.load(new java.io.File("mentoringReport.docx"));
 		VariablePrepare.prepare(wordPackage);
 		MainDocumentPart documentPart = wordPackage.getMainDocumentPart();
-		DatabaseControllre 
 		HashMap<String, String> mappings = new HashMap<String, String>();
 		mappings.put("division1", "O");
 		mappings.put("division2", "");
@@ -326,7 +326,7 @@ public class ReportsController {
 		mappings.put("content", "안녕 이건 내용란이야 너는 무슨 내용이니");
 
 		documentPart.variableReplace(mappings);
-		wordPackage.save(new File(reportId+".docx"));
+		wordPackage.save(new File(reportId + ".docx"));
 	}
 
 	/***
@@ -379,6 +379,7 @@ public class ReportsController {
 				.inputStreamToJson(db.getByView("_design/report",
 						"report_by_user", new Object[] { userId + " ", "" },
 						new Object[] { userId, "" }, true, true, false)));
+		Log.info(allList.toString());
 		for (int i = 0; i < allList.length(); i++) {
 			JSONObject doc = allList.getJSONObject(i).getJSONObject("doc");
 			if (doc.has("confirmed")) {
@@ -386,12 +387,21 @@ public class ReportsController {
 					JSONObject docu = new JSONObject();
 					docu.put("reportId", doc.get("_id"));
 					docu.put("reportTitle", doc.getJSONObject("report_info")
-							.get("title"));
+							.get("date"));
 					docu.put("reportTopic", doc.getJSONObject("report_details")
 							.get("topic"));
 					docu.put("attendee", doc.get("attendee"));
-					unConfirmed.put(doc);
+					unConfirmed.put(docu);
 				}
+			} else {
+				JSONObject docu = new JSONObject();
+				docu.put("reportId", doc.get("_id"));
+				docu.put("reportTitle",
+						doc.getJSONObject("report_info").get("date"));
+				docu.put("reportTopic", doc.getJSONObject("report_details")
+						.get("topic"));
+				docu.put("attendee", doc.get("attendee"));
+				unConfirmed.put(docu);
 			}
 		}
 		return unConfirmed;

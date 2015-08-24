@@ -94,7 +94,7 @@ public class UserControllerTest {
 	@Test
 	public void testTotalMentoringInfoByMonth() {
 		StatisticsController stC = new StatisticsController();
-		Log.info(stC.totalMentoringInfoByMonth(2015, 8, "mentor"));
+		Log.info(stC.totalMentoringInfoByMonth(2015, 8, "mentee"));
 	}
 	
 	@Test
