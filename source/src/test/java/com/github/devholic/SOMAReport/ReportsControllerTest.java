@@ -102,7 +102,7 @@ public class ReportsControllerTest {
 	
 	@Test
 	public void testGetUnconfirmedReport() {
-		JSONArray result = rCtrl.getUnconfirmedReports("9d898f7d5bfbf361939e1fafd50e8eeb");
+		JSONArray result = rCtrl.getUnconfirmedReports("32b4dfe862d90710dfcd02bdca015db2");
 		Log.info(result.toString());
 	}
 }

@@ -147,7 +147,7 @@ public class ReportsController {
 					numOfReports(document.getString("project")) + 1);
 			int whole = calWholeTime(reportInfo);
 			reportInfo.put("whole_time", whole);
-			int total = whole - reportInfo.getInt("except_time");
+			int total = (whole - reportInfo.getInt("except_time"));
 			reportInfo.put("total_time", total);
 			reportDoc.put("report_info", reportInfo);
 
@@ -230,7 +230,7 @@ public class ReportsController {
 		try {
 			Date start = format.parse(startTime);
 			Date end = format.parse(endTime);
-			return (int) ((end.getTime() - start.getTime()) / (1000 * 60 * 60));
+			return (int) ((end.getTime() - start.getTime()) / (1000 * 60));
 		} catch (ParseException e) {
 			Log.error(e.getLocalizedMessage());
 			return 0;
@@ -378,17 +378,26 @@ public class ReportsController {
 	public JSONArray getUnconfirmedReports(String userId) {
 		JSONArray unConfirmed = new JSONArray();
 		JSONArray allList = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/report", "report_by_user", new Object[]{userId+" ", ""}, new Object[]{userId, ""}, true, true, false)));
+		Log.info(allList.toString());
 		for (int i=0; i<allList.length(); i++) {
 			JSONObject doc = allList.getJSONObject(i).getJSONObject("doc");
 			if (doc.has("confirmed")) {
 				if (doc.getString("confirmed").equals("false")) {
 					JSONObject docu = new JSONObject();
 					docu.put("reportId", doc.get("_id"));
-					docu.put("reportTitle", doc.getJSONObject("report_info").get("title"));
+					docu.put("reportTitle", doc.getJSONObject("report_info").get("date"));
 					docu.put("reportTopic", doc.getJSONObject("report_details").get("topic"));
 					docu.put("attendee", doc.get("attendee"));
-					unConfirmed.put(doc);
+					unConfirmed.put(docu);
 				}
+			}
+			else {
+				JSONObject docu = new JSONObject();
+				docu.put("reportId", doc.get("_id"));
+				docu.put("reportTitle", doc.getJSONObject("report_info").get("date"));
+				docu.put("reportTopic", doc.getJSONObject("report_details").get("topic"));
+				docu.put("attendee", doc.get("attendee"));
+				unConfirmed.put(docu);
 			}
 		}
 		return unConfirmed;
