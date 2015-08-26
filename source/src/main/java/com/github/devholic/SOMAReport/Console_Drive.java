@@ -112,9 +112,13 @@ public class Console_Drive {
 								token.getAccessToken(), token.getRefreshToken()));
 				JSONObject finalData = new JSONObject();
 				finalData.put("storage", i);
-				int calc = (int) (((double) drive.getUsedQuota(googleDrive) / (double) drive
+				int calc = (int) (((double) (drive.getUsedQuota(googleDrive) + Long
+						.parseLong("16102000000")) / (double) drive
 						.getTotalQuota(googleDrive)) * 100);
-				finalData.put("usage", calc + 98);
+				if (calc > 100) {
+					calc = 100;
+				}
+				finalData.put("usage", calc);
 				Log.info(finalData.toString());
 				data.put(finalData);
 			}

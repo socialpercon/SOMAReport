@@ -51,7 +51,8 @@ public class Drive {
 			try {
 				DriveController drive = new DriveController();
 				drive.uploadFileToProject(id, FileFactory.stream2file(is),
-						formData.getFileName());
+						new String(formData.getFileName()
+								.getBytes("iso-8859-1"), "utf-8"));
 				JSONObject data = new JSONObject();
 				data.put("code", 1);
 				data.put("msg", "success");
@@ -77,8 +78,10 @@ public class Drive {
 			try {
 				DriveController drive = new DriveController();
 				drive.uploadProfileImage(session.getAttribute("user_id")
-						.toString(), FileFactory.stream2file(is), formData
-						.getFileName(), drive.getOptimizedStorage());
+						.toString(), FileFactory.stream2file(is),
+						new String(formData.getFileName()
+								.getBytes("iso-8859-1"), "utf-8"), drive
+								.getOptimizedStorage());
 				JSONObject data = new JSONObject();
 				data.put("code", 1);
 				data.put("msg", "success");
@@ -146,7 +149,7 @@ public class Drive {
 
 	@GET
 	@Path("/drive/raw")
-	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	@Produces("application/octet-stream")
 	public Response getDriveFile(@QueryParam("id") String id) {
 		DatabaseController db = new DatabaseController();
 		JSONObject fileData = JSONFactory.inputStreamToJson(db.getDoc(id));
@@ -158,7 +161,9 @@ public class Drive {
 						.status(200)
 						.header("Content-Disposition",
 								"attachment; filename=\""
-										+ fileData.getString("name") + "\"")
+										+ new String(fileData.getString("name")
+												.getBytes("utf-8"),
+												"ISO-8859-1") + "\"")
 						.entity(Files.toByteArray(raw)).build();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

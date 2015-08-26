@@ -35,6 +35,7 @@ public class Application {
 	public static void main(final String[] args) throws Exception {
 		Logger logger = Logger.getLogger(Application.class);
 		
+		//10초후부터 1시간 간격으로 cache파일을 지운다.
 		ScheduleTask st = new ScheduleTask();
 		Timer jobScheduler = new Timer(true);
 		jobScheduler.scheduleAtFixedRate(st, 10000, 3600000);
