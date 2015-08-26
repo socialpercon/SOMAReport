@@ -9,6 +9,7 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.mvc.mustache.MustacheMvcFeature;
 
+import com.github.devholic.SOMAReport.Utilities.FileFactory;
 import com.github.devholic.SOMAReport.Utilities.StringFactory;
 
 public class Application {
@@ -30,6 +31,9 @@ public class Application {
 
 	public static void main(final String[] args) throws Exception {
 		Logger logger = Logger.getLogger(Application.class);
+		FileFactory ff = new FileFactory();
+		ff.autoDelete();
+		
 		final HttpServer server = startServer();
 		logger.debug("Hit enter to stop server");
 		System.in.read();

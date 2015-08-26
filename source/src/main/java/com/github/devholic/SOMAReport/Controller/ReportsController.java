@@ -355,6 +355,7 @@ public class ReportsController {
 		JSONArray unConfirmed = new JSONArray();
 		JSONArray allList = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/report",
 				"report_by_user", new Object[] { userId + " ", "" }, new Object[] { userId, "" }, true, true, false)));
+
 		for (int i = 0; i < allList.length(); i++) {
 			JSONObject doc = allList.getJSONObject(i).getJSONObject("doc");
 			if (!doc.has("confirmed")) {

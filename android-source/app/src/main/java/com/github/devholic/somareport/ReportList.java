@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +24,7 @@ import com.github.devholic.somareport.data.view.Project;
 import com.github.devholic.somareport.data.view.ReportInfo;
 import com.github.devholic.somareport.data.view.User;
 import com.github.devholic.somareport.utils.HttpClientFactory;
-import com.github.devholic.somareport.utils.ProfileImageLoader;
+import com.github.devholic.somareport.utils.ImageLoaderUtil;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -130,6 +129,7 @@ public class ReportList extends AppCompatActivity {
                         startActivity(intent);
                         return true;
                     case R.id.drawer_logout:
+                        HttpClientFactory.closeClient();
                         intent = new Intent(ReportList.this, Login.class);
                         startActivity(intent);
                         return true;
@@ -229,8 +229,6 @@ public class ReportList extends AppCompatActivity {
             holder.title.setText(report.getTitle());
             holder.topic.setText(report.getTopic());
 
-
-
             if (report.isConfirmed()) {
                 holder.confirmed.setText("작\n성\n완\n료");
                 holder.confirmed.setBackgroundColor(getResources().getColor(R.color.buttonUnconfirmed));
@@ -240,7 +238,7 @@ public class ReportList extends AppCompatActivity {
                 holder.confirmed.setBackgroundColor(getResources().getColor(R.color.buttonConfirmed));
             }
 
-            ProfileImageLoader profileImageLoader;
+            ImageLoaderUtil imageLoaderUtil;
             String[] attendee = report.getAttendee();
             Log.i(TAG, "attendee:: "+attendee.toString());
             LinearLayout linearLayout = new LinearLayout(holder.attendee.getContext());
@@ -251,16 +249,8 @@ public class ReportList extends AppCompatActivity {
             for (int i=0; i<attendee.length; i++) {
                 CircleImageView circleImageView = new CircleImageView(holder.attendee.getContext());
 
-                params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                int length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, circleImageView.getResources().getDisplayMetrics());
-                params.width = length;
-                params.height = length;
-                length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, circleImageView.getResources().getDisplayMetrics());
-                params.rightMargin = length;
-                circleImageView.setLayoutParams(params);
-
-                profileImageLoader = new ProfileImageLoader(attendee[i], circleImageView);
-                profileImageLoader.getProfile();
+                imageLoaderUtil = new ImageLoaderUtil(attendee[i], circleImageView);
+                imageLoaderUtil.setProfile(36);
                 linearLayout.addView(circleImageView);
             }
             holder.attendee.removeAllViews();
@@ -328,8 +318,8 @@ public class ReportList extends AppCompatActivity {
                     else
                         drawerRole.setText("SW Maestro 사무국");
 
-                    ProfileImageLoader profileImageLoader = new ProfileImageLoader(userInfo.getId(), drawerProfile);
-                    profileImageLoader.getProfile();
+                    ImageLoaderUtil imageLoaderUtil = new ImageLoaderUtil(userInfo.getId(), drawerProfile);
+                    imageLoaderUtil.setProfile(0);
                 }
             }
         }
@@ -400,7 +390,9 @@ public class ReportList extends AppCompatActivity {
 
     @Override
     public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_right);
+        if (type != ReportInfo.UNCONFIRMED) {
+            super.finish();
+            overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_right);
+        }
     }
 }
