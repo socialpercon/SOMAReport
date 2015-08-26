@@ -227,7 +227,7 @@ public class ReportList extends AppCompatActivity {
         public void onBindViewHolder(DetailItemViewHolder holder, int position) {
             ReportInfo report = (ReportInfo)items.get(position);
             holder.title.setText(report.getTitle());
-            holder.topic.setText(report.getTopic());
+            holder.topic.setText("#"+report.getDate());
 
             if (report.isConfirmed()) {
                 holder.confirmed.setText("작\n성\n완\n료");

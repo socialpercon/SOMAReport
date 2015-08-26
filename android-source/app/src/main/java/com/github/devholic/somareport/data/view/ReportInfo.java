@@ -16,7 +16,7 @@ public class ReportInfo {
 
     private String reportId;
     private String title;
-    private String topic;
+    private String date;
     private String[] attendee;
     private String projectId;
     private String projectTitle;
@@ -54,12 +54,12 @@ public class ReportInfo {
         this.title = title;
     }
 
-    public String getTopic() {
-        return topic;
+    public String getDate() {
+        return date;
     }
 
-    public void setTopic(String topic) {
-        this.topic = topic;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String[] getAttendee() {
@@ -81,8 +81,8 @@ public class ReportInfo {
     public ReportInfo(JSONObject doc) {
         try {
             this.reportId = doc.getString("_id");
-            this.title = doc.getString("date");
-            this.topic = doc.getString("topic");
+            this.title = doc.getString("topic");
+            this.date = doc.getString("date");
             JSONArray att = doc.getJSONArray("attendee");
             this.attendee = new String[att.length()];
             if (doc.has("confirmed")) this.confirmed = true;
