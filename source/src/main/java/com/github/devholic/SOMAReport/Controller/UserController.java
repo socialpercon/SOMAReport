@@ -136,7 +136,7 @@ public class UserController {
 	 * @param userId
 	 * @return String (user name)
 	 */
-	public String getUserName(String userId) {
+	public static String getUserName(String userId) {
 		JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(userId));
 		return userDoc.getString("name");
 	}

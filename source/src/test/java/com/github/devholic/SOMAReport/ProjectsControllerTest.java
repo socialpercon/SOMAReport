@@ -10,7 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 
+import com.github.devholic.SOMAReport.Controller.DatabaseController;
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
+import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
 public class ProjectsControllerTest {
 
@@ -19,12 +21,14 @@ public class ProjectsControllerTest {
 	@Test
 	public void testGetMyProject() {
 		JSONArray result = ProjectsController
-				.getMyProject("9d898f7d5bfbf361939e1fafd50470e3");
+				.getMyProject("32b4dfe862d90710dfcd02bdca01de53");
 		for (int i = 0; i < result.length(); i++) {
 			Log.info(result.get(i));
 			assertEquals(result.getJSONObject(i).getString("mentor"),
-					"9d898f7d5bfbf361939e1fafd50470e3");
+					"32b4dfe862d90710dfcd02bdca01de53");
 		}
+		System.out.println(ProjectsController
+				.getMyProject("32b4dfe862d90710dfcd02bdca01de53", new Object[]{6, 1, 1}));
 	}
 
 	@Test
@@ -61,5 +65,14 @@ public class ProjectsControllerTest {
 	public void testGetDetailByProjectId() {
 		ProjectsController project = new ProjectsController();
 		System.out.println(project.getDetailByProjectId("9d898f7d5bfbf361939e1fafd518a9a2"));
+	}
+	
+	@Test
+	public void testMentorOfProject() {
+		String projectId = "32b4dfe862d90710dfcd02bdca0291d5";
+		String mentorId = ProjectsController.mentorOfProject(projectId);
+		DatabaseController db = new DatabaseController();
+		JSONObject project = JSONFactory.inputStreamToJson(db.getDoc(projectId));
+		assertEquals(project.getString("mentor"), mentorId);
 	}
 }

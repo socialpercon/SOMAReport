@@ -2,13 +2,7 @@ package com.github.devholic.SOMAReport.Controller;
 
 import java.io.InputStream;
 
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -36,7 +30,33 @@ public class StatisticsController {
 		JSONArray sumList = new JSONArray();
 		JSONObject stageInfo = JSONFactory.inputStreamToJson(db.getDoc(stageInfoId));
 		String stageString = stageInfo.getString("stageString");
+		JSONArray stages = stageInfo.getJSONArray("stage");
+		Object[] stage = new Object[stages.length()];
+		for (int i=0; i<stages.length(); i++) {
+			stage[i] = stages.get(i);
+		}
 
+//		JSONArray userList = new JSONArray();
+//		if (role.equals("mentor")) {
+//			userList = UserController.getMentorList();
+//		}
+//		else if (role.equals("mentee")) {
+//			userList = UserController.getMenteeList();
+//		}
+//		
+//		for (int i=0; i<userList.length(); i++) {
+//			String projectId = ProjectsController.getMyProject(userList.getString(i), stage);
+//			JSONArray res = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/statistics", "total_time_by_project", projectId, false,
+//								true, true)));
+//			if (res.length() == 0) {
+//				JSONObject doc = new JSONObject();
+//				doc.put("userId", userList.get(i));
+//				doc.put("userName", UserController.getUserName(userList.getString(i)));
+//				doc.put("stage", stages);
+//				
+//			}
+//		}
+		
 		if (role.equals("mentor")) {
 			JSONArray mentor = UserController.getMentorList();
 			for (int i = 0; i < mentor.length(); i++) {

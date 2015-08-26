@@ -135,6 +135,7 @@ public class ReportsController {
 			JSONObject reportDoc = new JSONObject();
 			reportDoc.put("type", "report");
 			reportDoc.put("project", document.get("project"));
+			reportDoc.put("mentor", ProjectsController.mentorOfProject(document.getString("project")));
 
 			JSONObject reportInfo = document.getJSONObject("report_info");
 			reportInfo.put("date", reportInfo.getString("date"));
