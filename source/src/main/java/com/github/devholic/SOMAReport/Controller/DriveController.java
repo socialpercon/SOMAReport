@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -84,13 +83,13 @@ public class DriveController {
 				.getByView("_design/drive", "account", false, false, false)));
 		for (int i = 0; i < ja.length(); i++) {
 			JSONObject data = ja.getJSONObject(i);
-			if (data.getString("value").equals("0.json")) {
-			} else {
-			}
+			Log.info(data.toString());
 			Token t = getToken(data.getString("value"));
 			Drive drive = buildService(getCredential(t.getAccessToken(),
 					t.getRefreshToken()));
-			if ((getTotalQuota(drive) - getUsedQuota(drive)) > 104857600) {
+			if ((getTotalQuota(drive) - getUsedQuota(drive)) > Long
+					.parseLong("16102000000")) {
+				Log.info("optimized storage : " + i);
 				return Integer.toString(i);
 			}
 		}
@@ -107,8 +106,7 @@ public class DriveController {
 	public void uploadFileToProject(String projectId, java.io.File file,
 			String originalName) throws IOException {
 		DatabaseController db = new DatabaseController();
-		
-		
+
 		JSONObject driveQuery = JSONFactory
 				.inputStreamToJson(db.getByView("_design/file", "projectdrive",
 						projectId, false, false, false));
@@ -141,19 +139,9 @@ public class DriveController {
 	 *****************************************/
 	public String uploadProfileImage(String id, java.io.File file,
 			String originalName, String storage) {
-
 		Long now = System.currentTimeMillis();
-		String encoded_originalName = "";
-		try {
-			encoded_originalName = new String(originalName.getBytes("euc-kr"), "utf-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 		String fileTitle = "";
 		JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(id));
-
 		String profileFile;
 		if (userDoc.has("profileFile")) {
 			profileFile = userDoc.getString("profileFile");
@@ -164,26 +152,20 @@ public class DriveController {
 		Map<String, Object> r = null;
 		JSONObject fileDoc = new JSONObject();
 		JSONObject imageData = new JSONObject();
-
 		try {
 			/* ************************************************
 			 * profile file이 있으면 기존에 있는 파일을 삭제하고 fileDoc의 정보를 update 한다.
 			 * ***********************************************
 			 */
 			if (userDoc.has("profileFile")) {
-
 				if (deleteImage(profileFile)) {
-
-					// fileDoc =
-					// JSONFactory.inputStreamToJson(db.getDoc(profileFile));
 					fileDoc.put("_id", id + "-profileImage");
 					fileDoc.put("type", "file");
-					fileDoc.put("name", encoded_originalName);
-					fileDoc.put("storage", "0");
+					fileDoc.put("name", originalName);
+					fileDoc.put("storage", storage);
 					fileDoc.put("modified_at", now);
 					fileDoc.put("cached_at", 0);
 					db.createDoc(fileDoc);
-
 					fileTitle = id;
 				} else {
 					Log.debug("deleteImage Failed...");
@@ -191,13 +173,13 @@ public class DriveController {
 				}
 				/* ************************************************
 				 * profile file이 없으면 새로운 fileDoc을 생성하고, userDoc에 profileFile 정보를
-				 * update한 ***********************************************
+				 * update한다 ***********************************************
 				 */
 			} else {
 				imageData.put("_id", id + "-profileImage");
 				imageData.put("type", "file");
-				imageData.put("name", encoded_originalName);
-				imageData.put("storage", "0");
+				imageData.put("name", originalName);
+				imageData.put("storage", storage);
 				imageData.put("modified_at", now);
 				imageData.put("cached_at", 0);
 				r = db.createDoc(imageData);
@@ -243,17 +225,9 @@ public class DriveController {
 	public String uploadFile(java.io.File file, String originalName,
 			String storage) {
 		Long now = System.currentTimeMillis();
-		String encoded_originalName = "";
-		try {
-			encoded_originalName = new String(originalName.getBytes("euc-kr"), "utf-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 		JSONObject imageData = new JSONObject();
 		imageData.put("type", "file");
-		imageData.put("name", encoded_originalName);
+		imageData.put("name", originalName);
 		imageData.put("storage", storage);
 		imageData.put("modified_at", now);
 		imageData.put("cached_at", 0);
@@ -381,6 +355,7 @@ public class DriveController {
 
 	/********************************************
 	 * 캐시를 생성한다
+	 * 
 	 * @param id
 	 * @param storage
 	 * @return File
@@ -415,16 +390,17 @@ public class DriveController {
 					o.write(buffer, 0, len);
 				}
 				o.close();
-				
-				//couchDB 'cached_at' update
-				JSONObject fileDoc = JSONFactory.inputStreamToJson(db.getDoc(id));
+
+				// couchDB 'cached_at' update
+				JSONObject fileDoc = JSONFactory.inputStreamToJson(db
+						.getDoc(id));
 				Long now = System.currentTimeMillis();
-				
+
 				if (fileDoc.has("cached_at")) {
 					fileDoc.put("cached_at", now);
-            		db.updateDoc(fileDoc);
-            	}
-				
+					db.updateDoc(fileDoc);
+				}
+
 				return cache;
 			} else {
 				return null;
