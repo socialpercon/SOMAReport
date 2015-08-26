@@ -65,9 +65,10 @@ public class UserControllerTest {
 	@Test
 	public void testTotalMentoringInfoByProject() {
 		StatisticsController st = new StatisticsController();
-		JSONArray mentorTotal = st.totalMentoringInfoByStage("mentor", "9d898f7d5bfbf361939e1fafd518ea39");
-		JSONArray menteeTotal = st.totalMentoringInfoByStage("mentee", "9d898f7d5bfbf361939e1fafd518ea39");
+		JSONArray mentorTotal = st.totalMentoringInfoByStage("mentor", "32b4dfe862d90710dfcd02bdca029659");
+		JSONArray menteeTotal = st.totalMentoringInfoByStage("mentee", "32b4dfe862d90710dfcd02bdca029659");
 		Log.info(mentorTotal);
+		Log.info(menteeTotal);
 	//	assertEquals(ProjectsController.getProjectList().length(), mentorTotal.length());
 		for (int i=0; i<mentorTotal.length(); i++) {
 			assertThat(mentorTotal.getJSONObject(i).get("mentoringNum"), not(nullValue()));
@@ -95,6 +96,7 @@ public class UserControllerTest {
 	public void testTotalMentoringInfoByMonth() {
 		StatisticsController stC = new StatisticsController();
 		Log.info(stC.totalMentoringInfoByMonth(2015, 8, "mentee"));
+		Log.info(stC.totalMentoringInfoByMonth(2015, 8, "mentor"));
 	}
 	
 	@Test

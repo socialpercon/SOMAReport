@@ -148,9 +148,9 @@ public class ReportsController {
 			reportInfo.put("date", reportInfo.getString("date"));
 			reportInfo.put("mentoring_num",
 					numOfReports(document.getString("project")) + 1);
-			int whole = calWholeTime(reportInfo);
+			int whole = calWholeTime(reportInfo) / 60;
 			reportInfo.put("whole_time", whole);
-			int total = (whole - reportInfo.getInt("except_time"));
+			int total = (whole - reportInfo.getInt("except_time")/60);
 			reportInfo.put("total_time", total);
 			reportDoc.put("report_info", reportInfo);
 
