@@ -306,17 +306,15 @@ public class DriveController {
 	}
 
 	public java.io.File getUserImage(String id) {
-		DatabaseController db = new DatabaseController();
-		JSONObject fileInfo = JSONFactory.inputStreamToJson(db.getByView(
-				"_design/file", "info", id + "-profileImage", false, false,
-				false));
 		Log.info(id);
+		DatabaseController db = new DatabaseController();
+		JSONObject fileInfo = JSONFactory.inputStreamToJson(db.getDoc(id));
 		Log.info("info : " + fileInfo.toString());
 		java.io.File f = new java.io.File("cache/" + id);
 		if (f.isFile()) {
 			return f;
 		} else {
-			return createCache(id, "0");
+			return createCache(id, fileInfo.getString("storage"));
 		}
 	}
 
@@ -413,8 +411,7 @@ public class DriveController {
 		try {
 			GoogleAuthorizationCodeFlow flow = getFlow();
 			GoogleTokenResponse resp;
-			resp = flow.newTokenRequest(code).setRedirectUri(url + fileName)
-					.execute();
+			resp = flow.newTokenRequest(code).setRedirectUri(url).execute();
 			PrintWriter out = new PrintWriter(fileName + ".json");
 			out.println(resp.toString());
 			out.close();

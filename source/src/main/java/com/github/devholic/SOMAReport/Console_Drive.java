@@ -70,7 +70,7 @@ public class Console_Drive {
 		if (session.getAttribute("user_id") != null
 				&& session.getAttribute("role").equals("admin")) {
 			UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
-			builder.path("console/drive/auth/add/");
+			builder.path("console/drive/auth/add/" + storage);
 			DriveController drive = new DriveController();
 			if (drive.createCredentialFlow2(code, storage, builder.build()
 					.toString())) {
@@ -80,6 +80,8 @@ public class Console_Drive {
 				jo.put("credential", storage + ".json");
 				db.createDoc(jo);
 			}
+			builder = UriBuilder.fromUri(uri.getBaseUri());
+			builder.path("console/drive");
 			return Response.seeOther(builder.build()).build();
 		} else {
 			return Response.status(401)
