@@ -36,24 +36,19 @@ public class ReportsController {
 	public JSONArray getReportByProjectId(String projectId) {
 		JSONArray list = new JSONArray();
 		try {
-			InputStream is = db.getByView("_design/report", "all_by_project",
-					new Object[] { projectId + " ", " " }, new Object[] {
-							projectId, " " }, true, true, false);
-			JSONArray a = JSONFactory
-					.getData(JSONFactory.inputStreamToJson(is));
+			InputStream is = db.getByView("_design/report", "all_by_project", new Object[] { projectId + " ", " " },
+					new Object[] { projectId, " " }, true, true, false);
+			JSONArray a = JSONFactory.getData(JSONFactory.inputStreamToJson(is));
 			Log.debug("ohohohohoh" + a.toString());
 			for (int i = 0; i < a.length(); i++) {
 				JSONObject doc = a.getJSONObject(i).getJSONObject("doc");
 				JSONObject reportInfo = new JSONObject();
 				reportInfo.put("_id", doc.getString("_id"));
 				reportInfo.put("project", doc.get("project"));
-				String projectTitle = JSONFactory.inputStreamToJson(
-						db.getDoc(projectId)).getString("title");
+				String projectTitle = JSONFactory.inputStreamToJson(db.getDoc(projectId)).getString("title");
 				reportInfo.put("projectTitle", projectTitle);
-				reportInfo.put("date", doc.getJSONObject("report_info")
-						.getString("date"));
-				reportInfo.put("topic", doc.getJSONObject("report_details")
-						.getString("topic"));
+				reportInfo.put("date", doc.getJSONObject("report_info").getString("date"));
+				reportInfo.put("topic", doc.getJSONObject("report_details").getString("topic"));
 				reportInfo.put("attendee", doc.getJSONArray("attendee"));
 				if (doc.has("confirmed"))
 					reportInfo.put("confirmed", doc.get("confirmed"));
@@ -91,8 +86,7 @@ public class ReportsController {
 	 * @param reportId
 	 * @return
 	 **************************************************************************/
-	public JSONObject getReportDetailByReportId(
-			@PathParam("reportId") String reportId) {
+	public JSONObject getReportDetailByReportId(@PathParam("reportId") String reportId) {
 		JSONObject detail = new JSONObject();
 		try {
 			InputStream is = db.getDoc(reportId);
@@ -112,10 +106,8 @@ public class ReportsController {
 	public JSONArray getReportList() {
 		JSONArray reportList = new JSONArray();
 		try {
-			InputStream is = db.getByView("_design/report", "all_by_project",
-					true, true, false);
-			JSONArray jo = JSONFactory.getData(JSONFactory
-					.inputStreamToJson(is));
+			InputStream is = db.getByView("_design/report", "all_by_project", true, true, false);
+			JSONArray jo = JSONFactory.getData(JSONFactory.inputStreamToJson(is));
 			for (int i = 0; i < jo.length(); i++) {
 				reportList.put(jo.getJSONObject(i).get("doc"));
 			}
@@ -146,11 +138,10 @@ public class ReportsController {
 
 			JSONObject reportInfo = document.getJSONObject("report_info");
 			reportInfo.put("date", reportInfo.getString("date"));
-			reportInfo.put("mentoring_num",
-					numOfReports(document.getString("project")) + 1);
+			reportInfo.put("mentoring_num", numOfReports(document.getString("project")) + 1);
 			int whole = calWholeTime(reportInfo) / 60;
 			reportInfo.put("whole_time", whole);
-			int total = (whole - reportInfo.getInt("except_time")/60);
+			int total = (whole - reportInfo.getInt("except_time") / 60);
 			reportInfo.put("total_time", total);
 			reportDoc.put("report_info", reportInfo);
 
@@ -158,8 +149,7 @@ public class ReportsController {
 			if (document.has("absentee"))
 				reportDoc.put("absentee", document.get("absentee"));
 			reportDoc.put("report_details", document.get("report_details"));
-			reportDoc.put("report_attachments",
-					document.get("report_attachments"));
+			reportDoc.put("report_attachments", document.get("report_attachments"));
 			id = db.createDoc(reportDoc).get("_id").toString();
 			reportDoc.put("_id", id);
 			Log.info(reportDoc);
@@ -174,13 +164,11 @@ public class ReportsController {
 
 	public Response updateReport() {
 		try {
-			return Response.status(200).type(MediaType.APPLICATION_JSON)
-					.entity("put : 200").build();
+			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("put : 200").build();
 		} catch (Exception e) {
 			Log.error(e.getLocalizedMessage());
 		}
-		return Response.status(500).type(MediaType.APPLICATION_JSON)
-				.entity("put : 500").build();
+		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("put : 500").build();
 	}
 
 	/************************************************************************
@@ -212,8 +200,7 @@ public class ReportsController {
 	 */
 	public int numOfReports(String projectId) {
 		JSONArray reports = JSONFactory.getData(JSONFactory
-				.inputStreamToJson(db.getByView("_design/report",
-						"all_by_project", projectId, false, false, false)));
+				.inputStreamToJson(db.getByView("_design/report", "all_by_project", projectId, false, false, false)));
 		return reports.length();
 	}
 
@@ -248,25 +235,18 @@ public class ReportsController {
 	 * @return JSONObject (report document)
 	 */
 	public JSONObject getReportWithNames(String reportId) {
-		JSONObject reportDoc = JSONFactory.inputStreamToJson(db
-				.getDoc(reportId));
+		JSONObject reportDoc = JSONFactory.inputStreamToJson(db.getDoc(reportId));
 		UserController user = new UserController();
 		JSONArray attendee = reportDoc.getJSONArray("attendee");
 		for (int i = 0; i < attendee.length(); i++) {
-			attendee.getJSONObject(i)
-					.put("name",
-							user.getUserName(attendee.getJSONObject(i)
-									.getString("id")));
+			attendee.getJSONObject(i).put("name", user.getUserName(attendee.getJSONObject(i).getString("id")));
 		}
 		reportDoc.put("attendee", attendee);
 
 		if (reportDoc.has("absentee")) {
 			JSONArray absentee = reportDoc.getJSONArray("absentee");
 			for (int i = 0; i < absentee.length(); i++) {
-				absentee.getJSONObject(i).put(
-						"name",
-						user.getUserName(attendee.getJSONObject(i).getString(
-								"id")));
+				absentee.getJSONObject(i).put("name", user.getUserName(absentee.getJSONObject(i).getString("id")));
 			}
 			reportDoc.put("absentee", absentee);
 		}
@@ -281,8 +261,7 @@ public class ReportsController {
 
 	public void renderDocx_mentoringReport(String reportId) throws Exception {
 		System.out.println("renderDocx_mentoringReport excuted....");
-		WordprocessingMLPackage wordPackage = WordprocessingMLPackage
-				.load(new java.io.File("mentoringReport.docx"));
+		WordprocessingMLPackage wordPackage = WordprocessingMLPackage.load(new java.io.File("mentoringReport.docx"));
 		VariablePrepare.prepare(wordPackage);
 		MainDocumentPart documentPart = wordPackage.getMainDocumentPart();
 		HashMap<String, String> mappings = new HashMap<String, String>();
@@ -358,8 +337,7 @@ public class ReportsController {
 		ProjectsController projectC = new ProjectsController();
 		JSONArray projects = projectC.projectsInStageInfo(stageId);
 		for (int i = 0; i < projects.length(); i++) {
-			JSONArray reports = getReportByProjectId(projects.getJSONObject(i)
-					.getString("_id"));
+			JSONArray reports = getReportByProjectId(projects.getJSONObject(i).getString("_id"));
 			for (int j = 0; j < reports.length(); j++) {
 				allReports.put(reports.getJSONObject(j));
 			}
@@ -375,32 +353,19 @@ public class ReportsController {
 	 */
 	public JSONArray getUnconfirmedReports(String userId) {
 		JSONArray unConfirmed = new JSONArray();
-		JSONArray allList = JSONFactory.getData(JSONFactory
-				.inputStreamToJson(db.getByView("_design/report",
-						"report_by_user", new Object[] { userId + " ", "" },
-						new Object[] { userId, "" }, true, true, false)));
-		Log.info(allList.toString());
+		JSONArray allList = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/report",
+				"report_by_user", new Object[] { userId + " ", "" }, new Object[] { userId, "" }, true, true, false)));
 		for (int i = 0; i < allList.length(); i++) {
 			JSONObject doc = allList.getJSONObject(i).getJSONObject("doc");
-			if (doc.has("confirmed")) {
-				if (doc.getString("confirmed").equals("false")) {
-					JSONObject docu = new JSONObject();
-					docu.put("reportId", doc.get("_id"));
-					docu.put("reportTitle", doc.getJSONObject("report_info")
-							.get("date"));
-					docu.put("reportTopic", doc.getJSONObject("report_details")
-							.get("topic"));
-					docu.put("attendee", doc.get("attendee"));
-					unConfirmed.put(docu);
-				}
-			} else {
+			if (!doc.has("confirmed")) {
 				JSONObject docu = new JSONObject();
-				docu.put("reportId", doc.get("_id"));
-				docu.put("reportTitle",
-						doc.getJSONObject("report_info").get("date"));
-				docu.put("reportTopic", doc.getJSONObject("report_details")
-						.get("topic"));
+				docu.put("_id", doc.get("_id"));
+				docu.put("date", doc.getJSONObject("report_info").get("date"));
+				docu.put("topic", doc.getJSONObject("report_details").get("topic"));
 				docu.put("attendee", doc.get("attendee"));
+				docu.put("project", doc.get("project"));
+				JSONObject project = JSONFactory.inputStreamToJson(db.getDoc(doc.getString("project")));
+				docu.put("projectTitle", project.get("title"));
 				unConfirmed.put(docu);
 			}
 		}

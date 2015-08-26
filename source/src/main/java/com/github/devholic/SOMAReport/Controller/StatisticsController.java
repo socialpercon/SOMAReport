@@ -123,8 +123,7 @@ public class StatisticsController {
 	/****
 	 * 모든 멘토/멘티의 "월별" 멘토링 시간 총합 및 시행 횟수를 리턴
 	 * 
-	 * @param year
-	 *            , month, id
+	 * @param year, month, id
 	 * @return [ {userName, userId, mentoringSum, mentoringNum} ]
 	 */
 	public JSONArray totalMentoringInfoByMonth(int year, int month, String role) {

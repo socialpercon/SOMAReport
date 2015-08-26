@@ -10,6 +10,8 @@
     <color name="colorAccent">#6289D9</color>
     <color name="colorAccentSub">#009688</color>
     <color name="colorAccentDark">#B71C1C</color>
+    <color name="buttonUnconfirmed">#66C4DE</color>
+    <color name="buttonConfirmed">#FC6A6A</color>
 
     <color name="textColorTitle">#323845</color>
     <color name="textColorPrimary">#FF000000</color>

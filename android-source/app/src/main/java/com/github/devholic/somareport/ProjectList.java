@@ -203,6 +203,7 @@ public class ProjectList extends AppCompatActivity {
             String[] mentee = project.getMentee();
             for (int i=0; i<mentee.length; i++) {
                 CircleImageView menteeImage = new CircleImageView(holder.mentee.getContext());
+
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 int length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, menteeImage.getResources().getDisplayMetrics());
                 params.width = length;
@@ -210,6 +211,7 @@ public class ProjectList extends AppCompatActivity {
                 length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, menteeImage.getResources().getDisplayMetrics());
                 params.rightMargin = length;
                 menteeImage.setLayoutParams(params);
+
                 profileImageLoader = new ProfileImageLoader(mentee[i], menteeImage);
                 profileImageLoader.getProfile();
                 holder.mentee.addView(menteeImage);

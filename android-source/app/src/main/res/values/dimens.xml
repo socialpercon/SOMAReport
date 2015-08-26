@@ -6,9 +6,10 @@
 
     <!-- FontSize -->
     <dimen name="textDisplay1">30sp</dimen>
-    <dimen name="textHeadline">24sp</dimen>
+    <dimen name="textHeadline">27sp</dimen>
     <dimen name="textTitle">20sp</dimen>
     <dimen name="textSubhead">16sp</dimen>
     <dimen name="textButton">14sp</dimen>
     <dimen name="textCaption">12sp</dimen>
+    <dimen name="textMini">8sp</dimen>
 </resources>

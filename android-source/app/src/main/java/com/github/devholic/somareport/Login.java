@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.github.devholic.somareport.data.view.ReportInfo;
 import com.github.devholic.somareport.utils.HttpClientFactory;
@@ -83,10 +84,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         overridePendingTransition(R.anim.slide_out_left, R.anim.slide_out_right);
     }
 
-    private class LoginTask extends AsyncTask<String, Void, Boolean> {
+    private class LoginTask extends AsyncTask<String, Void, Integer> {
 
         @Override
-        protected Boolean doInBackground(String... params) {
+        protected Integer doInBackground(String... params) {
             try {
                 HttpClient httpClient= HttpClientFactory.getThreadSafeClient();
                 HttpPost httpPost = new HttpPost(getString(R.string.api_url) + "/login");
@@ -110,7 +111,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     stringBuilder.append(new String(b, 0, n));
                 }
                 Log.d("TAG", stringBuilder.toString());
-                return true;
+                return httpResponse.getStatusLine().getStatusCode();
             }
             catch (MalformedURLException e) {
                 Log.e(TAG, e.getLocalizedMessage());
@@ -124,13 +125,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Log.e(TAG, e.getLocalizedMessage());
                 e.printStackTrace();
             }
-            return false;
+            return 0;
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-            if (aBoolean) {
+        protected void onPostExecute(Integer response) {
+            if (response == 200) {
                 Log.d(TAG, "Log in SUCCESS");
                 Intent intent = new Intent(Login.this, ReportList.class);
                 intent.putExtra("reportInfoType", ReportInfo.UNCONFIRMED);
@@ -138,9 +138,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_right, R.anim.slide_left);
             }
+            else if (response == 400) {
+                Log.d(TAG, "Log in FAIL");
+                Toast toast = Toast.makeText(loginBtn.getContext(), "로그인 정보가 잘못되었습니다.", Toast.LENGTH_SHORT);
+                toast.show();
+            }
             else {
                 Log.d(TAG, "Log in FAIL");
+                Toast toast = Toast.makeText(loginBtn.getContext(), "로그인 정보가 잘못되었습니다.", Toast.LENGTH_SHORT);
+                toast.show();
             }
+
         }
     }
 }

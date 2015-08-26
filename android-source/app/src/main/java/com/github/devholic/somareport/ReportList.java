@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -120,6 +121,9 @@ public class ReportList extends AppCompatActivity {
                 Intent intent;
                 switch (menuItem.getItemId()) {
                     case R.id.drawer_Unconfirmed:
+                        intent = new Intent(ReportList.this, ReportList.class);
+                        intent.putExtra("reportInfoType", ReportInfo.UNCONFIRMED);
+                        startActivity(intent);
                         return true;
                     case R.id.drawer_myProject:
                         intent = new Intent(ReportList.this, ProjectList.class);
@@ -135,15 +139,14 @@ public class ReportList extends AppCompatActivity {
             }
         });
 
-        UserInfoTask reportTask = new UserInfoTask();
-        reportTask.execute();
+        UserInfoTask userInfoTask = new UserInfoTask();
+        userInfoTask.execute();
     }
 
     private void setData() {
 
         ReportInfoTask reportInfoTask = new ReportInfoTask();
-        Bundle bundle = getIntent().getExtras();
-        project = bundle.getParcelable("project");
+        Log.d(TAG, "setData(): "+type);
 
         if (type == ReportInfo.UNCONFIRMED) {
             getSupportActionBar().setSubtitle("작성중인 멘토링 보고서");
@@ -152,10 +155,12 @@ public class ReportList extends AppCompatActivity {
         }
 
         else if (type == ReportInfo.BYPROJECT) {
+            Bundle bundle = getIntent().getExtras();
+            project = bundle.getParcelable("project");
 
             getSupportActionBar().setSubtitle("멘토링 보고서 리스트");
             noReportsTextView.setText("이 프로젝트에서 작성된\n멘토링 보고서가\n없습니다");
-            reportInfoTask.execute("/report/list/"+project.getId());
+            reportInfoTask.execute("/report/list/" + project.getId());
         }
 
         else {
@@ -209,7 +214,7 @@ public class ReportList extends AppCompatActivity {
                         Intent intent = new Intent(ReportList.this, ReportDetails.class);
                         ReportInfo r = (ReportInfo) items.get(itemPosition);
                         intent.putExtra("reportId", r.getReportId());
-                        intent.putExtra("pname", project.getTitle());
+                        intent.putExtra("pname", r.getProjectTitle());
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_right, R.anim.slide_left);
                     }
@@ -220,19 +225,46 @@ public class ReportList extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(DetailItemViewHolder holder, int position) {
-                ReportInfo report = (ReportInfo)items.get(position);
-                holder.title.setText(report.getTitle());
-                holder.topic.setText(report.getTopic());
+            ReportInfo report = (ReportInfo)items.get(position);
+            holder.title.setText(report.getTitle());
+            holder.topic.setText(report.getTopic());
 
-                ProfileImageLoader profileImageLoader;
-                String[] attendee = report.getAttendee();
-                for (int i=0; i<attendee.length; i++) {
-                    CircleImageView circleImageView = new CircleImageView(holder.attendee.getContext());
-                    profileImageLoader = new ProfileImageLoader(attendee[i], circleImageView);
-                    profileImageLoader.getProfile();
-                    holder.attendee.addView(circleImageView);
-                }
 
+
+            if (report.isConfirmed()) {
+                holder.confirmed.setText("작\n성\n완\n료");
+                holder.confirmed.setBackgroundColor(getResources().getColor(R.color.buttonUnconfirmed));
+            }
+            else {
+                holder.confirmed.setText("작\n성\n중");
+                holder.confirmed.setBackgroundColor(getResources().getColor(R.color.buttonConfirmed));
+            }
+
+            ProfileImageLoader profileImageLoader;
+            String[] attendee = report.getAttendee();
+            Log.i(TAG, "attendee:: "+attendee.toString());
+            LinearLayout linearLayout = new LinearLayout(holder.attendee.getContext());
+            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            linearLayout.setLayoutParams(params);
+
+            for (int i=0; i<attendee.length; i++) {
+                CircleImageView circleImageView = new CircleImageView(holder.attendee.getContext());
+
+                params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                int length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, circleImageView.getResources().getDisplayMetrics());
+                params.width = length;
+                params.height = length;
+                length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, circleImageView.getResources().getDisplayMetrics());
+                params.rightMargin = length;
+                circleImageView.setLayoutParams(params);
+
+                profileImageLoader = new ProfileImageLoader(attendee[i], circleImageView);
+                profileImageLoader.getProfile();
+                linearLayout.addView(circleImageView);
+            }
+            holder.attendee.removeAllViews();
+            holder.attendee.addView(linearLayout);
         }
 
         @Override
@@ -241,7 +273,7 @@ public class ReportList extends AppCompatActivity {
         }
 
         public class DetailItemViewHolder extends RecyclerView.ViewHolder {
-            TextView title, topic;
+            TextView title, topic, confirmed;
             LinearLayout attendee;
 
             public DetailItemViewHolder(View v) {
@@ -249,6 +281,7 @@ public class ReportList extends AppCompatActivity {
                 title = (TextView) v.findViewById(R.id.report_card_title);
                 topic = (TextView) v.findViewById(R.id.report_card_topic);
                 attendee = (LinearLayout) v.findViewById(R.id.report_card_attendee);
+                confirmed = (TextView) v.findViewById(R.id.confirmed_tv);
             }
         }
     }
@@ -330,11 +363,13 @@ public class ReportList extends AppCompatActivity {
         protected void onPostExecute(String s) {
             if (s != null) {
                 try {
+                    reports = new ArrayList<ReportInfo>();
                     JSONArray data = new JSONArray(s);
                     Log.i(TAG, data.toString());
                     for (int i=0; i<data.length(); i++) {
-                        ReportInfo r = new ReportInfo(data.getJSONObject(i));
-                        reports.add(i, r);
+                        Log.i(TAG, data.getJSONObject(i).toString());
+                        ReportInfo reportInfo = new ReportInfo(data.getJSONObject(i));
+                        reports.add(i, reportInfo);
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getLocalizedMessage());

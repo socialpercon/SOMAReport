@@ -120,7 +120,7 @@ public class Drive {
 				JSONObject doc = drivedocs.getJSONObject(i).getJSONObject("doc");
 				
 				long modified = doc.getLong("modified_at");
-				SimpleDateFormat datefm = new SimpleDateFormat("yyyyMMdd hh:mm");
+				SimpleDateFormat datefm = new SimpleDateFormat("yyyyMMdd HH:mm");
 				Date date = new Date();
 				date.setTime(modified);
 				String str = datefm.format(date);
