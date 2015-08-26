@@ -359,6 +359,12 @@ public class DriveController {
 		}
 	}
 
+	/********************************************
+	 * 캐시를 생성한다
+	 * @param id
+	 * @param storage
+	 * @return File
+	 ********************************************/
 	public java.io.File createCache(String id, String storage) {
 		try {
 			Token token = getToken(storage + ".json");
@@ -388,6 +394,16 @@ public class DriveController {
 					o.write(buffer, 0, len);
 				}
 				o.close();
+				
+				//couchDB 'cached_at' update
+				JSONObject fileDoc = JSONFactory.inputStreamToJson(db.getDoc(id));
+				Long now = System.currentTimeMillis();
+				
+				if (fileDoc.has("cached_at")) {
+					fileDoc.put("cached_at", now);
+            		db.updateDoc(fileDoc);
+            	}
+				
 				return cache;
 			} else {
 				return null;

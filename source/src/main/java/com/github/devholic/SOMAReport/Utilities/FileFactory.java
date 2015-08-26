@@ -93,11 +93,11 @@ public class FileFactory {
             	deleteCache(file);
             } else {
             	//couchDB에 cached_at을 0으로 초기화시킨다.
-            	JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(file.getName()));
+            	JSONObject fileDoc = JSONFactory.inputStreamToJson(db.getDoc(file.getName()));
             	
-            	if (userDoc.has("cached_at")) {
-            		userDoc.put("cached_at", 0);
-            		db.updateDoc(userDoc);
+            	if (fileDoc.has("cached_at")) {
+            		fileDoc.put("cached_at", 0);
+            		db.updateDoc(fileDoc);
             	}
             	
                 file.delete();
