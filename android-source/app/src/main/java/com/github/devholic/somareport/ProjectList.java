@@ -18,27 +18,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.devholic.somareport.data.view.Project;
 import com.github.devholic.somareport.data.view.ReportInfo;
 import com.github.devholic.somareport.data.view.User;
 import com.github.devholic.somareport.utils.HttpClientFactory;
-import com.github.devholic.somareport.utils.ProfileImageLoader;
+import com.github.devholic.somareport.utils.ImageLoaderUtil;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -197,23 +193,15 @@ public class ProjectList extends AppCompatActivity {
             holder.stage.setText(project.getStage());
             holder.title.setText(project.getTitle());
 
-            ProfileImageLoader profileImageLoader = new ProfileImageLoader(project.getMentor(), holder.mentor);
-            profileImageLoader.getProfile();
+            ImageLoaderUtil imageLoaderUtil = new ImageLoaderUtil(project.getMentor(), holder.mentor);
+            imageLoaderUtil.setProfile(0);
 
             String[] mentee = project.getMentee();
             for (int i=0; i<mentee.length; i++) {
                 CircleImageView menteeImage = new CircleImageView(holder.mentee.getContext());
 
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                int length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, menteeImage.getResources().getDisplayMetrics());
-                params.width = length;
-                params.height = length;
-                length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, menteeImage.getResources().getDisplayMetrics());
-                params.rightMargin = length;
-                menteeImage.setLayoutParams(params);
-
-                profileImageLoader = new ProfileImageLoader(mentee[i], menteeImage);
-                profileImageLoader.getProfile();
+                imageLoaderUtil = new ImageLoaderUtil(mentee[i], menteeImage);
+                imageLoaderUtil.setProfile(36);
                 holder.mentee.addView(menteeImage);
             }
 
@@ -287,8 +275,8 @@ public class ProjectList extends AppCompatActivity {
                     else
                         drawerRole.setText("SW Maestro 사무국");
 
-                    ProfileImageLoader profileImageLoader = new ProfileImageLoader(userInfo.getId(), drawerProfile);
-                    profileImageLoader.getProfile();
+                    ImageLoaderUtil imageLoaderUtil = new ImageLoaderUtil(userInfo.getId(), drawerProfile);
+                    imageLoaderUtil.setProfile(0);
                 }
             }
         }

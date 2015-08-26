@@ -243,7 +243,7 @@
                 <ImageButton
                     android:id="@+id/report_details_photo"
                     android:layout_width="fill_parent"
-                    android:layout_height="240dp"
+                    android:layout_height="360dp"
                     android:layout_margin="@dimen/report_detail_photo_margin"
                     android:layout_gravity="center"
                     android:background="@color/background"

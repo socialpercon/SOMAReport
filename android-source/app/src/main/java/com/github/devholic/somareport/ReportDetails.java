@@ -26,29 +26,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.devholic.somareport.utils.HttpClientFactory;
-import com.github.devholic.somareport.utils.ProfileImageLoader;
+import com.github.devholic.somareport.utils.ImageLoaderUtil;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.FileEntity;
-import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.charset.Charset;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -165,7 +161,7 @@ public class ReportDetails extends AppCompatActivity {
             if (string != null) {
                 try {
                     JSONObject data = new JSONObject(string);
-                    ProfileImageLoader profileImageLoader;
+                    ImageLoaderUtil imageLoaderUtil;
                     String ptitle = getIntent().getStringExtra("pname");
 
                     JSONObject reportInfo = data.getJSONObject("report_info");
@@ -179,16 +175,8 @@ public class ReportDetails extends AppCompatActivity {
 
                     for(int i=0; i<reportAttendee.length(); i++) {
                         CircleImageView attend = new CircleImageView(attendee.getContext());
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                        int length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, attend.getResources().getDisplayMetrics());
-                        params.width = length;
-                        params.height = length;
-                        length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, attend.getResources().getDisplayMetrics());
-                        params.rightMargin = length;
-                        attend.setLayoutParams(params);
-
-                        profileImageLoader = new ProfileImageLoader(reportAttendee.getJSONObject(i).getString("id"), attend);
-                        profileImageLoader.getProfile();
+                        imageLoaderUtil = new ImageLoaderUtil(reportAttendee.getJSONObject(i).getString("id"), attend);
+                        imageLoaderUtil.setProfile(60);
                         attendee.addView(attend);
                     }
 
@@ -201,17 +189,10 @@ public class ReportDetails extends AppCompatActivity {
                     else {
                         for (int i=0; i<reportAbsentee.length(); i++) {
                             CircleImageView absente = new CircleImageView(absentee.getContext());
-                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            int length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, absente.getResources().getDisplayMetrics());
-                            params.width = length;
-                            params.height = length;
-                            length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, absente.getResources().getDisplayMetrics());
-                            params.rightMargin = length;
-                            absente.setLayoutParams(params);
 
                             JSONObject abs = new JSONObject(reportAbsentee.get(i).toString());
-                            profileImageLoader = new ProfileImageLoader(abs.getString("id"), absente);
-                            profileImageLoader.getProfile();
+                            imageLoaderUtil = new ImageLoaderUtil(abs.getString("id"), absente);
+                            imageLoaderUtil.setProfile(60);
                             absentee.addView(absente);
 
                             TextView reason = new TextView(absentee.getContext());
@@ -243,7 +224,8 @@ public class ReportDetails extends AppCompatActivity {
                     }
                     else {
                         Log.i(TAG, reportDetails.getString("photo"));
-                        photo.setImageURI(Uri.parse("http://10.0.3.2:8080/drive/image?id="+reportDetails.getString("photo")));
+                        imageLoaderUtil = new ImageLoaderUtil(reportDetails.getString("photo"), photo);
+                        imageLoaderUtil.setImageView();
                         photo.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -389,17 +371,19 @@ public class ReportDetails extends AppCompatActivity {
         @Override
         protected Integer doInBackground(File... params) {
             try {
-
                 HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
                 HttpPost httpPost = new HttpPost(getString(R.string.api_url) + "/drive/file/upload/" + reportId);
 
-                List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
-                nameValuePair.add(new BasicNameValuePair("Connection", "Keep-Alive"));
-                Log.i(TAG, nameValuePair.toString());
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
-                MultipartEntity 
-
+                httpPost.setHeader("Connection", "Keep-Alive");
+                httpPost.setHeader("Accept-Charset", "UTF-8");
+                httpPost.setHeader("Content-Type","multipart/form-data; boundary=");
                 File file = params[0];
+                FileBody fileBody = new FileBody(file);
+                MultipartEntityBuilder builder = MultipartEntityBuilder.create()
+                        .setCharset(Charset.forName("UTF-8"))
+                        .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
+                        .addPart("file", fileBody);
+                httpPost.setEntity(builder.build());
 
                 HttpResponse httpResponse = httpClient.execute(httpPost);
                 Header[] headers = httpResponse.getAllHeaders();
