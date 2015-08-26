@@ -229,7 +229,6 @@ public class DriveController {
 	 *****************************************/
 	public String uploadFile(java.io.File file, String originalName,
 			String storage) {
-		storage = "0";
 		Long now = System.currentTimeMillis();
 		JSONObject imageData = new JSONObject();
 		imageData.put("type", "file");
@@ -369,6 +368,7 @@ public class DriveController {
 					.execute();
 			File file = fl.getItems().get(0);
 			if (file != null) {
+				Log.info(file.getDownloadUrl());
 				HttpResponse resp = drive.getRequestFactory()
 						.buildGetRequest(new GenericUrl(file.getDownloadUrl()))
 						.execute();
