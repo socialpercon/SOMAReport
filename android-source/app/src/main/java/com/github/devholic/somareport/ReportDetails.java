@@ -12,11 +12,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -24,21 +23,32 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.github.devholic.somareport.data.view.User;
 import com.github.devholic.somareport.utils.HttpClientFactory;
 import com.github.devholic.somareport.utils.ProfileImageLoader;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.FileEntity;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -60,22 +70,6 @@ public class ReportDetails extends AppCompatActivity {
 
     @Bind(R.id.report_details_toolbar)
     Toolbar toolbar;
-
-    // Drawer
-    @Bind(R.id.drawerLayout)
-    DrawerLayout drawerLayout;
-
-    @Bind(R.id.drawer_view)
-    NavigationView navigationView;
-
-    @Bind(R.id.drawer_profile)
-    CircleImageView drawerProfile;
-
-    @Bind(R.id.drawer_name)
-    TextView drawerName;
-
-    @Bind(R.id.drawer_role)
-    TextView drawerRole;
 
     // Report Details
     @Bind(R.id.report_details_title)
@@ -138,9 +132,9 @@ public class ReportDetails extends AppCompatActivity {
 
     private void setData() {
         reportId = getIntent().getStringExtra("reportId");
-
-
-
+        getSupportActionBar().setSubtitle(getIntent().getStringExtra("pname"));
+        ReportDetailTask reportDetailTask = new ReportDetailTask();
+        reportDetailTask.execute(reportId);
     }
 
     private class ReportDetailTask extends AsyncTask<String, Void, String> {
@@ -149,7 +143,7 @@ public class ReportDetails extends AppCompatActivity {
         protected String doInBackground(String... params) {
             try {
                 HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
-                HttpGet httpGet = new HttpGet(getString(R.string.api_url) + params[0]);
+                HttpGet httpGet = new HttpGet(getString(R.string.api_url) + "/report/" + params[0]);
                 HttpResponse httpResponse = httpClient.execute(httpGet);
                 int status = httpResponse.getStatusLine().getStatusCode();
                 Log.d(TAG, "Response Status:"+status);
@@ -185,14 +179,39 @@ public class ReportDetails extends AppCompatActivity {
 
                     for(int i=0; i<reportAttendee.length(); i++) {
                         CircleImageView attend = new CircleImageView(attendee.getContext());
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        int length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, attend.getResources().getDisplayMetrics());
+                        params.width = length;
+                        params.height = length;
+                        length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, attend.getResources().getDisplayMetrics());
+                        params.rightMargin = length;
+                        attend.setLayoutParams(params);
+
                         profileImageLoader = new ProfileImageLoader(reportAttendee.getJSONObject(i).getString("id"), attend);
                         profileImageLoader.getProfile();
                         attendee.addView(attend);
                     }
-                    if (reportAbsentee.length() > 0) {
+
+                    if (reportAbsentee.length() == 0) {
+                        TextView tv = (TextView) findViewById(R.id.report_details_absentee_t);
+                        tv.setVisibility(View.GONE);
+                        absentee.setVisibility(View.GONE);
+                    }
+
+                    else {
                         for (int i=0; i<reportAbsentee.length(); i++) {
                             CircleImageView absente = new CircleImageView(absentee.getContext());
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            int length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, absente.getResources().getDisplayMetrics());
+                            params.width = length;
+                            params.height = length;
+                            length = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, absente.getResources().getDisplayMetrics());
+                            params.rightMargin = length;
+                            absente.setLayoutParams(params);
+
                             JSONObject abs = new JSONObject(reportAbsentee.get(i).toString());
+                            profileImageLoader = new ProfileImageLoader(abs.getString("id"), absente);
+                            profileImageLoader.getProfile();
                             absentee.addView(absente);
 
                             TextView reason = new TextView(absentee.getContext());
@@ -204,7 +223,6 @@ public class ReportDetails extends AppCompatActivity {
                         }
                     }
 
-                    number.setText(reportInfo.get("mentoring_time").toString()+" 회");
                     place.setText(reportInfo.get("place").toString());
                     time.setText(reportInfo.get("total_time")+"(제외시간 "+reportInfo.get("except_time")+")");
 
@@ -215,7 +233,7 @@ public class ReportDetails extends AppCompatActivity {
                     plan.setText(reportDetails.get("plan").toString());
                     opinion.setText(reportDetails.get("opinion").toString());
 
-                    if (data.has("photo")) {
+                    if (!reportDetails.has("photo")) {
                         photo.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -224,7 +242,8 @@ public class ReportDetails extends AppCompatActivity {
                         });
                     }
                     else {
-                        photo.setImageURI(Uri.parse("http://10.0.3.2:8080/drive/user/image?id="+data.getString("photo")));
+                        Log.i(TAG, reportDetails.getString("photo"));
+                        photo.setImageURI(Uri.parse("http://10.0.3.2:8080/drive/image?id="+reportDetails.getString("photo")));
                         photo.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -332,8 +351,6 @@ public class ReportDetails extends AppCompatActivity {
             else if (requestCode == GET_PICTURE_CAMERA) {
                 try {
                     selected = MediaStore.Images.Media.getBitmap(getContentResolver(), cameraPictureUri);
-                    File f = new File(cameraPictureUri.getPath());
-                    if (f.exists())  f.delete();
                 } catch (IOException e) {
                     Log.e(TAG, e.getLocalizedMessage());
                 }
@@ -360,7 +377,56 @@ public class ReportDetails extends AppCompatActivity {
             * upload on drive repository (_id.jpg)
             * */
 
+            File f = new File(cameraPictureUri.getPath());
+            ImageUploadTask imageUploadTask = new ImageUploadTask();
+            imageUploadTask.execute(f);
+            f.delete();
         }
+    }
+
+    private class ImageUploadTask extends AsyncTask<File, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(File... params) {
+            try {
+
+                HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
+                HttpPost httpPost = new HttpPost(getString(R.string.api_url) + "/drive/file/upload/" + reportId);
+
+                List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
+                nameValuePair.add(new BasicNameValuePair("Connection", "Keep-Alive"));
+                Log.i(TAG, nameValuePair.toString());
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
+                MultipartEntity 
+
+                File file = params[0];
+
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                Header[] headers = httpResponse.getAllHeaders();
+                for(Header h : headers) {
+                    Log.i("TAG", "Key : " + h.getName()
+                            + " ,Value : " + h.getValue());
+                }
+
+                return httpResponse.getStatusLine().getStatusCode();
+            } catch (IOException e) {
+                Log.e(TAG, e.getLocalizedMessage());
+            }
+            return 0;
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            if (integer == 200) {
+                Toast toast = Toast.makeText(photo.getContext(), "사진이 업로드되었습니다", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            else {
+                Toast toast = Toast.makeText(photo.getContext(), "사진 업로드 실패", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+
     }
 
     @Override

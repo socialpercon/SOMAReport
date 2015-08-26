@@ -48,7 +48,7 @@ public class Report {
 		Log.info(unconfirmed);
 
 		if (unconfirmed.length() > 0)
-			return Response.status(200).type(MediaType.APPLICATION_JSON)
+			return Response.status(200).type(MediaType.APPLICATION_JSON + ";charset=utf-8")
 					.entity(unconfirmed.toString()).build();
 		else
 			// unconfirmed reports does not exists
@@ -63,7 +63,7 @@ public class Report {
 		JSONArray list = rCtrl.getReportByProjectId(projectId);
 
 		if (list.length() > 0)
-			return Response.status(200).type(MediaType.APPLICATION_JSON)
+			return Response.status(200).type(MediaType.APPLICATION_JSON + ";charset=utf-8")
 					.entity(list.toString()).build();
 		else
 			return Response.status(412).build();
@@ -75,7 +75,7 @@ public class Report {
 	public Response API_Report_Detail(@PathParam("id") String reportId) {
 		ReportsController rCtrl = new ReportsController();
 		JSONObject report = rCtrl.getReportWithNames(reportId);
-		return Response.status(200).type("application/json")
+		return Response.status(200).type("application/json;charset=utf-8")
 					.entity(report.toString()).build();
 	}
 
