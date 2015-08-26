@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +84,9 @@ public class DriveController {
 				.getByView("_design/drive", "account", false, false, false)));
 		for (int i = 0; i < ja.length(); i++) {
 			JSONObject data = ja.getJSONObject(i);
+			if (data.getString("value").equals("0.json")) {
+			} else {
+			}
 			Token t = getToken(data.getString("value"));
 			Drive drive = buildService(getCredential(t.getAccessToken(),
 					t.getRefreshToken()));
@@ -103,6 +107,8 @@ public class DriveController {
 	public void uploadFileToProject(String projectId, java.io.File file,
 			String originalName) throws IOException {
 		DatabaseController db = new DatabaseController();
+		
+		
 		JSONObject driveQuery = JSONFactory
 				.inputStreamToJson(db.getByView("_design/file", "projectdrive",
 						projectId, false, false, false));
@@ -137,7 +143,14 @@ public class DriveController {
 			String originalName, String storage) {
 
 		Long now = System.currentTimeMillis();
-
+		String encoded_originalName = "";
+		try {
+			encoded_originalName = new String(originalName.getBytes("euc-kr"), "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		String fileTitle = "";
 		JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(id));
 
@@ -165,7 +178,7 @@ public class DriveController {
 					// JSONFactory.inputStreamToJson(db.getDoc(profileFile));
 					fileDoc.put("_id", id + "-profileImage");
 					fileDoc.put("type", "file");
-					fileDoc.put("name", originalName);
+					fileDoc.put("name", encoded_originalName);
 					fileDoc.put("storage", "0");
 					fileDoc.put("modified_at", now);
 					fileDoc.put("cached_at", 0);
@@ -183,7 +196,7 @@ public class DriveController {
 			} else {
 				imageData.put("_id", id + "-profileImage");
 				imageData.put("type", "file");
-				imageData.put("name", originalName);
+				imageData.put("name", encoded_originalName);
 				imageData.put("storage", "0");
 				imageData.put("modified_at", now);
 				imageData.put("cached_at", 0);
@@ -229,11 +242,18 @@ public class DriveController {
 	 *****************************************/
 	public String uploadFile(java.io.File file, String originalName,
 			String storage) {
-		storage = "0";
 		Long now = System.currentTimeMillis();
+		String encoded_originalName = "";
+		try {
+			encoded_originalName = new String(originalName.getBytes("euc-kr"), "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		JSONObject imageData = new JSONObject();
 		imageData.put("type", "file");
-		imageData.put("name", originalName);
+		imageData.put("name", encoded_originalName);
 		imageData.put("storage", storage);
 		imageData.put("modified_at", now);
 		imageData.put("cached_at", 0);
@@ -359,6 +379,12 @@ public class DriveController {
 		}
 	}
 
+	/********************************************
+	 * 캐시를 생성한다
+	 * @param id
+	 * @param storage
+	 * @return File
+	 ********************************************/
 	public java.io.File createCache(String id, String storage) {
 		try {
 			Token token = getToken(storage + ".json");
@@ -369,6 +395,7 @@ public class DriveController {
 					.execute();
 			File file = fl.getItems().get(0);
 			if (file != null) {
+				Log.info(file.getDownloadUrl());
 				HttpResponse resp = drive.getRequestFactory()
 						.buildGetRequest(new GenericUrl(file.getDownloadUrl()))
 						.execute();
@@ -388,6 +415,16 @@ public class DriveController {
 					o.write(buffer, 0, len);
 				}
 				o.close();
+				
+				//couchDB 'cached_at' update
+				JSONObject fileDoc = JSONFactory.inputStreamToJson(db.getDoc(id));
+				Long now = System.currentTimeMillis();
+				
+				if (fileDoc.has("cached_at")) {
+					fileDoc.put("cached_at", now);
+            		db.updateDoc(fileDoc);
+            	}
+				
 				return cache;
 			} else {
 				return null;

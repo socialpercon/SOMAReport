@@ -1,6 +1,9 @@
 package com.github.devholic.SOMAReport;
 
 import java.net.URI;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -31,12 +34,22 @@ public class Application {
 
 	public static void main(final String[] args) throws Exception {
 		Logger logger = Logger.getLogger(Application.class);
-		FileFactory ff = new FileFactory();
-		ff.autoDelete();
+		
+		ScheduleTask st = new ScheduleTask();
+		Timer jobScheduler = new Timer(true);
+		jobScheduler.scheduleAtFixedRate(st, 10000, 3600000);
 		
 		final HttpServer server = startServer();
 		logger.debug("Hit enter to stop server");
 		System.in.read();
 		server.shutdownNow();
 	}
+}
+
+
+class ScheduleTask extends TimerTask{
+	 public void run() {
+		 FileFactory ff = new FileFactory();
+		 ff.autoDelete();
+	   }
 }

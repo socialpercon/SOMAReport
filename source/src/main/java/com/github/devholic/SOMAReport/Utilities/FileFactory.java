@@ -46,31 +46,8 @@ public class FileFactory {
 	 * 자동으로 캐시 폴더를 삭제하게 한다.
 	 ********************************************/
 	public void autoDelete(){
-	
-		//1시간마다 삭제하도록
-		int deleteSecond = 3600;
-		final SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss");
-		final ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
-		
-		exec.scheduleAtFixedRate(new Runnable(){
-			
-			public void run(){
-				try{
-					
-					Calendar cal = Calendar.getInstance() ;
-					System.out.println(fmt.format(cal.getTime())) ;
-					
-					File cachePath = new File("cache/");
-					
-					deleteCache(cachePath);
-					
-				}catch(Exception e){
-					Log.error(e.getMessage());
-					exec.shutdown();
-				}
-			}
-		},0,deleteSecond,TimeUnit.SECONDS);
-		
+		File cachePath = new File("cache/");
+		deleteCache(cachePath);
 	}
 	
 	/**********************************************
@@ -93,14 +70,15 @@ public class FileFactory {
             	deleteCache(file);
             } else {
             	//couchDB에 cached_at을 0으로 초기화시킨다.
-            	JSONObject userDoc = JSONFactory.inputStreamToJson(db.getDoc(file.getName()));
+            	JSONObject fileDoc = JSONFactory.inputStreamToJson(db.getDoc(file.getName()));
             	
-            	if (userDoc.has("cached_at")) {
-            		userDoc.put("cached_at", 0);
-            		db.updateDoc(userDoc);
+            	if(fileDoc != null){
+            		if (fileDoc.has("cached_at")) {
+                		fileDoc.put("cached_at", 0);
+                		db.updateDoc(fileDoc);
+                	}
+                    file.delete();
             	}
-            	
-                file.delete();
             }
         }
 
