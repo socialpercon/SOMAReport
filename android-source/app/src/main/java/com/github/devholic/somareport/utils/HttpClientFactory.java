@@ -32,7 +32,7 @@ public class HttpClientFactory {
     }
 
     public synchronized static void closeClient() {
-
+        client = null;
     }
 
     public static String getEntityFromResponse(HttpResponse httpResponse) throws IOException{
