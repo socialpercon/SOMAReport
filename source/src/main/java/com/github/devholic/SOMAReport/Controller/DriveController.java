@@ -84,6 +84,9 @@ public class DriveController {
 				.getByView("_design/drive", "account", false, false, false)));
 		for (int i = 0; i < ja.length(); i++) {
 			JSONObject data = ja.getJSONObject(i);
+			if (data.getString("value").equals("0.json")) {
+			} else {
+			}
 			Token t = getToken(data.getString("value"));
 			Drive drive = buildService(getCredential(t.getAccessToken(),
 					t.getRefreshToken()));
@@ -239,7 +242,6 @@ public class DriveController {
 	 *****************************************/
 	public String uploadFile(java.io.File file, String originalName,
 			String storage) {
-		storage = "0";
 		Long now = System.currentTimeMillis();
 		String encoded_originalName = "";
 		try {
@@ -393,6 +395,7 @@ public class DriveController {
 					.execute();
 			File file = fl.getItems().get(0);
 			if (file != null) {
+				Log.info(file.getDownloadUrl());
 				HttpResponse resp = drive.getRequestFactory()
 						.buildGetRequest(new GenericUrl(file.getDownloadUrl()))
 						.execute();
