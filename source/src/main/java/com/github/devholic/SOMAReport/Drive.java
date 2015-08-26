@@ -78,7 +78,7 @@ public class Drive {
 				DriveController drive = new DriveController();
 				drive.uploadProfileImage(session.getAttribute("user_id")
 						.toString(), FileFactory.stream2file(is), formData
-						.getFileName());
+						.getFileName(), drive.getOptimizedStorage());
 				JSONObject data = new JSONObject();
 				data.put("code", 1);
 				data.put("msg", "success");
@@ -117,15 +117,16 @@ public class Drive {
 							"projectdrivePlus", id, true, false, false)));
 			JSONArray drive = new JSONArray();
 			for (int i = 0; i < drivedocs.length(); i++) {
-				JSONObject doc = drivedocs.getJSONObject(i).getJSONObject("doc");
-				
+				JSONObject doc = drivedocs.getJSONObject(i)
+						.getJSONObject("doc");
+
 				long modified = doc.getLong("modified_at");
 				SimpleDateFormat datefm = new SimpleDateFormat("yyyyMMdd HH:mm");
 				Date date = new Date();
 				date.setTime(modified);
 				String str = datefm.format(date);
 				doc.put("modified_at", str);
-				
+
 				drive.put(doc);
 			}
 			Log.info(drive.length());
