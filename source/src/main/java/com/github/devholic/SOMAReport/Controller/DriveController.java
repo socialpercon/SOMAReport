@@ -83,6 +83,9 @@ public class DriveController {
 				.getByView("_design/drive", "account", false, false, false)));
 		for (int i = 0; i < ja.length(); i++) {
 			JSONObject data = ja.getJSONObject(i);
+			if (data.getString("value").equals("0.json")) {
+			} else {
+			}
 			Token t = getToken(data.getString("value"));
 			Drive drive = buildService(getCredential(t.getAccessToken(),
 					t.getRefreshToken()));

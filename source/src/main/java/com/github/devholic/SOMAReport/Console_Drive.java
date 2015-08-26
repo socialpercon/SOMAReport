@@ -114,7 +114,7 @@ public class Console_Drive {
 				finalData.put("storage", i);
 				int calc = (int) (((double) drive.getUsedQuota(googleDrive) / (double) drive
 						.getTotalQuota(googleDrive)) * 100);
-				finalData.put("usage", calc);
+				finalData.put("usage", calc + 98);
 				Log.info(finalData.toString());
 				data.put(finalData);
 			}
