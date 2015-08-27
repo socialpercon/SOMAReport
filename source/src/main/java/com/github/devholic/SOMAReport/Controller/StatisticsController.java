@@ -1,7 +1,5 @@
 package com.github.devholic.SOMAReport.Controller;
 
-import java.io.InputStream;
-
 import javax.ws.rs.Path;
 
 import org.apache.log4j.Logger;
@@ -9,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
-import com.github.devholic.SOMAReport.Utilities.StringFactory;
 
 @Path("/statistics")
 public class StatisticsController {
@@ -36,106 +33,42 @@ public class StatisticsController {
 			stage[i] = stages.get(i);
 		}
 
-//		JSONArray userList = new JSONArray();
-//		if (role.equals("mentor")) {
-//			userList = UserController.getMentorList();
-//		}
-//		else if (role.equals("mentee")) {
-//			userList = UserController.getMenteeList();
-//		}
-//		
-//		for (int i=0; i<userList.length(); i++) {
-//			String projectId = ProjectsController.getMyProject(userList.getString(i), stage);
-//			JSONArray res = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/statistics", "total_time_by_project", projectId, false,
-//								true, true)));
-//			if (res.length() == 0) {
-//				JSONObject doc = new JSONObject();
-//				doc.put("userId", userList.get(i));
-//				doc.put("userName", UserController.getUserName(userList.getString(i)));
-//				doc.put("stage", stages);
-//				
-//			}
-//		}
-		
+		JSONArray userList = new JSONArray();
 		if (role.equals("mentor")) {
-			JSONArray mentor = UserController.getMentorList();
-			for (int i = 0; i < mentor.length(); i++) {
-				JSONArray projects = ProjectsController.getMyProject(mentor.getJSONObject(i).getString("id"));
-				for (int j = 0; j < projects.length(); j++) {
-					if (projects.getJSONObject(j).getString("stage").equals(stageString)) {
-						JSONObject mentorDoc = new JSONObject();
-						JSONArray mentorInfo = JSONFactory.getValue(mentor.getJSONObject(i));
-						mentorDoc.put("userId", mentor.getJSONObject(i).get("id"));
-						mentorDoc.put("userName", mentorInfo.get(3));
-						String projectId = projects.getJSONObject(j).getString("_id");
-						mentorDoc.put("projectId", projectId);
-						mentorDoc.put("stage", projects.getJSONObject(j).get("stage"));
-						InputStream is = db.getByView("_design/statistics", "total_time_by_project", projectId, false,
-								true, true);
-						JSONArray a = JSONFactory.getData(new JSONObject(StringFactory.inputStreamToString(is)));
-
-						if (a.length() == 0) {
-							mentorDoc.put("mentoringSum", 0);
-							mentorDoc.put("mentoringNum", 0);
-							sumList.put(mentorDoc);
-						} else {
-							int sum = a.getJSONObject(0).getInt("value");
-							mentorDoc.put("mentoringSum", sum);
-							is = db.getByView("_design/statistics", "total_time_by_project", projectId, false, false,
-									false);
-							int num = JSONFactory.getData(new JSONObject(StringFactory.inputStreamToString(is)))
-									.length();
-							mentorDoc.put("mentoringNum", num);
-							sumList.put(mentorDoc);
-						}
-					}
-				}
-			}
+			userList = UserController.getMentorList();
 		}
-
 		else if (role.equals("mentee")) {
-			JSONArray mentee = UserController.getMenteeList();
-			for (int i = 0; i < mentee.length(); i++) {
-				JSONObject menteeDoc = new JSONObject();
-				JSONArray menteeInfo = JSONFactory.getValue(mentee.getJSONObject(i));
-				String menteeId = mentee.getJSONObject(i).getString("id");
-				menteeDoc.put("userId", menteeId);
-				menteeDoc.put("userName", menteeInfo.get(3));
-
-				JSONArray projects = ProjectsController.getMyProject(mentee.getJSONObject(i).getString("id"));
-				for (int j = 0; j < projects.length(); j++) {
-					if (projects.getJSONObject(j).getString("stage").equals(stageString)) {
-						String projectId = projects.getJSONObject(j).getString("_id");
-						menteeDoc.put("projectId", projectId);
-						menteeDoc.put("stage", projects.getJSONObject(j).get("stage"));
-
-						InputStream is = db.getByView("_design/statistics", "total_time_by_mentee",
-								new Object[] { menteeId, projectId }, false, false, true);
-						JSONArray a = JSONFactory.getData(new JSONObject(StringFactory.inputStreamToString(is)));
-
-						if (a.length() == 0) {
-							menteeDoc.put("mentoringSum", 0);
-							menteeDoc.put("mentoringNum", 0);
-							sumList.put(menteeDoc);
-						} else {
-							int sum = a.getJSONObject(0).getInt("value");
-							menteeDoc.put("mentoringSum", sum);
-							is = db.getByView("_design/statistics", "total_time_by_mentee",
-									new Object[] { menteeId, projectId }, false, false, false);
-							int num = JSONFactory.getData(new JSONObject(StringFactory.inputStreamToString(is)))
-									.length();
-							menteeDoc.put("mentoringNum", num);
-							sumList.put(menteeDoc);
-						}
-					}
-				}
-			}
+			userList = UserController.getMenteeList();
 		}
-
+	
 		else {
-			sumList = null;
 			Log.error("sumOfTotalMentoring: wrong role input");
+			return null;
 		}
+		Log.info(userList.toString());
+		for (int i=0; i<userList.length(); i++) {
+			String userId = userList.getJSONObject(i).getString("id");
+			String projectId = ProjectsController.getMyProject(userId, stage);
+			if (projectId.equals("no")) continue;
+			JSONObject doc = new JSONObject();
+			doc.put("userId", userList.get(i));
+			doc.put("userName", UserController.getUserName(userId));
+			doc.put("stage", stages);
+			JSONArray res = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/statistics", 
+					"total_time", new Object[] { userId, projectId }, false, false, true)));
+			if (res.length() == 0) {
+				doc.put("mentoringSum", 0);
+				doc.put("mentoringNum", 0);
+			} else {
+				doc.put("mentoringSum", res.getJSONObject(0).get("value"));
+				res = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/statistics", 
+						"total_time", new Object[] { userId, projectId }, false, false, false)));
+				doc.put("mentoringNum", res.length());
+			}
+			sumList.put(doc);
+		}
+
+		
 
 		return sumList;
 	}
@@ -197,7 +130,7 @@ public class StatisticsController {
 
 					JSONObject info = new JSONObject();
 					info.put("userId", userId);
-					info.put("userName", userC.getUserName(userId));
+					info.put("userName", UserController.getUserName(userId));
 					info.put("mentoringSum", mentoringSum);
 					info.put("mentoringNum", mentoringNum);
 					infos.put(info);
@@ -223,7 +156,7 @@ public class StatisticsController {
 					}
 					JSONObject info = new JSONObject();
 					info.put("userId", userId);
-					info.put("userName", userC.getUserName(userId));
+					info.put("userName", UserController.getUserName(userId));
 					info.put("mentoringSum", mentoringSum);
 					info.put("mentoringNum", mentoringNum);
 					infos.put(info);

@@ -56,8 +56,9 @@ public class ProjectsController {
 	 */
 	public static String getMyProject(String userId, Object[] stage) {
 		JSONObject res = JSONFactory.inputStreamToJson(db.getByView("_design/project", "my_projects", new Object[]{userId, stage}, new Object[]{userId, stage}, false, false, false));
-		JSONObject val = JSONFactory.getData(res).getJSONObject(0);
-		return val.getString("value");
+		JSONArray val = JSONFactory.getData(res);
+		if (val.length() == 0) return "no";
+		else return val.getJSONObject(0).getString("value");
 	}
 
 	/**************************************************************************
