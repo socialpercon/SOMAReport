@@ -113,7 +113,7 @@ public class Console_Drive {
 				JSONObject finalData = new JSONObject();
 				finalData.put("storage", i);
 				int calc = (int) (((double) (drive.getUsedQuota(googleDrive) + Long
-						.parseLong("16102000000")) / (double) drive
+						.parseLong("16101000000")) / (double) drive
 						.getTotalQuota(googleDrive)) * 100);
 				if (calc > 100) {
 					calc = 100;
