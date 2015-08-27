@@ -88,7 +88,7 @@ public class DriveController {
 			Drive drive = buildService(getCredential(t.getAccessToken(),
 					t.getRefreshToken()));
 			if ((getTotalQuota(drive) - getUsedQuota(drive)) > Long
-					.parseLong("16102000000")) {
+					.parseLong("16101000000")) {
 				Log.info("optimized storage : " + i);
 				return Integer.toString(i);
 			}
