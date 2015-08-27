@@ -205,13 +205,13 @@
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">추진내용 (*)</p>
-                <input style="width:100%" type="text" name="issue">
+                <textarea style="width:100%;margin-top:10px;max-width:100%!important;resize:vertical;overflow:visible" type="text" onkeyup="resize(this)" name="issue"></textarea>
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">해결방안 (*)</p>
-                <input style="width:100%" type="text" name="solution">
+                <textarea style="width:100%;margin-top:10px;max-width:100%!important;resize:vertical;overflow:visible" type="text" onkeyup="resize(this)" name="solution"></textarea>
               </td>
               </tr>
               <tr>
@@ -237,7 +237,7 @@
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">기타</p>
-                <input style="width:100%" type="text" name="etc">
+                <textarea style="width:100%;margin-top:10px;max-width:100%!important;resize:vertical;overflow:visible" type="text" onkeyup="resize(this)" name="etc"></textarea>
               </td>
               </tr>
               <tr>
@@ -253,7 +253,7 @@
                   <table>
                   {{#driveFiles}}
                   <tr>
-                  <input type="radio" name="photo" value="{{_id}}">{{name}}
+                  <input type="radio" class="checkbox" style="margin-left:-2.75px" name="photo" value="{{_id}}">{{name}}
                   </td>
                   </tr>
                   {{/driveFiles}}
