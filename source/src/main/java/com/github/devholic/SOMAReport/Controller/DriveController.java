@@ -103,10 +103,9 @@ public class DriveController {
 	 * @param file
 	 * @throws IOException
 	 *****************************************/
-	public void uploadFileToProject(String projectId, java.io.File file,
+	public String uploadFileToProject(String projectId, java.io.File file,
 			String originalName) throws IOException {
 		DatabaseController db = new DatabaseController();
-
 		JSONObject driveQuery = JSONFactory
 				.inputStreamToJson(db.getByView("_design/file", "projectdrive",
 						projectId, false, false, false));
@@ -129,6 +128,7 @@ public class DriveController {
 		String id = uploadFile(file, originalName, getOptimizedStorage());
 		jo.getJSONArray("files").put(id);
 		db.updateDoc(jo);
+		return id;
 	}
 
 	/******************************************

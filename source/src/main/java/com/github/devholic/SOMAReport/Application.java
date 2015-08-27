@@ -1,7 +1,6 @@
 package com.github.devholic.SOMAReport;
 
 import java.net.URI;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
