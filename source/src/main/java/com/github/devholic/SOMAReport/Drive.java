@@ -50,7 +50,7 @@ public class Drive {
 		if (session.getAttribute("user_id") != null) {
 			try {
 				DriveController drive = new DriveController();
-				drive.uploadFileToProject(id, FileFactory.stream2file(is),
+				String fileId = drive.uploadFileToProject(id, FileFactory.stream2file(is),
 						new String(formData.getFileName()
 								.getBytes("iso-8859-1"), "utf-8"));
 				JSONObject data = new JSONObject();
@@ -59,6 +59,7 @@ public class Drive {
 				data.put("driveid", "success");
 				data.put("originalname", new String(formData.getFileName()
 						.getBytes("iso-8859-1"), "utf-8"));
+				data.put("fileId", fileId);
 				return Response.status(200).entity(data.toString()).build();
 			} catch (IOException e) {
 				Log.error(e.getMessage());

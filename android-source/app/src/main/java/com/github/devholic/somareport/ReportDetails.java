@@ -29,20 +29,26 @@ import com.github.devholic.somareport.utils.ImageLoaderUtil;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -365,11 +371,13 @@ public class ReportDetails extends AppCompatActivity {
         }
     }
 
-    private class ImageUploadTask extends AsyncTask<File, Void, Integer> {
+    private class ImageUploadTask extends AsyncTask<File, Void, Integer[]> {
 
         @Override
-        protected Integer doInBackground(File... params) {
+        protected Integer[] doInBackground(File... params) {
             try {
+                Integer[] responseStatus = new Integer[2];
+
                 HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
                 HttpPost httpPost = new HttpPost("http://report.swmaestro.io" + "/drive/file/upload/" + projectId);
 
@@ -389,30 +397,57 @@ public class ReportDetails extends AppCompatActivity {
                 httpPost.setEntity(builder.build());
 
                 HttpResponse httpResponse = httpClient.execute(httpPost);
-                Log.d("response status", httpResponse.getStatusLine().getStatusCode()+"");
+                responseStatus[0] = httpResponse.getStatusLine().getStatusCode();
+                Log.d("file upload: ", "response status "+responseStatus[0]);
                 Header[] headers = httpResponse.getAllHeaders();
                 for(Header h : headers) {
                     Log.d("TAG", "Key : " + h.getName()
                             + " ,Value : " + h.getValue());
                 }
                 file.delete();
-                return httpResponse.getStatusLine().getStatusCode();
+                InputStream is = httpResponse.getEntity().getContent();
+                StringBuilder stringBuilder = new StringBuilder();
+                byte[] b = new byte[4096];
+                for (int n; (n = is.read(b)) != -1;) {
+                    stringBuilder.append(new String(b, 0, n));
+                }
+                JSONObject entity = new JSONObject(stringBuilder.toString());
+                String fileId = entity.getString("fileId");
+
+                httpPost = new HttpPost(getString(R.string.api_url)+"/report/update/"+reportId);
+                List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
+                nameValuePair.add(new BasicNameValuePair("reportId", reportId));
+                nameValuePair.add(new BasicNameValuePair("fileId", fileId));
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
+
+                httpResponse = httpClient.execute(httpPost);
+                responseStatus[1] = httpResponse.getStatusLine().getStatusCode();
+                Log.d("update report: ", "response status "+responseStatus[1]);
+
+                return responseStatus;
             } catch (IOException e) {
                 Log.e(TAG, e.getLocalizedMessage());
+            } catch (JSONException e) {
+                Log.e(TAG, e.getLocalizedMessage());
             }
-            return 0;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(Integer integer) {
-            if (integer == 200) {
-                Toast toast = Toast.makeText(photo.getContext(), "사진이 업로드되었습니다", Toast.LENGTH_SHORT);
-                toast.show();
-            }
+        protected void onPostExecute(Integer[] integer) {
+            if (integer == null) return;
             else {
-                Toast toast = Toast.makeText(photo.getContext(), "사진 업로드 실패", Toast.LENGTH_SHORT);
-                toast.show();
-            }
+                if (integer[0] == 200) {
+                    Toast toast = Toast.makeText(photo.getContext(), "사진이 업로드되었습니다", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    Toast toast = Toast.makeText(photo.getContext(), "사진 업로드 실패", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                if (integer[1] != 200) {
+                    Log.e(TAG, "report update FAIL");
+                }
+           }
         }
 
     }
