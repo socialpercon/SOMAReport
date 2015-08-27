@@ -379,7 +379,7 @@ public class ReportDetails extends AppCompatActivity {
                 Integer[] responseStatus = new Integer[2];
 
                 HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
-                HttpPost httpPost = new HttpPost("http://report.swmaestro.io" + "/drive/file/upload/" + projectId);
+                HttpPost httpPost = new HttpPost(getString(R.string.base_url) + "/drive/file/upload/" + projectId);
 
                 String boundary = "--------";
                 httpPost.setHeader("Connection", "Keep-Alive");
@@ -417,7 +417,7 @@ public class ReportDetails extends AppCompatActivity {
                 httpPost = new HttpPost(getString(R.string.api_url)+"/report/update/"+reportId);
                 List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
                 nameValuePair.add(new BasicNameValuePair("reportId", reportId));
-                nameValuePair.add(new BasicNameValuePair("fileId", fileId));
+                nameValuePair.add(new BasicNameValuePair("fileid", fileId));
                 httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
 
                 httpResponse = httpClient.execute(httpPost);
@@ -435,7 +435,10 @@ public class ReportDetails extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Integer[] integer) {
-            if (integer == null) return;
+            if (integer == null) {
+                Toast toast = Toast.makeText(photo.getContext(), "사진 업로드 실패", Toast.LENGTH_SHORT);
+                toast.show();
+            }
             else {
                 if (integer[0] == 200) {
                     Toast toast = Toast.makeText(photo.getContext(), "사진이 업로드되었습니다", Toast.LENGTH_SHORT);
