@@ -3,7 +3,9 @@ package com.github.devholic.SOMAReport;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -57,6 +59,18 @@ public class Report {
 		else
 			// unconfirmed reports does not exists
 			return Response.status(412).build();
+	}
+	
+	@POST
+	@Path("/api/report/update/{id}")
+	public Response API_Update_Report_Photo(@Context Request request, 
+			@PathParam("id") String reportId, @FormParam("fileId") String fileId) {
+		ReportsController rCtrl = new ReportsController();
+		
+		if (rCtrl.updateReportPhoto(reportId, fileId))
+			return Response.status(200).build();
+		else
+			return Response.status(400).build();
 	}
 
 	@GET
