@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:text="멘토링보고서. 작성. 성공적."
+                android:text="LOG-IN"
                 android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/abc_text_size_body_1_material" />
 

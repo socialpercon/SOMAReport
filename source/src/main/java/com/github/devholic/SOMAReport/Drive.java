@@ -58,7 +58,6 @@ public class Drive {
 				data.put("msg", "success");
 				return Response.status(200).entity(data.toString()).build();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				Log.error(e.getMessage());
 				return Response.status(401).build();
 			}

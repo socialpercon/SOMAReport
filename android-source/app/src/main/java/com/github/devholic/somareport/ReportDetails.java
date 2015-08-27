@@ -60,7 +60,7 @@ public class ReportDetails extends AppCompatActivity {
     Uri cameraPictureUri = null;
 
     private String reportId;
-    private JSONObject reportDoc;
+    private String projectId;
 
     @Bind(R.id.report_details_toolbar)
     Toolbar toolbar;
@@ -160,6 +160,7 @@ public class ReportDetails extends AppCompatActivity {
                 try {
                     JSONObject data = new JSONObject(string);
                     ImageLoaderUtil imageLoaderUtil;
+                    projectId = data.getString("project");
                     String ptitle = getIntent().getStringExtra("pname");
 
                     JSONObject reportInfo = data.getJSONObject("report_info");
@@ -370,14 +371,14 @@ public class ReportDetails extends AppCompatActivity {
         protected Integer doInBackground(File... params) {
             try {
                 HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
-                HttpPost httpPost = new HttpPost(getString(R.string.api_url) + "/drive/file/upload/" + reportId);
+                HttpPost httpPost = new HttpPost("http://report.swmaestro.io" + "/drive/file/upload/" + projectId);
 
                 String boundary = "--------";
                 httpPost.setHeader("Connection", "Keep-Alive");
                 httpPost.setHeader("Accept-Charset", "UTF-8");
                 httpPost.setHeader("Content-Type","multipart/form-data; boundary="+boundary);
                 File file = params[0];
-                FileBody fileBody = new FileBody(file, ContentType.APPLICATION_OCTET_STREAM);
+                FileBody fileBody = new FileBody(file, ContentType.APPLICATION_OCTET_STREAM, file.getName());
 
                 MultipartEntityBuilder builder = MultipartEntityBuilder.create()
                         .setCharset(Charset.forName("UTF-8"))
@@ -388,9 +389,10 @@ public class ReportDetails extends AppCompatActivity {
                 httpPost.setEntity(builder.build());
 
                 HttpResponse httpResponse = httpClient.execute(httpPost);
+                Log.d("response status", httpResponse.getStatusLine().getStatusCode()+"");
                 Header[] headers = httpResponse.getAllHeaders();
                 for(Header h : headers) {
-                    Log.i("TAG", "Key : " + h.getName()
+                    Log.d("TAG", "Key : " + h.getName()
                             + " ,Value : " + h.getValue());
                 }
                 file.delete();
