@@ -9,6 +9,7 @@
     <title>somareport</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="http://static.plusquare.com/somareport/theme_new.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/taitems/iOS-Overlay/gh-pages/css/iosOverlay.css">
     <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/datetimepicker/latest/DateTimePicker.min.css" />
   </head>
   <body style="margin:0px;height:100%">
@@ -136,16 +137,16 @@
         <div class="divider">
         </div>
         <div style="width:100%;">
-          <form method="post" action="/report/write" enctype="multipart/form-data">
+          <form method="post" action="/report/update" enctype="multipart/form-data">
           <table style="width:100%;border-color:rgba(0,0,0,0.05)" frame=void>
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">참석자</p>
               </td>
               </tr>
-              {{#project}}
-              <input type="hidden" name="projectid" value="{{_id}}">
-              {{#mentee}}
+              <input type="hidden" name="reportid" value="{{rid}}">
+              <input type="hidden" name="reportrev" value="{{rrev}}">
+              {{#people}}
               <tr>
                 <td style="float:left;padding-left:10px">
                   <input type="checkbox" class="checkbox" checked="">
@@ -157,73 +158,72 @@
               <tr>
                 <td style="float:left;padding-top:15px;padding-left:10px;padding-right:10px;width:100%">
                   <input type="hidden" name="attendee" value="{{id}}">
-                  <input style="width:calc(100% - 20px);-webkit-filter: grayscale(100%);" type="text" name="attendeeReason" placeholder="{{name}} 불참사유">
+                  <input style="width:calc(100% - 20px);-webkit-filter: grayscale(100%);" value="{{reason}}" type="text" name="attendeeReason" placeholder="{{name}} 불참사유">
                 </td>
               </tr>
               <tr>
                 <td style="height:15px">
                 </td>
               </tr>
-              {{/mentee}}
-              {{/project}}
+              {{/people}}
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">시작시간 (*)</p>
-                <input type="text" name="start" style="width:100%" data-field="datetime" readonly>
+                <input type="text" name="start" style="width:100%" data-field="datetime" value="{{starttime}}" readonly>
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">종료시간 (*)</p>
-                <input type="text" name="end" style="width:100%" data-field="datetime" readonly>
+                <input type="text" name="end" style="width:100%" data-field="datetime" value="{{endtime}}" readonly>
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">제외시간 (*) (분단위)</p>
-                <input style="width:100%" type="number" name="except">
+                <input style="width:100%" type="number" name="except" value="{{excepttime}}">
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">장소 (*)</p>
-                <input style="width:100%" type="text" name="place">
+                <input style="width:100%" type="text" name="place" value="{{place}}">
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">주제 (*)</p>
-                <input style="width:100%" type="text" name="topic">
+                <input style="width:100%" type="text" name="topic" value="{{topic}}">
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">목표 (*)</p>
-                <input style="width:100%" type="text" name="goal">
+                <input style="width:100%" type="text" name="goal" value="{{goal}}">
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">추진내용 (*)</p>
-                <textarea style="width:100%;margin-top:10px;max-width:100%!important;resize:vertical;overflow:visible" type="text" onkeyup="resize(this)" name="issue"></textarea>
+                <textarea style="width:100%;margin-top:10px;max-width:100%!important;resize:vertical;overflow:visible" type="text" onkeyup="resize(this)" name="issue">{{issue}}</textarea>
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">해결방안 (*)</p>
-                <textarea style="width:100%;margin-top:10px;max-width:100%!important;resize:vertical;overflow:visible" type="text" onkeyup="resize(this)" name="solution"></textarea>
+                <textarea style="width:100%;margin-top:10px;max-width:100%!important;resize:vertical;overflow:visible" type="text" onkeyup="resize(this)" name="solution">{{solution}}</textarea>
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">향후계획 (*)</p>
-                <input style="width:100%" type="text" name="plan">
+                <input style="width:100%" type="text" name="plan" value="{{plan}}">
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">멘토의견 (*)</p>
-                <input style="width:100%" type="text" name="opinion">
+                <input style="width:100%" type="text" name="opinion" value="{{opinion}}">
               </td>
               </tr>
               <tr>
@@ -237,51 +237,73 @@
               <tr>
               <td style="width:100%;padding:10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">기타</p>
-                <textarea style="width:100%;margin-top:10px;max-width:100%!important;resize:vertical;overflow:visible" type="text" onkeyup="resize(this)" name="etc"></textarea>
+                <textarea style="width:100%;margin-top:10px;max-width:100%!important;resize:vertical;overflow:visible" type="text" onkeyup="resize(this)" name="etc">{{etc}}</textarea>
               </td>
               </tr>
               <tr>
               <td style="width:100%;padding:10px 10px 30px 10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">내용 (*)</p>
-                <textarea style="width:100%;margin-top:10px;max-width:100%!important;resize:vertical;overflow:visible" type="text" onkeyup="resize(this)" name="content"></textarea>
+                <textarea style="width:100%;margin-top:10px;max-width:100%!important;resize:vertical;overflow:visible" type="text" onkeyup="resize(this)" name="content">{{content}}</textarea>
               </td>
               </tr>
               <tr>
-              <td style="width:100%;padding:10px 10px 30px 10px">
+              <td style="width:100%;padding:10px 10px 10px 10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">인증사진</p>
-                <div style="max-height:200px;overflow-y:scroll">
-                  <table>
-                  {{#driveFiles}}
-                  <tr>
-                  <td>
-                  <input type="radio" class="checkbox" style="margin-left:-2.75px" name="photo" value="{{_id}}">
-                  </td>
-                  <td>
-                    {{name}}
-                  </td>
-                  </tr>
-                  {{/driveFiles}}
+                <label for="photoUpload">
+                <div class="block" style="height:80px;float:left;display:inline-block;">
+                <div class="centered">
+                  <table style="background:#323845;padding:5px;border-radius:3px;">
+                    <tr>
+                      <td>
+                        <i style="padding-left:6px;padding-right:6px;color:#FFF" class="material-icons">add_circle_outline</i>
+                      </td>
+                      <td>
+                        <span style="font-size:14px;padding-right:6px;color:#FFF">UPLOAD IMAGE</span>
+                      </td>
+                    </tr>
                   </table>
                 </div>
+                </div>
+                </label>
+                <input id="photoUpload" type="file" name="file" style="display: none;"/>
+                <table id="photoTable" style="width:100%">
+                {{#photo}}
+                  <tr class="uploadedPhoto">
+                    <td><span id="photoName" style="color:rgba(0, 0, 0, 0.87);">{{name}}</span></td><td><a id="deletePhoto" href="#" onclick="deletePhoto(); return false;">삭제</a></td><input type="hidden" id="userPhoto" name="photo" value="{{id}}"></tr>
+                {{/photo}}
+                </table>
               </td>
               </tr>
               <tr>
-              <td style="width:100%;padding:10px 10px 30px 10px">
-                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">파일첨부</p>
-                <div style="max-height:200px;overflow-y:scroll">
-                  <table>
-                  {{#driveFiles}}
-                  <tr>
-                  <td style="float:left;padding-left:10px">
-                  <input type="checkbox" class="checkbox" name="reportFiles" value="{{_id}}">
-                  </td>
-                  <td style="float:left;padding-left:10px">
-                  {{name}}
-                  </td>
-                  </tr>
-                  {{/driveFiles}}
+              <td style="width:100%;padding:10px 10px 10px 10px">
+                <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">파일</p>
+                <label for="fileUpload">
+                <div class="block" style="height:80px;float:left;display:inline-block;">
+                <div class="centered">
+                  <table style="background:#323845;padding:5px;border-radius:3px;">
+                    <tr>
+                      <td>
+                        <i style="padding-left:6px;padding-right:6px;color:#FFF" class="material-icons">add_circle_outline</i>
+                      </td>
+                      <td>
+                        <span style="font-size:14px;padding-right:6px;color:#FFF">UPLOAD FILE</span>
+                      </td>
+                    </tr>
                   </table>
                 </div>
+                </div>
+                </label>
+                <input id="fileUpload" type="file" name="file" style="display: none;"/>
+                <table id="fileTable" style="width:100%">
+                {{#files}}
+                  <tr class="{{id}}">
+                    <td>
+                      <span style="color:rgba(0, 0, 0, 0.87);">{{name}}</span>
+                    </td>
+                    <td>
+                      <a href="#" onclick="deleteFile('{{id}}'); return false;">삭제</a></td><input type="hidden" name="fileList" value="{{id}}"></tr>
+                {{/files}}
+                </table>
               </td>
               </tr>
               <tr>
@@ -300,12 +322,64 @@
     <div id="dtBox"></div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script type="text/javascript" src="http://cdn.jsdelivr.net/datetimepicker/latest/DateTimePicker.min.js"></script>
+    <script src="https://cdn.rawgit.com/fgnass/spin.js/master/spin.min.js"></script>
+    <script src="https://cdn.rawgit.com/taitems/iOS-Overlay/gh-pages/js/iosOverlay.js"></script>
+    <script src="https://rawgit.com/blueimp/jQuery-File-Upload/master/js/jquery.fileupload.js" type="text/javascript"></script>
     <script>
+    {{#photo}}
+    var isUploaded = true;
+    {{/photo}}
+    {{^photo}}
+    var isUploaded = false;
+    {{/photo}}
     function resize(obj) {
       obj.style.height = "1px";
       obj.style.height = (20+obj.scrollHeight)+"px";
     }
+
+    function addPhoto(photoId, photoName){
+      isUploaded = true;
+      $("table#photoTable").append('<tr class="uploadedPhoto"><td><span id="photoName" style="color:rgba(0, 0, 0, 0.87);">'+photoName+'</span></td><td><a id="deletePhoto" href="#" onclick="deletePhoto(); return false;">삭제</a></td><input type="hidden" id="userPhoto" name="photo" value="'+photoId+'"></tr>');
+      overlay.hide();
+    }
+
+    function deletePhoto(){
+      isUploaded = false;
+      $("tr").remove(".uploadedPhoto");
+    }
+
+    function addFile(fileId, fileName){
+      $("table#fileTable").append('<tr class="'+fileId+'"><td><span style="color:rgba(0, 0, 0, 0.87);">'+fileName+'</span></td><td><a href="#" onclick="deleteFile(\''+fileId+'\'); return false;">삭제</a></td><input type="hidden" name="fileList" value="'+fileId+'"></tr>');
+        overlay.hide();
+    }
+
+    function deleteFile(id){
+      $("tr").remove("."+id);
+    }
+
+    var overlay;
+    var opts = {
+        lines: 13, // The number of lines to draw
+        length: 11, // The length of each line
+        width: 5, // The line thickness
+        radius: 17, // The radius of the inner circle
+        corners: 1, // Corner roundness (0..1)
+        rotate: 0, // The rotation offset
+        color: '#FFF', // #rgb or #rrggbb
+        speed: 1, // Rounds per second
+        trail: 60, // Afterglow percentage
+        shadow: false, // Whether to render a shadow
+        hwaccel: false, // Whether to use hardware acceleration
+        className: 'spinner', // The CSS class to assign to the spinner
+        zIndex: 2e9, // The z-index (defaults to 2000000000)
+        top: 'auto', // Top position relative to parent in px
+        left: 'auto' // Left position relative to parent in px
+      };
+      $(document).bind('drop dragover', function (e) {
+        e.preventDefault();
+      });
       $(document).ready(function()
       {
         $("#dtBox").DateTimePicker({
@@ -315,6 +389,82 @@
           shortMonthNames:["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
           fullMonthNames:["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
         });
+        $('#photoUpload').fileupload({
+        {{#project}}
+        url : '/drive/file/upload/{{_id}}',
+        {{/project}}
+        dataType: 'json',
+        //replaceFileInput: false,
+        add: function(e, data){
+            if(!isUploaded){
+            var uploadFile = data.files[0];
+            data.submit();
+            var target = document.createElement("div");
+            document.body.appendChild(target);
+            var spinner = new Spinner(opts).spin(target);
+            overlay = iosOverlay({
+              text: "Uploading...",
+              spinner: spinner
+            });
+            }
+        }, progressall: function(e,data) {
+
+        }, done: function (e, data) {
+            console.log(data);
+            var code = data.result.code;
+            var msg = data.result.msg;
+            if(code == '1') {
+              addPhoto(data.result.fileid, data.result.originalname);
+            } else {
+                alert(code + ' : ' + msg);
+            }
+        }, fail: function(e, data){
+            console.log(data);
+            console.log(data.errorThrown);
+            console.log(data.textStatus);
+            console.log(data.jqXHR);
+            overlay.hide();
+            alert('업로드 중 문제가 발생했습니다');
+            foo = data;
+        }
+      });
+      $('#fileUpload').fileupload({
+        {{#project}}
+        url : '/drive/file/upload/{{_id}}',
+        {{/project}}
+        dataType: 'json',
+        //replaceFileInput: false,
+        add: function(e, data){
+            var uploadFile = data.files[0];
+            data.submit();
+            var target = document.createElement("div");
+            document.body.appendChild(target);
+            var spinner = new Spinner(opts).spin(target);
+            overlay = iosOverlay({
+              text: "Uploading...",
+              spinner: spinner
+            });
+        }, progressall: function(e,data) {
+
+        }, done: function (e, data) {
+            console.log(data);
+            var code = data.result.code;
+            var msg = data.result.msg;
+            if(code == '1') {
+              addFile(data.result.fileid, data.result.originalname);
+            } else {
+                alert(code + ' : ' + msg);
+            }
+        }, fail: function(e, data){
+            console.log(data);
+            console.log(data.errorThrown);
+            console.log(data.textStatus);
+            console.log(data.jqXHR);
+            overlay.hide();
+            alert('업로드 중 문제가 발생했습니다');
+            foo = data;
+        }
+      });
       });
     </script>
   </body>

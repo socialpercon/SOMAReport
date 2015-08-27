@@ -3,7 +3,6 @@ package com.github.devholic.SOMAReport;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -26,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Controller.DatabaseController;
+import com.github.devholic.SOMAReport.Controller.DriveController;
 import com.github.devholic.SOMAReport.Controller.ProjectsController;
 import com.github.devholic.SOMAReport.Controller.ReportsController;
 import com.github.devholic.SOMAReport.Controller.UserController;
@@ -60,13 +60,13 @@ public class Report {
 			// unconfirmed reports does not exists
 			return Response.status(412).build();
 	}
-	
+
 	@POST
 	@Path("/api/report/update/{id}")
-	public Response API_Update_Report_Photo(@Context Request request, 
+	public Response API_Update_Report_Photo(@Context Request request,
 			@PathParam("id") String reportId, @FormParam("fileId") String fileId) {
 		ReportsController rCtrl = new ReportsController();
-		
+
 		if (rCtrl.updateReportPhoto(reportId, fileId))
 			return Response.status(200).build();
 		else
@@ -272,9 +272,8 @@ public class Report {
 			data.put("project", project.getDetailByProjectId(id));
 			ReportsController reports = new ReportsController();
 			data.put("reports", reports.getReportByProjectId(id));
-			UserController user = new UserController();
-			data.put("name", user.getUserName(session.getAttribute("user_id")
-					.toString()));
+			data.put("name", UserController.getUserName(session.getAttribute(
+					"user_id").toString()));
 			data.put("role", UserController.getRoleById(session.getAttribute(
 					"user_id").toString()));
 			data.put("user_id", session.getAttribute("user_id").toString());
@@ -291,7 +290,6 @@ public class Report {
 				Log.info(drive.toString());
 				data.put("driveFiles", drive);
 			}
-			Log.info("lalalallalaal" + data.toString());
 			return Response
 					.status(200)
 					.entity(new Viewable("/new/new_report_write.mustache",
@@ -322,7 +320,7 @@ public class Report {
 			@FormDataParam("etc") String etc,
 			@FormDataParam("content") String content,
 			@FormDataParam("photo") String photo,
-			@FormDataParam("reportFiles") List<String> reportFiles) {
+			@FormDataParam("fileList") List<String> fileList) {
 		ReportsController report = new ReportsController();
 		JSONArray attendeeArray = new JSONArray();
 		JSONArray absenteeArray = new JSONArray();
@@ -339,8 +337,8 @@ public class Report {
 			}
 		}
 		JSONArray reportFileArray = new JSONArray();
-		for (int a = 0; a < reportFiles.size(); a++) {
-			reportFileArray.put(reportFiles.get(a));
+		for (int a = 0; a < fileList.size(); a++) {
+			reportFileArray.put(fileList.get(a));
 		}
 		JSONObject jo = new JSONObject();
 		jo.put("project", pid);
@@ -402,33 +400,104 @@ public class Report {
 				builder.path("project/list");
 				return Response.seeOther(builder.build()).build();
 			}
-			ProjectsController project = new ProjectsController();
-			data.put("project", project.getDetailByProjectId(id));
-			ReportsController reports = new ReportsController();
-			data.put("reports", reports.getReportByProjectId(id));
-			UserController user = new UserController();
-			data.put("name", user.getUserName(session.getAttribute("user_id")
-					.toString()));
+			data.put("name", UserController.getUserName(session.getAttribute(
+					"user_id").toString()));
 			data.put("role", UserController.getRoleById(session.getAttribute(
 					"user_id").toString()));
 			data.put("user_id", session.getAttribute("user_id").toString());
 			DatabaseController db = new DatabaseController();
-			JSONArray drivedocs = JSONFactory.getData(JSONFactory
-					.inputStreamToJson(db.getByView("_design/file",
-							"projectdrivePlus", id, true, false, false)));
-			JSONArray drive = new JSONArray();
-			for (int i = 0; i < drivedocs.length(); i++) {
-				drive.put(drivedocs.getJSONObject(i).get("doc"));
+			JSONObject target = JSONFactory.inputStreamToJson(db.getDoc(id));
+			Log.info(target.toString());
+			data.put("rid", target.getString("_id"));
+			data.put("rrev", target.getString("_rev"));
+			JSONArray people = new JSONArray();
+			for (int i = 0; i < target.getJSONArray("absentee").length(); i++) {
+				JSONObject person = new JSONObject();
+				person.put("id",
+						target.getJSONArray("absentee").getJSONObject(i)
+								.getString("id"));
+				person.put(
+						"name",
+						UserController.getUserName(target
+								.getJSONArray("absentee").getJSONObject(i)
+								.getString("id")));
+				person.put("reason", target.getJSONArray("absentee")
+						.getJSONObject(i).getString("reason"));
+				people.put(person);
 			}
-			Log.info(drive.length());
-			if (drive.length() != 0) {
-				Log.info(drive.toString());
-				data.put("driveFiles", drive);
+			for (int i = 0; i < target.getJSONArray("attendee").length(); i++) {
+				JSONObject person = new JSONObject();
+				person.put("id",
+						target.getJSONArray("attendee").getJSONObject(i)
+								.getString("id"));
+				person.put(
+						"name",
+						UserController.getUserName(target
+								.getJSONArray("attendee").getJSONObject(i)
+								.getString("id")));
+				person.put("reason", "");
+				people.put(person);
 			}
-			Log.info("lalalallalaal" + data.toString());
+			String st = target.getJSONObject("report_info").getString(
+					"start_time");
+			String et = target.getJSONObject("report_info").getString(
+					"end_time");
+			data.put("starttime", st.substring(0, 4) + "-" + st.substring(4, 6)
+					+ "-" + st.substring(6, 8) + " " + st.substring(8, 10)
+					+ ":" + st.substring(10, 12));
+			data.put("endtime", et.substring(0, 4) + "-" + et.substring(4, 6)
+					+ "-" + et.substring(6, 8) + " " + et.substring(8, 10)
+					+ ":" + et.substring(10, 12));
+			data.put("excepttime", target.getJSONObject("report_info")
+					.getString("except_time"));
+			data.put("place",
+					target.getJSONObject("report_info").getString("place"));
+			data.put("topic",
+					target.getJSONObject("report_details").getString("topic"));
+			data.put("goal",
+					target.getJSONObject("report_details").getString("goal"));
+			data.put("issue",
+					target.getJSONObject("report_details").getString("issue"));
+			data.put("solution", target.getJSONObject("report_details")
+					.getString("solution"));
+			data.put("plan",
+					target.getJSONObject("report_details").getString("plan"));
+			data.put("opinion", target.getJSONObject("report_details")
+					.getString("opinion"));
+			data.put("etc",
+					target.getJSONObject("report_details").getString("etc"));
+			data.put("content", target.getJSONObject("report_details")
+					.getString("content"));
+			JSONObject photo = new JSONObject();
+			photo.put("id",
+					target.getJSONObject("report_details").getString("photo"));
+			JSONObject photoRaw = JSONFactory.inputStreamToJson(db
+					.getDoc(target.getJSONObject("report_details").getString(
+							"photo")));
+			photo.put("name", photoRaw.getString("name"));
+			data.put("photo", photo);
+			JSONArray files = new JSONArray();
+			for (int i = 0; i < target.getJSONArray("report_attachments")
+					.length(); i++) {
+				JSONObject f = new JSONObject();
+				f.put("id", target.getJSONArray("report_attachments")
+						.getString(i));
+				JSONObject fRaw = JSONFactory.inputStreamToJson(db
+						.getDoc(target.getJSONArray("report_attachments")
+								.getString(i)));
+				f.put("name", fRaw.getString("name"));
+				files.put(f);
+			}
+			data.put("files", files);
+			ProjectsController project = new ProjectsController();
+			data.put("project",
+					project.getDetailByProjectId(target.getString("project")));
+			ReportsController reports = new ReportsController();
+			data.put("reports",
+					reports.getReportByProjectId(target.getString("project")));
 			return Response
 					.status(200)
-					.entity(new Viewable("/new/new_report_write.mustache",
+					.entity(new Viewable("/new/new_report_update.mustache",
 							MustacheHelper.toMap(data))).build();
 		} else {
 			return Response.status(401)
@@ -439,7 +508,8 @@ public class Report {
 	@POST
 	@Path("/report/update")
 	public Response API_ReportUpdate(@Context Request request,
-			@FormDataParam("projectid") String pid,
+			@FormDataParam("reportid") String rid,
+			@FormDataParam("reportrev") String rev,
 			@FormDataParam("place") String place,
 			@FormDataParam("start") String start,
 			@FormDataParam("attendee") List<String> attendee,
@@ -457,6 +527,9 @@ public class Report {
 			@FormDataParam("content") String content,
 			@FormDataParam("photo") String photo,
 			@FormDataParam("reportFiles") List<String> reportFiles) {
+		DatabaseController db = new DatabaseController();
+		JSONObject target = JSONFactory.inputStreamToJson(db.getDoc(rid));
+		db.updateDoc(target);
 		ReportsController report = new ReportsController();
 		JSONArray attendeeArray = new JSONArray();
 		JSONArray absenteeArray = new JSONArray();
@@ -476,10 +549,10 @@ public class Report {
 		for (int a = 0; a < reportFiles.size(); a++) {
 			reportFileArray.put(reportFiles.get(a));
 		}
-		JSONObject jo = new JSONObject();
-		jo.put("project", pid);
-		jo.put("attendee", attendeeArray);
-		jo.put("absentee", absenteeArray);
+		target.remove("attendee");
+		target.put("attendee", attendeeArray);
+		target.remove("absentee");
+		target.put("absentee", absenteeArray);
 		JSONObject info = new JSONObject();
 		info.put("place", place);
 		String[] startArr = start.split(" ");
@@ -494,8 +567,8 @@ public class Report {
 				+ endArr[1].split(":")[1].toString();
 		info.put("end_time", startDay + endParsed);
 		info.put("except_time", except);
-		jo.put("report_info", info);
-		Log.info("inserted-report_info: " + jo.toString());
+		target.remove("report_info");
+		target.put("report_info", info);
 		JSONObject details = new JSONObject();
 		details.put("topic", topic);
 		details.put("goal", goal);
@@ -511,16 +584,14 @@ public class Report {
 			details.put("etc", etc);
 		}
 		details.put("content", content);
-		jo.put("report_details", details);
-		jo.put("report_attachments", reportFileArray);
+		target.remove("report_details");
+		target.put("report_details", details);
+		target.remove("report_attachments");
+		target.put("report_attachments", reportFileArray);
 		UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
-		String id = report.insertReport(jo);
-		Log.info("inserted: " + id);
-		if (id != null) {
-			builder.path("report/" + id);
-		} else {
-			builder.path("report/list/" + pid);
-		}
+		db.updateDoc(target);
+		Log.info("inserted: " + rid);
+		builder.path("report/" + rid);
 		return Response.seeOther(builder.build()).build();
 	}
 }
