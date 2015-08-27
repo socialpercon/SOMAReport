@@ -14,7 +14,6 @@ import java.io.InputStream;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -37,7 +36,8 @@ public class DatabaseControllerTest {
 		Log.info(m.toString());
 		assertThat(m.get("_id").toString(), not(nullValue()));
 		assertThat(m.get("_rev").toString(), not(nullValue()));
-		assertTrue(db.deleteDoc(m.get("_id").toString(), m.get("_rev").toString()));
+		assertTrue(db.deleteDoc(m.get("_id").toString(), m.get("_rev")
+				.toString()));
 	}
 
 	@Test
@@ -56,7 +56,8 @@ public class DatabaseControllerTest {
 		Log.info(m.toString());
 		assertThat(m.get("_id").toString(), not(nullValue()));
 		assertThat(m.get("_rev").toString(), not(nullValue()));
-		assertTrue(db.deleteDoc(m.get("_id").toString(), m.get("_rev").toString()));
+		assertTrue(db.deleteDoc(m.get("_id").toString(), m.get("_rev")
+				.toString()));
 	}
 
 	@Test
@@ -70,48 +71,29 @@ public class DatabaseControllerTest {
 	}
 
 	@Test
-	public void boodleboodle() {
-		DatabaseController db = new DatabaseController();
-		JSONArray res = db.getAllDocs();
-		for (int i = 0; i < res.length(); i++) {
-			JSONObject doc = res.getJSONObject(i);
-			String fileName = doc.getString("_id");
-			if (!doc.getString("_id").contains("_design")) {
-				//fileName = fileName.substring(8, fileName.length());
-				db.deleteDoc(doc.getString("_id"), doc.getString("_rev"));
-			}
-//			try {
-//				FileWriter fw = new FileWriter(doc.getString("_id").substring(8, doc.getString("_id").length()));
-//				fw.write(doc.toString());
-//				fw.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-
-		}
-	}
-
-	@Test
 	public void formatCheck() {
 		DatabaseController db = new DatabaseController();
-		JSONObject doc = JSONFactory.inputStreamToJson(db.getDoc("32b4dfe862d90710dfcd02bdca0146db"));
-		Log.info("getDoc: "+doc.toString());
-		doc = JSONFactory.inputStreamToJson(db.getByView("_design/user", "role", false,
-				false, false));
-		Log.info("getByView-No key"+doc.toString());
-		doc = JSONFactory.inputStreamToJson(db.getByView("_design/user", "role", "mentee", true,
-				false, false));
-		Log.info("getByView-with key"+doc.toString());
-		doc = JSONFactory.inputStreamToJson(db.getByView("_design/report", "all_by_project",
-				new Object[] { "9d898f7d5bfbf361939e1fafd518a9a2" + " ", " " }, new Object[] {
-						"9d898f7d5bfbf361939e1fafd518a9a2", " " }, false, true, false));
-		Log.info("getByView-with start-end key"+doc.toString());
-		doc = JSONFactory.inputStreamToJson(db.getByView(
-								"_design/statistics",
-								"total_time_by_project_date", new Object[] {
-										"9d898f7d5bfbf361939e1fafd518a9a2", "20150801" },
-								new Object[] { "9d898f7d5bfbf361939e1fafd518a9a2", "20150831" }, false,
-								false, true, 1));
+		JSONObject doc = JSONFactory.inputStreamToJson(db
+				.getDoc("32b4dfe862d90710dfcd02bdca0146db"));
+		Log.info("getDoc: " + doc.toString());
+		doc = JSONFactory.inputStreamToJson(db.getByView("_design/user",
+				"role", false, false, false));
+		Log.info("getByView-No key" + doc.toString());
+		doc = JSONFactory.inputStreamToJson(db.getByView("_design/user",
+				"role", "mentee", true, false, false));
+		Log.info("getByView-with key" + doc.toString());
+		doc = JSONFactory.inputStreamToJson(db.getByView("_design/report",
+				"all_by_project", new Object[] {
+						"9d898f7d5bfbf361939e1fafd518a9a2" + " ", " " },
+				new Object[] { "9d898f7d5bfbf361939e1fafd518a9a2", " " },
+				false, true, false));
+		Log.info("getByView-with start-end key" + doc.toString());
+		doc = JSONFactory.inputStreamToJson(db
+				.getByView("_design/statistics", "total_time_by_project_date",
+						new Object[] { "9d898f7d5bfbf361939e1fafd518a9a2",
+								"20150801" },
+						new Object[] { "9d898f7d5bfbf361939e1fafd518a9a2",
+								"20150831" }, false, false, true, 1));
 		Log.info(doc.toString());
 	}
 }

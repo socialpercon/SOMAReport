@@ -244,6 +244,15 @@
             {{/detail}}
             {{#writeauth}}
             {{#detail}}
+            {{#confirmed}}
+              <tr>
+                <td style="float:left">
+                  <button style="width:120px" onclick="location.href='/api/report/download/{{reportid}}'">
+                    <i class="material-icons" style="color: white;">file_download</i>
+                  </button>
+                </td>
+              </tr>
+            {{/confirmed}}
             {{^confirmed}}
               <tr>
                 <td style="float:left">
@@ -259,6 +268,19 @@
               </tr>
             {{/confirmed}}
             {{/detail}}
+            {{/writeauth}}
+            {{^writeauth}}
+            {{#admin}}
+            {{#confirmed}}
+            <tr>
+                <td style="float:left">
+                  <button style="width:120px" onclick="location.href='/api/report/download/{{reportid}}'">
+                    <i class="material-icons" style="color: white;">file_download</i>
+                  </button>
+                </td>
+            </tr>
+            {{/confirmed}}
+            {{/admin}}
             {{/writeauth}}
           </table>
         </div>
