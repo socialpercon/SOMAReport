@@ -46,6 +46,20 @@ public class ProjectsController {
 		}
 		return list;
 	}
+	
+	/****
+	 * 유저/단계에 해당하는 프로젝트의 아이디를 가져온다
+	 * 
+	 * @param userId
+	 * @param stage
+	 * @return projectId
+	 */
+	public static String getMyProject(String userId, Object[] stage) {
+		JSONObject res = JSONFactory.inputStreamToJson(db.getByView("_design/project", "my_projects", new Object[]{userId, stage}, new Object[]{userId, stage}, false, false, false));
+		JSONArray val = JSONFactory.getData(res);
+		if (val.length() == 0) return "no";
+		else return val.getJSONObject(0).getString("value");
+	}
 
 	/**************************************************************************
 	 * 프로젝트 아이디로 프로젝트 상세정보 가져오기
@@ -200,6 +214,20 @@ public class ProjectsController {
 		JSONObject res = JSONFactory.inputStreamToJson(db.getByView("_design/project", "stage_info", stages, true, false, false));
 		if (JSONFactory.getData(res).length()==0) return null;
 		return JSONFactory.getData(res).getJSONObject(0).getJSONObject("doc");
+	}
+	
+	/***
+	 * 주어진 프로젝트의 멘토 id를 가져온다.
+	 * 
+	 * @param projectId
+	 * @return mentorId
+	 */
+	public static String mentorOfProject(String projectId) {
+		JSONObject res = JSONFactory.inputStreamToJson(db.getByView("_design/user", "mentor_of_project", projectId, false, false, false));
+		System.out.println(JSONFactory.getData(res).toString());
+		if (JSONFactory.getData(res).length()==0) return "error";
+		else
+			return JSONFactory.getData(res).getJSONObject(0).getString("value");
 	}
 	
 }

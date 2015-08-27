@@ -20,6 +20,7 @@ import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -169,7 +171,7 @@ public class ReportDetails extends AppCompatActivity {
                     JSONArray reportAttendee = data.getJSONArray("attendee");
                     JSONArray reportAbsentee = data.getJSONArray("absentee");
 
-                    title.setText("#"+reportInfo.get("date"));
+                    title.setText(reportDetails.getString("topic"));
                     getSupportActionBar().setTitle("#"+reportInfo.get("date"));
                     getSupportActionBar().setSubtitle(ptitle);
 
@@ -199,6 +201,8 @@ public class ReportDetails extends AppCompatActivity {
                             String absent = abs.get("name").toString() + " : " + abs.get("reason").toString();
                             Log.i(TAG, absent);
                             reason.setText(absent);
+
+                            reason.setGravity(Gravity.CENTER);
                             reason.setTextColor(getResources().getColor(R.color.textColorSecondary));
                             absentee.addView(reason);
                         }
@@ -218,7 +222,7 @@ public class ReportDetails extends AppCompatActivity {
                         photo.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                onCreatedDialog(0).show();
+                                onCreatedDialog(1).show();
                             }
                         });
                     }
@@ -229,7 +233,7 @@ public class ReportDetails extends AppCompatActivity {
                         photo.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                onCreatedDialog(1).show();
+                                onCreatedDialog(0).show();
                             }
                         });
                     }
@@ -379,9 +383,11 @@ public class ReportDetails extends AppCompatActivity {
                 httpPost.setHeader("Content-Type","multipart/form-data; boundary=");
                 File file = params[0];
                 FileBody fileBody = new FileBody(file);
+
                 MultipartEntityBuilder builder = MultipartEntityBuilder.create()
                         .setCharset(Charset.forName("UTF-8"))
                         .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
+                        .setContentType(ContentType.APPLICATION_OCTET_STREAM)
                         .addPart("file", fileBody);
                 httpPost.setEntity(builder.build());
 

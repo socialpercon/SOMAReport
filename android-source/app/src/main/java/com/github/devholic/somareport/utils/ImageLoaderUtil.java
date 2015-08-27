@@ -56,6 +56,7 @@ public class ImageLoaderUtil {
                 .showImageForEmptyUri(R.drawable.default_profile)
                 .showImageOnFail(R.drawable.default_profile)
                 .showStubImage(R.drawable.default_profile)
+                .cacheInMemory(true)
                 .bitmapConfig(Bitmap.Config.RGB_565).cacheOnDisc(true).cacheInMemory(true).build();
     }
 

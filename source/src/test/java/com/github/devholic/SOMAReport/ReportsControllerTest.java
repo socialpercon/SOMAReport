@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -71,8 +72,15 @@ public class ReportsControllerTest {
 		JSONArray list = rCtrl.getReportList();
 		Log.info(list.length()+" reports :"+list);
 		assertTrue(list.length() != 0);
-		for (int i=0; i<list.length(); i++) 
+		for (int i=0; i<list.length(); i++) {
 			assertEquals(list.getJSONObject(i).get("type"), "report");
+			JSONObject jo = list.getJSONObject(i);
+			String mentor = ProjectsController.mentorOfProject(jo.getString("project"));
+			System.out.println(mentor);
+			jo.put("mentor", mentor);
+			Map<String, Object> m = dCtrl.updateDoc(jo);
+			assertTrue(m.get("mentor")!=null);
+		}
 	}
 	
 	@Test
