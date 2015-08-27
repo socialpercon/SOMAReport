@@ -249,15 +249,19 @@
               <tr>
               <td style="width:100%;padding:10px 10px 30px 10px">
                 <p style="margin:0;font-size:14px;color:rgba(0, 0, 0, 0.54);">인증사진</p>
-                <div style="max-height:200px;overflow-y:scroll">
-                  <table>
-                  {{#driveFiles}}
-                  <tr>
-                  <input type="radio" class="checkbox" style="margin-left:-2.75px" name="photo" value="{{_id}}">{{name}}
-                  </td>
-                  </tr>
-                  {{/driveFiles}}
+                <div class="block" style="height:80px;float:left;display:inline-block;">
+                <div class="centered">
+                  <table style="background:#323845;padding:5px;border-radius:3px;">
+                    <tr>
+                      <td>
+                        <i style="padding-left:6px;padding-right:6px;color:#FFF" class="material-icons">add_circle_outline</i>
+                      </td>
+                      <td>
+                        <span style="font-size:14px;padding-right:6px;color:#FFF">UPLOAD IMAGE</span>
+                      </td>
+                    </tr>
                   </table>
+                </div>
                 </div>
               </td>
               </tr>

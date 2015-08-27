@@ -56,6 +56,9 @@ public class Drive {
 				JSONObject data = new JSONObject();
 				data.put("code", 1);
 				data.put("msg", "success");
+				data.put("driveid", "success");
+				data.put("originalname", new String(formData.getFileName()
+						.getBytes("iso-8859-1"), "utf-8"));
 				return Response.status(200).entity(data.toString()).build();
 			} catch (IOException e) {
 				Log.error(e.getMessage());
