@@ -15,12 +15,10 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,7 +33,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
-import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
@@ -44,7 +41,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
@@ -360,13 +356,11 @@ public class ReportDetails extends AppCompatActivity {
             photo.setLayoutParams(params);
 
             /*
-            * upload on drive repository (_id.jpg)
+            * upload on drive repository
             * */
-
             File f = new File(cameraPictureUri.getPath());
             ImageUploadTask imageUploadTask = new ImageUploadTask();
             imageUploadTask.execute(f);
-            f.delete();
         }
     }
 
@@ -378,17 +372,19 @@ public class ReportDetails extends AppCompatActivity {
                 HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
                 HttpPost httpPost = new HttpPost(getString(R.string.api_url) + "/drive/file/upload/" + reportId);
 
+                String boundary = "--------";
                 httpPost.setHeader("Connection", "Keep-Alive");
                 httpPost.setHeader("Accept-Charset", "UTF-8");
-                httpPost.setHeader("Content-Type","multipart/form-data; boundary=");
+                httpPost.setHeader("Content-Type","multipart/form-data; boundary="+boundary);
                 File file = params[0];
-                FileBody fileBody = new FileBody(file);
+                FileBody fileBody = new FileBody(file, ContentType.APPLICATION_OCTET_STREAM);
 
                 MultipartEntityBuilder builder = MultipartEntityBuilder.create()
                         .setCharset(Charset.forName("UTF-8"))
                         .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
-                        .setContentType(ContentType.APPLICATION_OCTET_STREAM)
+                        .setBoundary(boundary)
                         .addPart("file", fileBody);
+
                 httpPost.setEntity(builder.build());
 
                 HttpResponse httpResponse = httpClient.execute(httpPost);
@@ -397,7 +393,7 @@ public class ReportDetails extends AppCompatActivity {
                     Log.i("TAG", "Key : " + h.getName()
                             + " ,Value : " + h.getValue());
                 }
-
+                file.delete();
                 return httpResponse.getStatusLine().getStatusCode();
             } catch (IOException e) {
                 Log.e(TAG, e.getLocalizedMessage());

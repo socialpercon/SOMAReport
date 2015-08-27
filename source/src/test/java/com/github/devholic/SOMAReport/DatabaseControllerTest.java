@@ -10,6 +10,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
@@ -70,23 +72,22 @@ public class DatabaseControllerTest {
 	}
 
 	@Test
-	public void boodleboodle() {
+	public void testBackup() {
 		DatabaseController db = new DatabaseController();
 		JSONArray res = db.getAllDocs();
 		for (int i = 0; i < res.length(); i++) {
 			JSONObject doc = res.getJSONObject(i);
 			String fileName = doc.getString("_id");
 			if (!doc.getString("_id").contains("_design")) {
-				//fileName = fileName.substring(8, fileName.length());
-				db.deleteDoc(doc.getString("_id"), doc.getString("_rev"));
+				fileName = fileName.substring(8, fileName.length());
 			}
-//			try {
-//				FileWriter fw = new FileWriter(doc.getString("_id").substring(8, doc.getString("_id").length()));
-//				fw.write(doc.toString());
-//				fw.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
+			try {
+				FileWriter fw = new FileWriter("docs/"+doc.getString("_id").substring(8, doc.getString("_id").length()));
+				fw.write(doc.toString());
+				fw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 		}
 	}
