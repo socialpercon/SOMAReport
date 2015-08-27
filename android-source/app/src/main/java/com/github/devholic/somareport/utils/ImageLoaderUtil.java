@@ -71,7 +71,7 @@ public class ImageLoaderUtil {
             circleImageView.setLayoutParams(params);
         }
         imageLoader.init(imgConfig);
-        String imgUri = "http://report.swmaestro.io/drive/user/image?id=" + id + "-profileImage";
+        String imgUri = imageView.getContext().getString(R.string.base_url)+"/drive/user/image?id=" + id + "-profileImage";
         imageLoader.displayImage(imgUri, circleImageView, displayImgOption);
     }
 
@@ -87,7 +87,7 @@ public class ImageLoaderUtil {
         params.gravity = Gravity.CENTER;
         imageView.setLayoutParams(params);
         imageLoader.init(imgConfig);
-        String imgUri = "http://report.swmaestro.io/drive/image?id=" + id;
+        String imgUri = imageView.getContext().getString(R.string.base_url)+"/drive/image?id=" + id;
         Log.i("imageLoader-uri", imgUri);
         imageLoader.displayImage(imgUri, imageView, displayImgOption);
     }

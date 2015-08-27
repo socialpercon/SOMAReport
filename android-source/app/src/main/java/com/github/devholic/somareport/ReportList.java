@@ -139,8 +139,13 @@ public class ReportList extends AppCompatActivity {
             }
         });
 
-        UserInfoTask userInfoTask = new UserInfoTask();
-        userInfoTask.execute();
+        if (!getIntent().hasExtra("userInfo")) {
+            UserInfoTask userInfoTask = new UserInfoTask();
+            userInfoTask.execute();
+        }
+        else {
+
+        }
     }
 
     private void setData() {
