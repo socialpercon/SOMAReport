@@ -8,7 +8,7 @@ import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
-import org.junit.Assert;
+//import org.junit.Assert;
 
 public class ElasticSearchUtil {
 
@@ -44,7 +44,7 @@ public class ElasticSearchUtil {
 		IndexResponse response = client
 				.prepareIndex("somareport", "report", _id)
 				.setSource(jsonobject).execute().actionGet();
-		Assert.assertNotNull(response);
+	//	Assert.assertNotNull(response);
 	}
 
 	/**********************************************
@@ -59,7 +59,7 @@ public class ElasticSearchUtil {
 		// search
 		GetResponse response = client.prepareGet("somareport", "report", _id)
 				.execute().actionGet();
-		Assert.assertNotNull(response.getId());
+		//Assert.assertNotNull(response.getId());
 		System.out.println(response.getId());
 
 		// 출력한다
@@ -79,7 +79,7 @@ public class ElasticSearchUtil {
 		DeleteResponse response = client
 				.prepareDelete("somareport", "report", _id).execute()
 				.actionGet();
-		Assert.assertNotNull(response);
+		//Assert.assertNotNull(response);
 
 	}
 }

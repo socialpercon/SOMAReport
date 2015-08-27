@@ -10,16 +10,22 @@ import java.util.HashMap;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
+import org.docx4j.XmlUtils;
 import org.docx4j.model.datastorage.migration.VariablePrepare;
+import org.docx4j.openpackaging.exceptions.Docx4JException;
+import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
+import org.docx4j.wml.Document;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 
+@SuppressWarnings({ "restriction", "deprecation" })
 public class ReportsController {
 
 	private final Logger Log = Logger.getLogger(ReportsController.class);
@@ -36,19 +42,24 @@ public class ReportsController {
 	public JSONArray getReportByProjectId(String projectId) {
 		JSONArray list = new JSONArray();
 		try {
-			InputStream is = db.getByView("_design/report", "all_by_project", new Object[] { projectId + " ", " " },
-					new Object[] { projectId, " " }, true, true, false);
-			JSONArray a = JSONFactory.getData(JSONFactory.inputStreamToJson(is));
+			InputStream is = db.getByView("_design/report", "all_by_project",
+					new Object[] { projectId + " ", " " }, new Object[] {
+							projectId, " " }, true, true, false);
+			JSONArray a = JSONFactory
+					.getData(JSONFactory.inputStreamToJson(is));
 			Log.debug("ohohohohoh" + a.toString());
 			for (int i = 0; i < a.length(); i++) {
 				JSONObject doc = a.getJSONObject(i).getJSONObject("doc");
 				JSONObject reportInfo = new JSONObject();
 				reportInfo.put("_id", doc.getString("_id"));
 				reportInfo.put("project", doc.get("project"));
-				String projectTitle = JSONFactory.inputStreamToJson(db.getDoc(projectId)).getString("title");
+				String projectTitle = JSONFactory.inputStreamToJson(
+						db.getDoc(projectId)).getString("title");
 				reportInfo.put("projectTitle", projectTitle);
-				reportInfo.put("date", doc.getJSONObject("report_info").getString("date"));
-				reportInfo.put("topic", doc.getJSONObject("report_details").getString("topic"));
+				reportInfo.put("date", doc.getJSONObject("report_info")
+						.getString("date"));
+				reportInfo.put("topic", doc.getJSONObject("report_details")
+						.getString("topic"));
 				reportInfo.put("attendee", doc.getJSONArray("attendee"));
 				if (doc.has("confirmed"))
 					reportInfo.put("confirmed", doc.get("confirmed"));
@@ -86,7 +97,8 @@ public class ReportsController {
 	 * @param reportId
 	 * @return
 	 **************************************************************************/
-	public JSONObject getReportDetailByReportId(@PathParam("reportId") String reportId) {
+	public JSONObject getReportDetailByReportId(
+			@PathParam("reportId") String reportId) {
 		JSONObject detail = new JSONObject();
 		try {
 			InputStream is = db.getDoc(reportId);
@@ -106,8 +118,10 @@ public class ReportsController {
 	public JSONArray getReportList() {
 		JSONArray reportList = new JSONArray();
 		try {
-			InputStream is = db.getByView("_design/report", "all_by_project", true, true, false);
-			JSONArray jo = JSONFactory.getData(JSONFactory.inputStreamToJson(is));
+			InputStream is = db.getByView("_design/report", "all_by_project",
+					true, true, false);
+			JSONArray jo = JSONFactory.getData(JSONFactory
+					.inputStreamToJson(is));
 			for (int i = 0; i < jo.length(); i++) {
 				reportList.put(jo.getJSONObject(i).get("doc"));
 			}
@@ -139,7 +153,8 @@ public class ReportsController {
 
 			JSONObject reportInfo = document.getJSONObject("report_info");
 			reportInfo.put("date", reportInfo.getString("date"));
-			reportInfo.put("mentoring_num", numOfReports(document.getString("project")) + 1);
+			reportInfo.put("mentoring_num",
+					numOfReports(document.getString("project")) + 1);
 			int whole = calWholeTime(reportInfo) / 60;
 			reportInfo.put("whole_time", whole);
 			int total = (whole - reportInfo.getInt("except_time") / 60);
@@ -150,7 +165,8 @@ public class ReportsController {
 			if (document.has("absentee"))
 				reportDoc.put("absentee", document.get("absentee"));
 			reportDoc.put("report_details", document.get("report_details"));
-			reportDoc.put("report_attachments", document.get("report_attachments"));
+			reportDoc.put("report_attachments",
+					document.get("report_attachments"));
 			id = db.createDoc(reportDoc).get("_id").toString();
 			reportDoc.put("_id", id);
 			Log.info(reportDoc);
@@ -165,11 +181,13 @@ public class ReportsController {
 
 	public Response updateReport() {
 		try {
-			return Response.status(200).type(MediaType.APPLICATION_JSON).entity("put : 200").build();
+			return Response.status(200).type(MediaType.APPLICATION_JSON)
+					.entity("put : 200").build();
 		} catch (Exception e) {
 			Log.error(e.getLocalizedMessage());
 		}
-		return Response.status(500).type(MediaType.APPLICATION_JSON).entity("put : 500").build();
+		return Response.status(500).type(MediaType.APPLICATION_JSON)
+				.entity("put : 500").build();
 	}
 
 	/************************************************************************
@@ -201,7 +219,8 @@ public class ReportsController {
 	 */
 	public int numOfReports(String projectId) {
 		JSONArray reports = JSONFactory.getData(JSONFactory
-				.inputStreamToJson(db.getByView("_design/report", "all_by_project", projectId, false, false, false)));
+				.inputStreamToJson(db.getByView("_design/report",
+						"all_by_project", projectId, false, false, false)));
 		return reports.length();
 	}
 
@@ -236,18 +255,25 @@ public class ReportsController {
 	 * @return JSONObject (report document)
 	 */
 	public JSONObject getReportWithNames(String reportId) {
-		JSONObject reportDoc = JSONFactory.inputStreamToJson(db.getDoc(reportId));
+		JSONObject reportDoc = JSONFactory.inputStreamToJson(db
+				.getDoc(reportId));
 		UserController user = new UserController();
 		JSONArray attendee = reportDoc.getJSONArray("attendee");
 		for (int i = 0; i < attendee.length(); i++) {
-			attendee.getJSONObject(i).put("name", user.getUserName(attendee.getJSONObject(i).getString("id")));
+			attendee.getJSONObject(i)
+					.put("name",
+							user.getUserName(attendee.getJSONObject(i)
+									.getString("id")));
 		}
 		reportDoc.put("attendee", attendee);
 
 		if (reportDoc.has("absentee")) {
 			JSONArray absentee = reportDoc.getJSONArray("absentee");
 			for (int i = 0; i < absentee.length(); i++) {
-				absentee.getJSONObject(i).put("name", user.getUserName(absentee.getJSONObject(i).getString("id")));
+				absentee.getJSONObject(i).put(
+						"name",
+						user.getUserName(absentee.getJSONObject(i).getString(
+								"id")));
 			}
 			reportDoc.put("absentee", absentee);
 		}
@@ -260,53 +286,115 @@ public class ReportsController {
 	 * @throws Exception
 	 ***********************************************/
 
-	public void renderDocx_mentoringReport(String reportId) throws Exception {
-		System.out.println("renderDocx_mentoringReport excuted....");
-		WordprocessingMLPackage wordPackage = WordprocessingMLPackage.load(new java.io.File("mentoringReport.docx"));
-		VariablePrepare.prepare(wordPackage);
-		MainDocumentPart documentPart = wordPackage.getMainDocumentPart();
-		HashMap<String, String> mappings = new HashMap<String, String>();
-		mappings.put("division1", "O");
-		mappings.put("division2", "");
-		mappings.put("division3", "");
-		mappings.put("division4", "");
-
-		mappings.put("projectName", "SOMAReport");
-		mappings.put("term", "2015-07-01 ~ 2015.08-28");
-		mappings.put("main_mento", "김태완");
-		mappings.put("sub_mento", "");
-		mappings.put("section", "웹");
-		mappings.put("class", "6기");
-		mappings.put("stage", "1단계 1차");
-		mappings.put("field", "웹");
-
-		mappings.put("mentee1", "민종현");
-		mappings.put("mentee2", "강성훈");
-		mappings.put("mentee3", "이재연");
-		mappings.put("mentee4", "");
-
-		mappings.put("absent_reason1", "집안일");
-		mappings.put("absent_reason2", "");
-		mappings.put("absent_reason3", "");
-		mappings.put("absent_reason4", "");
-
-		mappings.put("times", "3");
-		mappings.put("date", "2015-08-18");
-		mappings.put("location", "아람 6-2");
-		mappings.put("start_time", "19:00-22:00");
-		mappings.put("except_time", "");
-
-		mappings.put("topic", "개발 스코프 정의");
-		mappings.put("purpose", "개발 스코프를 정의한다");
-		mappings.put("propel", "개발을 하는것");
-		mappings.put("solution", "구글링을 해보기");
-		mappings.put("plan", "다음주까지 개발 완성");
-		mappings.put("mento_opinion", "잘하고 잇군요");
-		mappings.put("etc", "안녕 이건 기타란이야");
-		mappings.put("content", "안녕 이건 내용란이야 너는 무슨 내용이니");
-
-		documentPart.variableReplace(mappings);
-		wordPackage.save(new File(reportId + ".docx"));
+	@SuppressWarnings({})
+	public boolean renderDocx_mentoringReport(String reportId) {
+		try {
+			File cached = new File("cache/" + reportId + ".docx");
+			if (cached.exists()) {
+				cached.delete();
+			}
+			DatabaseController db = new DatabaseController();
+			JSONObject data = JSONFactory
+					.inputStreamToJson(db.getDoc(reportId));
+			JSONObject project = JSONFactory.inputStreamToJson(db.getDoc(data
+					.getString("project")));
+			UserController user = new UserController();
+			WordprocessingMLPackage wordPackage = WordprocessingMLPackage
+					.load(new java.io.File("mentoringReport.docx"));
+			VariablePrepare.prepare(wordPackage);
+			MainDocumentPart documentPart = wordPackage.getMainDocumentPart();
+			HashMap<String, String> mappings = new HashMap<String, String>();
+			mappings.put("division1", "O");
+			mappings.put("division2", "");
+			mappings.put("division3", "");
+			mappings.put("division4", "");
+			mappings.put("projectName", project.getString("title"));
+			mappings.put("term", "2015-07-01 ~ 2015-08-31");
+			mappings.put("main_mento",
+					user.getUserName(project.getString("mentor")));
+			mappings.put("sub_mento", "");
+			mappings.put("section", project.getString("field"));
+			mappings.put("class", project.getJSONArray("stage").getInt(0) + "기");
+			mappings.put("stage", project.getJSONArray("stage").getInt(1)
+					+ "단계 " + project.getJSONArray("stage").getInt(2) + "차");
+			mappings.put("field", project.getString("field"));
+			int i = 1;
+			for (int j = 0; j < data.getJSONArray("absentee").length(); j++) {
+				mappings.put(
+						"mentee" + Integer.toString(i),
+						user.getUserName(data.getJSONArray("absentee")
+								.getJSONObject(j).getString("id")));
+				mappings.put("absent_reason" + Integer.toString(i),
+						data.getJSONArray("absentee").getJSONObject(j)
+								.getString("reason"));
+				i++;
+			}
+			for (int j = 0; j < data.getJSONArray("attendee").length(); j++) {
+				mappings.put(
+						"mentee" + Integer.toString(i),
+						user.getUserName(data.getJSONArray("attendee")
+								.getJSONObject(j).getString("id")));
+				mappings.put("absent_reason" + Integer.toString(i), "");
+				i++;
+			}
+			for (int j = i; j <= 4; j++) {
+				mappings.put("mentee" + Integer.toString(i), "");
+				mappings.put("absent_reason" + Integer.toString(i), "");
+				i++;
+			}
+			mappings.put(
+					"times",
+					Integer.toString(data.getJSONObject("report_info").getInt(
+							"whole_time")));
+			mappings.put("date",
+					data.getJSONObject("report_info").getString("date"));
+			mappings.put("location", data.getJSONObject("report_info")
+					.getString("place"));
+			String start = data.getJSONObject("report_info").getString(
+					"start_time");
+			String end = data.getJSONObject("report_info")
+					.getString("end_time");
+			mappings.put(
+					"start_time",
+					start.substring(8, 10) + ":" + start.substring(10, 12)
+							+ "~" + end.substring(8, 10) + ":"
+							+ end.substring(10, 12));
+			mappings.put("except_time", data.getJSONObject("report_info")
+					.getString("except_time"));
+			mappings.put("topic", data.getJSONObject("report_details")
+					.getString("topic"));
+			mappings.put("purpose", data.getJSONObject("report_details")
+					.getString("goal"));
+			mappings.put("propel", data.getJSONObject("report_details")
+					.getString("issue"));
+			mappings.put("solution", data.getJSONObject("report_details")
+					.getString("solution"));
+			mappings.put("plan", data.getJSONObject("report_details")
+					.getString("plan"));
+			mappings.put("mento_opinion", data.getJSONObject("report_details")
+					.getString("opinion"));
+			mappings.put("etc",
+					data.getJSONObject("report_details").getString("etc"));
+			Log.info(data.getJSONObject("report_details").toString());
+			mappings.put("naeyong", data.getJSONObject("report_details")
+					.getString("content"));
+			String xml = XmlUtils.marshaltoString(
+					documentPart.getJaxbElement(), true);
+			Object obj = XmlUtils.unmarshallFromTemplate(xml, mappings);
+			documentPart.setJaxbElement((Document) obj);
+			SaveToZipFile saver = new SaveToZipFile(wordPackage);
+			saver.save(new File("cache/" + reportId + ".docx"));
+			return true;
+		} catch (JAXBException e) {
+			Log.error(e.getMessage());
+			return false;
+		} catch (Docx4JException e) {
+			Log.error(e.getMessage());
+			return false;
+		} catch (Exception e) {
+			Log.error(e.getCause().getMessage());
+			return false;
+		}
 	}
 
 	/***
@@ -338,7 +426,8 @@ public class ReportsController {
 		ProjectsController projectC = new ProjectsController();
 		JSONArray projects = projectC.projectsInStageInfo(stageId);
 		for (int i = 0; i < projects.length(); i++) {
-			JSONArray reports = getReportByProjectId(projects.getJSONObject(i).getString("_id"));
+			JSONArray reports = getReportByProjectId(projects.getJSONObject(i)
+					.getString("_id"));
 			for (int j = 0; j < reports.length(); j++) {
 				allReports.put(reports.getJSONObject(j));
 			}
@@ -354,8 +443,10 @@ public class ReportsController {
 	 */
 	public JSONArray getUnconfirmedReports(String userId) {
 		JSONArray unConfirmed = new JSONArray();
-		JSONArray allList = JSONFactory.getData(JSONFactory.inputStreamToJson(db.getByView("_design/report",
-				"report_by_user", new Object[] { userId + " ", "" }, new Object[] { userId, "" }, true, true, false)));
+		JSONArray allList = JSONFactory.getData(JSONFactory
+				.inputStreamToJson(db.getByView("_design/report",
+						"report_by_user", new Object[] { userId + " ", "" },
+						new Object[] { userId, "" }, true, true, false)));
 
 		for (int i = 0; i < allList.length(); i++) {
 			JSONObject doc = allList.getJSONObject(i).getJSONObject("doc");
@@ -363,10 +454,12 @@ public class ReportsController {
 				JSONObject docu = new JSONObject();
 				docu.put("_id", doc.get("_id"));
 				docu.put("date", doc.getJSONObject("report_info").get("date"));
-				docu.put("topic", doc.getJSONObject("report_details").get("topic"));
+				docu.put("topic",
+						doc.getJSONObject("report_details").get("topic"));
 				docu.put("attendee", doc.get("attendee"));
 				docu.put("project", doc.get("project"));
-				JSONObject project = JSONFactory.inputStreamToJson(db.getDoc(doc.getString("project")));
+				JSONObject project = JSONFactory.inputStreamToJson(db
+						.getDoc(doc.getString("project")));
 				docu.put("projectTitle", project.get("title"));
 				unConfirmed.put(docu);
 			}

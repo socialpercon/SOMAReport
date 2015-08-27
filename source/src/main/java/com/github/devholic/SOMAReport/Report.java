@@ -1,5 +1,7 @@
 package com.github.devholic.SOMAReport;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -27,6 +29,7 @@ import com.github.devholic.SOMAReport.Controller.ReportsController;
 import com.github.devholic.SOMAReport.Controller.UserController;
 import com.github.devholic.SOMAReport.Utilities.JSONFactory;
 import com.github.devholic.SOMAReport.Utilities.MustacheHelper;
+import com.google.common.io.Files;
 
 @Path("/")
 public class Report {
@@ -36,7 +39,7 @@ public class Report {
 	@Context
 	UriInfo uri;
 
-	// APIs
+	// API
 	@GET
 	@Path("/api/report/unconfirmed")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -48,7 +51,8 @@ public class Report {
 		Log.info(unconfirmed);
 
 		if (unconfirmed.length() > 0)
-			return Response.status(200).type(MediaType.APPLICATION_JSON + ";charset=utf-8")
+			return Response.status(200)
+					.type(MediaType.APPLICATION_JSON + ";charset=utf-8")
 					.entity(unconfirmed.toString()).build();
 		else
 			// unconfirmed reports does not exists
@@ -63,12 +67,13 @@ public class Report {
 		JSONArray list = rCtrl.getReportByProjectId(projectId);
 
 		if (list.length() > 0)
-			return Response.status(200).type(MediaType.APPLICATION_JSON + ";charset=utf-8")
+			return Response.status(200)
+					.type(MediaType.APPLICATION_JSON + ";charset=utf-8")
 					.entity(list.toString()).build();
 		else
 			return Response.status(412).build();
 	}
-	
+
 	@GET
 	@Path("/api/report/{id}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -76,7 +81,29 @@ public class Report {
 		ReportsController rCtrl = new ReportsController();
 		JSONObject report = rCtrl.getReportWithNames(reportId);
 		return Response.status(200).type("application/json;charset=utf-8")
-					.entity(report.toString()).build();
+				.entity(report.toString()).build();
+	}
+
+	@GET
+	@Path("/api/report/download/{id}")
+	@Produces("application/octet-stream")
+	public Response API_GenerateDoc(@PathParam("id") String id) {
+		ReportsController report = new ReportsController();
+		if (report.renderDocx_mentoringReport(id)) {
+			try {
+				return Response
+						.status(200)
+						.header("Content-Disposition",
+								"attachment; filename=\"" + id + ".docx" + "\"")
+						.entity(Files.toByteArray(new File("cache/" + id
+								+ ".docx"))).build();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				return Response.status(500).build();
+			}
+		} else {
+			return Response.noContent().build();
+		}
 	}
 
 	// View
@@ -250,7 +277,7 @@ public class Report {
 				Log.info(drive.toString());
 				data.put("driveFiles", drive);
 			}
-			Log.info("lalalallalaal"+data.toString());
+			Log.info("lalalallalaal" + data.toString());
 			return Response
 					.status(200)
 					.entity(new Viewable("/new/new_report_write.mustache",
@@ -264,6 +291,140 @@ public class Report {
 	@POST
 	@Path("/report/write")
 	public Response API_ReportWrite(@Context Request request,
+			@FormDataParam("projectid") String pid,
+			@FormDataParam("place") String place,
+			@FormDataParam("start") String start,
+			@FormDataParam("attendee") List<String> attendee,
+			@FormDataParam("attendeeReason") List<String> absenteeReason,
+			@FormDataParam("end") String end,
+			@FormDataParam("except") String except,
+			@FormDataParam("topic") String topic,
+			@FormDataParam("goal") String goal,
+			@FormDataParam("issue") String issue,
+			@FormDataParam("solution") String solution,
+			@FormDataParam("plan") String plan,
+			@FormDataParam("opinion") String opinion,
+			@FormDataParam("opinion-public") String opinion_public,
+			@FormDataParam("etc") String etc,
+			@FormDataParam("content") String content,
+			@FormDataParam("photo") String photo,
+			@FormDataParam("reportFiles") List<String> reportFiles) {
+		ReportsController report = new ReportsController();
+		JSONArray attendeeArray = new JSONArray();
+		JSONArray absenteeArray = new JSONArray();
+		for (int a = 0; a < attendee.size(); a++) {
+			if (absenteeReason.get(a).length() == 0) {
+				JSONObject att = new JSONObject();
+				att.put("id", attendee.get(a));
+				attendeeArray.put(att);
+			} else {
+				JSONObject abs = new JSONObject();
+				abs.put("id", attendee.get(a));
+				abs.put("reason", absenteeReason.get(a));
+				absenteeArray.put(abs);
+			}
+		}
+		JSONArray reportFileArray = new JSONArray();
+		for (int a = 0; a < reportFiles.size(); a++) {
+			reportFileArray.put(reportFiles.get(a));
+		}
+		JSONObject jo = new JSONObject();
+		jo.put("project", pid);
+		jo.put("attendee", attendeeArray);
+		jo.put("absentee", absenteeArray);
+		JSONObject info = new JSONObject();
+		info.put("place", place);
+		String[] startArr = start.split(" ");
+		String[] endArr = end.split(" ");
+		String startDay = startArr[0].toString();
+		startDay = startDay.replaceAll("-", "");
+		info.put("date", startDay);
+		String start_time = startDay + startArr[1].split(":")[0].toString()
+				+ startArr[1].split(":")[1].toString();
+		info.put("start_time", start_time);
+		String endParsed = endArr[1].split(":")[0].toString()
+				+ endArr[1].split(":")[1].toString();
+		info.put("end_time", startDay + endParsed);
+		info.put("except_time", except);
+		jo.put("report_info", info);
+		Log.info("inserted-report_info: " + jo.toString());
+		JSONObject details = new JSONObject();
+		details.put("topic", topic);
+		details.put("goal", goal);
+		details.put("issue", issue);
+		details.put("solution", solution);
+		details.put("plan", plan);
+		details.put("opinion", opinion);
+		details.put("photo", photo);
+		if (opinion_public != null) {
+			details.put("opinion-public", "true");
+		}
+		if (etc != null) {
+			details.put("etc", etc);
+		}
+		details.put("content", content);
+		jo.put("report_details", details);
+		jo.put("report_attachments", reportFileArray);
+		UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
+		String id = report.insertReport(jo);
+		Log.info("inserted: " + id);
+		if (id != null) {
+			builder.path("report/" + id);
+		} else {
+			builder.path("report/list/" + pid);
+		}
+		return Response.seeOther(builder.build()).build();
+	}
+
+	@GET
+	@Path("/report/update/{id}")
+	public Response View_ReportUpdate(@Context Request request,
+			@PathParam("id") String id) {
+		Session session = request.getSession();
+		if (session.getAttribute("user_id") != null) {
+			JSONObject data = new JSONObject();
+			if (!session.getAttribute("role").equals("mentor")) {
+				UriBuilder builder = UriBuilder.fromUri(uri.getBaseUri());
+				builder.path("project/list");
+				return Response.seeOther(builder.build()).build();
+			}
+			ProjectsController project = new ProjectsController();
+			data.put("project", project.getDetailByProjectId(id));
+			ReportsController reports = new ReportsController();
+			data.put("reports", reports.getReportByProjectId(id));
+			UserController user = new UserController();
+			data.put("name", user.getUserName(session.getAttribute("user_id")
+					.toString()));
+			data.put("role", UserController.getRoleById(session.getAttribute(
+					"user_id").toString()));
+			data.put("user_id", session.getAttribute("user_id").toString());
+			DatabaseController db = new DatabaseController();
+			JSONArray drivedocs = JSONFactory.getData(JSONFactory
+					.inputStreamToJson(db.getByView("_design/file",
+							"projectdrivePlus", id, true, false, false)));
+			JSONArray drive = new JSONArray();
+			for (int i = 0; i < drivedocs.length(); i++) {
+				drive.put(drivedocs.getJSONObject(i).get("doc"));
+			}
+			Log.info(drive.length());
+			if (drive.length() != 0) {
+				Log.info(drive.toString());
+				data.put("driveFiles", drive);
+			}
+			Log.info("lalalallalaal" + data.toString());
+			return Response
+					.status(200)
+					.entity(new Viewable("/new/new_report_write.mustache",
+							MustacheHelper.toMap(data))).build();
+		} else {
+			return Response.status(401)
+					.entity(new Viewable("/new/new_login.mustache")).build();
+		}
+	}
+
+	@POST
+	@Path("/report/update")
+	public Response API_ReportUpdate(@Context Request request,
 			@FormDataParam("projectid") String pid,
 			@FormDataParam("place") String place,
 			@FormDataParam("start") String start,

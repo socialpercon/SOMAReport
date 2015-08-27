@@ -253,7 +253,11 @@
                   <table>
                   {{#driveFiles}}
                   <tr>
-                  <input type="radio" class="checkbox" style="margin-left:-2.75px" name="photo" value="{{_id}}">{{name}}
+                  <td>
+                  <input type="radio" class="checkbox" style="margin-left:-2.75px" name="photo" value="{{_id}}">
+                  </td>
+                  <td>
+                    {{name}}
                   </td>
                   </tr>
                   {{/driveFiles}}
