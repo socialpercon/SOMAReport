@@ -15,12 +15,10 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,22 +29,26 @@ import com.github.devholic.somareport.utils.ImageLoaderUtil;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
-import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -64,7 +66,7 @@ public class ReportDetails extends AppCompatActivity {
     Uri cameraPictureUri = null;
 
     private String reportId;
-    private JSONObject reportDoc;
+    private String projectId;
 
     @Bind(R.id.report_details_toolbar)
     Toolbar toolbar;
@@ -164,6 +166,7 @@ public class ReportDetails extends AppCompatActivity {
                 try {
                     JSONObject data = new JSONObject(string);
                     ImageLoaderUtil imageLoaderUtil;
+                    projectId = data.getString("project");
                     String ptitle = getIntent().getStringExtra("pname");
 
                     JSONObject reportInfo = data.getJSONObject("report_info");
@@ -360,61 +363,91 @@ public class ReportDetails extends AppCompatActivity {
             photo.setLayoutParams(params);
 
             /*
-            * upload on drive repository (_id.jpg)
+            * upload on drive repository
             * */
-
             File f = new File(cameraPictureUri.getPath());
             ImageUploadTask imageUploadTask = new ImageUploadTask();
             imageUploadTask.execute(f);
-            f.delete();
         }
     }
 
-    private class ImageUploadTask extends AsyncTask<File, Void, Integer> {
+    private class ImageUploadTask extends AsyncTask<File, Void, Integer[]> {
 
         @Override
-        protected Integer doInBackground(File... params) {
+        protected Integer[] doInBackground(File... params) {
             try {
-                HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
-                HttpPost httpPost = new HttpPost(getString(R.string.api_url) + "/drive/file/upload/" + reportId);
+                Integer[] responseStatus = new Integer[2];
 
+                HttpClient httpClient = HttpClientFactory.getThreadSafeClient();
+                HttpPost httpPost = new HttpPost("http://report.swmaestro.io" + "/drive/file/upload/" + projectId);
+
+                String boundary = "--------";
                 httpPost.setHeader("Connection", "Keep-Alive");
                 httpPost.setHeader("Accept-Charset", "UTF-8");
-                httpPost.setHeader("Content-Type","multipart/form-data; boundary=");
+                httpPost.setHeader("Content-Type","multipart/form-data; boundary="+boundary);
                 File file = params[0];
-                FileBody fileBody = new FileBody(file);
+                FileBody fileBody = new FileBody(file, ContentType.APPLICATION_OCTET_STREAM, file.getName());
 
                 MultipartEntityBuilder builder = MultipartEntityBuilder.create()
                         .setCharset(Charset.forName("UTF-8"))
                         .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
-                        .setContentType(ContentType.APPLICATION_OCTET_STREAM)
+                        .setBoundary(boundary)
                         .addPart("file", fileBody);
+
                 httpPost.setEntity(builder.build());
 
                 HttpResponse httpResponse = httpClient.execute(httpPost);
+                responseStatus[0] = httpResponse.getStatusLine().getStatusCode();
+                Log.d("file upload: ", "response status "+responseStatus[0]);
                 Header[] headers = httpResponse.getAllHeaders();
                 for(Header h : headers) {
-                    Log.i("TAG", "Key : " + h.getName()
+                    Log.d("TAG", "Key : " + h.getName()
                             + " ,Value : " + h.getValue());
                 }
+                file.delete();
+                InputStream is = httpResponse.getEntity().getContent();
+                StringBuilder stringBuilder = new StringBuilder();
+                byte[] b = new byte[4096];
+                for (int n; (n = is.read(b)) != -1;) {
+                    stringBuilder.append(new String(b, 0, n));
+                }
+                JSONObject entity = new JSONObject(stringBuilder.toString());
+                String fileId = entity.getString("fileId");
 
-                return httpResponse.getStatusLine().getStatusCode();
+                httpPost = new HttpPost(getString(R.string.api_url)+"/report/update/"+reportId);
+                List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
+                nameValuePair.add(new BasicNameValuePair("reportId", reportId));
+                nameValuePair.add(new BasicNameValuePair("fileId", fileId));
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePair));
+
+                httpResponse = httpClient.execute(httpPost);
+                responseStatus[1] = httpResponse.getStatusLine().getStatusCode();
+                Log.d("update report: ", "response status "+responseStatus[1]);
+
+                return responseStatus;
             } catch (IOException e) {
                 Log.e(TAG, e.getLocalizedMessage());
+            } catch (JSONException e) {
+                Log.e(TAG, e.getLocalizedMessage());
             }
-            return 0;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(Integer integer) {
-            if (integer == 200) {
-                Toast toast = Toast.makeText(photo.getContext(), "사진이 업로드되었습니다", Toast.LENGTH_SHORT);
-                toast.show();
-            }
+        protected void onPostExecute(Integer[] integer) {
+            if (integer == null) return;
             else {
-                Toast toast = Toast.makeText(photo.getContext(), "사진 업로드 실패", Toast.LENGTH_SHORT);
-                toast.show();
-            }
+                if (integer[0] == 200) {
+                    Toast toast = Toast.makeText(photo.getContext(), "사진이 업로드되었습니다", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    Toast toast = Toast.makeText(photo.getContext(), "사진 업로드 실패", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                if (integer[1] != 200) {
+                    Log.e(TAG, "report update FAIL");
+                }
+           }
         }
 
     }

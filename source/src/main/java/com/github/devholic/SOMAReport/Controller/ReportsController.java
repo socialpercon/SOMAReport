@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
@@ -465,5 +466,24 @@ public class ReportsController {
 			}
 		}
 		return unConfirmed;
+	}
+	
+	/****
+	 * 사진 파일을 레포트에 업데이트
+	 * 
+	 * @param reportId, fileId
+	 * @return boolean
+	 */
+	public boolean updateReportPhoto (String reportId, String fileId) {
+		JSONObject reportDoc = JSONFactory.inputStreamToJson(db.getDoc(reportId));
+		JSONObject reportDetail = reportDoc.getJSONObject("report_details");
+		reportDetail.put("photo", fileId);
+		reportDoc.put("report_details", reportDetail);
+		Map<String, Object> result = db.updateDoc(reportDoc);
+		JSONObject res = new JSONObject(result.get("report_details").toString());
+		if (res.has("photo"))
+			return true;
+		else
+			return false;
 	}
 }

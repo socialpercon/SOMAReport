@@ -11,5 +11,5 @@
     <dimen name="textSubhead">16sp</dimen>
     <dimen name="textButton">14sp</dimen>
     <dimen name="textCaption">12sp</dimen>
-    <dimen name="textMini">8sp</dimen>
+    <dimen name="textMini">10sp</dimen>
 </resources>

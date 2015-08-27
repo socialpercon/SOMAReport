@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -56,7 +57,6 @@ public class ImageLoaderUtil {
                 .showImageForEmptyUri(R.drawable.default_profile)
                 .showImageOnFail(R.drawable.default_profile)
                 .showStubImage(R.drawable.default_profile)
-                .cacheInMemory(true)
                 .bitmapConfig(Bitmap.Config.RGB_565).cacheOnDisc(true).cacheInMemory(true).build();
     }
 
@@ -71,13 +71,23 @@ public class ImageLoaderUtil {
             circleImageView.setLayoutParams(params);
         }
         imageLoader.init(imgConfig);
-        String imgUri = "http://10.0.3.2:8080/drive/user/image?id=" + id + "-profileImage";
+        String imgUri = "http://report.swmaestro.io/drive/user/image?id=" + id + "-profileImage";
         imageLoader.displayImage(imgUri, circleImageView, displayImgOption);
     }
 
     public void setImageView () {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        imageView.setLayoutParams(params);
+        int width = imageView.getWidth();
+        int height = imageView.getHeight();
+        double scale = (double)height / width;
+        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.width = width;
+        params.height = (int)(width * scale);
+        params.gravity = Gravity.CENTER;
+        imageView.setLayoutParams(params);
         imageLoader.init(imgConfig);
-        String imgUri = "http://10.0.3.2:8080/drive/image?id=" + id;
+        String imgUri = "http://report.swmaestro.io/drive/image?id=" + id;
         Log.i("imageLoader-uri", imgUri);
         imageLoader.displayImage(imgUri, imageView, displayImgOption);
     }

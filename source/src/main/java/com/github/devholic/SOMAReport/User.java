@@ -32,6 +32,8 @@ public class User {
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 	public Response APIgetUserInfo(@Context Request request) {
 		Session session = request.getSession();
+		if (session.getAttribute("user_id")==null)
+			return Response.status(412).build();
 		String userId = session.getAttribute("user_id").toString();
 		JSONObject userInfo = UserController.getUserInfo(userId);
 		Log.info(userId);

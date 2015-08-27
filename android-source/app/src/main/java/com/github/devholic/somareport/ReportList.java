@@ -159,7 +159,7 @@ public class ReportList extends AppCompatActivity {
             project = bundle.getParcelable("project");
 
             getSupportActionBar().setSubtitle("멘토링 보고서 리스트");
-            noReportsTextView.setText("이 프로젝트에서 작성된\n멘토링 보고서가\n없습니다");
+            noReportsTextView.setText("작성된\n보고서가\n없습니다");
             reportInfoTask.execute("/report/list/" + project.getId());
         }
 
@@ -299,7 +299,6 @@ public class ReportList extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String info) {
-            Log.i(TAG, info);
             if (info != null) {
                 JSONObject doc = null;
                 try {
